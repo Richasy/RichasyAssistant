@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>RichasyAssistant.Libs.Kernel</AssemblyName>
+    <RootNamespace>RichasyAssistant.Libs.Kernel</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.0.0-beta4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.App\Models.App.csproj" />
+    <ProjectReference Include="..\Libs.Locator\Libs.Locator.csproj" />
+  </ItemGroup>
+
+</Project>
