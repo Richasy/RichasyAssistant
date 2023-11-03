@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Reader Copilot. All rights reserved.
 
+using System.ComponentModel.DataAnnotations;
+
 namespace RichasyAssistant.Models.App.Kernel;
 
 /// <summary>
@@ -35,6 +37,12 @@ public class SessionOptions
     public double PresencePenalty { get; set; }
 
     /// <summary>
+    /// Session id.
+    /// </summary>
+    [Key]
+    public string? SessionId { get; set; }
+
+    /// <summary>
     /// Create a copy based on its own properties.
     /// </summary>
     /// <returns>New <see cref="SessionOptions"/> object.</returns>
@@ -46,5 +54,6 @@ public class SessionOptions
             TopP = TopP,
             FrequencyPenalty = FrequencyPenalty,
             PresencePenalty = PresencePenalty,
+            SessionId = SessionId,
         };
 }

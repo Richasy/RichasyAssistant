@@ -49,7 +49,13 @@ public static class GlobalVariables
         {
             if (value is IDisposable disposable)
             {
-                disposable.Dispose();
+                try
+                {
+                    disposable.Dispose();
+                }
+                catch (Exception)
+                {
+                }
             }
 
             _variables.Remove(name);

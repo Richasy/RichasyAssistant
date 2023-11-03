@@ -16,4 +16,9 @@ public enum VariableNames
     /// 知识库核心.
     /// </summary>
     MemoryKernel,
+
+    /// <summary>
+    /// 聊天数据库.
+    /// </summary>
+    ChatDbContext,
 }

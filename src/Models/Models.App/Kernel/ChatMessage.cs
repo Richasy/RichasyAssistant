@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Reader Copilot. All rights reserved.
 
+using System.ComponentModel.DataAnnotations;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Models.App.Kernel;
@@ -25,6 +26,7 @@ public sealed class ChatMessage
         Content = message;
         Time = time == default ? DateTimeOffset.Now : time;
         Extension = extension;
+        Id = Time.ToUnixTimeMilliseconds().ToString();
     }
 
     /// <summary>
@@ -45,11 +47,17 @@ public sealed class ChatMessage
     /// <summary>
     /// Additional information, such as data sources.
     /// </summary>
-    public string Extension { get; set; }
+    public string? Extension { get; set; }
+
+    /// <summary>
+    /// 标识符.
+    /// </summary>
+    [Key]
+    public string Id { get; set; }
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is ChatMessage message && Time.Equals(message.Time);
+    public override bool Equals(object? obj) => obj is ChatMessage message && Id == message.Id;
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(Time);
+    public override int GetHashCode() => HashCode.Combine(Id);
 }

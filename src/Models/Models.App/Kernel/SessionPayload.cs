@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Reader Copilot. All rights reserved.
 
+using System.ComponentModel.DataAnnotations;
+
 namespace RichasyAssistant.Models.App.Kernel;
 
 /// <summary>
@@ -10,7 +12,13 @@ public sealed class SessionPayload
     /// <summary>
     /// 会话标识符.
     /// </summary>
-    public string SessionId { get; set; }
+    [Key]
+    public string Id { get; set; }
+
+    /// <summary>
+    /// 标题.
+    /// </summary>
+    public string Title { get; set; }
 
     /// <summary>
     /// 历史消息记录.
@@ -23,8 +31,8 @@ public sealed class SessionPayload
     public SessionOptions Options { get; set; }
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is SessionPayload payload && SessionId == payload.SessionId;
+    public override bool Equals(object? obj) => obj is SessionPayload payload && Id == payload.Id;
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(SessionId);
+    public override int GetHashCode() => HashCode.Combine(Id);
 }

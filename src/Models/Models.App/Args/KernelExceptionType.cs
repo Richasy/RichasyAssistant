@@ -41,4 +41,19 @@ public enum KernelExceptionType
     /// 聊天响应为空.
     /// </summary>
     EmptyChatResponse,
+
+    /// <summary>
+    /// 资料库尚未初始化.
+    /// </summary>
+    LibraryNotInitialized,
+
+    /// <summary>
+    /// 聊天数据库初始化失败.
+    /// </summary>
+    ChatDbNotInitialized,
+
+    /// <summary>
+    /// 聊天数据库初始化失败.
+    /// </summary>
+    ChatDbInitializeFailed,
 }

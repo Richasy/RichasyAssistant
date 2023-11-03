@@ -10,21 +10,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\azure-config.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Assets\azure-config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.47.1-preview.0.27" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Libs\Libs.Kernel\Libs.Kernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\azure-config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Database\chat.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
