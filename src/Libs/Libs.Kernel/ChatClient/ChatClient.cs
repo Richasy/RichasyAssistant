@@ -2,8 +2,10 @@
 
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
+using RichasyAssistant.Libs.Database;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Models.App.Args;
+using RichasyAssistant.Models.App.Kernel;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Libs.Kernel;
@@ -19,6 +21,7 @@ public sealed partial class ChatClient : IDisposable
     public ChatClient()
     {
         _sessions = new List<ChatSession>();
+        _prompts = new List<SystemPrompt>();
     }
 
     /// <summary>
@@ -26,6 +29,41 @@ public sealed partial class ChatClient : IDisposable
     /// </summary>
     ~ChatClient()
         => Dispose(disposing: false);
+
+    /// <summary>
+    /// 初始化本地数据库.
+    /// </summary>
+    /// <returns><see cref="Task"/>.</returns>
+    public async Task InitializeLocalDatabaseAsync()
+    {
+        var libPath = GlobalSettings.TryGet<string>(SettingNames.LibraryFolderPath);
+        if (string.IsNullOrEmpty(libPath))
+        {
+            throw new KernelException(KernelExceptionType.LibraryNotInitialized);
+        }
+
+        var localDbPath = Path.Combine(libPath, "chat.db");
+        if (!File.Exists(localDbPath))
+        {
+            var defaultChatDbPath = GlobalSettings.TryGet<string>(SettingNames.DefaultChatDbPath);
+            if (string.IsNullOrEmpty(defaultChatDbPath)
+                || !File.Exists(defaultChatDbPath))
+            {
+                throw new KernelException(KernelExceptionType.ChatDbInitializeFailed);
+            }
+
+            await Task.Run(() =>
+            {
+                File.Copy(defaultChatDbPath, localDbPath, true);
+            });
+        }
+
+        var context = new ChatDbContext(localDbPath);
+        GlobalVariables.Set(VariableNames.ChatDbContext, context);
+
+        await InitializeSessionsAsync();
+        await InitializePromptsAsync();
+    }
 
     /// <inheritdoc/>
     public void Dispose()
@@ -50,6 +88,14 @@ public sealed partial class ChatClient : IDisposable
         return chatCore;
     }
 
+    /// <summary>
+    /// 获取数据库上下文.
+    /// </summary>
+    /// <returns>数据库上下文.</returns>
+    private static ChatDbContext GetDbContext()
+        => GlobalVariables.TryGet<ChatDbContext>(VariableNames.ChatDbContext)
+            ?? throw new KernelException(KernelExceptionType.ChatDbNotInitialized);
+
     private ChatSession GetCurrentSession()
     {
         if (string.IsNullOrEmpty(_currentSessionId))
@@ -70,6 +116,7 @@ public sealed partial class ChatClient : IDisposable
             if (disposing)
             {
                 GlobalVariables.TryRemove(VariableNames.ChatKernel);
+                GlobalVariables.TryRemove(VariableNames.ChatDbContext);
             }
 
             _disposedValue = true;

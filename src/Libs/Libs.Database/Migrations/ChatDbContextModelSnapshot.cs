@@ -15,7 +15,7 @@ namespace RichasyAssistant.Libs.Database.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
 
             modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.ChatMessage", b =>
                 {
@@ -82,6 +82,24 @@ namespace RichasyAssistant.Libs.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sessions");
+                });
+
+            modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.SystemPrompt", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Prompt")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemPrompts");
                 });
 
             modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.ChatMessage", b =>

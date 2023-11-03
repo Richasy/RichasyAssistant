@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RichasyAssistant.Libs.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class InitializeChatDbContext : Migration
+    public partial class InitializeChatDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +22,19 @@ namespace RichasyAssistant.Libs.Database.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sessions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SystemPrompts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Prompt = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SystemPrompts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,6 +95,9 @@ namespace RichasyAssistant.Libs.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "SessionOptions");
+
+            migrationBuilder.DropTable(
+                name: "SystemPrompts");
 
             migrationBuilder.DropTable(
                 name: "Sessions");

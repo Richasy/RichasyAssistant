@@ -27,6 +27,11 @@ public sealed class ChatDbContext : DbContext
     /// </summary>
     public DbSet<SessionPayload> Sessions { get; set; }
 
+    /// <summary>
+    /// 提示词列表.
+    /// </summary>
+    public DbSet<SystemPrompt> SystemPrompts { get; set; }
+
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

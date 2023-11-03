@@ -37,10 +37,12 @@ public sealed partial class ChatSession
     /// </summary>
     public ChatSession(
         string sessionId,
+        string title,
         List<ChatMessage> messages,
         SessionOptions options)
     {
         SessionId = sessionId;
+        Title = title;
         UpdateHistory(messages);
         UpdateOptions(options);
     }
@@ -51,11 +53,33 @@ public sealed partial class ChatSession
     public string SessionId { get; }
 
     /// <summary>
+    /// 会话标题.
+    /// </summary>
+    public string Title { get; set; }
+
+    /// <summary>
     /// 添加新消息.
     /// </summary>
     /// <param name="message">消息内容.</param>
     public void AddMessage(ChatMessage message)
-        => _messages.Add(message);
+    {
+        if (message.Role == ChatMessageRole.System)
+        {
+            var firstMsg = _messages.FirstOrDefault();
+            if (firstMsg?.Role == ChatMessageRole.System)
+            {
+                firstMsg.Content = message.Content;
+            }
+            else
+            {
+                _messages.Insert(0, message);
+            }
+        }
+        else
+        {
+            _messages.Add(message);
+        }
+    }
 
     /// <summary>
     /// 移除消息.
@@ -153,7 +177,7 @@ public sealed partial class ChatSession
         return new SessionPayload
         {
             Id = SessionId,
-            Title = string.Empty,
+            Title = Title ?? string.Empty,
             Messages = _messages ?? new List<ChatMessage>(),
             Options = _requestSettings ?? new SessionOptions
             {

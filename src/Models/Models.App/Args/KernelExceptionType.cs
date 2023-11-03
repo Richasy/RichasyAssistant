@@ -56,4 +56,19 @@ public enum KernelExceptionType
     /// 聊天数据库初始化失败.
     /// </summary>
     ChatDbInitializeFailed,
+
+    /// <summary>
+    /// 会话列表初始化失败.
+    /// </summary>
+    SessionInitializeFailed,
+
+    /// <summary>
+    /// 提示词列表初始化失败.
+    /// </summary>
+    PromptInitializeFailed,
+
+    /// <summary>
+    /// 系统提示词未找到.
+    /// </summary>
+    SystemPromptNotFound,
 }

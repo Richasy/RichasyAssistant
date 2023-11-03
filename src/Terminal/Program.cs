@@ -3,6 +3,7 @@
 using System.Text.Json;
 using RichasyAssistant.Libs.Kernel;
 using RichasyAssistant.Libs.Locator;
+using RichasyAssistant.Models.App.Kernel;
 using RichasyAssistant.Models.Constants;
 using RichasyAssistant.Terminal.Models;
 using Spectre.Console;
@@ -62,7 +63,7 @@ AnsiConsole.MarkupLine("[grey]已初始化聊天数据库[/]");
 
 // 获取已有会话，并初始化选项.
 start: var sessions = client.GetSessions();
-var options = new List<string> { "新会话" };
+var options = new List<string> { "新会话", "提示词管理" };
 if (sessions.Count > 0)
 {
     options.Add("继续会话");
@@ -92,11 +93,66 @@ else if (selectOption == "继续会话")
             .Title("选择需要继续的会话")
             .AddChoices(sessions.Select(p => p.Id)));
 }
+else if (selectOption == "提示词管理")
+{
+promptStart:
+    var prompts = client.GetPrompts();
+    var pOptions = new List<string> { "添加提示词", "返回" };
+
+    if (prompts.Count > 0)
+    {
+        pOptions.Insert(1, "删除提示词");
+    }
+
+    var pSelectOption = AnsiConsole.Prompt(
+               new SelectionPrompt<string>()
+               .Title("提示词管理")
+               .AddChoices(pOptions));
+
+    if (pSelectOption == "添加提示词")
+    {
+        var name = AnsiConsole.Ask<string>("[grey]提示词名称: [/]");
+        var prompt = AnsiConsole.Ask<string>("[grey]提示词: [/]");
+        var newPrompt = new SystemPrompt(name, prompt);
+        await client.AddOrUpdatePromptAsync(newPrompt);
+        goto start;
+    }
+    else if (pSelectOption == "返回")
+    {
+        goto start;
+    }
+    else
+    {
+        var selectPrompt = AnsiConsole.Prompt(
+        new SelectionPrompt<SystemPrompt>()
+            .Title("选择需要删除的提示词")
+            .AddChoices(prompts)
+            .UseConverter(p => p.Name));
+
+        await client.RemoveSessionAsync(selectPrompt.Id);
+        goto promptStart;
+    }
+}
 
 if (string.IsNullOrEmpty(selectSessionId))
 {
+    // 选择提示词.
+    var prompts = client.GetPrompts();
+    var systemPrompt = string.Empty;
+    if (prompts.Count > 0)
+    {
+        var prompt = AnsiConsole.Prompt(
+                       new SelectionPrompt<SystemPrompt>()
+                          .Title("选择提示词")
+                          .AddChoices(prompts)
+                          .UseConverter(p => p.Name));
+
+        AnsiConsole.MarkupLine($"[grey]已选择提示词: {prompt.Name}[/]");
+        systemPrompt = prompt.Prompt;
+    }
+
     // 创建会话.
-    var newSession = await client.CreateNewSessionAsync();
+    var newSession = await client.CreateNewSessionAsync(systemPrompt);
     AnsiConsole.MarkupLine($"[grey]已创建会话: {newSession.Id}[/]");
     selectSessionId = newSession.Id;
 }
@@ -106,6 +162,7 @@ client.SwitchSession(selectSessionId);
 AnsiConsole.MarkupLine($"[grey]已切换会话: {selectSessionId}[/]");
 
 // 开始聊天.
+chatStart:
 AnsiConsole.Write(
              new Rule("[orange3]聊天[/]")
                       .LeftJustified());
@@ -137,6 +194,13 @@ while (!needExit)
     if (message == "exit")
     {
         break;
+    }
+    else if (message == "clear")
+    {
+        var ids = client.GetSession(selectSessionId).Messages.Where(p => p.Role != ChatMessageRole.System).Select(p => p.Id);
+        await client.RemoveMessagesAsync(ids.ToArray());
+        AnsiConsole.MarkupLine("[grey]已清空聊天记录[/]");
+        goto chatStart;
     }
 
     await AnsiConsole.Status()

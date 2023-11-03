@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Reader Copilot. All rights reserved.
 
+using RichasyAssistant.Models.App.Kernel;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Libs.Kernel;
@@ -10,6 +11,7 @@ namespace RichasyAssistant.Libs.Kernel;
 public sealed partial class ChatClient
 {
     private readonly List<ChatSession> _sessions;
+    private readonly List<SystemPrompt> _prompts;
     private bool _disposedValue;
     private string? _currentSessionId;
 
