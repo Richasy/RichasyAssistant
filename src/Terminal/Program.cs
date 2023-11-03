@@ -45,13 +45,6 @@ AnsiConsole.Write(
            .LeftJustified()
            .Color(Color.Green));
 
-// 输入系统提示词
-AnsiConsole.Write(
-    new Rule("[yellow]基础配置[/]")
-           .LeftJustified());
-
-var sysPrompt = AnsiConsole.Ask<string>("[grey]请输入系统提示词: [/]", string.Empty).Trim();
-
 // 进行准备工作.
 AnsiConsole.Write(
           new Rule("[magenta3_2]准备工作[/]")
@@ -63,46 +56,47 @@ var client = new ChatClient()
 
 AnsiConsole.MarkupLine("[grey]已创建聊天客户端[/]");
 
-try
-{
-    await client.InitializeLocalDatabaseAsync();
-}
-catch (Exception ex)
-{
-    AnsiConsole.WriteException(ex);
-}
-
+// 初始化数据库.
+await client.InitializeLocalDatabaseAsync();
 AnsiConsole.MarkupLine("[grey]已初始化聊天数据库[/]");
 
-var sessions = client.GetSessions();
-var selectSessionId = string.Empty;
+// 获取已有会话，并初始化选项.
+start: var sessions = client.GetSessions();
+var options = new List<string> { "新会话" };
 if (sessions.Count > 0)
 {
-    var prompts = sessions.Select(p => p.Id).ToList();
-    prompts.Insert(0, "创建新会话");
+    options.Add("继续会话");
+    options.Add("删除会话");
+}
+
+var selectOption = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("功能")
+            .AddChoices(options));
+
+var selectSessionId = string.Empty;
+if (selectOption == "删除会话")
+{
     var selectSession = AnsiConsole.Prompt(
         new SelectionPrompt<string>()
-            .Title("创建新会话或者打开已有会话")
-            .PageSize(10)
-            .MoreChoicesText("[grey](向上或向下移动以显示更多会话)[/]")
-            .AddChoices(prompts));
+            .Title("选择需要删除的会话")
+            .AddChoices(sessions.Select(p => p.Id)));
 
-    if (selectSession != "创建新会话")
-    {
-        selectSessionId = selectSession;
-    }
-    else
-    {
-        // 创建会话.
-        var newSession = await client.CreateNewSessionAsync(sysPrompt);
-        AnsiConsole.MarkupLine($"[grey]已创建会话: {newSession.Id}[/]");
-        selectSessionId = newSession.Id;
-    }
+    await client.RemoveSessionAsync(selectSession);
+    goto start;
 }
-else
+else if (selectOption == "继续会话")
+{
+    selectSessionId = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("选择需要继续的会话")
+            .AddChoices(sessions.Select(p => p.Id)));
+}
+
+if (string.IsNullOrEmpty(selectSessionId))
 {
     // 创建会话.
-    var newSession = await client.CreateNewSessionAsync(sysPrompt);
+    var newSession = await client.CreateNewSessionAsync();
     AnsiConsole.MarkupLine($"[grey]已创建会话: {newSession.Id}[/]");
     selectSessionId = newSession.Id;
 }
