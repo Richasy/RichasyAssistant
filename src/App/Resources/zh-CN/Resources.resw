@@ -117,14 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessKey" xml:space="preserve">
+    <value>访问密钥</value>
+  </data>
+  <data name="AccessKeyPlaceholderText" xml:space="preserve">
+    <value>访问服务的密钥</value>
+  </data>
   <data name="AppInTrayTip" xml:space="preserve">
     <value>小幻助理已隐藏在后台，需要时可以在任务栏托盘中打开</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>小幻助理</value>
   </data>
+  <data name="AzureOpenAITip" xml:space="preserve">
+    <value>如果你正在使用 Azure Open AI，请在部署模型后填写下面的表单，应用会使用 Azure Open AI 作为你的默认 AI 服务</value>
+  </data>
+  <data name="ChatModelName" xml:space="preserve">
+    <value>对话模型名称</value>
+  </data>
+  <data name="ChatModelPlaceholderText" xml:space="preserve">
+    <value>部署的对话模型名称</value>
+  </data>
   <data name="CreateLibrary" xml:space="preserve">
     <value>创建存储库</value>
+  </data>
+  <data name="EmbeddingModelName" xml:space="preserve">
+    <value>嵌入模型名称</value>
+  </data>
+  <data name="EmbeddingModelPlaceholderText" xml:space="preserve">
+    <value>部署的嵌入模型名称</value>
+  </data>
+  <data name="Endpoint" xml:space="preserve">
+    <value>终结点</value>
+  </data>
+  <data name="EndpointPlaceholderText" xml:space="preserve">
+    <value>访问接口的地址</value>
   </data>
   <data name="FolderMustEmpty" xml:space="preserve">
     <value>您必须选择一个空文件夹</value>
@@ -138,14 +165,35 @@
   <data name="NextStep" xml:space="preserve">
     <value>下一步</value>
   </data>
+  <data name="OpenAITip" xml:space="preserve">
+    <value>如果你正在使用 Open AI，请在填写下面的表单，应用会使用 Open AI 作为你的默认 AI 服务</value>
+  </data>
   <data name="OpenLibrary" xml:space="preserve">
     <value>打开存储库</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>组织（选填）</value>
+  </data>
+  <data name="OrganizationPlaceholderText" xml:space="preserve">
+    <value>填写组织名称</value>
+  </data>
+  <data name="ProxyEndpoint" xml:space="preserve">
+    <value>代理终结点（选填）</value>
+  </data>
+  <data name="ProxyEndpointPlaceholderText" xml:space="preserve">
+    <value>填写可信的代理服务地址</value>
   </data>
   <data name="QuitApp" xml:space="preserve">
     <value>退出应用</value>
   </data>
   <data name="Skip" xml:space="preserve">
     <value>跳过</value>
+  </data>
+  <data name="TextCompletionModelName" xml:space="preserve">
+    <value>文本完成模型名称</value>
+  </data>
+  <data name="TextCompletionModelPlaceholderText" xml:space="preserve">
+    <value>部署的文本完成模型名称</value>
   </data>
   <data name="WelcomeDescription" xml:space="preserve">
     <value>在开始使用前，请跟随我一起做一些简单的配置吧！</value>

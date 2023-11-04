@@ -11,21 +11,6 @@ namespace RichasyAssistant.App.ViewModels.Views;
 /// </summary>
 public sealed partial class WelcomePageViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private int _currentStep;
-
-    [ObservableProperty]
-    private int _stepCount;
-
-    [ObservableProperty]
-    private bool _isFREStep;
-
-    [ObservableProperty]
-    private bool _isLibraryStep;
-
-    [ObservableProperty]
-    private bool _isAIStep;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="WelcomePageViewModel"/> class.
     /// </summary>
@@ -34,16 +19,17 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         StepCount = 3;
         CurrentStep = 0;
         CheckStep();
+        CheckKernelType();
     }
 
-    /// <summary>
-    /// 实例.
-    /// </summary>
-    public static WelcomePageViewModel Instance { get; } = new();
-
     [RelayCommand]
-    private static void Restart()
+    private async Task RestartAsync()
     {
+        if (CurrentStep >= 2)
+        {
+            await AppViewModel.ResetSecretsAsync();
+        }
+
         SettingsToolkit.WriteLocalSetting(SettingNames.SkipWelcome, true);
         Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().UnregisterKey();
         Application.Current.Exit();
@@ -56,7 +42,7 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void GoNext()
+    private async Task GoNextAsync()
     {
         if (CurrentStep < StepCount - 1)
         {
@@ -64,7 +50,7 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         }
         else
         {
-            Restart();
+            await RestartAsync();
         }
     }
 
@@ -82,7 +68,7 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
             }
 
             SettingsToolkit.WriteLocalSetting(SettingNames.LibraryFolderPath, folder.Path);
-            GoNext();
+            await GoNextAsync();
         }
     }
 
@@ -97,11 +83,12 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
             if (!File.Exists(secretFilePath))
             {
                 // 没有可用的配置文件，仍需要完成剩余配置.
-                GoNext();
+                await GoNextAsync();
             }
             else
             {
-                Restart();
+                await AppViewModel.RetrieveSecretsAsync();
+                await RestartAsync();
             }
         }
     }
@@ -113,6 +100,15 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         IsAIStep = CurrentStep == 2;
     }
 
+    private void CheckKernelType()
+    {
+        IsAzureOpenAI = KernelType == KernelType.AzureOpenAI;
+        IsOpenAI = KernelType == KernelType.OpenAI;
+    }
+
     partial void OnCurrentStepChanged(int value)
         => CheckStep();
+
+    partial void OnKernelTypeChanged(KernelType value)
+        => CheckKernelType();
 }

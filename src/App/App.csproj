@@ -14,6 +14,8 @@
     <DefaultLanguage>zh-CN</DefaultLanguage>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\Database\chat.db" />
+    <Content Remove="Assets\Database\secret.db" />
     <Content Remove="Assets\FolderOpen.json" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +98,12 @@
     <Page Update="Controls\CardPanel\CardPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <None Update="Assets\Database\chat.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Database\secret.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

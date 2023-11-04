@@ -7,6 +7,7 @@
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:lottie="using:CommunityToolkit.WinUI.Lottie"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -24,6 +25,13 @@
             <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
+        <DataTemplate x:Key="InputHeaderTemplate">
+            <TextBlock
+                HorizontalAlignment="Left"
+                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{Binding}" />
+        </DataTemplate>
     </Page.Resources>
 
     <Grid>
@@ -44,6 +52,25 @@
                 Style="{StaticResource EmojiIconStyle}"
                 Visibility="{x:Bind ViewModel.IsLibraryStep, Mode=OneWay}">
                 <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="-20, 0, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
+            </FontIcon>
+            <FontIcon
+                Glyph="&#x1F916;"
+                Style="{StaticResource EmojiIconStyle}"
+                Visibility="{x:Bind ViewModel.IsAIStep, Mode=OneWay}">
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="-20, 0, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
                     <animations:OpacityAnimation
                         From="0"
                         To="1.0"
@@ -52,11 +79,13 @@
             </FontIcon>
         </Grid>
 
-        <Grid
-            Grid.Column="1"
-            Padding="0,0,32,0"
-            VerticalAlignment="Center">
-            <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsFREStep, Mode=OneWay}">
+        <Grid Grid.Column="1" VerticalAlignment="Center">
+
+            <!--  初始  -->
+            <StackPanel
+                Margin="0,0,32,0"
+                Spacing="20"
+                Visibility="{x:Bind ViewModel.IsFREStep, Mode=OneWay}">
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{ext:Locale Name=WelcomeTitle}" />
                 <TextBlock Style="{StaticResource DescriptionTextStyle}" Text="{ext:Locale Name=WelcomeDescription}" />
 
@@ -71,7 +100,12 @@
                         Duration="0:0:0.5" />
                 </animations:Implicit.ShowAnimations>
             </StackPanel>
-            <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsLibraryStep, Mode=OneWay}">
+
+            <!--  存储库  -->
+            <StackPanel
+                Margin="0,0,32,0"
+                Spacing="20"
+                Visibility="{x:Bind ViewModel.IsLibraryStep, Mode=OneWay}">
                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{ext:Locale Name=LibraryChooseTitle}" />
                 <TextBlock Style="{StaticResource DescriptionTextStyle}" Text="{ext:Locale Name=LibraryChooseDescription}" />
                 <StackPanel
@@ -89,6 +123,115 @@
                         Command="{x:Bind ViewModel.OpenLibraryCommand}"
                         Content="{ext:Locale Name=OpenLibrary}" />
                 </StackPanel>
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="20, 0, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
+            </StackPanel>
+
+            <!--  AI配置  -->
+            <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsAIStep, Mode=OneWay}">
+                <labs:Segmented
+                    x:Name="AIPicker"
+                    Margin="0,0,32,0"
+                    HorizontalAlignment="Center"
+                    SelectionChanged="OnAIPickerSelectionChanged">
+                    <labs:SegmentedItem Content="Azure Open AI" />
+                    <labs:SegmentedItem Content="Open AI" />
+                </labs:Segmented>
+
+                <ScrollViewer
+                    Height="260"
+                    Padding="0,0,32,0"
+                    Style="{StaticResource PageScrollViewerStyle}">
+                    <Grid>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureOpenAI, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=AzureOpenAITip}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AccessKey}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                Password="{x:Bind ViewModel.AzureOpenAIAccessKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=Endpoint}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureOpenAIEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=ChatModelName}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=ChatModelPlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureOpenAIChatModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=EmbeddingModelName}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=EmbeddingModelPlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureOpenAIEmbeddingModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=TextCompletionModelName}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=TextCompletionModelPlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureOpenAICompletionModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsOpenAI, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=OpenAITip}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AccessKey}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                Password="{x:Bind ViewModel.OpenAIAccessKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=ProxyEndpoint}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=ProxyEndpointPlaceholderText}"
+                                Text="{x:Bind ViewModel.OpenAICustomEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=Organization}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=OrganizationPlaceholderText}"
+                                Text="{x:Bind ViewModel.OpenAIOrganization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=ChatModelName}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=ChatModelPlaceholderText}"
+                                Text="{x:Bind ViewModel.OpenAIChatModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=EmbeddingModelName}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=EmbeddingModelPlaceholderText}"
+                                Text="{x:Bind ViewModel.OpenAIEmbeddingModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=TextCompletionModelName}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=TextCompletionModelPlaceholderText}"
+                                Text="{x:Bind ViewModel.OpenAICompletionModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
 
                 <animations:Implicit.ShowAnimations>
                     <animations:TranslationAnimation

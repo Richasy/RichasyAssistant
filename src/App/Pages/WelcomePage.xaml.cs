@@ -18,6 +18,20 @@ public sealed partial class WelcomePage : WelcomePageBase
         InitializeComponent();
         ViewModel = WelcomePageViewModel.Instance;
     }
+
+    /// <inheritdoc/>
+    protected override void OnPageLoaded()
+        => AIPicker.SelectedIndex = (int)ViewModel.KernelType;
+
+    private void OnAIPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded)
+        {
+            return;
+        }
+
+        ViewModel.KernelType = (KernelType)AIPicker.SelectedIndex;
+    }
 }
 
 /// <summary>
