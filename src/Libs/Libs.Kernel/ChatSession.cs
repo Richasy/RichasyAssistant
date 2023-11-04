@@ -22,8 +22,9 @@ public sealed partial class ChatSession
     public ChatSession(string systemPrompt, SessionOptions options)
     {
         _messages = new List<ChatMessage>();
-        _requestSettings = options;
         SessionId = Guid.NewGuid().ToString("N");
+        options.SessionId = SessionId;
+        _requestSettings = options;
 
         if (!string.IsNullOrEmpty(systemPrompt))
         {
@@ -36,11 +37,12 @@ public sealed partial class ChatSession
     /// </summary>
     public ChatSession(
         string sessionId,
+        string title,
         List<ChatMessage> messages,
         SessionOptions options)
     {
         SessionId = sessionId;
-        _messages = messages;
+        Title = title;
         UpdateHistory(messages);
         UpdateOptions(options);
     }
@@ -51,11 +53,40 @@ public sealed partial class ChatSession
     public string SessionId { get; }
 
     /// <summary>
+    /// 会话标题.
+    /// </summary>
+    public string Title { get; set; }
+
+    /// <summary>
     /// 添加新消息.
     /// </summary>
     /// <param name="message">消息内容.</param>
     public void AddMessage(ChatMessage message)
-        => _messages.Add(message);
+    {
+        if (message.Role == ChatMessageRole.System)
+        {
+            var firstMsg = _messages.FirstOrDefault();
+            if (firstMsg?.Role == ChatMessageRole.System)
+            {
+                firstMsg.Content = message.Content;
+            }
+            else
+            {
+                _messages.Insert(0, message);
+            }
+        }
+        else
+        {
+            _messages.Add(message);
+        }
+    }
+
+    /// <summary>
+    /// 移除消息.
+    /// </summary>
+    /// <param name="messageId">消息 Id.</param>
+    public void RemoveMessage(string messageId)
+        => _messages.RemoveAll(p => p.Id == messageId);
 
     /// <summary>
     /// 更新系统提示.
@@ -82,7 +113,10 @@ public sealed partial class ChatSession
     /// </summary>
     /// <param name="options">设置.</param>
     public void UpdateOptions(SessionOptions options)
-        => _requestSettings = options;
+    {
+        options.SessionId = SessionId;
+        _requestSettings = options;
+    }
 
     /// <summary>
     /// 更新历史记录.
@@ -142,10 +176,12 @@ public sealed partial class ChatSession
     {
         return new SessionPayload
         {
-            SessionId = SessionId,
+            Id = SessionId,
+            Title = Title ?? string.Empty,
             Messages = _messages ?? new List<ChatMessage>(),
             Options = _requestSettings ?? new SessionOptions
             {
+                SessionId = SessionId,
                 TopP = GlobalSettings.TryGet<double>(SettingNames.DefaultTopP),
                 Temperature = GlobalSettings.TryGet<double>(SettingNames.DefaultTemperature),
                 MaxResponseTokens = GlobalSettings.TryGet<int>(SettingNames.DefaultMaxResponseTokens),

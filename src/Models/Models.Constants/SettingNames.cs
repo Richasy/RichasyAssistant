@@ -26,4 +26,9 @@ public enum SettingNames
     OpenAIChatModelName,
     OpenAIEmbeddingModelName,
     OpenAICompletionModelName,
+
+    LibraryFolderPath,
+    DefaultChatDbPath,
+
+    IsAutoGenerateSessionTitle,
 }
