@@ -1,4 +1,4 @@
-﻿// Copyright (c) Reader Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Text.Json;
 using RichasyAssistant.Libs.Kernel;
