@@ -22,6 +22,7 @@ public sealed partial class ChatClient : IDisposable
     {
         _sessions = new List<ChatSession>();
         _prompts = new List<SystemPrompt>();
+        _coreFunctions = new Dictionary<string, ISKFunction>();
     }
 
     /// <summary>

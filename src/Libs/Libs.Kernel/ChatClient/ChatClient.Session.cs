@@ -219,6 +219,22 @@ public sealed partial class ChatClient
         await UpdateCurrentSessionPayloadAsync();
     }
 
+    /// <summary>
+    /// 更新当前会话标题.
+    /// </summary>
+    /// <param name="title">标题.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    public async Task UpdateSessionTitleAsync(string title, string sessionId = null)
+    {
+        var session = (string.IsNullOrEmpty(sessionId)
+            ? GetCurrentSession()
+            : _sessions.FirstOrDefault(p => p.SessionId == sessionId))
+            ?? throw new KernelException(KernelExceptionType.ChatSessionNotFound);
+
+        session.Title = title;
+        await UpdateCurrentSessionPayloadAsync();
+    }
+
     private async Task UpdateCurrentSessionPayloadAsync()
     {
         var session = GetCurrentSession();

@@ -36,6 +36,9 @@ if (!Directory.Exists(libPath))
 GlobalSettings.Set(SettingNames.LibraryFolderPath, libPath);
 GlobalSettings.Set(SettingNames.DefaultChatDbPath, localChatDbPath);
 
+// 配置是否自动生成会话标题.
+GlobalSettings.Set(SettingNames.IsAutoGenerateSessionTitle, true);
+
 /**************************************************
  ** 以下代码为控制台程序的UI渲染流程.
  ***************************************************/
@@ -61,6 +64,10 @@ AnsiConsole.MarkupLine("[grey]已创建聊天客户端[/]");
 await client.InitializeLocalDatabaseAsync();
 AnsiConsole.MarkupLine("[grey]已初始化聊天数据库[/]");
 
+// 初始化插件.
+client.InitializeCorePlugins();
+AnsiConsole.MarkupLine("[grey]已初始化内部插件[/]");
+
 // 获取已有会话，并初始化选项.
 start: var sessions = client.GetSessions();
 var options = new List<string> { "新会话", "提示词管理" };
@@ -79,19 +86,22 @@ var selectSessionId = string.Empty;
 if (selectOption == "删除会话")
 {
     var selectSession = AnsiConsole.Prompt(
-        new SelectionPrompt<string>()
+        new SelectionPrompt<SessionPayload>()
             .Title("选择需要删除的会话")
-            .AddChoices(sessions.Select(p => p.Id)));
+            .AddChoices(sessions)
+            .UseConverter(p => string.IsNullOrEmpty(p.Title) ? p.Id : p.Title));
 
-    await client.RemoveSessionAsync(selectSession);
+    await client.RemoveSessionAsync(selectSession.Id);
     goto start;
 }
 else if (selectOption == "继续会话")
 {
-    selectSessionId = AnsiConsole.Prompt(
-        new SelectionPrompt<string>()
+    var selectSession = AnsiConsole.Prompt(
+        new SelectionPrompt<SessionPayload>()
             .Title("选择需要继续的会话")
-            .AddChoices(sessions.Select(p => p.Id)));
+            .AddChoices(sessions)
+            .UseConverter(p => string.IsNullOrEmpty(p.Title) ? p.Id : p.Title));
+    selectSessionId = selectSession.Id;
 }
 else if (selectOption == "提示词管理")
 {
@@ -138,8 +148,9 @@ if (string.IsNullOrEmpty(selectSessionId))
 {
     // 选择提示词.
     var prompts = client.GetPrompts();
+    prompts.Insert(0, new SystemPrompt("无", string.Empty));
     var systemPrompt = string.Empty;
-    if (prompts.Count > 0)
+    if (prompts.Count > 1)
     {
         var prompt = AnsiConsole.Prompt(
                        new SelectionPrompt<SystemPrompt>()
@@ -147,8 +158,11 @@ if (string.IsNullOrEmpty(selectSessionId))
                           .AddChoices(prompts)
                           .UseConverter(p => p.Name));
 
-        AnsiConsole.MarkupLine($"[grey]已选择提示词: {prompt.Name}[/]");
-        systemPrompt = prompt.Prompt;
+        if (prompt.Name != "无")
+        {
+            AnsiConsole.MarkupLine($"[grey]已选择提示词: {prompt.Name}[/]");
+            systemPrompt = prompt.Prompt;
+        }
     }
 
     // 创建会话.
@@ -187,8 +201,21 @@ foreach (var message in messages)
 
 // 轮询.
 var needExit = false;
+var session = client.GetSession(selectSessionId);
+var needGenerateTitle = GlobalSettings.TryGet<bool>(SettingNames.IsAutoGenerateSessionTitle)
+    && string.IsNullOrEmpty(session.Title);
 while (!needExit)
 {
+    if (needGenerateTitle)
+    {
+        var title = await client.TryGenerateTitleAsync();
+        if (!string.IsNullOrEmpty(title))
+        {
+            AnsiConsole.MarkupLine($"[grey]会话标题已更新为: {title.EscapeMarkup()}[/]");
+            needGenerateTitle = false;
+        }
+    }
+
     var message = AnsiConsole.Ask<string>("[purple_1]我: [/]");
 
     if (message == "exit")

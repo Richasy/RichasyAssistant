@@ -29,4 +29,6 @@ public enum SettingNames
 
     LibraryFolderPath,
     DefaultChatDbPath,
+
+    IsAutoGenerateSessionTitle,
 }
