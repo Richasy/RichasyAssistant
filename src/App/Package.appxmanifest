@@ -48,10 +48,18 @@
         </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\Logo\SplashScreen.png"  BackgroundColor="#FFFFFF"/>
       </uap:VisualElements>
+      <Extensions>
+          <uap:Extension Category="windows.protocol">
+              <uap:Protocol Name="ricass" DesiredView="useLess" />
+          </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient"/>
+    <Capability Name="internetClientServer"/>
+    <Capability Name="privateNetworkClientServer"/>
   </Capabilities>
 </Package>

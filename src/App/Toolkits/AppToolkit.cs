@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Globalization;
+using System.Text;
 using Windows.ApplicationModel;
 using Windows.UI;
 
@@ -71,5 +72,27 @@ public static class AppToolkit
         color.A = 255;
 
         return color;
+    }
+
+    /// <summary>
+    /// Base64编码.
+    /// </summary>
+    /// <returns>Base64 text.</returns>
+    public static string Base64Encode(string text)
+    {
+        var bytes = Encoding.UTF8.GetBytes(text);
+        var base64String = Convert.ToBase64String(bytes);
+        return base64String;
+    }
+
+    /// <summary>
+    /// Base64解码.
+    /// </summary>
+    /// <returns>Text.</returns>
+    public static string Base64Decode(string text)
+    {
+        var bytes = Convert.FromBase64String(text);
+        var decodeText = Encoding.UTF8.GetString(bytes);
+        return decodeText;
     }
 }

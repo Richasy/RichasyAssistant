@@ -29,19 +29,28 @@
                 x:Name="Pager"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                NumberOfPages="4"
-                SelectedPageIndex="1" />
+                NumberOfPages="{x:Bind _viewModel.StepCount, Mode=OneWay}"
+                SelectedPageIndex="{x:Bind _viewModel.CurrentStep, Mode=TwoWay}" />
             <StackPanel
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Orientation="Horizontal"
                 Spacing="12">
-                <Button MinWidth="120" Content="{ext:Locale Name=Skip}" />
                 <Button
                     MinWidth="120"
+                    Command="{x:Bind _viewModel.RestartCommand}"
+                    Content="{ext:Locale Name=Skip}" />
+                <Button
+                    MinWidth="120"
+                    Command="{x:Bind _viewModel.GoNextCommand, Mode=OneWay}"
                     Content="{ext:Locale Name=NextStep}"
                     Style="{StaticResource AccentButtonStyle}" />
             </StackPanel>
         </Grid>
+
+        <Grid
+            x:Name="TipContainer"
+            Grid.RowSpan="2"
+            Visibility="Collapsed" />
     </Grid>
 </local:WindowBase>

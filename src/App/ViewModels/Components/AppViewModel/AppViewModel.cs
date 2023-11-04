@@ -65,6 +65,14 @@ public sealed partial class AppViewModel : ViewModelBase
     public void ShowTip(string message, InfoType type = InfoType.Information)
         => RequestShowTip?.Invoke(this, new AppTipNotification(message, type, ActivatedWindow));
 
+    /// <summary>
+    /// 显示提示.
+    /// </summary>
+    /// <param name="messageName">提示内容.</param>
+    /// <param name="type">提示类型.</param>
+    public void ShowTip(StringNames messageName, InfoType type = InfoType.Information)
+        => RequestShowTip?.Invoke(this, new AppTipNotification(ResourceToolkit.GetLocalizedString(messageName), type, ActivatedWindow));
+
     private static void UpdateGlobalSetting<T>(SettingNames name, T defaultValue)
     {
         var setting = SettingsToolkit.ReadLocalSetting(name, defaultValue);

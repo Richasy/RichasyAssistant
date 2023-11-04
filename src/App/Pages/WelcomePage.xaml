@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Page
+<local:WelcomePageBase
     x:Class="RichasyAssistant.App.Pages.WelcomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
     xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:lottie="using:CommunityToolkit.WinUI.Lottie"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="EmojiIconStyle" TargetType="FontIcon">
+            <Setter Property="FontFamily" Value="Segoe UI Emoji" />
+            <Setter Property="FontSize" Value="160" />
+        </Style>
+        <Style
+            x:Key="DescriptionTextStyle"
+            BasedOn="{StaticResource BodyTextBlockStyle}"
+            TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,18 +37,70 @@
                 Width="200"
                 PlaceholderStretch="Uniform"
                 Source="ms-appx:///Assets/logo.png"
-                Stretch="Uniform" />
+                Stretch="Uniform"
+                Visibility="{x:Bind ViewModel.IsFREStep, Mode=OneWay}" />
+            <FontIcon
+                Glyph="&#x1F4C1;"
+                Style="{StaticResource EmojiIconStyle}"
+                Visibility="{x:Bind ViewModel.IsLibraryStep, Mode=OneWay}">
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
+            </FontIcon>
         </Grid>
 
-        <Grid Grid.Column="1" VerticalAlignment="Center">
-            <StackPanel Spacing="20">
-                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="欢迎使用 小幻助理" />
-                <TextBlock
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    Text="在开始使用前，请跟随我一起做一些简单的配置吧！"
-                    TextWrapping="Wrap" />
+        <Grid
+            Grid.Column="1"
+            Padding="0,0,32,0"
+            VerticalAlignment="Center">
+            <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsFREStep, Mode=OneWay}">
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{ext:Locale Name=WelcomeTitle}" />
+                <TextBlock Style="{StaticResource DescriptionTextStyle}" Text="{ext:Locale Name=WelcomeDescription}" />
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="0, 20, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
+            </StackPanel>
+            <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsLibraryStep, Mode=OneWay}">
+                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{ext:Locale Name=LibraryChooseTitle}" />
+                <TextBlock Style="{StaticResource DescriptionTextStyle}" Text="{ext:Locale Name=LibraryChooseDescription}" />
+                <StackPanel
+                    Margin="0,12,0,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    Spacing="12">
+                    <Button
+                        MinWidth="120"
+                        Command="{x:Bind ViewModel.CreateLibraryCommand}"
+                        Content="{ext:Locale Name=CreateLibrary}"
+                        Style="{StaticResource AccentButtonStyle}" />
+                    <Button
+                        MinWidth="120"
+                        Command="{x:Bind ViewModel.OpenLibraryCommand}"
+                        Content="{ext:Locale Name=OpenLibrary}" />
+                </StackPanel>
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="20, 0, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
             </StackPanel>
         </Grid>
     </Grid>
-</Page>
+</local:WelcomePageBase>

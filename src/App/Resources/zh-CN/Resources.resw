@@ -123,13 +123,34 @@
   <data name="AppName" xml:space="preserve">
     <value>小幻助理</value>
   </data>
+  <data name="CreateLibrary" xml:space="preserve">
+    <value>创建存储库</value>
+  </data>
+  <data name="FolderMustEmpty" xml:space="preserve">
+    <value>您必须选择一个空文件夹</value>
+  </data>
+  <data name="LibraryChooseDescription" xml:space="preserve">
+    <value>选择一个空白文件夹作为聊天记录、提示词列表等应用数据的存储库。你也可以打开一个已有的存储库以跳过初始配置</value>
+  </data>
+  <data name="LibraryChooseTitle" xml:space="preserve">
+    <value>选择一个存储库</value>
+  </data>
   <data name="NextStep" xml:space="preserve">
     <value>下一步</value>
+  </data>
+  <data name="OpenLibrary" xml:space="preserve">
+    <value>打开存储库</value>
   </data>
   <data name="QuitApp" xml:space="preserve">
     <value>退出应用</value>
   </data>
   <data name="Skip" xml:space="preserve">
     <value>跳过</value>
+  </data>
+  <data name="WelcomeDescription" xml:space="preserve">
+    <value>在开始使用前，请跟随我一起做一些简单的配置吧！</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>欢迎使用小幻助理</value>
   </data>
 </root>
