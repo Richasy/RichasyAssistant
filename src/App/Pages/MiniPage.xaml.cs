@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using RichasyAssistant.App.Controls;
+using RichasyAssistant.App.Controls.Items;
+using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.App.ViewModels.Views;
 
 namespace RichasyAssistant.App.Pages;
@@ -22,6 +24,18 @@ public sealed partial class MiniPage : MiniPageBase
     /// <inheritdoc/>
     protected override void OnPageLoaded()
         => ViewModel.InitializeCommand.Execute(default);
+
+    private void OnDeleteItemClick(object sender, RoutedEventArgs e)
+    {
+        var vm = (sender as FrameworkElement).DataContext as ChatSessionItemViewModel;
+        ViewModel.DeleteSessionCommand.Execute(vm);
+    }
+
+    private void OnItemClick(object sender, EventArgs e)
+    {
+        var vm = (sender as ChatSessionItem).ViewModel;
+        ViewModel.OpenSessionCommand.Execute(vm);
+    }
 }
 
 /// <summary>

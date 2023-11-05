@@ -18,7 +18,7 @@
             Margin="0,0,0,12"
             HorizontalAlignment="Center"
             FontFamily="Segoe UI Emoji"
-            FontSize="50"
+            FontSize="40"
             Glyph="{x:Bind Emoji, Mode=OneWay}" />
         <TextBlock
             Margin="0,0,0,8"

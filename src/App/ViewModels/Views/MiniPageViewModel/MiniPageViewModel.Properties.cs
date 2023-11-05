@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Collections.ObjectModel;
+using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.App.ViewModels.Items;
 
 namespace RichasyAssistant.App.ViewModels.Views;
@@ -25,13 +25,24 @@ public sealed partial class MiniPageViewModel
     [ObservableProperty]
     private bool _isInitialized;
 
+    [ObservableProperty]
+    private bool _isInSession;
+
+    [ObservableProperty]
+    private string _errorText;
+
     /// <summary>
     /// 实例.
     /// </summary>
     public static MiniPageViewModel Instance { get; } = new MiniPageViewModel();
 
     /// <summary>
+    /// 会话.
+    /// </summary>
+    public ChatSessionViewModel Session { get; }
+
+    /// <summary>
     /// 近期会话.
     /// </summary>
-    public ObservableCollection<SessionItemViewModel> RecentSessions { get; }
+    public ObservableCollection<ChatSessionItemViewModel> RecentSessions { get; }
 }

@@ -37,6 +37,11 @@ public sealed partial class ChatClient : IDisposable
     /// <returns><see cref="Task"/>.</returns>
     public async Task InitializeLocalDatabaseAsync()
     {
+        if (GlobalVariables.TryGet<ChatDbContext>(VariableNames.ChatDbContext) != null)
+        {
+            return;
+        }
+
         var libPath = GlobalSettings.TryGet<string>(SettingNames.LibraryFolderPath);
         if (string.IsNullOrEmpty(libPath))
         {

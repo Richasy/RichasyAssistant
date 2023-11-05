@@ -7,7 +7,7 @@ namespace RichasyAssistant.App.ViewModels.Items;
 /// <summary>
 /// 会话项视图模型.
 /// </summary>
-public sealed partial class SessionItemViewModel : ViewModelBase
+public sealed partial class ChatSessionItemViewModel : ViewModelBase
 {
     [ObservableProperty]
     private FluentSymbol _icon;
@@ -24,10 +24,10 @@ public sealed partial class SessionItemViewModel : ViewModelBase
     private SessionPayload _payload;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SessionItemViewModel"/> class.
+    /// Initializes a new instance of the <see cref="ChatSessionItemViewModel"/> class.
     /// </summary>
     /// <param name="payload">会话数据.</param>
-    public SessionItemViewModel(SessionPayload payload)
+    public ChatSessionItemViewModel(SessionPayload payload)
         => Update(payload);
 
     /// <summary>
@@ -50,6 +50,12 @@ public sealed partial class SessionItemViewModel : ViewModelBase
     /// <returns>会话数据.</returns>
     public SessionPayload GetData()
         => _payload;
+
+    /// <inheritdoc/>
+    public override bool Equals(object obj) => obj is ChatSessionItemViewModel model && EqualityComparer<SessionPayload>.Default.Equals(_payload, model._payload);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => HashCode.Combine(_payload);
 
     private static string GetDefaultTitle(SessionPayload payload)
     {
@@ -82,5 +88,5 @@ public sealed partial class SessionItemViewModel : ViewModelBase
     /// <param name="payload">会话数据.</param>
     /// <returns><see cref="ChatMessage"/>.</returns>
     private static ChatMessage GetLastMessage(SessionPayload payload)
-        => payload.Messages.OrderByDescending(p => p.Time).LastOrDefault();
+        => payload.Messages.OrderByDescending(p => p.Time).FirstOrDefault();
 }

@@ -38,6 +38,11 @@ public enum KernelExceptionType
     GenerateChatResponseFailed,
 
     /// <summary>
+    /// 聊天响应已取消.
+    /// </summary>
+    ChatResponseCancelled,
+
+    /// <summary>
     /// 聊天响应为空.
     /// </summary>
     EmptyChatResponse,

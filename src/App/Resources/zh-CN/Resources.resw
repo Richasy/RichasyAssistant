@@ -168,17 +168,29 @@
   <data name="AzureWhisperTip" xml:space="preserve">
     <value>如果你正在使用 Azure Open AI Whisper（耳语）服务，请在模型部署完成后填写下面的表单，应用将通过耳语服务提供语音转文本功能</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
   <data name="BaiduTranslate" xml:space="preserve">
     <value>百度翻译</value>
   </data>
   <data name="BaiduTranslateTip" xml:space="preserve">
     <value>如果你注册了百度翻译开放平台，请将你的应用信息填入下面的表单，应用会使用 百度翻译 作为你的默认翻译服务</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ChatInvalidConfiguration" xml:space="preserve">
+    <value>聊天服务配置无效</value>
+  </data>
   <data name="ChatModelName" xml:space="preserve">
     <value>对话模型名称</value>
   </data>
   <data name="ChatModelPlaceholderText" xml:space="preserve">
     <value>部署的对话模型名称</value>
+  </data>
+  <data name="ClearMessage" xml:space="preserve">
+    <value>清空消息</value>
   </data>
   <data name="CreateLibrary" xml:space="preserve">
     <value>创建存储库</value>
@@ -191,6 +203,9 @@
   </data>
   <data name="EmbeddingModelPlaceholderText" xml:space="preserve">
     <value>部署的嵌入模型名称</value>
+  </data>
+  <data name="EmptyResponse" xml:space="preserve">
+    <value>响应为空</value>
   </data>
   <data name="Endpoint" xml:space="preserve">
     <value>终结点</value>
@@ -209,6 +224,12 @@
   </data>
   <data name="FolderMustEmpty" xml:space="preserve">
     <value>您必须选择一个空文件夹</value>
+  </data>
+  <data name="GenerateResponseCancelled" xml:space="preserve">
+    <value>已停止生成响应</value>
+  </data>
+  <data name="GenerateResponseFailed" xml:space="preserve">
+    <value>生成响应时出现异常</value>
   </data>
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
@@ -248,6 +269,9 @@
   </data>
   <data name="NoMessage" xml:space="preserve">
     <value>暂无消息</value>
+  </data>
+  <data name="NoMessageDescription" xml:space="preserve">
+    <value>在下方的文本框中输入内容发送消息吧！</value>
   </data>
   <data name="NoSession" xml:space="preserve">
     <value>暂无可用的会话</value>
@@ -297,6 +321,9 @@
   <data name="RegionPlaceholderText" xml:space="preserve">
     <value>服务所在地区</value>
   </data>
+  <data name="Resent" xml:space="preserve">
+    <value>重新发送</value>
+  </data>
   <data name="SearchByName" xml:space="preserve">
     <value>按名称搜索</value>
   </data>
@@ -309,6 +336,9 @@
   <data name="Skip" xml:space="preserve">
     <value>跳过</value>
   </data>
+  <data name="SomethingWrong" xml:space="preserve">
+    <value>出错了！</value>
+  </data>
   <data name="TextCompletionModelName" xml:space="preserve">
     <value>文本完成模型名称</value>
   </data>
@@ -317,6 +347,12 @@
   </data>
   <data name="Translate" xml:space="preserve">
     <value>文本翻译</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>发生了未知错误</value>
+  </data>
+  <data name="UserInputPlaceholderText" xml:space="preserve">
+    <value>输入消息</value>
   </data>
   <data name="WelcomeDescription" xml:space="preserve">
     <value>在开始使用前，请跟随我一起做一些简单的配置吧！</value>

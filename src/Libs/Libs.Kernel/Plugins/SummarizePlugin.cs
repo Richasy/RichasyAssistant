@@ -22,11 +22,11 @@ public sealed class SummarizePlugin
         You are a title generator. You will get the first chat message in the chat history, please generate a title for this conversation,
         which must be concise and express the core meaning of the first chat message.
 
-        Need response with {{$LANGUAGE}}.
+        Need response with {{$LANGUAGE}}, Try to keep it as simple as possible and don't require punctuation.
 
         EXAMPLE INPUT1:
 
-        I said: ""I will record a demo for the new feature by Friday""
+        I said: "I will record a demo for the new feature by Friday"
 
         EXAMPLE OUTPUT1:
 
@@ -34,11 +34,11 @@ public sealed class SummarizePlugin
 
         EXAMPLE INPUT2:
 
-        I said: ""Hey!""
+        I said: "Hey!"
 
         EXAMPLE OUTPUT2:
 
-        Say hello.
+        Say hello
 
         CONTENT STARTS HERE.
 

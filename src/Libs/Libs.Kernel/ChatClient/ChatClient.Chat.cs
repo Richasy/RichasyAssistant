@@ -16,13 +16,16 @@ public sealed partial class ChatClient
     /// 发送消息.
     /// </summary>
     /// <param name="message">消息.</param>
+    /// <param name="userMsgHandler">用户消息添加处理.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns>聊天信息.</returns>
-    public async Task<ChatMessage> SendMessageAsync(string message, CancellationToken cancellationToken = default)
+    public async Task<ChatMessage> SendMessageAsync(string message, Action<ChatMessage> userMsgHandler, CancellationToken cancellationToken = default)
     {
         var session = GetCurrentSession();
         var chat = GetChatCore();
-        session.AddMessage(new ChatMessage(ChatMessageRole.User, message));
+        var userMsg = new ChatMessage(ChatMessageRole.User, message);
+        session.AddMessage(userMsg);
+        userMsgHandler?.Invoke(userMsg);
         await UpdateCurrentSessionPayloadAsync();
 
         try
@@ -45,6 +48,11 @@ public sealed partial class ChatClient
         }
         catch (Exception ex)
         {
+            if (ex is TaskCanceledException)
+            {
+                throw new KernelException(KernelExceptionType.ChatResponseCancelled, ex);
+            }
+
             throw new KernelException(KernelExceptionType.GenerateChatResponseFailed, ex);
         }
     }
@@ -53,14 +61,17 @@ public sealed partial class ChatClient
     /// 发送消息，并接收流式响应.
     /// </summary>
     /// <param name="message">用户消息.</param>
+    /// <param name="userMsgHandler">用户消息添加处理.</param>
     /// <param name="streamHandler">流式消息处理.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns><see cref="ChatMessage"/>.</returns>
-    public async Task<ChatMessage> SendMessageAsync(string message, Action<string> streamHandler, CancellationToken cancellationToken = default)
+    public async Task<ChatMessage> SendMessageAsync(string message, Action<ChatMessage> userMsgHandler, Action<string> streamHandler, CancellationToken cancellationToken = default)
     {
         var session = GetCurrentSession();
         var chat = GetChatCore();
-        session.AddMessage(new ChatMessage(ChatMessageRole.User, message));
+        var userMsg = new ChatMessage(ChatMessageRole.User, message);
+        session.AddMessage(userMsg);
+        userMsgHandler?.Invoke(userMsg);
         await UpdateCurrentSessionPayloadAsync();
 
         var resMessage = string.Empty;
@@ -70,7 +81,7 @@ public sealed partial class ChatClient
             await foreach (var item in response)
             {
                 resMessage += item;
-                streamHandler(item);
+                streamHandler?.Invoke(item);
             }
 
             resMessage = resMessage.Trim();
@@ -86,6 +97,11 @@ public sealed partial class ChatClient
         }
         catch (Exception ex)
         {
+            if (ex is TaskCanceledException)
+            {
+                throw new KernelException(KernelExceptionType.ChatResponseCancelled, ex);
+            }
+
             throw new KernelException(KernelExceptionType.GenerateChatResponseFailed, ex);
         }
     }

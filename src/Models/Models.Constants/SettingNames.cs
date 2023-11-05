@@ -59,4 +59,5 @@ public enum SettingNames
     DefaultSpeech,
     DefaultImage,
     NeedHideWhenLaunch,
+    StreamOutput,
 }

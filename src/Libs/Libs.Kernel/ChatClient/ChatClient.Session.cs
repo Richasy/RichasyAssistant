@@ -101,8 +101,6 @@ public sealed partial class ChatClient
         };
 
         var newSession = new ChatSession(sysPrompt, options);
-        _sessions.Add(newSession);
-
         var payload = newSession.GetPayload();
         await AddOrUpdateSessionPayloadAsync(payload);
 
@@ -118,6 +116,11 @@ public sealed partial class ChatClient
         if (string.IsNullOrEmpty(sessionId))
         {
             throw new KernelException(KernelExceptionType.ChatSessionInvalid);
+        }
+
+        if (sessionId == _currentSessionId)
+        {
+            return;
         }
 
         _currentSessionId = sessionId;

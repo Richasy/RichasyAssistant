@@ -22,3 +22,4 @@ global using System.Threading.Tasks;
 global using CommunityToolkit.Mvvm.Input;
 global using Windows.Win32;
 global using Windows.Win32.Foundation;
+global using System.Collections.ObjectModel;
