@@ -12,9 +12,10 @@
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
         <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
-        <Setter Property="PointerOverBackground" Value="{ThemeResource CardBackgroundFillColorSecondaryBrush}" />
-        <Setter Property="PointerOverBorderBrush" Value="{ThemeResource SubtleFillColorTransparentBrush}" />
+        <Setter Property="PointerOverBackground" Value="{ThemeResource ControlFillColorSecondaryBrush}" />
+        <Setter Property="PointerOverBorderBrush" Value="{ThemeResource DividerStrokeColorDefaultBrush}" />
         <Setter Property="PressedBackground" Value="{ThemeResource CardBackgroundFillColorSecondaryBrush}" />
         <Setter Property="PressedBorderBrush" Value="{ThemeResource SubtleFillColorTransparentBrush}" />
         <Setter Property="DisabledBackground" Value="{ThemeResource ControlFillColorDisabledBrush}" />
@@ -62,6 +63,9 @@
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HostContainer" Storyboard.TargetProperty="Fill">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding Path=PointerOverBackground, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextFillColorPrimaryBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HostContainer" Storyboard.TargetProperty="Stroke">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding Path=PointerOverBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" />

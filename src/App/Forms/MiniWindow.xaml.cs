@@ -7,6 +7,7 @@ using Microsoft.Windows.AppNotifications.Builder;
 using RichasyAssistant.App.Controls;
 using RichasyAssistant.App.Pages;
 using RichasyAssistant.App.ViewModels.Components;
+using RichasyAssistant.App.ViewModels.Views;
 using RichasyAssistant.Models.App.Args;
 using Windows.ApplicationModel.Activation;
 
@@ -81,8 +82,9 @@ public sealed partial class MiniWindow : WindowBase, ITipWindow
         {
             var isFirstLaunch = SettingsToolkit.ReadLocalSetting(SettingNames.IsFirstLaunch, true);
             var isStartup = SettingsToolkit.ReadLocalSetting(SettingNames.IsStartupOpen, true);
+            var needHideWhenLaunch = SettingsToolkit.ReadLocalSetting(SettingNames.NeedHideWhenLaunch, false);
             _isFirstActivate = false;
-            if (!isFirstLaunch && isStartup)
+            if (!isFirstLaunch && isStartup && needHideWhenLaunch)
             {
                 await Task.Delay(600);
                 var notify = new AppNotificationBuilder()
@@ -93,10 +95,14 @@ public sealed partial class MiniWindow : WindowBase, ITipWindow
                 AppNotificationManager.Default.Show(notify);
                 this.Hide();
             }
-            else
+            else if (isFirstLaunch)
             {
                 SettingsToolkit.WriteLocalSetting(SettingNames.IsFirstLaunch, false);
             }
+        }
+        else if (MiniPageViewModel.Instance.IsInitialized)
+        {
+            MiniPageViewModel.Instance.InitializeCommand.Execute(default);
         }
     }
 

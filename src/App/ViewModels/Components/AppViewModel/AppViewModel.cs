@@ -83,7 +83,8 @@ public sealed partial class AppViewModel : ViewModelBase
         var localPath = Package.Current.InstalledPath;
         var localChatDbPath = Path.Combine(localPath, "Assets/Database/chat.db");
         var localSecretDbPath = Path.Combine(localPath, "Assets/Database/secret.db");
-        GlobalSettings.Set(SettingNames.LibraryFolderPath, string.Empty);
+        var libraryPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
+        GlobalSettings.Set(SettingNames.LibraryFolderPath, libraryPath);
         GlobalSettings.Set(SettingNames.DefaultChatDbPath, localChatDbPath);
         GlobalSettings.Set(SettingNames.DefaultSecretDbPath, localSecretDbPath);
     }

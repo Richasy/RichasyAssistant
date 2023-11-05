@@ -58,4 +58,5 @@ public enum SettingNames
     DefaultTranslate,
     DefaultSpeech,
     DefaultImage,
+    NeedHideWhenLaunch,
 }

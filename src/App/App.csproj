@@ -26,9 +26,14 @@
     <None Remove="Assets\Emoji\robot_3d.png" />
     <None Remove="Assets\Emoji\studio_microphone_3d.png" />
     <None Remove="Assets\FluentIcon.ttf" />
+    <None Remove="Assets\Icons\message.png" />
+    <None Remove="Assets\Icons\system_prompt.png" />
+    <None Remove="Assets\Icons\translate.png" />
     <None Remove="Assets\logo.ico" />
     <None Remove="Assets\logo.png" />
     <None Remove="Controls\EmptyHolder.xaml" />
+    <None Remove="Controls\Items\FeatureItem.xaml" />
+    <None Remove="Controls\Items\SessionItem.xaml" />
     <None Remove="Controls\LoadingOverlapper.xaml" />
     <None Remove="Controls\StatusTip.xaml" />
     <None Remove="Controls\TipPopup.xaml" />
@@ -110,6 +115,12 @@
     <None Update="Assets\Database\secret.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Items\SessionItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Items\FeatureItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Update="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

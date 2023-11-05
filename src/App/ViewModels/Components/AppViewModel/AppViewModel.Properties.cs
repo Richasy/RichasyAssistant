@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using RichasyAssistant.Libs.Kernel;
 using RichasyAssistant.Models.App.Args;
 
 namespace RichasyAssistant.App.ViewModels.Components;
@@ -31,4 +32,9 @@ public sealed partial class AppViewModel
     /// 迷你窗口对象.
     /// </summary>
     public Window MiniWindow { get; set; }
+
+    /// <summary>
+    /// 聊天客户端.
+    /// </summary>
+    public ChatClient ChatClient { get; set; }
 }
