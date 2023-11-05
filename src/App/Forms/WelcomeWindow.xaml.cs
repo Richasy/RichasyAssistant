@@ -43,4 +43,7 @@ public sealed partial class WelcomeWindow : WindowBase, ITipWindow
             TipContainer.Visibility = Visibility.Collapsed;
         }
     }
+
+    internal static Visibility IsNavButtonShown(bool isLastStep)
+        => isLastStep ? Visibility.Collapsed : Visibility.Visible;
 }

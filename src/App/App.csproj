@@ -19,6 +19,12 @@
     <Content Remove="Assets\FolderOpen.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\Emoji\framed_picture_3d.png" />
+    <None Remove="Assets\Emoji\globe_showing_asia-australia_3d.png" />
+    <None Remove="Assets\Emoji\open_file_folder_3d.png" />
+    <None Remove="Assets\Emoji\party_popper_3d.png" />
+    <None Remove="Assets\Emoji\robot_3d.png" />
+    <None Remove="Assets\Emoji\studio_microphone_3d.png" />
     <None Remove="Assets\FluentIcon.ttf" />
     <None Remove="Assets\logo.ico" />
     <None Remove="Assets\logo.png" />

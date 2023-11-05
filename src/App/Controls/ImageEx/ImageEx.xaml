@@ -9,7 +9,7 @@
         <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="local:ImageEx">
+    <Style x:Key="DefaultImageExStyle" TargetType="local:ImageEx">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="LazyLoadingThreshold" Value="300" />
@@ -100,4 +100,6 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style BasedOn="{StaticResource DefaultImageExStyle}" TargetType="local:ImageEx" />
 </ResourceDictionary>

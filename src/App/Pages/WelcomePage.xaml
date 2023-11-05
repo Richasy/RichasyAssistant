@@ -25,6 +25,14 @@
             <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
+        <Style
+            x:Key="HolderIconStyle"
+            BasedOn="{StaticResource DefaultImageExStyle}"
+            TargetType="controls:ImageEx">
+            <Setter Property="Width" Value="180" />
+            <Setter Property="PlaceholderStretch" Value="Uniform" />
+            <Setter Property="Stretch" Value="Uniform" />
+        </Style>
         <DataTemplate x:Key="InputHeaderTemplate">
             <TextBlock
                 HorizontalAlignment="Left"
@@ -43,40 +51,37 @@
         <Grid VerticalAlignment="Center">
             <controls:ImageEx
                 Width="200"
-                PlaceholderStretch="Uniform"
                 Source="ms-appx:///Assets/logo.png"
-                Stretch="Uniform"
+                Style="{StaticResource HolderIconStyle}"
                 Visibility="{x:Bind ViewModel.IsFREStep, Mode=OneWay}" />
-            <FontIcon
-                Glyph="&#x1F4C1;"
-                Style="{StaticResource EmojiIconStyle}"
-                Visibility="{x:Bind ViewModel.IsLibraryStep, Mode=OneWay}">
-                <animations:Implicit.ShowAnimations>
-                    <animations:TranslationAnimation
-                        From="-20, 0, 0"
-                        To="0,0,0"
-                        Duration="0:0:0.5" />
-                    <animations:OpacityAnimation
-                        From="0"
-                        To="1.0"
-                        Duration="0:0:0.5" />
-                </animations:Implicit.ShowAnimations>
-            </FontIcon>
-            <FontIcon
-                Glyph="&#x1F916;"
-                Style="{StaticResource EmojiIconStyle}"
-                Visibility="{x:Bind ViewModel.IsAIStep, Mode=OneWay}">
-                <animations:Implicit.ShowAnimations>
-                    <animations:TranslationAnimation
-                        From="-20, 0, 0"
-                        To="0,0,0"
-                        Duration="0:0:0.5" />
-                    <animations:OpacityAnimation
-                        From="0"
-                        To="1.0"
-                        Duration="0:0:0.5" />
-                </animations:Implicit.ShowAnimations>
-            </FontIcon>
+            <controls:ImageEx
+                Source="ms-appx:///Assets/Emoji/open_file_folder_3d.png"
+                Style="{StaticResource HolderIconStyle}"
+                Visibility="{x:Bind ViewModel.IsLibraryStep, Mode=OneWay}" />
+            <controls:ImageEx
+                Source="ms-appx:///Assets/Emoji/robot_3d.png"
+                Style="{StaticResource HolderIconStyle}"
+                Visibility="{x:Bind ViewModel.IsAIStep, Mode=OneWay}" />
+            <controls:ImageEx
+                Source="ms-appx:///Assets/Emoji/globe_showing_asia-australia_3d.png"
+                Style="{StaticResource HolderIconStyle}"
+                Visibility="{x:Bind ViewModel.IsTranslateStep, Mode=OneWay}" />
+            <controls:ImageEx
+                Source="ms-appx:///Assets/Emoji/studio_microphone_3d.png"
+                Style="{StaticResource HolderIconStyle}"
+                Visibility="{x:Bind ViewModel.IsSpeechStep, Mode=OneWay}" />
+            <controls:ImageEx
+                Source="ms-appx:///Assets/Emoji/framed_picture_3d.png"
+                Style="{StaticResource HolderIconStyle}"
+                Visibility="{x:Bind ViewModel.IsImageStep, Mode=OneWay}" />
+            <controls:ImageEx
+                Source="ms-appx:///Assets/Emoji/framed_picture_3d.png"
+                Style="{StaticResource HolderIconStyle}"
+                Visibility="{x:Bind ViewModel.IsImageStep, Mode=OneWay}" />
+            <controls:ImageEx
+                Source="ms-appx:///Assets/Emoji/party_popper_3d.png"
+                Style="{StaticResource HolderIconStyle}"
+                Visibility="{x:Bind ViewModel.IsLastStep, Mode=OneWay}" />
         </Grid>
 
         <Grid Grid.Column="1" VerticalAlignment="Center">
@@ -161,30 +166,32 @@
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=AccessKey}"
                                 HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                LostFocus="OnAIKeyBoxLostFocus"
                                 Password="{x:Bind ViewModel.AzureOpenAIAccessKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
                             <TextBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=Endpoint}"
                                 HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                LostFocus="OnAIKeyBoxLostFocus"
                                 PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
                                 Text="{x:Bind ViewModel.AzureOpenAIEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox
+                            <AutoSuggestBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=ChatModelName}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                ItemsSource="{x:Bind ViewModel.AzureOpenAIChatModelCollection}"
                                 PlaceholderText="{ext:Locale Name=ChatModelPlaceholderText}"
                                 Text="{x:Bind ViewModel.AzureOpenAIChatModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox
+                            <AutoSuggestBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=EmbeddingModelName}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                ItemsSource="{x:Bind ViewModel.AzureOpenAIEmbeddingModelCollection}"
                                 PlaceholderText="{ext:Locale Name=EmbeddingModelPlaceholderText}"
                                 Text="{x:Bind ViewModel.AzureOpenAIEmbeddingModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox
+                            <AutoSuggestBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=TextCompletionModelName}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                ItemsSource="{x:Bind ViewModel.AzureOpenAICompletionModelCollection}"
                                 PlaceholderText="{ext:Locale Name=TextCompletionModelPlaceholderText}"
                                 Text="{x:Bind ViewModel.AzureOpenAICompletionModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
@@ -197,36 +204,39 @@
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=AccessKey}"
                                 HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                LostFocus="OnAIKeyBoxLostFocus"
                                 Password="{x:Bind ViewModel.OpenAIAccessKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
                             <TextBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=ProxyEndpoint}"
                                 HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                LostFocus="OnAIKeyBoxLostFocus"
                                 PlaceholderText="{ext:Locale Name=ProxyEndpointPlaceholderText}"
                                 Text="{x:Bind ViewModel.OpenAICustomEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=Organization}"
                                 HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                LostFocus="OnAIKeyBoxLostFocus"
                                 PlaceholderText="{ext:Locale Name=OrganizationPlaceholderText}"
                                 Text="{x:Bind ViewModel.OpenAIOrganization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox
+                            <AutoSuggestBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=ChatModelName}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                ItemsSource="{x:Bind ViewModel.OpenAIChatModelCollection}"
                                 PlaceholderText="{ext:Locale Name=ChatModelPlaceholderText}"
                                 Text="{x:Bind ViewModel.OpenAIChatModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox
+                            <AutoSuggestBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=EmbeddingModelName}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                ItemsSource="{x:Bind ViewModel.OpenAIEmbeddingModelCollection}"
                                 PlaceholderText="{ext:Locale Name=EmbeddingModelPlaceholderText}"
                                 Text="{x:Bind ViewModel.OpenAIEmbeddingModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox
+                            <AutoSuggestBox
                                 HorizontalAlignment="Stretch"
                                 Header="{ext:Locale Name=TextCompletionModelName}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                ItemsSource="{x:Bind ViewModel.OpenAICompletionModelCollection}"
                                 PlaceholderText="{ext:Locale Name=TextCompletionModelPlaceholderText}"
                                 Text="{x:Bind ViewModel.OpenAICompletionModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
@@ -236,6 +246,254 @@
                 <animations:Implicit.ShowAnimations>
                     <animations:TranslationAnimation
                         From="20, 0, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
+            </StackPanel>
+
+            <!--  翻译配置  -->
+            <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsTranslateStep, Mode=OneWay}">
+                <labs:Segmented
+                    x:Name="TranslatePicker"
+                    Margin="0,0,32,0"
+                    HorizontalAlignment="Center"
+                    SelectionChanged="OnTranslatePickerSelectionChanged">
+                    <labs:SegmentedItem Content="{ext:Locale Name=AzureTranslate}" />
+                    <labs:SegmentedItem Content="{ext:Locale Name=BaiduTranslate}" />
+                </labs:Segmented>
+
+                <ScrollViewer
+                    Height="200"
+                    Padding="0,0,32,0"
+                    Style="{StaticResource PageScrollViewerStyle}">
+                    <Grid>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureTranslate, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=AzureTranslateTip}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AccessKey}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                Password="{x:Bind ViewModel.AzureTranslateKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=Region}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=RegionPlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureTranslateRegion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsBaiduTranslate, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=BaiduTranslateTip}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AppId}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=AppIdPlaceholderText}"
+                                Text="{x:Bind ViewModel.BaiduTranslateAppId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AppSecret}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                Password="{x:Bind ViewModel.BaiduTranslateKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AppSecretPlaceholderText}" />
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="20, 0, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
+            </StackPanel>
+
+            <!--  声音配置  -->
+            <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsSpeechStep, Mode=OneWay}">
+                <labs:Segmented
+                    x:Name="SpeechPicker"
+                    Margin="0,0,32,0"
+                    HorizontalAlignment="Center"
+                    SelectionChanged="OnSpeechPickerSelectionChanged">
+                    <labs:SegmentedItem Content="{ext:Locale Name=AzureSpeech}" />
+                    <labs:SegmentedItem Content="{ext:Locale Name=AzureWhisper}" />
+                    <labs:SegmentedItem Content="{ext:Locale Name=OpenAIWhisper}" />
+                </labs:Segmented>
+
+                <ScrollViewer
+                    Height="220"
+                    Padding="0,0,32,0"
+                    Style="{StaticResource PageScrollViewerStyle}">
+                    <Grid>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureSpeech, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=AzureSpeechTip}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AccessKey}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                Password="{x:Bind ViewModel.AzureSpeechKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=Region}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=RegionPlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureSpeechRegion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureWhisper, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=AzureWhisperTip}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AccessKey}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                LostFocus="OnWhisperKeyBoxLostFocus"
+                                Password="{x:Bind ViewModel.AzureWhisperKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=Endpoint}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                LostFocus="OnWhisperKeyBoxLostFocus"
+                                PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureWhisperEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=ModelName}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=ModelNamePlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureWhisperModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsOpenAIWhisper, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=OpenAIWhisperTip}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AccessKey}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                Password="{x:Bind ViewModel.OpenAIWhisperKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=ProxyEndpoint}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=ProxyEndpointPlaceholderText}"
+                                Text="{x:Bind ViewModel.OpenAICustomEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="20, 0, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
+            </StackPanel>
+
+            <!--  图像配置  -->
+            <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsImageStep, Mode=OneWay}">
+                <labs:Segmented
+                    x:Name="ImagePicker"
+                    Margin="0,0,32,0"
+                    HorizontalAlignment="Center"
+                    SelectionChanged="OnImagePickerSelectionChanged">
+                    <labs:SegmentedItem Content="Azure DALL·E" />
+                    <labs:SegmentedItem Content="Open AI DALL·E" />
+                </labs:Segmented>
+
+                <ScrollViewer
+                    Height="200"
+                    Padding="0,0,32,0"
+                    Style="{StaticResource PageScrollViewerStyle}">
+                    <Grid>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureImage, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=AzureDallETip}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AccessKey}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                Password="{x:Bind ViewModel.AzureImageKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=Endpoint}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
+                                Text="{x:Bind ViewModel.AzureImageEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsOpenAIImage, Mode=OneWay}">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=OpenAIDallETip}" />
+                            <PasswordBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=AccessKey}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                Password="{x:Bind ViewModel.OpenAIImageKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+                            <TextBox
+                                HorizontalAlignment="Stretch"
+                                Header="{ext:Locale Name=ProxyEndpoint}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=ProxyEndpointPlaceholderText}"
+                                Text="{x:Bind ViewModel.OpenAICustomEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="20, 0, 0"
+                        To="0,0,0"
+                        Duration="0:0:0.5" />
+                    <animations:OpacityAnimation
+                        From="0"
+                        To="1.0"
+                        Duration="0:0:0.5" />
+                </animations:Implicit.ShowAnimations>
+            </StackPanel>
+
+            <!--  结束  -->
+            <StackPanel
+                Margin="0,0,32,0"
+                Spacing="20"
+                Visibility="{x:Bind ViewModel.IsLastStep, Mode=OneWay}">
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{ext:Locale Name=FinishTitle}" />
+                <TextBlock Style="{StaticResource DescriptionTextStyle}" Text="{ext:Locale Name=FinishDescription}" />
+
+                <animations:Implicit.ShowAnimations>
+                    <animations:TranslationAnimation
+                        From="0, 20, 0"
                         To="0,0,0"
                         Duration="0:0:0.5" />
                     <animations:OpacityAnimation

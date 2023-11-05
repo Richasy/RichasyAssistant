@@ -20,7 +20,11 @@
         </Grid>
 
         <!--  底部导航  -->
-        <Grid Grid.Row="1" Padding="28,24">
+        <Grid
+            Grid.Row="1"
+            Padding="28,24"
+            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+            BorderThickness="0,1,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
@@ -29,13 +33,16 @@
                 x:Name="Pager"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
+                NextButtonVisibility="VisibleOnPointerOver"
                 NumberOfPages="{x:Bind _viewModel.StepCount, Mode=OneWay}"
+                PreviousButtonVisibility="VisibleOnPointerOver"
                 SelectedPageIndex="{x:Bind _viewModel.CurrentStep, Mode=TwoWay}" />
             <StackPanel
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Orientation="Horizontal"
-                Spacing="12">
+                Spacing="12"
+                Visibility="{x:Bind local:WelcomeWindow.IsNavButtonShown(_viewModel.IsLastStep), Mode=OneWay}">
                 <Button
                     MinWidth="120"
                     Command="{x:Bind _viewModel.RestartCommand}"
@@ -46,6 +53,14 @@
                     Content="{ext:Locale Name=NextStep}"
                     Style="{StaticResource AccentButtonStyle}" />
             </StackPanel>
+            <Button
+                Grid.Column="1"
+                MinWidth="120"
+                VerticalAlignment="Center"
+                Command="{x:Bind _viewModel.RestartCommand}"
+                Content="{ext:Locale Name=LaunchApp}"
+                Style="{StaticResource AccentButtonStyle}"
+                Visibility="{x:Bind _viewModel.IsLastStep, Mode=OneWay}" />
         </Grid>
 
         <Grid

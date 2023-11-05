@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation.Peers;
-using Microsoft.UI.Xaml.Controls;
 
 namespace RichasyAssistant.App.Controls;
 

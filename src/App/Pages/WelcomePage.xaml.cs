@@ -21,7 +21,18 @@ public sealed partial class WelcomePage : WelcomePageBase
 
     /// <inheritdoc/>
     protected override void OnPageLoaded()
-        => AIPicker.SelectedIndex = (int)ViewModel.KernelType;
+    {
+        AIPicker.SelectedIndex = (int)ViewModel.KernelType;
+        TranslatePicker.SelectedIndex = (int)ViewModel.TranslateType;
+        SpeechPicker.SelectedIndex = (int)ViewModel.SpeechType;
+        ImagePicker.SelectedIndex = (int)ViewModel.ImageGenerateType;
+    }
+
+    private void OnAIKeyBoxLostFocus(object sender, RoutedEventArgs e)
+        => ViewModel.TryLoadAIModelSourceCommand.Execute(default);
+
+    private void OnWhisperKeyBoxLostFocus(object sender, RoutedEventArgs e)
+        => ViewModel.TryLoadWhisperModelCommand.Execute(default);
 
     private void OnAIPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -31,6 +42,36 @@ public sealed partial class WelcomePage : WelcomePageBase
         }
 
         ViewModel.KernelType = (KernelType)AIPicker.SelectedIndex;
+    }
+
+    private void OnTranslatePickerSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded)
+        {
+            return;
+        }
+
+        ViewModel.TranslateType = (TranslateType)TranslatePicker.SelectedIndex;
+    }
+
+    private void OnSpeechPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded)
+        {
+            return;
+        }
+
+        ViewModel.SpeechType = (SpeechType)SpeechPicker.SelectedIndex;
+    }
+
+    private void OnImagePickerSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded)
+        {
+            return;
+        }
+
+        ViewModel.ImageGenerateType = (ImageGenerateType)ImagePicker.SelectedIndex;
     }
 }
 

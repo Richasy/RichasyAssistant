@@ -27,6 +27,25 @@ public enum SettingNames
     OpenAIEmbeddingModelName,
     OpenAICompletionModelName,
 
+    AzureTranslateKey,
+    AzureTranslateRegion,
+
+    BaiduTranslateAppId,
+    BaiduTranslateAppKey,
+
+    AzureSpeechKey,
+    AzureSpeechRegion,
+
+    AzureWhisperKey,
+    AzureWhisperModelName,
+    AzureWhisperEndpoint,
+
+    AzureImageKey,
+    AzureImageEndpoint,
+
+    OpenAIWhisperKey,
+    OpenAIImageKey,
+
     LibraryFolderPath,
     DefaultChatDbPath,
     DefaultSecretDbPath,
@@ -35,4 +54,8 @@ public enum SettingNames
     IsFirstLaunch,
     IsStartupOpen,
     SkipWelcome,
+    DefaultKernel,
+    DefaultTranslate,
+    DefaultSpeech,
+    DefaultImage,
 }

@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System;
-
 namespace RichasyAssistant.App.Controls;
 
 /// <summary>

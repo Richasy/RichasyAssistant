@@ -52,6 +52,33 @@ public sealed partial class AppViewModel : ViewModelBase
         UpdateGlobalSetting(SettingNames.OpenAICompletionModelName, string.Empty);
         UpdateGlobalSetting(SettingNames.OpenAIEmbeddingModelName, string.Empty);
 
+        // 配置 Azure 翻译设置.
+        UpdateGlobalSetting(SettingNames.AzureTranslateKey, string.Empty);
+        UpdateGlobalSetting(SettingNames.AzureTranslateRegion, string.Empty);
+
+        // 配置百度翻译设置.
+        UpdateGlobalSetting(SettingNames.BaiduTranslateAppId, string.Empty);
+        UpdateGlobalSetting(SettingNames.BaiduTranslateAppKey, string.Empty);
+
+        // 配置 Azure 语音设置.
+        UpdateGlobalSetting(SettingNames.AzureSpeechKey, string.Empty);
+        UpdateGlobalSetting(SettingNames.AzureSpeechRegion, string.Empty);
+
+        // 配置 Azure Whisper 设置.
+        UpdateGlobalSetting(SettingNames.AzureWhisperKey, string.Empty);
+        UpdateGlobalSetting(SettingNames.AzureWhisperEndpoint, string.Empty);
+        UpdateGlobalSetting(SettingNames.AzureWhisperModelName, string.Empty);
+
+        // 配置 Open AI Whisper 设置.
+        UpdateGlobalSetting(SettingNames.OpenAIWhisperKey, string.Empty);
+
+        // 配置 Azure 图像设置.
+        UpdateGlobalSetting(SettingNames.AzureImageKey, string.Empty);
+        UpdateGlobalSetting(SettingNames.AzureImageEndpoint, string.Empty);
+
+        // 配置 Open AI 图像设置.
+        UpdateGlobalSetting(SettingNames.OpenAIImageKey, string.Empty);
+
         // 配置存储设置.
         var localPath = Package.Current.InstalledPath;
         var localChatDbPath = Path.Combine(localPath, "Assets/Database/chat.db");
@@ -88,6 +115,28 @@ public sealed partial class AppViewModel : ViewModelBase
             RetrieveSecret(metas, SettingNames.OpenAIChatModelName);
             RetrieveSecret(metas, SettingNames.OpenAICompletionModelName);
             RetrieveSecret(metas, SettingNames.OpenAIEmbeddingModelName);
+
+            RetrieveSecret(metas, SettingNames.AzureTranslateKey);
+            RetrieveSecret(metas, SettingNames.AzureTranslateRegion);
+
+            RetrieveSecret(metas, SettingNames.BaiduTranslateAppId);
+            RetrieveSecret(metas, SettingNames.BaiduTranslateAppKey);
+
+            RetrieveSecret(metas, SettingNames.AzureSpeechKey);
+            RetrieveSecret(metas, SettingNames.AzureSpeechRegion);
+
+            RetrieveSecret(metas, SettingNames.AzureWhisperKey);
+            RetrieveSecret(metas, SettingNames.AzureWhisperEndpoint);
+            RetrieveSecret(metas, SettingNames.AzureWhisperModelName);
+
+            RetrieveSecret(metas, SettingNames.OpenAIWhisperKey);
+
+            RetrieveSecret(metas, SettingNames.AzureImageKey);
+            RetrieveSecret(metas, SettingNames.AzureImageEndpoint);
+
+            RetrieveSecret(metas, SettingNames.OpenAIImageKey);
+
+            LoadDefaultService();
         }
     }
 
@@ -103,7 +152,7 @@ public sealed partial class AppViewModel : ViewModelBase
             return;
         }
 
-        using(dbContext)
+        using (dbContext)
         {
             WriteSecret(dbContext, SettingNames.AzureOpenAIAccessKey);
             WriteSecret(dbContext, SettingNames.AzureOpenAIEndpoint);
@@ -117,6 +166,28 @@ public sealed partial class AppViewModel : ViewModelBase
             WriteSecret(dbContext, SettingNames.OpenAIChatModelName);
             WriteSecret(dbContext, SettingNames.OpenAICompletionModelName);
             WriteSecret(dbContext, SettingNames.OpenAIEmbeddingModelName);
+
+            WriteSecret(dbContext, SettingNames.AzureTranslateKey);
+            WriteSecret(dbContext, SettingNames.AzureTranslateRegion);
+
+            WriteSecret(dbContext, SettingNames.BaiduTranslateAppId);
+            WriteSecret(dbContext, SettingNames.BaiduTranslateAppKey);
+
+            WriteSecret(dbContext, SettingNames.AzureSpeechKey);
+            WriteSecret(dbContext, SettingNames.AzureSpeechRegion);
+
+            WriteSecret(dbContext, SettingNames.AzureWhisperKey);
+            WriteSecret(dbContext, SettingNames.AzureWhisperEndpoint);
+            WriteSecret(dbContext, SettingNames.AzureWhisperModelName);
+
+            WriteSecret(dbContext, SettingNames.OpenAIWhisperKey);
+
+            WriteSecret(dbContext, SettingNames.AzureImageKey);
+            WriteSecret(dbContext, SettingNames.AzureImageEndpoint);
+
+            WriteSecret(dbContext, SettingNames.OpenAIImageKey);
+
+            await dbContext.SaveChangesAsync();
         }
     }
 
@@ -142,7 +213,7 @@ public sealed partial class AppViewModel : ViewModelBase
     /// <returns><see cref="Task"/>.</returns>
     private static async Task<SecretDbContext> GetSecretDbContextAsync()
     {
-        var libraryPath = GlobalSettings.TryGet<string>(SettingNames.LibraryFolderPath);
+        var libraryPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
         if (string.IsNullOrEmpty(libraryPath))
         {
             return default;
@@ -201,5 +272,48 @@ public sealed partial class AppViewModel : ViewModelBase
     {
         var setting = SettingsToolkit.ReadLocalSetting(name, defaultValue);
         GlobalSettings.Set(name, setting);
+    }
+
+    private static void LoadDefaultService()
+    {
+        if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
+        }
+        else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.OpenAIAccessKey, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultKernel, KernelType.OpenAI);
+        }
+
+        if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureTranslateKey, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultTranslate, TranslateType.Azure);
+        }
+        else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.BaiduTranslateAppId, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultTranslate, TranslateType.Baidu);
+        }
+
+        if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureSpeechKey, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultSpeech, SpeechType.Azure);
+        }
+        else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureWhisperKey, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultSpeech, SpeechType.AzureWhisper);
+        }
+        else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.OpenAIWhisperKey, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultSpeech, SpeechType.OpenAIWhisper);
+        }
+
+        if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureImageKey, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultImage, ImageGenerateType.AzureDallE);
+        }
+        else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.OpenAIImageKey, string.Empty)))
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultImage, ImageGenerateType.OpenAIDallE);
+        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System;
 using System.Windows.Input;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 
