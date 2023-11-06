@@ -20,6 +20,7 @@
     <Content Remove="Assets\FolderOpen.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\baiduLan.json" />
     <None Remove="Assets\Emoji\framed_picture_3d.png" />
     <None Remove="Assets\Emoji\globe_showing_asia-australia_3d.png" />
     <None Remove="Assets\Emoji\open_file_folder_3d.png" />

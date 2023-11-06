@@ -46,7 +46,7 @@ internal sealed partial class AzureTranslateService
             {
                 var id = item.Key;
                 var name = item.Value.Name;
-                data.Add(new Metadata { Id = id, Value = name });
+                data.Add(new Metadata { Id = id + "_a", Value = name });
             }
         }
 

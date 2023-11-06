@@ -50,6 +50,7 @@ internal sealed partial class AzureTranslateService : ITranslateService
 
         foreach (var item in list)
         {
+            item.Id = item.Id.Replace("_a", string.Empty);
             var culture = new CultureInfo(item.Id);
             item.Value = culture.DisplayName;
         }

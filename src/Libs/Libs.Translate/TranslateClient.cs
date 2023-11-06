@@ -34,6 +34,11 @@ public sealed class TranslateClient
             _service?.Dispose();
             _service = new AzureTranslateService();
         }
+        else if (defaultService is TranslateType.Baidu && _service is not BaiduTranslateService)
+        {
+            _service?.Dispose();
+            _service = new BaiduTranslateService();
+        }
 
         _service.Initialize();
         await InitializeLocalDatabaseAsync();
