@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>RichasyAssistant.Libs.Translate</AssemblyName>
+    <RootNamespace>RichasyAssistant.Libs.Translate</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.Translation.Text" Version="1.0.0-beta.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.App\Models.App.csproj" />
+    <ProjectReference Include="..\Libs.Database\Libs.Database.csproj" />
+    <ProjectReference Include="..\Libs.Locator\Libs.Locator.csproj" />
+  </ItemGroup>
+
+</Project>

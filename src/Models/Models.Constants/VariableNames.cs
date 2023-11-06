@@ -21,4 +21,9 @@ public enum VariableNames
     /// 聊天数据库.
     /// </summary>
     ChatDbContext,
+
+    /// <summary>
+    /// 翻译数据库.
+    /// </summary>
+    TranslationDbContext,
 }
