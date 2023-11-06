@@ -37,11 +37,16 @@
                 VerticalAlignment="Center"
                 Spacing="2">
                 <TextBlock
+                    x:Name="TitleBlock"
                     FontSize="13"
                     MaxLines="1"
                     Text="{x:Bind ViewModel.Title, Mode=OneWay}"
                     TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                    TextWrapping="NoWrap">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind ViewModel.Title, Mode=OneWay}" IsEnabled="{x:Bind TitleBlock.IsTextTrimmed, Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
                 <TextBlock
                     FontSize="10"
                     Foreground="{ThemeResource TextFillColorTertiaryBrush}"

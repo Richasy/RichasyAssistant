@@ -29,6 +29,12 @@ public sealed partial class MiniPageViewModel
     private bool _isInSession;
 
     [ObservableProperty]
+    private bool _isInTranslation;
+
+    [ObservableProperty]
+    private bool _isMainShown;
+
+    [ObservableProperty]
     private string _errorText;
 
     /// <summary>
@@ -40,6 +46,11 @@ public sealed partial class MiniPageViewModel
     /// 会话.
     /// </summary>
     public ChatSessionViewModel Session { get; }
+
+    /// <summary>
+    /// 翻译.
+    /// </summary>
+    public TranslationViewModel Translation { get; }
 
     /// <summary>
     /// 近期会话.

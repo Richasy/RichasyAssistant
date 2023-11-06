@@ -19,7 +19,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Padding="12,8" Background="{ThemeResource LayerFillColorDefaultBrush}">
+        <Grid Padding="4" Background="{ThemeResource LayerFillColorDefaultBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -31,12 +31,17 @@
                 Content="{x:Bind LeftElement, Mode=OneWay}"
                 Visibility="{x:Bind LeftElement, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
             <TextBlock
+                x:Name="TitleBlock"
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyStrongTextBlockStyle}"
                 Text="{x:Bind ViewModel.Name, Mode=OneWay}"
                 TextTrimming="CharacterEllipsis"
-                TextWrapping="NoWrap" />
+                TextWrapping="NoWrap">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind ViewModel.Name, Mode=OneWay}" IsEnabled="{x:Bind TitleBlock.IsTextTrimmed, Mode=OneWay}" />
+                </ToolTipService.ToolTip>
+            </TextBlock>
             <ContentControl
                 Grid.Column="2"
                 Margin="12,0,0,0"

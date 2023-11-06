@@ -19,11 +19,18 @@ public sealed partial class MiniPage : MiniPageBase
     {
         InitializeComponent();
         ViewModel = MiniPageViewModel.Instance;
+        MainContainer.RegisterPropertyChangedCallback(VisibilityProperty, OnMainVisibilityChanged);
     }
 
     /// <inheritdoc/>
     protected override void OnPageLoaded()
-        => ViewModel.InitializeCommand.Execute(default);
+    {
+        ViewModel.InitializeCommand.Execute(default);
+        SearchBox.Focus(FocusState.Programmatic);
+    }
+
+    private void OnMainVisibilityChanged(DependencyObject sender, DependencyProperty dp)
+        => SearchBox?.Focus(FocusState.Programmatic);
 
     private void OnDeleteItemClick(object sender, RoutedEventArgs e)
     {

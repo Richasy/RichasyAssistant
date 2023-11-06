@@ -27,6 +27,11 @@ public sealed class TranslationDbContext : DbContext
     /// </summary>
     public DbSet<LanguageList> Languages { get; set; }
 
+    /// <summary>
+    /// 翻译记录.
+    /// </summary>
+    public DbSet<TranslationRecord> History { get; set; }
+
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

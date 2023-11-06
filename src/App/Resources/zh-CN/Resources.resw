@@ -144,6 +144,9 @@
   <data name="Assistant" xml:space="preserve">
     <value>助理</value>
   </data>
+  <data name="AutoDetect" xml:space="preserve">
+    <value>自动检测</value>
+  </data>
   <data name="AzureDallETip" xml:space="preserve">
     <value>如果你正在使用 Azure DALL·E 服务，请在资源部署完成后填写下面的表单，应用将通过 DALL·E 服务提供文生图功能</value>
   </data>
@@ -324,6 +327,9 @@
   <data name="Resent" xml:space="preserve">
     <value>重新发送</value>
   </data>
+  <data name="Retry" xml:space="preserve">
+    <value>重试</value>
+  </data>
   <data name="SearchByName" xml:space="preserve">
     <value>按名称搜索</value>
   </data>
@@ -339,14 +345,32 @@
   <data name="SomethingWrong" xml:space="preserve">
     <value>出错了！</value>
   </data>
+  <data name="SourceLanguage" xml:space="preserve">
+    <value>源语言</value>
+  </data>
+  <data name="TargetLanguage" xml:space="preserve">
+    <value>目标语言</value>
+  </data>
   <data name="TextCompletionModelName" xml:space="preserve">
     <value>文本完成模型名称</value>
   </data>
   <data name="TextCompletionModelPlaceholderText" xml:space="preserve">
     <value>部署的文本完成模型名称</value>
   </data>
-  <data name="Translate" xml:space="preserve">
+  <data name="TextTranslate" xml:space="preserve">
     <value>文本翻译</value>
+  </data>
+  <data name="TranslatedContentPlaceholderText" xml:space="preserve">
+    <value>翻译后的文本将显示在这里</value>
+  </data>
+  <data name="TranslateInvalid" xml:space="preserve">
+    <value>翻译服务不可用</value>
+  </data>
+  <data name="TranslateInvalidDescription" xml:space="preserve">
+    <value>请在设置中完成翻译服务相关的配置</value>
+  </data>
+  <data name="TranslationInputPlaceholderText" xml:space="preserve">
+    <value>请输入要翻译的文本</value>
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>发生了未知错误</value>

@@ -34,7 +34,7 @@ internal sealed partial class AzureTranslateService : ITranslateService
     public async Task<List<Metadata>> GetSupportLanguagesAsync()
     {
         var context = GetDbContext();
-        var list = context.Languages.AsNoTracking().FirstOrDefault(p => p.Id == "azure")?.Langauges;
+        var list = context.Languages.AsNoTracking().Include(p => p.Langauges).FirstOrDefault(p => p.Id == "azure")?.Langauges;
         if (list == null)
         {
             var data = await GetLanguagesFromOnlineAsync();
@@ -44,13 +44,14 @@ internal sealed partial class AzureTranslateService : ITranslateService
                 Langauges = data,
             });
 
+            await context.SaveChangesAsync();
             list = data;
         }
 
         foreach (var item in list)
         {
             var culture = new CultureInfo(item.Id);
-            item.Value = culture.Name;
+            item.Value = culture.DisplayName;
         }
 
         return list;

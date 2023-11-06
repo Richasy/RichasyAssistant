@@ -61,4 +61,6 @@ public enum SettingNames
     DefaultImage,
     NeedHideWhenLaunch,
     StreamOutput,
+    TranslationSourceLanguage,
+    TranslationTargetLanguage,
 }

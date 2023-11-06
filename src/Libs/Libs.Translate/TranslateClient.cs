@@ -5,6 +5,7 @@ using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Libs.Translate.Services;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
+using RichasyAssistant.Models.App.Translate;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Libs.Translate;
@@ -50,7 +51,7 @@ public sealed class TranslateClient
         }
 
         var languages = await _service.GetSupportLanguagesAsync();
-        return languages;
+        return languages.OrderBy(p => p.Value).ToList();
     }
 
     /// <summary>
@@ -65,6 +66,18 @@ public sealed class TranslateClient
         }
 
         var text = await _service.TranslateTextAsync(input, sourceLanguageId, targetLanguageId, cancellationToken);
+
+        try
+        {
+            var dbContext = GlobalVariables.TryGet<TranslationDbContext>(VariableNames.TranslationDbContext);
+            var record = new TranslationRecord(input, text, sourceLanguageId, targetLanguageId);
+            await dbContext.History.AddAsync(record, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (Exception)
+        {
+        }
+
         return text;
     }
 
