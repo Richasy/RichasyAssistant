@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using RichasyAssistant.Libs.Kernel;
+using RichasyAssistant.Libs.Translate;
 using RichasyAssistant.Models.App.Args;
 
 namespace RichasyAssistant.App.ViewModels.Components;
@@ -37,4 +38,9 @@ public sealed partial class AppViewModel
     /// 聊天客户端.
     /// </summary>
     public ChatClient ChatClient { get; set; }
+
+    /// <summary>
+    /// 翻译客户端.
+    /// </summary>
+    public TranslateClient TranslateClient { get; set; }
 }

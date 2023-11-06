@@ -16,9 +16,11 @@
   <ItemGroup>
     <Content Remove="Assets\Database\chat.db" />
     <Content Remove="Assets\Database\secret.db" />
+    <Content Remove="Assets\Database\trans.db" />
     <Content Remove="Assets\FolderOpen.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\baiduLan.json" />
     <None Remove="Assets\Emoji\framed_picture_3d.png" />
     <None Remove="Assets\Emoji\globe_showing_asia-australia_3d.png" />
     <None Remove="Assets\Emoji\open_file_folder_3d.png" />
@@ -32,6 +34,7 @@
     <None Remove="Assets\logo.ico" />
     <None Remove="Assets\logo.png" />
     <None Remove="Controls\Components\SlimChatSessionPanel.xaml" />
+    <None Remove="Controls\Components\SlimTranslationPanel.xaml" />
     <None Remove="Controls\EmptyHolder.xaml" />
     <None Remove="Controls\Items\ChatSessionItem.xaml" />
     <None Remove="Controls\Items\FeatureItem.xaml" />
@@ -64,7 +67,6 @@
     <PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.18" />
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.231030-build.1587" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="CommunityToolkit.WinUI.Lottie" Version="8.0.0-rc" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.118" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
       <PrivateAssets>all</PrivateAssets>
@@ -88,6 +90,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Libs\Libs.Kernel\Libs.Kernel.csproj" />
     <ProjectReference Include="..\Libs\Libs.Locator\Libs.Locator.csproj" />
+    <ProjectReference Include="..\Libs\Libs.Translate\Libs.Translate.csproj" />
     <ProjectReference Include="..\Models\Models.App\Models.App.csproj" />
     <ProjectReference Include="..\Models\Models.Constants\Models.Constants.csproj" />
   </ItemGroup>
@@ -114,6 +117,12 @@
     <None Update="Assets\Database\secret.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Database\trans.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Page Update="Controls\Components\SlimTranslationPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\Components\SlimChatSessionPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

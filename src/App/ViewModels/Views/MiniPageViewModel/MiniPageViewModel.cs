@@ -16,6 +16,8 @@ public sealed partial class MiniPageViewModel : ViewModelBase
     {
         RecentSessions = new ObservableCollection<ChatSessionItemViewModel>();
         Session = new ChatSessionViewModel();
+        Translation = new TranslationViewModel();
+        CheckState();
         AttachIsRunningToAsyncCommand(p => IsLoading = p, InitializeCommand);
         AttachExceptionHandlerToAsyncCommand(ShowError, InitializeCommand);
     }
@@ -70,6 +72,10 @@ public sealed partial class MiniPageViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void OpenTranslation()
+        => IsInTranslation = true;
+
+    [RelayCommand]
     private async Task DeleteSessionAsync(ChatSessionItemViewModel session)
     {
         var chatClient = AppViewModel.Instance.ChatClient;
@@ -82,6 +88,7 @@ public sealed partial class MiniPageViewModel : ViewModelBase
     private void Back()
     {
         IsInSession = false;
+        IsInTranslation = false;
         InitializeCommand.Execute(default);
     }
 
@@ -96,6 +103,21 @@ public sealed partial class MiniPageViewModel : ViewModelBase
             };
 
             ErrorText = content;
+        }
+    }
+
+    private void CheckState()
+        => IsMainShown = !IsInSession && !IsInTranslation;
+
+    partial void OnIsInSessionChanged(bool value)
+        => CheckState();
+
+    partial void OnIsInTranslationChanged(bool value)
+    {
+        CheckState();
+        if (value && !Translation.IsInitialized)
+        {
+            Translation.InitializeCommand.Execute(default);
         }
     }
 }

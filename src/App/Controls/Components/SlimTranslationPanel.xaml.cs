@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.ComponentModel;
 using Microsoft.UI.Input;
 using RichasyAssistant.App.ViewModels.Components;
 using Windows.UI.Core;
@@ -7,9 +8,9 @@ using Windows.UI.Core;
 namespace RichasyAssistant.App.Controls.Components;
 
 /// <summary>
-/// 简化的聊天会话面板.
+/// 简化翻译面板.
 /// </summary>
-public sealed partial class SlimChatSessionPanel : ChatSessionPanelBase
+public sealed partial class SlimTranslationPanel : TranslationPanelBase
 {
     /// <summary>
     /// <see cref="LeftElement"/> 的依赖属性.
@@ -24,13 +25,12 @@ public sealed partial class SlimChatSessionPanel : ChatSessionPanelBase
         DependencyProperty.Register(nameof(RightElement), typeof(object), typeof(SlimChatSessionPanel), new PropertyMetadata(default));
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SlimChatSessionPanel"/> class.
+    /// Initializes a new instance of the <see cref="SlimTranslationPanel"/> class.
     /// </summary>
-    public SlimChatSessionPanel()
+    public SlimTranslationPanel()
     {
         InitializeComponent();
         RegisterPropertyChangedCallback(VisibilityProperty, OnVisibilityChanged);
-        Loaded += OnLoaded;
     }
 
     /// <summary>
@@ -55,13 +55,13 @@ public sealed partial class SlimChatSessionPanel : ChatSessionPanelBase
     /// 重置焦点.
     /// </summary>
     public void ResetFocus()
-        => InputBox?.Focus(FocusState.Programmatic);
+        => SourceBox?.Focus(FocusState.Programmatic);
 
     internal override void OnViewModelChanged(DependencyPropertyChangedEventArgs e)
     {
-        if (e.OldValue is ChatSessionViewModel oldVM)
+        if (e.OldValue is TranslationViewModel oldVM)
         {
-            oldVM.RequestScrollToBottom -= OnRequestScrollToBottomAsync;
+            oldVM.PropertyChanged -= OnViewModelPropertyChangedAsync;
         }
 
         if (e.NewValue == null)
@@ -69,27 +69,31 @@ public sealed partial class SlimChatSessionPanel : ChatSessionPanelBase
             return;
         }
 
-        var vm = e.NewValue as ChatSessionViewModel;
-        vm.RequestScrollToBottom += OnRequestScrollToBottomAsync;
+        var vm = e.NewValue as TranslationViewModel;
+        vm.PropertyChanged += OnViewModelPropertyChangedAsync;
         if (IsLoaded)
         {
             ResetFocus();
         }
     }
 
-    private async void OnRequestScrollToBottomAsync(object sender, EventArgs e)
-    {
-        await Task.Delay(200);
-        MessageViewer.ChangeView(0, MessageViewer.ScrollableHeight + MessageViewer.ActualHeight, default);
-    }
-
     private void OnVisibilityChanged(DependencyObject sender, DependencyProperty dp)
         => ResetFocus();
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
-        => ResetFocus();
+    private async void OnViewModelPropertyChangedAsync(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ViewModel.OutputText) && !string.IsNullOrEmpty(ViewModel.OutputText))
+        {
+            OutputBox.Focus(FocusState.Programmatic);
+        }
+        else if (e.PropertyName == nameof(ViewModel.IsInitialized) && ViewModel.IsInitialized)
+        {
+            await Task.Delay(200);
+            ResetFocus();
+        }
+    }
 
-    private void OnInputBoxKeyDown(object sender, KeyRoutedEventArgs e)
+    private void OnSourceBoxKeyDown(object sender, KeyRoutedEventArgs e)
     {
         if (e.Key == Windows.System.VirtualKey.Enter)
         {
@@ -99,15 +103,15 @@ public sealed partial class SlimChatSessionPanel : ChatSessionPanelBase
             if (!isShiftDown)
             {
                 e.Handled = true;
-                ViewModel.SendMessageCommand.Execute(default);
+                ViewModel.TranslateCommand.Execute(default);
             }
         }
     }
 }
 
 /// <summary>
-/// 聊天会话面板基类.
+/// 翻译面板基类.
 /// </summary>
-public abstract class ChatSessionPanelBase : ReactiveUserControl<ChatSessionViewModel>
+public abstract class TranslationPanelBase : ReactiveUserControl<TranslationViewModel>
 {
 }

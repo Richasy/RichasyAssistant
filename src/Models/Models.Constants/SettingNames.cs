@@ -49,6 +49,7 @@ public enum SettingNames
     LibraryFolderPath,
     DefaultChatDbPath,
     DefaultSecretDbPath,
+    DefaultTranslationDbPath,
 
     IsAutoGenerateSessionTitle,
     IsFirstLaunch,
@@ -60,4 +61,6 @@ public enum SettingNames
     DefaultImage,
     NeedHideWhenLaunch,
     StreamOutput,
+    TranslationSourceLanguage,
+    TranslationTargetLanguage,
 }

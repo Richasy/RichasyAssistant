@@ -76,4 +76,14 @@ public enum KernelExceptionType
     /// 系统提示词未找到.
     /// </summary>
     SystemPromptNotFound,
+
+    /// <summary>
+    /// 翻译数据库未初始化.
+    /// </summary>
+    TranslationDbNotInitialized,
+
+    /// <summary>
+    /// 翻译服务尚未初始化.
+    /// </summary>
+    TranslationServiceNotInitialized,
 }

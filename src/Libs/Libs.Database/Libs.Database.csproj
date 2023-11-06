@@ -35,4 +35,10 @@
       <ProjectReference Include="..\..\Models\Models.App\Models.App.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Assets\trans.db">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
