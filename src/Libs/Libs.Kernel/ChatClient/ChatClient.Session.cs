@@ -207,6 +207,7 @@ public sealed partial class ChatClient
         if (sourceSession != null)
         {
             context.Sessions.Remove(sourceSession);
+            await context.SaveChangesAsync();
         }
     }
 
