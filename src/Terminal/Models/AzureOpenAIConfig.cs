@@ -1,4 +1,4 @@
-﻿// Copyright (c) Reader Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 namespace RichasyAssistant.Terminal.Models;
 

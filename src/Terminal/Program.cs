@@ -1,4 +1,4 @@
-﻿// Copyright (c) Reader Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Text.Json;
 using RichasyAssistant.Libs.Kernel;
@@ -233,7 +233,7 @@ while (!needExit)
     await AnsiConsole.Status()
              .StartAsync("[grey]正在等待响应...[/]", async ctx =>
              {
-                 var response = await client.SendMessageAsync(message);
+                 var response = await client.SendMessageAsync(message, default);
                  AnsiConsole.MarkupLine($"[yellow2]助理: [/][aquamarine1_1]{response.Content.EscapeMarkup()}[/]");
              });
 }

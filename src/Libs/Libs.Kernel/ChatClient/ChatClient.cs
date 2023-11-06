@@ -1,4 +1,4 @@
-﻿// Copyright (c) Reader Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
@@ -37,6 +37,11 @@ public sealed partial class ChatClient : IDisposable
     /// <returns><see cref="Task"/>.</returns>
     public async Task InitializeLocalDatabaseAsync()
     {
+        if (GlobalVariables.TryGet<ChatDbContext>(VariableNames.ChatDbContext) != null)
+        {
+            return;
+        }
+
         var libPath = GlobalSettings.TryGet<string>(SettingNames.LibraryFolderPath);
         if (string.IsNullOrEmpty(libPath))
         {

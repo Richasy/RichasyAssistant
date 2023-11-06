@@ -10,10 +10,12 @@
 
   <ItemGroup>
     <None Remove="Assets\chat.db" />
+    <None Remove="Assets\secret.db" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\chat.db" />
+    <Content Include="Assets\secret.db" />
   </ItemGroup>
 
     <ItemGroup>

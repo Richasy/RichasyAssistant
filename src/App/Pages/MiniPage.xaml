@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:MiniPageBase
+    x:Class="RichasyAssistant.App.Pages.MiniPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+    xmlns:components="using:RichasyAssistant.App.Controls.Components"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:items="using:RichasyAssistant.App.Controls.Items"
+    xmlns:items1="using:RichasyAssistant.App.ViewModels.Items"
+    xmlns:local="using:RichasyAssistant.App.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Grid Visibility="{x:Bind ViewModel.IsInSession, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            <Grid RowSpacing="12" Visibility="{x:Bind ViewModel.ErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <AutoSuggestBox
+                    Margin="20,20,20,0"
+                    HorizontalAlignment="Stretch"
+                    PlaceholderText="{ext:Locale Name=SearchByName}"
+                    QueryIcon="Find"
+                    Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Grid
+                    x:Name="MainFeatureContainer"
+                    Grid.Row="1"
+                    Padding="20,0"
+                    ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <items:FeatureItem
+                        Command="{x:Bind ViewModel.CreateSessionCommand}"
+                        Icon="ms-appx:///Assets/Icons/message.png"
+                        Text="{ext:Locale Name=NewSession}" />
+                    <items:FeatureItem
+                        Grid.Column="1"
+                        Icon="ms-appx:///Assets/Icons/system_prompt.png"
+                        Text="{ext:Locale Name=PresetSession}" />
+                    <items:FeatureItem
+                        Grid.Column="2"
+                        Icon="ms-appx:///Assets/Icons/translate.png"
+                        Text="{ext:Locale Name=Translate}" />
+                </Grid>
+                <Grid Grid.Row="2" RowSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Margin="20,0,0,0"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="{ext:Locale Name=RecentSession}" />
+
+                    <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                        <ScrollViewer Padding="8,0" Style="{StaticResource PageScrollViewerStyle}">
+                            <ItemsRepeater Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.RecentSessions}">
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="items1:ChatSessionItemViewModel">
+                                        <items:ChatSessionItem Click="OnItemClick" ViewModel="{x:Bind}">
+                                            <items:ChatSessionItem.ContextFlyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem
+                                                        Click="OnDeleteItemClick"
+                                                        DataContext="{x:Bind}"
+                                                        Text="{ext:Locale Name=Delete}">
+                                                        <MenuFlyoutItem.Icon>
+                                                            <controls:FluentIcon Foreground="{ThemeResource SystemFillColorCriticalBrush}" Symbol="Delete" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+                                                </MenuFlyout>
+                                            </items:ChatSessionItem.ContextFlyout>
+                                        </items:ChatSessionItem>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                                <ItemsRepeater.Layout>
+                                    <StackLayout Spacing="4" />
+                                </ItemsRepeater.Layout>
+                            </ItemsRepeater>
+                        </ScrollViewer>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{ext:Locale Name=NoSession}"
+                            TextAlignment="Center"
+                            Visibility="{x:Bind ViewModel.IsHistoryEmpty, Mode=OneWay}" />
+                    </Grid>
+
+                    <controls:LoadingOverlapper
+                        Grid.Row="1"
+                        IsOpen="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                        Text="{ext:Locale Name=LoadingAndWait}" />
+                </Grid>
+            </Grid>
+            <controls:EmptyHolder
+                Title="{ext:Locale Name=SomethingWrong}"
+                Description="{x:Bind ViewModel.ErrorText, Mode=OneWay}"
+                Emoji="&#x1F631;"
+                Style="{StaticResource BasicEmptyHolderStyle}"
+                Visibility="{x:Bind ViewModel.ErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation
+                    From="-30, 0, 0"
+                    To="0,0,0"
+                    Duration="0:0:0.5" />
+                <animations:OpacityAnimation
+                    From="0"
+                    To="1.0"
+                    Duration="0:0:0.5" />
+            </animations:Implicit.ShowAnimations>
+        </Grid>
+
+        <components:SlimChatSessionPanel ViewModel="{x:Bind ViewModel.Session, Mode=OneWay}" Visibility="{x:Bind ViewModel.IsInSession, Mode=OneWay}">
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation
+                    From="30, 0, 0"
+                    To="0,0,0"
+                    Duration="0:0:0.5" />
+                <animations:OpacityAnimation
+                    From="0"
+                    To="1.0"
+                    Duration="0:0:0.5" />
+            </animations:Implicit.ShowAnimations>
+            <components:SlimChatSessionPanel.LeftElement>
+                <Button
+                    Command="{x:Bind ViewModel.BackCommand}"
+                    Style="{StaticResource IconButtonStyle}"
+                    ToolTipService.ToolTip="{ext:Locale Name=Back}">
+                    <controls:FluentIcon FontSize="16" Symbol="ArrowLeft" />
+                </Button>
+            </components:SlimChatSessionPanel.LeftElement>
+            <components:SlimChatSessionPanel.RightElement>
+                <Button
+                    Command="{x:Bind ViewModel.Session.ClearMessageCommand, Mode=OneWay}"
+                    Style="{StaticResource IconButtonStyle}"
+                    ToolTipService.ToolTip="{ext:Locale Name=ClearMessage}"
+                    Visibility="{x:Bind ViewModel.Session.IsChatEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                    <controls:FluentIcon
+                        FontSize="16"
+                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                        Symbol="Eraser" />
+                </Button>
+            </components:SlimChatSessionPanel.RightElement>
+        </components:SlimChatSessionPanel>
+    </Grid>
+
+</local:MiniPageBase>

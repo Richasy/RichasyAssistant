@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessKey" xml:space="preserve">
+    <value>访问密钥</value>
+  </data>
+  <data name="AccessKeyPlaceholderText" xml:space="preserve">
+    <value>访问服务的密钥</value>
+  </data>
+  <data name="AppId" xml:space="preserve">
+    <value>应用 ID</value>
+  </data>
+  <data name="AppIdPlaceholderText" xml:space="preserve">
+    <value>请输入 App ID</value>
+  </data>
+  <data name="AppInTrayTip" xml:space="preserve">
+    <value>小幻助理已隐藏在后台，需要时可以在任务栏托盘中打开</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>小幻助理</value>
+  </data>
+  <data name="AppSecret" xml:space="preserve">
+    <value>应用密钥</value>
+  </data>
+  <data name="AppSecretPlaceholderText" xml:space="preserve">
+    <value>请输入应用密钥</value>
+  </data>
+  <data name="Assistant" xml:space="preserve">
+    <value>助理</value>
+  </data>
+  <data name="AzureDallETip" xml:space="preserve">
+    <value>如果你正在使用 Azure DALL·E 服务，请在资源部署完成后填写下面的表单，应用将通过 DALL·E 服务提供文生图功能</value>
+  </data>
+  <data name="AzureOpenAITip" xml:space="preserve">
+    <value>如果你正在使用 Azure Open AI，请在部署模型后填写下面的表单，应用会使用 Azure Open AI 作为你的默认 AI 服务</value>
+  </data>
+  <data name="AzureSpeech" xml:space="preserve">
+    <value>Azure 语音</value>
+  </data>
+  <data name="AzureSpeechTip" xml:space="preserve">
+    <value>如果你正在使用 Azure 语音服务，请在创建相关资源后填写下面的表单，应用将通过 Azure 语音服务 提供文本转语音和语音转文本功能</value>
+  </data>
+  <data name="AzureTranslate" xml:space="preserve">
+    <value>Azure 翻译</value>
+  </data>
+  <data name="AzureTranslateTip" xml:space="preserve">
+    <value>如果你正在使用 Azure 翻译服务（必应翻译），请在创建相关资源后填写下面的表单，应用会使用 Azure 翻译 作为你的默认翻译服务</value>
+  </data>
+  <data name="AzureWhisper" xml:space="preserve">
+    <value>Azure 耳语</value>
+  </data>
+  <data name="AzureWhisperTip" xml:space="preserve">
+    <value>如果你正在使用 Azure Open AI Whisper（耳语）服务，请在模型部署完成后填写下面的表单，应用将通过耳语服务提供语音转文本功能</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="BaiduTranslate" xml:space="preserve">
+    <value>百度翻译</value>
+  </data>
+  <data name="BaiduTranslateTip" xml:space="preserve">
+    <value>如果你注册了百度翻译开放平台，请将你的应用信息填入下面的表单，应用会使用 百度翻译 作为你的默认翻译服务</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ChatInvalidConfiguration" xml:space="preserve">
+    <value>聊天服务配置无效</value>
+  </data>
+  <data name="ChatModelName" xml:space="preserve">
+    <value>对话模型名称</value>
+  </data>
+  <data name="ChatModelPlaceholderText" xml:space="preserve">
+    <value>部署的对话模型名称</value>
+  </data>
+  <data name="ClearMessage" xml:space="preserve">
+    <value>清空消息</value>
+  </data>
+  <data name="CreateLibrary" xml:space="preserve">
+    <value>创建存储库</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="EmbeddingModelName" xml:space="preserve">
+    <value>嵌入模型名称</value>
+  </data>
+  <data name="EmbeddingModelPlaceholderText" xml:space="preserve">
+    <value>部署的嵌入模型名称</value>
+  </data>
+  <data name="EmptyResponse" xml:space="preserve">
+    <value>响应为空</value>
+  </data>
+  <data name="Endpoint" xml:space="preserve">
+    <value>终结点</value>
+  </data>
+  <data name="EndpointPlaceholderText" xml:space="preserve">
+    <value>访问接口的地址</value>
+  </data>
+  <data name="ExportHistory" xml:space="preserve">
+    <value>导出聊天记录</value>
+  </data>
+  <data name="FinishDescription" xml:space="preserve">
+    <value>小幻助理将基于你提供的配置信息为你提供独特的 AI 体验，祝您使用愉快</value>
+  </data>
+  <data name="FinishTitle" xml:space="preserve">
+    <value>你完成了所有配置！</value>
+  </data>
+  <data name="FolderMustEmpty" xml:space="preserve">
+    <value>您必须选择一个空文件夹</value>
+  </data>
+  <data name="GenerateResponseCancelled" xml:space="preserve">
+    <value>已停止生成响应</value>
+  </data>
+  <data name="GenerateResponseFailed" xml:space="preserve">
+    <value>生成响应时出现异常</value>
+  </data>
+  <data name="Instruction" xml:space="preserve">
+    <value>指令</value>
+  </data>
+  <data name="LaunchApp" xml:space="preserve">
+    <value>启动应用</value>
+  </data>
+  <data name="LibraryChooseDescription" xml:space="preserve">
+    <value>选择一个空白文件夹作为聊天记录、提示词列表等应用数据的存储库。你也可以打开一个已有的存储库以跳过初始配置</value>
+  </data>
+  <data name="LibraryChooseTitle" xml:space="preserve">
+    <value>选择一个存储库</value>
+  </data>
+  <data name="LibraryNeedInitialized" xml:space="preserve">
+    <value>您必须指定一个文件夹作为应用数据存储库</value>
+  </data>
+  <data name="LoadingAndWait" xml:space="preserve">
+    <value>加载中，请稍后</value>
+  </data>
+  <data name="Me" xml:space="preserve">
+    <value>我</value>
+  </data>
+  <data name="ModelName" xml:space="preserve">
+    <value>模型名称</value>
+  </data>
+  <data name="ModelNamePlaceholderText" xml:space="preserve">
+    <value>部署的模型名称</value>
+  </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="NewSession" xml:space="preserve">
+    <value>新会话</value>
+  </data>
+  <data name="NextStep" xml:space="preserve">
+    <value>下一步</value>
+  </data>
+  <data name="NoMessage" xml:space="preserve">
+    <value>暂无消息</value>
+  </data>
+  <data name="NoMessageDescription" xml:space="preserve">
+    <value>在下方的文本框中输入内容发送消息吧！</value>
+  </data>
+  <data name="NoSession" xml:space="preserve">
+    <value>暂无可用的会话</value>
+  </data>
+  <data name="OpenAIDallETip" xml:space="preserve">
+    <value>如果你正在使用 Open AI DALL·E 服务，请在下方填写你的令牌信息，应用将通过 DALL·E 服务提供文生图功能</value>
+  </data>
+  <data name="OpenAITip" xml:space="preserve">
+    <value>如果你正在使用 Open AI，请在填写下面的表单，应用会使用 Open AI 作为你的默认 AI 服务</value>
+  </data>
+  <data name="OpenAIWhisper" xml:space="preserve">
+    <value>Open AI 耳语</value>
+  </data>
+  <data name="OpenAIWhisperTip" xml:space="preserve">
+    <value>如果你正在使用 Open AI Whisper（耳语）服务，请在下方填写你的令牌信息，应用将通过耳语服务提供语音转文本功能</value>
+  </data>
+  <data name="OpenFullWindow" xml:space="preserve">
+    <value>打开完整窗口</value>
+  </data>
+  <data name="OpenLibrary" xml:space="preserve">
+    <value>打开存储库</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>组织（选填）</value>
+  </data>
+  <data name="OrganizationPlaceholderText" xml:space="preserve">
+    <value>填写组织名称</value>
+  </data>
+  <data name="PresetSession" xml:space="preserve">
+    <value>预设会话</value>
+  </data>
+  <data name="ProxyEndpoint" xml:space="preserve">
+    <value>代理终结点（选填）</value>
+  </data>
+  <data name="ProxyEndpointPlaceholderText" xml:space="preserve">
+    <value>填写可信的代理服务地址</value>
+  </data>
+  <data name="QuitApp" xml:space="preserve">
+    <value>退出应用</value>
+  </data>
+  <data name="RecentSession" xml:space="preserve">
+    <value>近期会话</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>地区</value>
+  </data>
+  <data name="RegionPlaceholderText" xml:space="preserve">
+    <value>服务所在地区</value>
+  </data>
+  <data name="Resent" xml:space="preserve">
+    <value>重新发送</value>
+  </data>
+  <data name="SearchByName" xml:space="preserve">
+    <value>按名称搜索</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>会话</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>跳过</value>
+  </data>
+  <data name="SomethingWrong" xml:space="preserve">
+    <value>出错了！</value>
+  </data>
+  <data name="TextCompletionModelName" xml:space="preserve">
+    <value>文本完成模型名称</value>
+  </data>
+  <data name="TextCompletionModelPlaceholderText" xml:space="preserve">
+    <value>部署的文本完成模型名称</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>文本翻译</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>发生了未知错误</value>
+  </data>
+  <data name="UserInputPlaceholderText" xml:space="preserve">
+    <value>输入消息</value>
+  </data>
+  <data name="WelcomeDescription" xml:space="preserve">
+    <value>在开始使用前，请跟随我一起做一些简单的配置吧！</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>欢迎使用小幻助理</value>
+  </data>
+</root>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Reader Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 namespace RichasyAssistant.Models.App.Args;
 
@@ -36,6 +36,11 @@ public enum KernelExceptionType
     /// 生成聊天响应失败.
     /// </summary>
     GenerateChatResponseFailed,
+
+    /// <summary>
+    /// 聊天响应已取消.
+    /// </summary>
+    ChatResponseCancelled,
 
     /// <summary>
     /// 聊天响应为空.
