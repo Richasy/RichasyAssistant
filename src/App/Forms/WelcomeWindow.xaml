@@ -33,9 +33,9 @@
                 x:Name="Pager"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                NextButtonVisibility="VisibleOnPointerOver"
+                IsEnabled="False"
+                MaxVisiblePips="10"
                 NumberOfPages="{x:Bind _viewModel.StepCount, Mode=OneWay}"
-                PreviousButtonVisibility="VisibleOnPointerOver"
                 SelectedPageIndex="{x:Bind _viewModel.CurrentStep, Mode=TwoWay}" />
             <StackPanel
                 Grid.Column="1"

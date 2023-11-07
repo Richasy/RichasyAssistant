@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Collections.ObjectModel;
-
 namespace RichasyAssistant.App.ViewModels.Views;
 
 /// <summary>

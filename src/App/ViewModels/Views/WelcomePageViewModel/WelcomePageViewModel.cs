@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.Libs.Kernel;

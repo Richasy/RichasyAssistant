@@ -38,6 +38,7 @@ public sealed partial class MiniWindow : WindowBase, ITipWindow
         AppViewModel.Instance.MiniWindow = this;
         Activated += OnMiniWindowActivatedAsync;
 
+        AppViewModel.Instance.RequestShowTip += OnAppViewModelRequestShowTip;
         MainFrame.Navigate(typeof(MiniPage), default, new DrillInNavigationTransitionInfo());
     }
 
