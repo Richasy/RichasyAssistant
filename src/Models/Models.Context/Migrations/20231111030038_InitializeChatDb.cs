@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace RichasyAssistant.Libs.Database.Migrations
+namespace RichasyAssistant.Models.Context.Migrations
 {
     /// <inheritdoc />
     public partial class InitializeChatDb : Migration
@@ -13,28 +13,43 @@ namespace RichasyAssistant.Libs.Database.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Sessions",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sessions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SystemPrompts",
+                name: "Assistants",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Prompt = table.Column<string>(type: "TEXT", nullable: false)
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Kernel = table.Column<int>(type: "INTEGER", nullable: false),
+                    Model = table.Column<string>(type: "TEXT", nullable: true),
+                    Instruction = table.Column<string>(type: "TEXT", nullable: true),
+                    Remark = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SystemPrompts", x => x.Id);
+                    table.PrimaryKey("PK_Assistants", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "List<string>",
+                columns: table => new
+                {
+                    Capacity = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sessions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Assistants = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sessions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,14 +61,14 @@ namespace RichasyAssistant.Libs.Database.Migrations
                     Content = table.Column<string>(type: "TEXT", nullable: false),
                     Time = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                     Extension = table.Column<string>(type: "TEXT", nullable: true),
-                    SessionPayloadId = table.Column<string>(type: "TEXT", nullable: true)
+                    ChatSessionId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ChatMessage", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ChatMessage_Sessions_SessionPayloadId",
-                        column: x => x.SessionPayloadId,
+                        name: "FK_ChatMessage_Sessions_ChatSessionId",
+                        column: x => x.ChatSessionId,
                         principalTable: "Sessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -82,22 +97,25 @@ namespace RichasyAssistant.Libs.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChatMessage_SessionPayloadId",
+                name: "IX_ChatMessage_ChatSessionId",
                 table: "ChatMessage",
-                column: "SessionPayloadId");
+                column: "ChatSessionId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Assistants");
+
+            migrationBuilder.DropTable(
                 name: "ChatMessage");
 
             migrationBuilder.DropTable(
-                name: "SessionOptions");
+                name: "List<string>");
 
             migrationBuilder.DropTable(
-                name: "SystemPrompts");
+                name: "SessionOptions");
 
             migrationBuilder.DropTable(
                 name: "Sessions");

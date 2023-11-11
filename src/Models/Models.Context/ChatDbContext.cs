@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using RichasyAssistant.Models.App.Kernel;
 
-namespace RichasyAssistant.Libs.Database;
+namespace RichasyAssistant.Models.Context;
 
 /// <summary>
 /// 聊天数据存储库.
@@ -25,22 +25,31 @@ public sealed class ChatDbContext : DbContext
     /// <summary>
     /// 会话列表.
     /// </summary>
-    public DbSet<SessionPayload> Sessions { get; set; }
+    public DbSet<ChatSession> Sessions { get; set; }
 
     /// <summary>
-    /// 提示词列表.
+    /// 助理列表.
     /// </summary>
-    public DbSet<SystemPrompt> SystemPrompts { get; set; }
+    public DbSet<Assistant> Assistants { get; set; }
 
     /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<SessionPayload>()
+        modelBuilder.Entity<List<string>>()
+            .HasNoKey();
+
+        modelBuilder.Entity<ChatSession>()
             .HasMany(p => p.Messages)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<SessionPayload>()
+        modelBuilder.Entity<ChatSession>()
+            .Property(e => e.Assistants)
+            .HasConversion(
+                v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
+
+        modelBuilder.Entity<ChatSession>()
             .HasOne(p => p.Options)
             .WithOne()
             .HasForeignKey<SessionOptions>(o => o.SessionId)

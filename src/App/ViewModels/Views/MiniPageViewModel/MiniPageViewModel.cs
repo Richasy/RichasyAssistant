@@ -3,6 +3,7 @@
 using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.Libs.Kernel;
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
 
 namespace RichasyAssistant.App.ViewModels.Views;
@@ -25,25 +26,12 @@ public sealed partial class MiniPageViewModel : ViewModelBase
     [RelayCommand]
     private async Task InitializeAsync()
     {
-        if (AppViewModel.Instance.ChatClient == null)
+        if (!IsInitialized)
         {
-            AppViewModel.Instance.ChatClient = new ChatClient();
-            var defaultKernel = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
-            if (defaultKernel == KernelType.AzureOpenAI)
-            {
-                AppViewModel.Instance.ChatClient.UseAzure();
-            }
-            else if (defaultKernel == KernelType.OpenAI)
-            {
-                AppViewModel.Instance.ChatClient.UseOpenAI();
-            }
-
-            AppViewModel.Instance.ChatClient.InitializeCorePlugins();
-            await AppViewModel.Instance.ChatClient.InitializeLocalDatabaseAsync();
+            await ChatDataService.InitializeAsync();
         }
 
-        var chatClient = AppViewModel.Instance.ChatClient;
-        var sessions = chatClient.GetSessions().Take(20);
+        var sessions = ChatDataService.GetSessions().Take(20);
         TryClear(RecentSessions);
         foreach (var item in sessions)
         {
@@ -56,18 +44,18 @@ public sealed partial class MiniPageViewModel : ViewModelBase
     [RelayCommand]
     private async Task CreateSessionAsync()
     {
-        var chatClient = AppViewModel.Instance.ChatClient;
-        var session = await chatClient.CreateNewSessionAsync();
-        RecentSessions.Insert(0, new ChatSessionItemViewModel(session));
+        var kernel = await ChatKernel.CreateAsync();
+        RecentSessions.Insert(0, new ChatSessionItemViewModel(kernel.Session));
         IsHistoryEmpty = RecentSessions.Count == 0;
-        Session.InitializeCommand.Execute(session);
+        Session.InitializeCommand.Execute(kernel);
         IsInSession = true;
     }
 
     [RelayCommand]
     private void OpenSession(ChatSessionItemViewModel session)
     {
-        Session.InitializeCommand.Execute(session.GetData());
+        var kernel = ChatKernel.Create(session.GetData().Id);
+        Session.InitializeCommand.Execute(kernel);
         IsInSession = true;
     }
 
@@ -78,8 +66,7 @@ public sealed partial class MiniPageViewModel : ViewModelBase
     [RelayCommand]
     private async Task DeleteSessionAsync(ChatSessionItemViewModel session)
     {
-        var chatClient = AppViewModel.Instance.ChatClient;
-        await chatClient.RemoveSessionAsync(session.GetData().Id);
+        await ChatDataService.DeleteSessionAsync(session.GetData().Id);
         RecentSessions.Remove(session);
         IsHistoryEmpty = RecentSessions.Count == 0;
     }

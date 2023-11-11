@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Azure.AI.Translation.Text;
-using RichasyAssistant.Libs.Database;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
+using RichasyAssistant.Models.Context;
 
 namespace RichasyAssistant.Libs.Translate.Services;
 

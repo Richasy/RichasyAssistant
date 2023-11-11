@@ -7,7 +7,7 @@ namespace RichasyAssistant.Models.App.Kernel;
 /// <summary>
 /// 会话负载.
 /// </summary>
-public sealed class SessionPayload
+public sealed class ChatSession
 {
     /// <summary>
     /// 会话标识符.
@@ -30,8 +30,13 @@ public sealed class SessionPayload
     /// </summary>
     public SessionOptions Options { get; set; }
 
+    /// <summary>
+    /// 助理标识符列表.
+    /// </summary>
+    public List<string> Assistants { get; set; }
+
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is SessionPayload payload && Id == payload.Id;
+    public override bool Equals(object? obj) => obj is ChatSession payload && Id == payload.Id;
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(Id);

@@ -41,19 +41,4 @@ public class SessionOptions
     /// </summary>
     [Key]
     public string? SessionId { get; set; }
-
-    /// <summary>
-    /// Create a copy based on its own properties.
-    /// </summary>
-    /// <returns>New <see cref="SessionOptions"/> object.</returns>
-    public SessionOptions Clone()
-        => new SessionOptions
-        {
-            Temperature = Temperature,
-            MaxResponseTokens = MaxResponseTokens,
-            TopP = TopP,
-            FrequencyPenalty = FrequencyPenalty,
-            PresencePenalty = PresencePenalty,
-            SessionId = SessionId,
-        };
 }

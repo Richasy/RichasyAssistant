@@ -9,13 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.0.0-beta4" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.0.0-beta6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Models\Models.App\Models.App.csproj" />
-    <ProjectReference Include="..\Libs.Database\Libs.Database.csproj" />
+    <ProjectReference Include="..\..\Models\Models.Context\Models.Context.csproj" />
     <ProjectReference Include="..\Libs.Locator\Libs.Locator.csproj" />
+    <ProjectReference Include="..\Libs.Service\Libs.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -130,7 +130,7 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
             {
                 GlobalSettings.Set(SettingNames.AzureOpenAIAccessKey, AzureOpenAIAccessKey);
                 GlobalSettings.Set(SettingNames.AzureOpenAIEndpoint, AzureOpenAIEndpoint);
-                var (chatModels, textCompletions, embeddings) = await ChatClient.GetSupportModelsAsync(KernelType.AzureOpenAI);
+                var (chatModels, textCompletions, embeddings) = await ChatKernel.GetSupportModelsAsync(KernelType.AzureOpenAI);
                 TryClear(AzureOpenAIChatModelCollection);
                 TryClear(AzureOpenAICompletionModelCollection);
                 TryClear(AzureOpenAIEmbeddingModelCollection);
@@ -152,7 +152,7 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
             else
             {
                 GlobalSettings.Set(SettingNames.OpenAIAccessKey, AzureOpenAIAccessKey);
-                var (chatModels, textCompletions, embeddings) = await ChatClient.GetSupportModelsAsync(KernelType.OpenAI);
+                var (chatModels, textCompletions, embeddings) = await ChatKernel.GetSupportModelsAsync(KernelType.OpenAI);
                 TryClear(OpenAIChatModelCollection);
                 TryClear(OpenAICompletionModelCollection);
                 TryClear(OpenAIEmbeddingModelCollection);
@@ -207,14 +207,14 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
     {
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIAccessKey, AzureOpenAIAccessKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIEndpoint, AzureOpenAIEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIChatModelName, AzureOpenAIChatModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureOpenAIChatModelName, AzureOpenAIChatModelName);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAICompletionModelName, AzureOpenAICompletionModelName);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIEmbeddingModelName, AzureOpenAIEmbeddingModelName);
 
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIAccessKey, OpenAIAccessKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICustomEndpoint, OpenAICustomEndpoint);
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIOrganization, OpenAIOrganization);
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIChatModelName, OpenAIChatModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultOpenAIChatModelName, OpenAIChatModelName);
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICompletionModelName, OpenAICompletionModelName);
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIEmbeddingModelName, OpenAIEmbeddingModelName);
 
@@ -229,7 +229,7 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
 
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperKey, AzureWhisperKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperEndpoint, AzureWhisperEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperModelName, AzureWhisperModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureWhisperModelName, AzureWhisperModelName);
 
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIWhisperKey, OpenAIWhisperKey);
 

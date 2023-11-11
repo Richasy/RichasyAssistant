@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace RichasyAssistant.Libs.Database.Migrations
+namespace RichasyAssistant.Models.Context.Migrations
 {
     /// <inheritdoc />
     public partial class InitializeTranslationDb : Migration

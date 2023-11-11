@@ -2,27 +2,56 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RichasyAssistant.Libs.Database;
+using RichasyAssistant.Models.Context;
 
 #nullable disable
 
-namespace RichasyAssistant.Libs.Database.Migrations
+namespace RichasyAssistant.Models.Context.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    [Migration("20231103123047_InitializeChatDb")]
-    partial class InitializeChatDb
+    partial class ChatDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
 
+            modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.Assistant", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Instruction")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Kernel")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Assistants");
+                });
+
             modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.ChatMessage", b =>
                 {
                     b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ChatSessionId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Content")
@@ -35,17 +64,32 @@ namespace RichasyAssistant.Libs.Database.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SessionPayloadId")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTimeOffset>("Time")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SessionPayloadId");
+                    b.HasIndex("ChatSessionId");
 
                     b.ToTable("ChatMessage");
+                });
+
+            modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.ChatSession", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Assistants")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.SessionOptions", b =>
@@ -73,56 +117,32 @@ namespace RichasyAssistant.Libs.Database.Migrations
                     b.ToTable("SessionOptions");
                 });
 
-            modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.SessionPayload", b =>
+            modelBuilder.Entity("System.Collections.Generic.List<string>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Capacity")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Sessions");
-                });
-
-            modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.SystemPrompt", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Prompt")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SystemPrompts");
+                    b.ToTable("List<string>");
                 });
 
             modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.ChatMessage", b =>
                 {
-                    b.HasOne("RichasyAssistant.Models.App.Kernel.SessionPayload", null)
+                    b.HasOne("RichasyAssistant.Models.App.Kernel.ChatSession", null)
                         .WithMany("Messages")
-                        .HasForeignKey("SessionPayloadId")
+                        .HasForeignKey("ChatSessionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.SessionOptions", b =>
                 {
-                    b.HasOne("RichasyAssistant.Models.App.Kernel.SessionPayload", null)
+                    b.HasOne("RichasyAssistant.Models.App.Kernel.ChatSession", null)
                         .WithOne("Options")
                         .HasForeignKey("RichasyAssistant.Models.App.Kernel.SessionOptions", "SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.SessionPayload", b =>
+            modelBuilder.Entity("RichasyAssistant.Models.App.Kernel.ChatSession", b =>
                 {
                     b.Navigation("Messages");
 

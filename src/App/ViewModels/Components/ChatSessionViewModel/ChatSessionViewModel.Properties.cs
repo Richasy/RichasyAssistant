@@ -3,7 +3,7 @@
 using System.Threading;
 using Microsoft.UI.Dispatching;
 using RichasyAssistant.App.ViewModels.Items;
-using RichasyAssistant.Models.App.Kernel;
+using RichasyAssistant.Libs.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Components;
 
@@ -13,7 +13,7 @@ namespace RichasyAssistant.App.ViewModels.Components;
 public sealed partial class ChatSessionViewModel
 {
     private readonly DispatcherQueue _dispatcherQueue;
-    private SessionPayload _sourceSession;
+    private ChatKernel _kernel;
     private CancellationTokenSource _cancellationTokenSource;
 
     [ObservableProperty]
@@ -45,8 +45,8 @@ public sealed partial class ChatSessionViewModel
     public ObservableCollection<ChatMessageItemViewModel> Messages { get; }
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) => obj is ChatSessionViewModel model && EqualityComparer<SessionPayload>.Default.Equals(_sourceSession, model._sourceSession);
+    public override bool Equals(object obj) => obj is ChatSessionViewModel model && EqualityComparer<ChatKernel>.Default.Equals(_kernel, model._kernel);
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(_sourceSession);
+    public override int GetHashCode() => HashCode.Combine(_kernel);
 }

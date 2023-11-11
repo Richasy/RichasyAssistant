@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using RichasyAssistant.Models.App.Translate;
 
-namespace RichasyAssistant.Libs.Database;
+namespace RichasyAssistant.Models.Context;
 
 /// <summary>
 /// 翻译数据存储库.

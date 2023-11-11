@@ -16,14 +16,14 @@ public enum SettingNames
 
     AzureOpenAIAccessKey,
     AzureOpenAIEndpoint,
-    AzureOpenAIChatModelName,
+    DefaultAzureOpenAIChatModelName,
     AzureOpenAIEmbeddingModelName,
     AzureOpenAICompletionModelName,
 
     OpenAIAccessKey,
     OpenAIOrganization,
     OpenAICustomEndpoint,
-    OpenAIChatModelName,
+    DefaultOpenAIChatModelName,
     OpenAIEmbeddingModelName,
     OpenAICompletionModelName,
 
@@ -37,7 +37,7 @@ public enum SettingNames
     AzureSpeechRegion,
 
     AzureWhisperKey,
-    AzureWhisperModelName,
+    DefaultAzureWhisperModelName,
     AzureWhisperEndpoint,
 
     AzureImageKey,

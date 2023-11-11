@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
 using RichasyAssistant.Models.Constants;
@@ -8,10 +10,15 @@ using RichasyAssistant.Models.Constants;
 namespace RichasyAssistant.Libs.Kernel;
 
 /// <summary>
-/// 聊天客户端的聊天部分.
+/// 聊天内核.
 /// </summary>
-public sealed partial class ChatClient
+public sealed partial class ChatKernel
 {
+    private ChatKernel()
+    {
+        _coreFunctions = new Dictionary<string, ISKFunction>();
+    }
+
     /// <summary>
     /// 发送消息.
     /// </summary>
@@ -21,16 +28,14 @@ public sealed partial class ChatClient
     /// <returns>聊天信息.</returns>
     public async Task<ChatMessage> SendMessageAsync(string message, Action<ChatMessage> userMsgHandler, CancellationToken cancellationToken = default)
     {
-        var session = GetCurrentSession();
         var chat = GetChatCore();
         var userMsg = new ChatMessage(ChatMessageRole.User, message);
-        session.AddMessage(userMsg);
+        await ChatDataService.AddMessageAsync(userMsg, SessionId);
         userMsgHandler?.Invoke(userMsg);
-        await UpdateCurrentSessionPayloadAsync();
 
         try
         {
-            var response = await chat.GenerateMessageAsync(session.GetChatHistory(), session.GetOpenAIRequestSettings(), cancellationToken);
+            var response = await chat.GenerateMessageAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken);
 
             if (string.IsNullOrEmpty(response))
             {
@@ -38,8 +43,7 @@ public sealed partial class ChatClient
             }
 
             var assistantMessage = new ChatMessage(ChatMessageRole.Assistant, response);
-            session.AddMessage(assistantMessage);
-            await UpdateCurrentSessionPayloadAsync();
+            await ChatDataService.AddMessageAsync(assistantMessage, SessionId);
             return assistantMessage;
         }
         catch (KernelException)
@@ -67,17 +71,15 @@ public sealed partial class ChatClient
     /// <returns><see cref="ChatMessage"/>.</returns>
     public async Task<ChatMessage> SendMessageAsync(string message, Action<ChatMessage> userMsgHandler, Action<string> streamHandler, CancellationToken cancellationToken = default)
     {
-        var session = GetCurrentSession();
         var chat = GetChatCore();
         var userMsg = new ChatMessage(ChatMessageRole.User, message);
-        session.AddMessage(userMsg);
+        await ChatDataService.AddMessageAsync(userMsg, SessionId);
         userMsgHandler?.Invoke(userMsg);
-        await UpdateCurrentSessionPayloadAsync();
 
         var resMessage = string.Empty;
         try
         {
-            var response = chat.GenerateMessageStreamAsync(session.GetChatHistory(), session.GetOpenAIRequestSettings(), cancellationToken);
+            var response = chat.GenerateMessageStreamAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken);
             await foreach (var item in response)
             {
                 resMessage += item;
@@ -91,8 +93,7 @@ public sealed partial class ChatClient
             }
 
             var assistantMessage = new ChatMessage(ChatMessageRole.Assistant, resMessage);
-            session.AddMessage(assistantMessage);
-            await UpdateCurrentSessionPayloadAsync();
+            await ChatDataService.AddMessageAsync(assistantMessage, SessionId);
             return assistantMessage;
         }
         catch (Exception ex)

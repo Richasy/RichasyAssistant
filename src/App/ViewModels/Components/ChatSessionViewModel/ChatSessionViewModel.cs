@@ -4,8 +4,9 @@ using System.Collections.Specialized;
 using System.Threading;
 using Microsoft.UI.Dispatching;
 using RichasyAssistant.App.ViewModels.Items;
+using RichasyAssistant.Libs.Kernel;
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
-using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Components;
 
@@ -31,21 +32,20 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void Initialize(SessionPayload session)
+    private void Initialize(ChatKernel kernel)
     {
         TryClear(Messages);
         UserInput = string.Empty;
-        _sourceSession = session;
+        _kernel = kernel;
         UserInput = string.Empty;
         ErrorText = string.Empty;
-        Name = string.IsNullOrEmpty(_sourceSession.Title)
+        Name = string.IsNullOrEmpty(_kernel.Session.Title)
             ? ResourceToolkit.GetLocalizedString(StringNames.NewSession)
-            : _sourceSession.Title;
+            : _kernel.Session.Title;
 
-        AppViewModel.Instance.ChatClient.SwitchSession(session.Id);
-        if (session.Messages?.Any() == true)
+        if (kernel.Session.Messages?.Any() == true)
         {
-            foreach (var message in session.Messages)
+            foreach (var message in kernel.Session.Messages)
             {
                 var vm = new ChatMessageItemViewModel(message);
                 Messages.Add(vm);
@@ -70,12 +70,10 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         var msg = UserInput;
         UserInput = string.Empty;
         TempMessage = string.Empty;
-        var client = AppViewModel.Instance.ChatClient;
-        client.SwitchSession(_sourceSession.Id);
         var isStream = SettingsToolkit.ReadLocalSetting(SettingNames.StreamOutput, true);
         if (isStream)
         {
-            var response = await client.SendMessageAsync(
+            var response = await _kernel.SendMessageAsync(
                 msg,
                 userMsg =>
                 {
@@ -85,13 +83,12 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                         if (Messages.Count <= 2)
                         {
                             var needGenerateTitle = SettingsToolkit.ReadLocalSetting(SettingNames.IsAutoGenerateSessionTitle, true)
-                                && string.IsNullOrEmpty(_sourceSession.Title);
+                                && string.IsNullOrEmpty(_kernel.Session.Title);
                             if (needGenerateTitle)
                             {
-                                var title = await client.TryGenerateTitleAsync();
+                                var title = await _kernel.TryGenerateTitleAsync();
                                 if (!string.IsNullOrEmpty(title))
                                 {
-                                    _sourceSession.Title = title;
                                     Name = title;
                                 }
                             }
@@ -111,7 +108,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         }
         else
         {
-            var response = await client.SendMessageAsync(
+            var response = await _kernel.SendMessageAsync(
                 msg,
                 userMsg =>
                 {
@@ -148,7 +145,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 var lastUserMsg = Messages.LastOrDefault(p => p.IsUser);
                 Messages.Remove(lastUserMsg);
                 UserInput = lastUserMsg.Content;
-                await AppViewModel.Instance.ChatClient.RemoveMessageAsync(lastUserMsg.GetData().Id);
+                await ChatDataService.DeleteMessageAsync(_kernel.SessionId, lastUserMsg.GetData().Id);
             });
         }
     }
@@ -159,7 +156,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         var msgIds = Messages.Where(p => p.IsUser || p.IsAssistant).Select(p => p.GetData().Id).ToArray();
         TryClear(Messages);
         UserInput = string.Empty;
-        await AppViewModel.Instance.ChatClient.RemoveMessagesAsync(msgIds);
+        await ChatDataService.ClearMessageAsync(_kernel.SessionId);
     }
 
     private void HandleException(Exception ex)

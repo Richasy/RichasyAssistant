@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RichasyAssistant.Libs.Database;
+using RichasyAssistant.Models.Context;
 
 #nullable disable
 
-namespace RichasyAssistant.Libs.Database.Migrations
+namespace RichasyAssistant.Models.Context.Migrations
 {
     [DbContext(typeof(SecretDbContext))]
     [Migration("20231104141358_InitializeSecretDb")]

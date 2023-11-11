@@ -2,15 +2,18 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.SemanticKernel.AI.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.AI.OpenAI;
 using RichasyAssistant.Libs.Locator;
+using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Libs.Kernel;
 
 /// <summary>
-/// 聊天客户端的模型部分.
+/// 聊天内核.
 /// </summary>
-public sealed partial class ChatClient
+public sealed partial class ChatKernel
 {
     /// <summary>
     /// 获取支持的模型.
@@ -125,6 +128,48 @@ public sealed partial class ChatClient
         }
 
         return string.Empty;
+    }
+
+    private IChatCompletion GetChatCore()
+    {
+        var chatCore = Kernel.GetService<IChatCompletion>()
+            ?? throw new KernelException(KernelExceptionType.ChatNotInitialized);
+        return chatCore;
+    }
+
+    private ChatHistory GetHistory()
+    {
+        var history = new ChatHistory();
+        foreach (var item in Session.Messages)
+        {
+            var role = item.Role == ChatMessageRole.System
+                ? AuthorRole.System
+                : item.Role == ChatMessageRole.Assistant
+                    ? AuthorRole.Assistant
+                    : AuthorRole.User;
+            history.AddMessage(role, item.Content);
+        }
+
+        return history;
+    }
+
+    private OpenAIRequestSettings GetOpenAIRequestSettings()
+    {
+        var settings = new OpenAIRequestSettings
+        {
+            Temperature = Session.Options.Temperature,
+            MaxTokens = Session.Options.MaxResponseTokens,
+            TopP = Session.Options.TopP,
+            FrequencyPenalty = Session.Options.FrequencyPenalty,
+            PresencePenalty = Session.Options.PresencePenalty,
+        };
+
+        if (Session.Messages?.FirstOrDefault()?.Role == ChatMessageRole.System)
+        {
+            settings.ChatSystemPrompt = Session.Messages.First().Content;
+        }
+
+        return settings;
     }
 
     private sealed class OpenAIDeploymentResponse

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RichasyAssistant.Libs.Database;
+using RichasyAssistant.Models.Context;
 
 #nullable disable
 
-namespace RichasyAssistant.Libs.Database.Migrations
+namespace RichasyAssistant.Models.Context.Migrations
 {
     [DbContext(typeof(TranslationDbContext))]
     [Migration("20231106111427_InitializeTranslationDb")]

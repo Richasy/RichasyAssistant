@@ -75,7 +75,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
     <PackageReference Include="NLog" Version="5.2.5" />
-    <PackageReference Include="WinUIEx" Version="2.3.2" />
+    <PackageReference Include="WinUIEx" Version="2.3.3" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -90,6 +90,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Libs\Libs.Kernel\Libs.Kernel.csproj" />
     <ProjectReference Include="..\Libs\Libs.Locator\Libs.Locator.csproj" />
+    <ProjectReference Include="..\Libs\Libs.Service\Libs.Service.csproj" />
     <ProjectReference Include="..\Libs\Libs.Translate\Libs.Translate.csproj" />
     <ProjectReference Include="..\Models\Models.App\Models.App.csproj" />
     <ProjectReference Include="..\Models\Models.Constants\Models.Constants.csproj" />

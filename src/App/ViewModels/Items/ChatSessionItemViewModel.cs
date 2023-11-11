@@ -21,20 +21,20 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     [ObservableProperty]
     private string _date;
 
-    private SessionPayload _payload;
+    private ChatSession _payload;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSessionItemViewModel"/> class.
     /// </summary>
     /// <param name="payload">会话数据.</param>
-    public ChatSessionItemViewModel(SessionPayload payload)
+    public ChatSessionItemViewModel(ChatSession payload)
         => Update(payload);
 
     /// <summary>
     /// 更新.
     /// </summary>
     /// <param name="payload">会话数据.</param>
-    public void Update(SessionPayload payload)
+    public void Update(ChatSession payload)
     {
         _payload = payload;
         Title = string.IsNullOrEmpty(payload.Title) ? GetDefaultTitle(payload) : payload.Title;
@@ -48,16 +48,16 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     /// 获取原始数据.
     /// </summary>
     /// <returns>会话数据.</returns>
-    public SessionPayload GetData()
+    public ChatSession GetData()
         => _payload;
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) => obj is ChatSessionItemViewModel model && EqualityComparer<SessionPayload>.Default.Equals(_payload, model._payload);
+    public override bool Equals(object obj) => obj is ChatSessionItemViewModel model && EqualityComparer<ChatSession>.Default.Equals(_payload, model._payload);
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(_payload);
 
-    private static string GetDefaultTitle(SessionPayload payload)
+    private static string GetDefaultTitle(ChatSession payload)
     {
         var lastMsg = GetLastMessage(payload);
         return lastMsg is null
@@ -65,7 +65,7 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
             : ResourceToolkit.GetLocalizedString(StringNames.Session) + " - " + lastMsg.Time.ToString("yyyyMMddHHmmss");
     }
 
-    private static string GetLastMessageText(SessionPayload payload)
+    private static string GetLastMessageText(ChatSession payload)
     {
         var lastMsg = GetLastMessage(payload);
         if (lastMsg == null)
@@ -87,6 +87,6 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     /// </summary>
     /// <param name="payload">会话数据.</param>
     /// <returns><see cref="ChatMessage"/>.</returns>
-    private static ChatMessage GetLastMessage(SessionPayload payload)
+    private static ChatMessage GetLastMessage(ChatSession payload)
         => payload.Messages.OrderByDescending(p => p.Time).FirstOrDefault();
 }

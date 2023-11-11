@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using RichasyAssistant.Models.App.Kernel;
 
-namespace RichasyAssistant.Libs.Database;
+namespace RichasyAssistant.Models.Context;
 
 /// <summary>
 /// 密钥数据库上下文.

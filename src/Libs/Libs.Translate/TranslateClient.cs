@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using RichasyAssistant.Libs.Database;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Libs.Translate.Services;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
 using RichasyAssistant.Models.App.Translate;
 using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Models.Context;
 
 namespace RichasyAssistant.Libs.Translate;
 

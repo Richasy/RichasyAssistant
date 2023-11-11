@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using RichasyAssistant.Libs.Database;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
+using RichasyAssistant.Models.Context;
 using Windows.ApplicationModel;
 
 namespace RichasyAssistant.App.ViewModels.Components;
@@ -40,7 +40,7 @@ public sealed partial class AppViewModel : ViewModelBase
         // 配置 Azure OpenAI 设置.
         UpdateGlobalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);
         UpdateGlobalSetting(SettingNames.AzureOpenAIEndpoint, string.Empty);
-        UpdateGlobalSetting(SettingNames.AzureOpenAIChatModelName, string.Empty);
+        UpdateGlobalSetting(SettingNames.DefaultAzureOpenAIChatModelName, string.Empty);
         UpdateGlobalSetting(SettingNames.AzureOpenAICompletionModelName, string.Empty);
         UpdateGlobalSetting(SettingNames.AzureOpenAIEmbeddingModelName, string.Empty);
 
@@ -48,7 +48,7 @@ public sealed partial class AppViewModel : ViewModelBase
         UpdateGlobalSetting(SettingNames.OpenAIAccessKey, string.Empty);
         UpdateGlobalSetting(SettingNames.OpenAIOrganization, string.Empty);
         UpdateGlobalSetting(SettingNames.OpenAICustomEndpoint, string.Empty);
-        UpdateGlobalSetting(SettingNames.OpenAIChatModelName, string.Empty);
+        UpdateGlobalSetting(SettingNames.DefaultOpenAIChatModelName, string.Empty);
         UpdateGlobalSetting(SettingNames.OpenAICompletionModelName, string.Empty);
         UpdateGlobalSetting(SettingNames.OpenAIEmbeddingModelName, string.Empty);
 
@@ -67,7 +67,7 @@ public sealed partial class AppViewModel : ViewModelBase
         // 配置 Azure Whisper 设置.
         UpdateGlobalSetting(SettingNames.AzureWhisperKey, string.Empty);
         UpdateGlobalSetting(SettingNames.AzureWhisperEndpoint, string.Empty);
-        UpdateGlobalSetting(SettingNames.AzureWhisperModelName, string.Empty);
+        UpdateGlobalSetting(SettingNames.DefaultAzureWhisperModelName, string.Empty);
 
         // 配置 Open AI Whisper 设置.
         UpdateGlobalSetting(SettingNames.OpenAIWhisperKey, string.Empty);
@@ -108,14 +108,14 @@ public sealed partial class AppViewModel : ViewModelBase
             var metas = dbContext.Metadata.ToList();
             RetrieveSecret(metas, SettingNames.AzureOpenAIAccessKey);
             RetrieveSecret(metas, SettingNames.AzureOpenAIEndpoint);
-            RetrieveSecret(metas, SettingNames.AzureOpenAIChatModelName);
+            RetrieveSecret(metas, SettingNames.DefaultAzureOpenAIChatModelName);
             RetrieveSecret(metas, SettingNames.AzureOpenAICompletionModelName);
             RetrieveSecret(metas, SettingNames.AzureOpenAIEmbeddingModelName);
 
             RetrieveSecret(metas, SettingNames.OpenAIAccessKey);
             RetrieveSecret(metas, SettingNames.OpenAICustomEndpoint);
             RetrieveSecret(metas, SettingNames.OpenAIOrganization);
-            RetrieveSecret(metas, SettingNames.OpenAIChatModelName);
+            RetrieveSecret(metas, SettingNames.DefaultOpenAIChatModelName);
             RetrieveSecret(metas, SettingNames.OpenAICompletionModelName);
             RetrieveSecret(metas, SettingNames.OpenAIEmbeddingModelName);
 
@@ -130,7 +130,7 @@ public sealed partial class AppViewModel : ViewModelBase
 
             RetrieveSecret(metas, SettingNames.AzureWhisperKey);
             RetrieveSecret(metas, SettingNames.AzureWhisperEndpoint);
-            RetrieveSecret(metas, SettingNames.AzureWhisperModelName);
+            RetrieveSecret(metas, SettingNames.DefaultAzureWhisperModelName);
 
             RetrieveSecret(metas, SettingNames.OpenAIWhisperKey);
 
@@ -159,14 +159,14 @@ public sealed partial class AppViewModel : ViewModelBase
         {
             WriteSecret(dbContext, SettingNames.AzureOpenAIAccessKey);
             WriteSecret(dbContext, SettingNames.AzureOpenAIEndpoint);
-            WriteSecret(dbContext, SettingNames.AzureOpenAIChatModelName);
+            WriteSecret(dbContext, SettingNames.DefaultAzureOpenAIChatModelName);
             WriteSecret(dbContext, SettingNames.AzureOpenAICompletionModelName);
             WriteSecret(dbContext, SettingNames.AzureOpenAIEmbeddingModelName);
 
             WriteSecret(dbContext, SettingNames.OpenAIAccessKey);
             WriteSecret(dbContext, SettingNames.OpenAICustomEndpoint);
             WriteSecret(dbContext, SettingNames.OpenAIOrganization);
-            WriteSecret(dbContext, SettingNames.OpenAIChatModelName);
+            WriteSecret(dbContext, SettingNames.DefaultOpenAIChatModelName);
             WriteSecret(dbContext, SettingNames.OpenAICompletionModelName);
             WriteSecret(dbContext, SettingNames.OpenAIEmbeddingModelName);
 
@@ -181,7 +181,7 @@ public sealed partial class AppViewModel : ViewModelBase
 
             WriteSecret(dbContext, SettingNames.AzureWhisperKey);
             WriteSecret(dbContext, SettingNames.AzureWhisperEndpoint);
-            WriteSecret(dbContext, SettingNames.AzureWhisperModelName);
+            WriteSecret(dbContext, SettingNames.DefaultAzureWhisperModelName);
 
             WriteSecret(dbContext, SettingNames.OpenAIWhisperKey);
 
