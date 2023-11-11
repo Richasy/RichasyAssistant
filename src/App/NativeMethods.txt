@@ -1,3 +1,4 @@
 ﻿GetWindowLong
 SetWindowLong
 ShowWindow
+IsZoomed

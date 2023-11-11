@@ -2,12 +2,9 @@
 
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.Windows.AppNotifications;
-using Microsoft.Windows.AppNotifications.Builder;
 using RichasyAssistant.App.Controls;
 using RichasyAssistant.App.Pages;
 using RichasyAssistant.App.ViewModels.Components;
-using RichasyAssistant.App.ViewModels.Views;
 using RichasyAssistant.Models.App.Args;
 using Windows.ApplicationModel.Activation;
 
@@ -19,7 +16,6 @@ namespace RichasyAssistant.App.Forms;
 public sealed partial class MiniWindow : WindowBase, ITipWindow
 {
     private readonly IActivatedEventArgs _launchArgs;
-    private bool _isFirstActivate = true;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MiniWindow"/> class.
@@ -29,14 +25,10 @@ public sealed partial class MiniWindow : WindowBase, ITipWindow
         InitializeComponent();
         _launchArgs = args;
         AppWindow.IsShownInSwitchers = false;
-        var presenter = AppWindow.Presenter as OverlappedPresenter;
-        presenter.SetBorderAndTitleBar(false, false);
-        presenter.IsResizable = false;
-        presenter.IsMaximizable = false;
-        presenter.IsMinimizable = false;
 
-        AppViewModel.Instance.MiniWindow = this;
-        Activated += OnMiniWindowActivatedAsync;
+        Width = 400;
+        Height = 600;
+        this.CenterOnScreen();
 
         AppViewModel.Instance.RequestShowTip += OnAppViewModelRequestShowTip;
         MainFrame.Navigate(typeof(MiniPage), default, new DrillInNavigationTransitionInfo());
@@ -71,40 +63,6 @@ public sealed partial class MiniWindow : WindowBase, ITipWindow
         }
 
         await Task.CompletedTask;
-    }
-
-    private async void OnMiniWindowActivatedAsync(object sender, WindowActivatedEventArgs args)
-    {
-        if (args.WindowActivationState == WindowActivationState.Deactivated)
-        {
-            Close();
-        }
-        else if (_isFirstActivate)
-        {
-            var isFirstLaunch = SettingsToolkit.ReadLocalSetting(SettingNames.IsFirstLaunch, true);
-            var isStartup = SettingsToolkit.ReadLocalSetting(SettingNames.IsStartupOpen, true);
-            var needHideWhenLaunch = SettingsToolkit.ReadLocalSetting(SettingNames.NeedHideWhenLaunch, false);
-            _isFirstActivate = false;
-            if (!isFirstLaunch && isStartup && needHideWhenLaunch)
-            {
-                await Task.Delay(600);
-                var notify = new AppNotificationBuilder()
-                    .AddText(ResourceToolkit.GetLocalizedString(StringNames.AppInTrayTip))
-                    .MuteAudio()
-                    .SetDuration(AppNotificationDuration.Default)
-                    .BuildNotification();
-                AppNotificationManager.Default.Show(notify);
-                this.Hide();
-            }
-            else if (isFirstLaunch)
-            {
-                SettingsToolkit.WriteLocalSetting(SettingNames.IsFirstLaunch, false);
-            }
-        }
-        else if (MiniPageViewModel.Instance.IsInitialized)
-        {
-            MiniPageViewModel.Instance.InitializeCommand.Execute(default);
-        }
     }
 
     private void OnAppViewModelRequestShowTip(object sender, AppTipNotification e)

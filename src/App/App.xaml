@@ -12,7 +12,6 @@
                 <ResourceDictionary Source="ms-appx:///Controls/CardPanel/CardPanel.xaml" />
                 <ResourceDictionary Source="ms-appx:///Controls/ImageEx/ImageEx.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Overwrites.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/TrayResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />

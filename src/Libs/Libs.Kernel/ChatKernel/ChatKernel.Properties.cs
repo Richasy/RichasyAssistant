@@ -36,4 +36,10 @@ public sealed partial class ChatKernel
     /// 会话信息.
     /// </summary>
     public ChatSession Session => ChatDataService.GetSession(SessionId);
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj) => obj is ChatKernel kernel && SessionId == kernel.SessionId;
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => HashCode.Combine(SessionId);
 }

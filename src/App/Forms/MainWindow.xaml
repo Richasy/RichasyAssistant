@@ -8,10 +8,34 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Orientation="Horizontal">
-        <Button x:Name="myButton">Click Me</Button>
-    </StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!--  标题栏  -->
+        <Grid Grid.ColumnSpan="2" Height="40" />
+
+        <Grid Grid.Row="1">
+            <!--  导航栏  -->
+        </Grid>
+
+        <Frame
+            x:Name="MainFrame"
+            Grid.Row="1"
+            Grid.Column="1"
+            Loaded="OnFrameLoaded" />
+
+        <Grid
+            x:Name="TipContainer"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Visibility="Collapsed" />
+    </Grid>
 </local:WindowBase>

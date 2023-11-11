@@ -24,16 +24,6 @@ public sealed partial class AppViewModel
     public static AppViewModel Instance { get; } = new();
 
     /// <summary>
-    /// 主窗口对象.
-    /// </summary>
-    public Window MainWindow { get; set; }
-
-    /// <summary>
-    /// 迷你窗口对象.
-    /// </summary>
-    public Window MiniWindow { get; set; }
-
-    /// <summary>
     /// 翻译客户端.
     /// </summary>
     public TranslateClient TranslateClient { get; set; }

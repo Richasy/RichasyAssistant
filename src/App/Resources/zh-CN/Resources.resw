@@ -129,9 +129,6 @@
   <data name="AppIdPlaceholderText" xml:space="preserve">
     <value>请输入 App ID</value>
   </data>
-  <data name="AppInTrayTip" xml:space="preserve">
-    <value>小幻助理已隐藏在后台，需要时可以在任务栏托盘中打开</value>
-  </data>
   <data name="AppName" xml:space="preserve">
     <value>小幻助理</value>
   </data>
@@ -183,6 +180,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Chat" xml:space="preserve">
+    <value>聊天</value>
+  </data>
   <data name="ChatInvalidConfiguration" xml:space="preserve">
     <value>聊天服务配置无效</value>
   </data>
@@ -200,6 +200,9 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
+  </data>
+  <data name="Draw" xml:space="preserve">
+    <value>绘图</value>
   </data>
   <data name="EmbeddingModelName" xml:space="preserve">
     <value>嵌入模型名称</value>
@@ -312,9 +315,6 @@
   <data name="ProxyEndpointPlaceholderText" xml:space="preserve">
     <value>填写可信的代理服务地址</value>
   </data>
-  <data name="QuitApp" xml:space="preserve">
-    <value>退出应用</value>
-  </data>
   <data name="RecentSession" xml:space="preserve">
     <value>近期会话</value>
   </data>
@@ -348,6 +348,12 @@
   <data name="SourceLanguage" xml:space="preserve">
     <value>源语言</value>
   </data>
+  <data name="Speech" xml:space="preserve">
+    <value>语音</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>文件</value>
+  </data>
   <data name="TargetLanguage" xml:space="preserve">
     <value>目标语言</value>
   </data>
@@ -359,6 +365,9 @@
   </data>
   <data name="TextTranslate" xml:space="preserve">
     <value>文本翻译</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>翻译</value>
   </data>
   <data name="TranslatedContentPlaceholderText" xml:space="preserve">
     <value>翻译后的文本将显示在这里</value>
