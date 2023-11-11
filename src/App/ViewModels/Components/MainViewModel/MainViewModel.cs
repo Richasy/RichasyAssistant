@@ -39,6 +39,7 @@ public sealed partial class MainViewModel
             item.IsSelected = item.Data.Type == type;
         }
 
+        CurrentFeature = type;
         var pageType = type switch
         {
             FeatureType.Chat => typeof(ChatPage),
@@ -48,11 +49,12 @@ public sealed partial class MainViewModel
             // FeatureType.Speech => typeof(SpeechPage),
             // FeatureType.Storage => typeof(StoragePage),
             // FeatureType.Settings => typeof(SettingsPage),
-            _ => throw new NotImplementedException(),
+            _ => typeof(Page),
         };
 
         var args = new AppNavigateEventArgs(pageType, data);
         RequestNavigate?.Invoke(this, args);
+        SettingsToolkit.WriteLocalSetting(SettingNames.LastOpenedPage, type);
     }
 
     private static NavigateItemViewModel GetNavigateItem(FeatureType type)

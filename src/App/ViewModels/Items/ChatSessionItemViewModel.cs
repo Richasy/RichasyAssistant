@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Items;
@@ -21,53 +22,47 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     [ObservableProperty]
     private string _date;
 
-    private ChatSession _payload;
+    [ObservableProperty]
+    private bool _isSelected;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSessionItemViewModel"/> class.
     /// </summary>
-    /// <param name="payload">会话数据.</param>
-    public ChatSessionItemViewModel(ChatSession payload)
-        => Update(payload);
+    /// <param name="session">会话数据.</param>
+    public ChatSessionItemViewModel(ChatSession session)
+    {
+        Id = session.Id;
+        Update(session);
+    }
+
+    /// <summary>
+    /// 会话Id.
+    /// </summary>
+    public string Id { get; }
 
     /// <summary>
     /// 更新.
     /// </summary>
-    /// <param name="payload">会话数据.</param>
-    public void Update(ChatSession payload)
+    /// <param name="session">会话数据.</param>
+    public void Update(ChatSession session = default)
     {
-        _payload = payload;
-        Title = string.IsNullOrEmpty(payload.Title) ? GetDefaultTitle(payload) : payload.Title;
-        var hasSystemPrompt = payload.Messages.Any(p => p.Role == ChatMessageRole.System);
+        session ??= ChatDataService.GetSession(Id);
+        Title = string.IsNullOrEmpty(session.Title) ? ResourceToolkit.GetLocalizedString(StringNames.NoName) : session.Title;
+        var hasSystemPrompt = session.Messages.Any(p => p.Role == ChatMessageRole.System);
         Icon = hasSystemPrompt ? FluentSymbol.ChatSparkle : FluentSymbol.Chat;
-        LastMessage = GetLastMessageText(payload);
-        Date = GetLastMessage(payload)?.Time.ToString("MM/dd") ?? string.Empty;
+        LastMessage = GetLastMessageText(session);
+        Date = GetLastMessage(session)?.Time.ToString("MM/dd") ?? string.Empty;
     }
 
-    /// <summary>
-    /// 获取原始数据.
-    /// </summary>
-    /// <returns>会话数据.</returns>
-    public ChatSession GetData()
-        => _payload;
+    /// <inheritdoc/>
+    public override bool Equals(object obj) => obj is ChatSessionItemViewModel model && Id == model.Id;
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) => obj is ChatSessionItemViewModel model && EqualityComparer<ChatSession>.Default.Equals(_payload, model._payload);
+    public override int GetHashCode() => HashCode.Combine(Id);
 
-    /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(_payload);
-
-    private static string GetDefaultTitle(ChatSession payload)
+    private static string GetLastMessageText(ChatSession session)
     {
-        var lastMsg = GetLastMessage(payload);
-        return lastMsg is null
-            ? ResourceToolkit.GetLocalizedString(StringNames.Session) + " - " + payload.Id
-            : ResourceToolkit.GetLocalizedString(StringNames.Session) + " - " + lastMsg.Time.ToString("yyyyMMddHHmmss");
-    }
-
-    private static string GetLastMessageText(ChatSession payload)
-    {
-        var lastMsg = GetLastMessage(payload);
+        var lastMsg = GetLastMessage(session);
         if (lastMsg == null)
         {
             return ResourceToolkit.GetLocalizedString(StringNames.NoMessage);
@@ -85,8 +80,8 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     /// <summary>
     /// 获取最后一条消息.
     /// </summary>
-    /// <param name="payload">会话数据.</param>
+    /// <param name="session">会话数据.</param>
     /// <returns><see cref="ChatMessage"/>.</returns>
-    private static ChatMessage GetLastMessage(ChatSession payload)
-        => payload.Messages.OrderByDescending(p => p.Time).FirstOrDefault();
+    private static ChatMessage GetLastMessage(ChatSession session)
+        => session.Messages.OrderByDescending(p => p.Time).FirstOrDefault();
 }

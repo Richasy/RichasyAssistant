@@ -7,12 +7,12 @@ namespace RichasyAssistant.App.Controls.Items;
 /// <summary>
 /// 会话项.
 /// </summary>
-public sealed partial class ChatSessionItem : ChatSessionItemBase
+public sealed partial class ChatSessionItemControl : ChatSessionItemControlBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ChatSessionItem"/> class.
+    /// Initializes a new instance of the <see cref="ChatSessionItemControl"/> class.
     /// </summary>
-    public ChatSessionItem() => InitializeComponent();
+    public ChatSessionItemControl() => InitializeComponent();
 
     /// <summary>
     /// 点击.
@@ -26,6 +26,6 @@ public sealed partial class ChatSessionItem : ChatSessionItemBase
 /// <summary>
 /// 会话项基类.
 /// </summary>
-public abstract class ChatSessionItemBase : ReactiveUserControl<ChatSessionItemViewModel>
+public abstract class ChatSessionItemControlBase : ReactiveUserControl<ChatSessionItemViewModel>
 {
 }

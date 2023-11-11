@@ -33,19 +33,22 @@
     <None Remove="Assets\Icons\translate.png" />
     <None Remove="Assets\logo.ico" />
     <None Remove="Assets\logo.png" />
-    <None Remove="Controls\Components\SlimChatSessionPanel.xaml" />
+    <None Remove="Assets\openai_black.png" />
+    <None Remove="Assets\openai_white.png" />
+    <None Remove="Controls\Components\AppTitleBar.xaml" />
+    <None Remove="Controls\Components\ChatListPanel.xaml" />
+    <None Remove="Controls\Components\ChatSessionPanel.xaml" />
+    <None Remove="Controls\Components\NavigationPanel.xaml" />
     <None Remove="Controls\Components\SlimTranslationPanel.xaml" />
     <None Remove="Controls\EmptyHolder.xaml" />
-    <None Remove="Controls\Items\ChatSessionItem.xaml" />
-    <None Remove="Controls\Items\FeatureItem.xaml" />
-    <None Remove="Controls\Items\SlimChatMessageItem.xaml" />
+    <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
+    <None Remove="Controls\Items\ChatSessionItemControl.xaml" />
+    <None Remove="Controls\Items\NavigateItemControl.xaml" />
     <None Remove="Controls\LoadingOverlapper.xaml" />
     <None Remove="Controls\StatusTip.xaml" />
     <None Remove="Controls\TipPopup.xaml" />
-    <None Remove="Forms\MiniWindow.xaml" />
     <None Remove="Forms\WelcomeWindow.xaml" />
     <None Remove="Pages\ChatPage.xaml" />
-    <None Remove="Pages\MiniPage.xaml" />
     <None Remove="Pages\WelcomePage.xaml" />
     <None Remove="Styles\Overwrites.xaml" />
     <None Remove="Controls\ImageEx\ImageEx.xaml" />
@@ -67,6 +70,7 @@
     <PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.18" />
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.231030-build.1587" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.0.231003-build.754" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -95,16 +99,6 @@
     <ProjectReference Include="..\Models\Models.Constants\Models.Constants.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Pages\MiniPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Forms\MiniWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Controls\ImageEx\ImageEx.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,22 +114,28 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Components\NavigationPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Components\AppTitleBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Items\NavigateItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\ChatPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Components\SlimTranslationPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Components\SlimChatSessionPanel.xaml">
+    <Page Update="Controls\Components\ChatSessionPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Items\SlimChatMessageItem.xaml">
+    <Page Update="Controls\Items\ChatMessageItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Items\ChatSessionItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Items\FeatureItem.xaml">
+    <Page Update="Controls\Items\ChatSessionItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="NLog.config">
@@ -184,4 +184,10 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Controls\Components\ChatListPanel.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="Controls\Components\ChatListPanel.xaml" />
+  </ItemGroup>
 </Project>

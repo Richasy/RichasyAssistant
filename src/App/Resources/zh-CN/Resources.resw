@@ -141,6 +141,9 @@
   <data name="Assistant" xml:space="preserve">
     <value>助理</value>
   </data>
+  <data name="AttachImage" xml:space="preserve">
+    <value>附加照片</value>
+  </data>
   <data name="AutoDetect" xml:space="preserve">
     <value>自动检测</value>
   </data>
@@ -176,6 +179,12 @@
   </data>
   <data name="BaiduTranslateTip" xml:space="preserve">
     <value>如果你注册了百度翻译开放平台，请将你的应用信息填入下面的表单，应用会使用 百度翻译 作为你的默认翻译服务</value>
+  </data>
+  <data name="BeginChat" xml:space="preserve">
+    <value>开始对话吧！</value>
+  </data>
+  <data name="BeginChatDescription" xml:space="preserve">
+    <value>创建或打开一个会话，然后开始聊天吧！</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
@@ -231,6 +240,12 @@
   <data name="FolderMustEmpty" xml:space="preserve">
     <value>您必须选择一个空文件夹</value>
   </data>
+  <data name="FrequencyPenalty" xml:space="preserve">
+    <value>文本重复</value>
+  </data>
+  <data name="FrequencyPenaltyDescription" xml:space="preserve">
+    <value>值越高，则后续产生的文本越不容易出现重复字符</value>
+  </data>
   <data name="GenerateResponseCancelled" xml:space="preserve">
     <value>已停止生成响应</value>
   </data>
@@ -255,8 +270,17 @@
   <data name="LoadingAndWait" xml:space="preserve">
     <value>加载中，请稍后</value>
   </data>
+  <data name="MaximumResponseTokens" xml:space="preserve">
+    <value>输出令牌最大值</value>
+  </data>
+  <data name="MaximumResponseTokensDescription" xml:space="preserve">
+    <value>大约4个字符为1个令牌</value>
+  </data>
   <data name="Me" xml:space="preserve">
     <value>我</value>
+  </data>
+  <data name="ModelConfiguration" xml:space="preserve">
+    <value>模型配置</value>
   </data>
   <data name="ModelName" xml:space="preserve">
     <value>模型名称</value>
@@ -278,6 +302,9 @@
   </data>
   <data name="NoMessageDescription" xml:space="preserve">
     <value>在下方的文本框中输入内容发送消息吧！</value>
+  </data>
+  <data name="NoName" xml:space="preserve">
+    <value>未命名</value>
   </data>
   <data name="NoSession" xml:space="preserve">
     <value>暂无可用的会话</value>
@@ -306,6 +333,12 @@
   <data name="OrganizationPlaceholderText" xml:space="preserve">
     <value>填写组织名称</value>
   </data>
+  <data name="PresencePenalty" xml:space="preserve">
+    <value>话题重复</value>
+  </data>
+  <data name="PresencePenaltyDescription" xml:space="preserve">
+    <value>值越高，则后续文本越容易讨论新的话题</value>
+  </data>
   <data name="PresetSession" xml:space="preserve">
     <value>预设会话</value>
   </data>
@@ -324,17 +357,38 @@
   <data name="RegionPlaceholderText" xml:space="preserve">
     <value>服务所在地区</value>
   </data>
+  <data name="Repeatability" xml:space="preserve">
+    <value>重复度</value>
+  </data>
+  <data name="RepeatabilityDescription" xml:space="preserve">
+    <value>控制模型对文字或话题的重复度</value>
+  </data>
   <data name="Resent" xml:space="preserve">
     <value>重新发送</value>
   </data>
   <data name="Retry" xml:space="preserve">
     <value>重试</value>
   </data>
+  <data name="Sampling" xml:space="preserve">
+    <value>采样</value>
+  </data>
+  <data name="SamplingDescription" xml:space="preserve">
+    <value>设置采样参数，以此决定答案的随机性</value>
+  </data>
   <data name="SearchByName" xml:space="preserve">
     <value>按名称搜索</value>
   </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>发送消息</value>
+  </data>
   <data name="Session" xml:space="preserve">
     <value>会话</value>
+  </data>
+  <data name="SessionOption" xml:space="preserve">
+    <value>会话设置</value>
+  </data>
+  <data name="SessionTitle" xml:space="preserve">
+    <value>会话标题</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
@@ -351,11 +405,20 @@
   <data name="Speech" xml:space="preserve">
     <value>语音</value>
   </data>
+  <data name="SpeechInput" xml:space="preserve">
+    <value>语音输入</value>
+  </data>
   <data name="Storage" xml:space="preserve">
     <value>文件</value>
   </data>
   <data name="TargetLanguage" xml:space="preserve">
     <value>目标语言</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="TemperatureDescription" xml:space="preserve">
+    <value>控制随机性，降低 temperature 会导致更少的随机完成。</value>
   </data>
   <data name="TextCompletionModelName" xml:space="preserve">
     <value>文本完成模型名称</value>
@@ -365,6 +428,12 @@
   </data>
   <data name="TextTranslate" xml:space="preserve">
     <value>文本翻译</value>
+  </data>
+  <data name="TopP" xml:space="preserve">
+    <value>Top-P</value>
+  </data>
+  <data name="TopPDescription" xml:space="preserve">
+    <value>通过核采样控制多样性</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻译</value>

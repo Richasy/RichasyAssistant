@@ -9,46 +9,17 @@ namespace RichasyAssistant.App.Controls.Components;
 /// <summary>
 /// 简化的聊天会话面板.
 /// </summary>
-public sealed partial class SlimChatSessionPanel : ChatSessionPanelBase
+public sealed partial class ChatSessionPanel : ChatSessionPanelBase
 {
     /// <summary>
-    /// <see cref="LeftElement"/> 的依赖属性.
+    /// Initializes a new instance of the <see cref="ChatSessionPanel"/> class.
     /// </summary>
-    public static readonly DependencyProperty LeftElementProperty =
-        DependencyProperty.Register(nameof(LeftElement), typeof(object), typeof(SlimChatSessionPanel), new PropertyMetadata(default));
-
-    /// <summary>
-    /// <see cref="RightElement"/> 的依赖属性.
-    /// </summary>
-    public static readonly DependencyProperty RightElementProperty =
-        DependencyProperty.Register(nameof(RightElement), typeof(object), typeof(SlimChatSessionPanel), new PropertyMetadata(default));
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SlimChatSessionPanel"/> class.
-    /// </summary>
-    public SlimChatSessionPanel()
+    public ChatSessionPanel()
     {
         InitializeComponent();
         RegisterPropertyChangedCallback(VisibilityProperty, OnVisibilityChanged);
         Loaded += OnLoaded;
-    }
-
-    /// <summary>
-    /// 头部左侧插件.
-    /// </summary>
-    public object LeftElement
-    {
-        get => (object)GetValue(LeftElementProperty);
-        set => SetValue(LeftElementProperty, value);
-    }
-
-    /// <summary>
-    /// 头部右侧插件.
-    /// </summary>
-    public object RightElement
-    {
-        get => (object)GetValue(RightElementProperty);
-        set => SetValue(RightElementProperty, value);
+        Unloaded += OnUnloaded;
     }
 
     /// <summary>
@@ -71,11 +42,15 @@ public sealed partial class SlimChatSessionPanel : ChatSessionPanelBase
 
         var vm = e.NewValue as ChatSessionViewModel;
         vm.RequestScrollToBottom += OnRequestScrollToBottomAsync;
+        vm.RequestFocusInput += OnRequestFocusInput;
         if (IsLoaded)
         {
             ResetFocus();
         }
     }
+
+    private void OnRequestFocusInput(object sender, EventArgs e)
+        => ResetFocus();
 
     private async void OnRequestScrollToBottomAsync(object sender, EventArgs e)
     {
@@ -88,6 +63,12 @@ public sealed partial class SlimChatSessionPanel : ChatSessionPanelBase
 
     private void OnLoaded(object sender, RoutedEventArgs e)
         => ResetFocus();
+
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.RequestFocusInput -= OnRequestFocusInput;
+        ViewModel.RequestScrollToBottom -= OnRequestScrollToBottomAsync;
+    }
 
     private void OnInputBoxKeyDown(object sender, KeyRoutedEventArgs e)
     {

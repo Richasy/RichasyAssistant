@@ -65,4 +65,7 @@ public enum SettingNames
     LastWindowHeight,
     IsWindowMaximized,
     LastOpenedPage,
+    ChatListColumnWidth,
+    ChatListType,
+    LastOpenSessionId,
 }

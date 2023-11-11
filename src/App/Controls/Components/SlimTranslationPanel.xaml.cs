@@ -16,13 +16,13 @@ public sealed partial class SlimTranslationPanel : TranslationPanelBase
     /// <see cref="LeftElement"/> 的依赖属性.
     /// </summary>
     public static readonly DependencyProperty LeftElementProperty =
-        DependencyProperty.Register(nameof(LeftElement), typeof(object), typeof(SlimChatSessionPanel), new PropertyMetadata(default));
+        DependencyProperty.Register(nameof(LeftElement), typeof(object), typeof(ChatSessionPanel), new PropertyMetadata(default));
 
     /// <summary>
     /// <see cref="RightElement"/> 的依赖属性.
     /// </summary>
     public static readonly DependencyProperty RightElementProperty =
-        DependencyProperty.Register(nameof(RightElement), typeof(object), typeof(SlimChatSessionPanel), new PropertyMetadata(default));
+        DependencyProperty.Register(nameof(RightElement), typeof(object), typeof(ChatSessionPanel), new PropertyMetadata(default));
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SlimTranslationPanel"/> class.

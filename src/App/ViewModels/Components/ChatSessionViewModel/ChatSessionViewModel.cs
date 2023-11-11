@@ -32,27 +32,35 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void Initialize(ChatKernel kernel)
+    private async Task InitializeAsync(ChatSessionItemViewModel item)
     {
+        if (_itemRef != null && IsInSettings)
+        {
+            await ExitSettingsAsync();
+        }
+
+        _itemRef = item;
         TryClear(Messages);
         UserInput = string.Empty;
-        _kernel = kernel;
+        _kernel = ChatKernel.Create(item.Id);
         UserInput = string.Empty;
         ErrorText = string.Empty;
         Name = string.IsNullOrEmpty(_kernel.Session.Title)
-            ? ResourceToolkit.GetLocalizedString(StringNames.NewSession)
+            ? ResourceToolkit.GetLocalizedString(StringNames.NoName)
             : _kernel.Session.Title;
 
-        if (kernel.Session.Messages?.Any() == true)
+        if (_kernel.Session.Messages?.Any() == true)
         {
-            foreach (var message in kernel.Session.Messages)
+            foreach (var message in _kernel.Session.Messages)
             {
                 var vm = new ChatMessageItemViewModel(message);
                 Messages.Add(vm);
             }
         }
 
+        IsReady = true;
         CheckChatEmpty();
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
     }
 
     [RelayCommand]
@@ -80,18 +88,11 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                     _dispatcherQueue.TryEnqueue(async () =>
                     {
                         Messages.Add(new ChatMessageItemViewModel(userMsg));
+                        _itemRef.Update();
+                        RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
                         if (Messages.Count <= 2)
                         {
-                            var needGenerateTitle = SettingsToolkit.ReadLocalSetting(SettingNames.IsAutoGenerateSessionTitle, true)
-                                && string.IsNullOrEmpty(_kernel.Session.Title);
-                            if (needGenerateTitle)
-                            {
-                                var title = await _kernel.TryGenerateTitleAsync();
-                                if (!string.IsNullOrEmpty(title))
-                                {
-                                    Name = title;
-                                }
-                            }
+                            await CheckAutoGenerateTitleAsync();
                         }
                     });
                 },
@@ -104,6 +105,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 },
                 _cancellationTokenSource.Token);
             Messages.Add(new ChatMessageItemViewModel(response));
+            _itemRef.Update();
             TempMessage = string.Empty;
         }
         else
@@ -112,16 +114,23 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 msg,
                 userMsg =>
                 {
-                    _dispatcherQueue.TryEnqueue(() =>
+                    _dispatcherQueue.TryEnqueue(async () =>
                     {
                         Messages.Add(new ChatMessageItemViewModel(userMsg));
                         RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
+                        _itemRef.Update();
+                        if (Messages.Count <= 2)
+                        {
+                            await CheckAutoGenerateTitleAsync();
+                        }
                     });
                 },
                 _cancellationTokenSource.Token);
             Messages.Add(new ChatMessageItemViewModel(response));
+            _itemRef.Update();
         }
 
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
         _cancellationTokenSource = null;
     }
 
@@ -148,6 +157,8 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 await ChatDataService.DeleteMessageAsync(_kernel.SessionId, lastUserMsg.GetData().Id);
             });
         }
+
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
     }
 
     [RelayCommand]
@@ -157,6 +168,63 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         TryClear(Messages);
         UserInput = string.Empty;
         await ChatDataService.ClearMessageAsync(_kernel.SessionId);
+        _itemRef.Update();
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
+    }
+
+    [RelayCommand]
+    private void EnterSettings()
+    {
+        var session = ChatDataService.GetSession(_itemRef.Id);
+        var options = session.Options;
+        Name = session.Title;
+        MaxTokens = options.MaxResponseTokens;
+        TopP = options.TopP;
+        Temperature = options.Temperature;
+        FrequencyPenalty = options.FrequencyPenalty;
+        PresencePenalty = options.PresencePenalty;
+        IsInSettings = true;
+    }
+
+    [RelayCommand]
+    private async Task ExitSettingsAsync()
+    {
+        var session = ChatDataService.GetSession(_itemRef.Id);
+        var options = session.Options;
+        options.MaxResponseTokens = Convert.ToInt32(MaxTokens);
+        options.Temperature = Temperature;
+        options.TopP = TopP;
+        options.FrequencyPenalty = FrequencyPenalty;
+        options.PresencePenalty = PresencePenalty;
+
+        session.Title = Name;
+        await ChatDataService.AddOrUpdateSessionAsync(session);
+
+        _itemRef.Update();
+        Name = string.IsNullOrEmpty(_kernel.Session.Title)
+            ? ResourceToolkit.GetLocalizedString(StringNames.NoName)
+            : _kernel.Session.Title;
+        IsInSettings = false;
+    }
+
+    [RelayCommand]
+    private void Reset()
+    {
+        _itemRef = null;
+        _kernel = null;
+        IsReady = false;
+        IsChatEmpty = true;
+        IsInSettings = false;
+        ErrorText = string.Empty;
+        UserInput = string.Empty;
+        TempMessage = string.Empty;
+        Name = string.Empty;
+        MaxTokens = 0;
+        TopP = 0;
+        Temperature = 0;
+        FrequencyPenalty = 0;
+        PresencePenalty = 0;
+        TryClear(Messages);
     }
 
     private void HandleException(Exception ex)
@@ -192,5 +260,27 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         }
 
         CheckChatEmpty();
+    }
+
+    private async Task CheckAutoGenerateTitleAsync()
+    {
+        var needGenerateTitle = SettingsToolkit.ReadLocalSetting(SettingNames.IsAutoGenerateSessionTitle, true)
+            && string.IsNullOrEmpty(_kernel.Session.Title);
+        if (needGenerateTitle)
+        {
+            var title = await _kernel.TryGenerateTitleAsync();
+            if (!string.IsNullOrEmpty(title))
+            {
+                Name = title;
+            }
+        }
+    }
+
+    partial void OnNameChanged(string value)
+    {
+        if (_itemRef != null)
+        {
+            _itemRef.Title = value;
+        }
     }
 }

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:ChatMessageItemControlBase
+    x:Class="RichasyAssistant.App.Controls.Items.ChatMessageItemControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Controls.Items"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid ColumnSpacing="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="LeftColumn" Width="*" />
+            <ColumnDefinition x:Name="RightColumn" Width="0.2*" />
+        </Grid.ColumnDefinitions>
+        <controls:CardPanel
+            x:Name="RootCard"
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            DisabledBackground="Transparent"
+            PointerOverBackground="Transparent"
+            PressedBackground="Transparent"
+            StateChanged="OnRootCardStateChanged"
+            StrokeThickness="0">
+            <Grid HorizontalAlignment="Left" ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <controls:ImageEx
+                    x:Name="AvatarImage"
+                    Width="28"
+                    Height="28"
+                    Margin="0,4,0,0"
+                    VerticalAlignment="Top"
+                    Background="{ThemeResource AppBarBackgroundThemeBrush}"
+                    CornerRadius="16"
+                    PlaceholderSource="{ThemeResource OpenAILogo}"
+                    PlaceholderStretch="Uniform"
+                    Stretch="UniformToFill" />
+
+                <Grid
+                    x:Name="MessageContainer"
+                    Grid.Column="1"
+                    RowSpacing="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Rectangle
+                        x:Name="MessageBackground"
+                        Fill="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        RadiusX="4"
+                        RadiusY="4"
+                        Stroke="{ThemeResource ControlStrokeColorDefaultBrush}"
+                        StrokeThickness="1" />
+                    <Grid Padding="12,8">
+                        <TextBlock
+                            x:Name="PlainMessageBlock"
+                            Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind ViewModel.Content, Mode=OneWay}"
+                            TextWrapping="Wrap" />
+                    </Grid>
+
+                    <TextBlock
+                        x:Name="TimeBlock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        FontSize="10"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Time, Mode=OneWay}" />
+                </Grid>
+
+            </Grid>
+        </controls:CardPanel>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualStateGroup.States>
+                    <VisualState x:Name="AssistantState" />
+                    <VisualState x:Name="MyState">
+                        <VisualState.Setters>
+                            <Setter Target="MessageBackground.Fill" Value="{ThemeResource AccentFillColorDefaultBrush}" />
+                            <Setter Target="MessageBackground.Stroke" Value="{ThemeResource ControlStrokeColorOnAccentDefaultBrush}" />
+                            <Setter Target="PlainMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                            <Setter Target="LeftColumn.Width" Value="0.2*" />
+                            <Setter Target="RightColumn.Width" Value="*" />
+                            <Setter Target="RootCard.(Grid.Column)" Value="1" />
+                            <Setter Target="RootCard.HorizontalAlignment" Value="Right" />
+                            <Setter Target="TimeBlock.HorizontalAlignment" Value="Right" />
+                            <Setter Target="AvatarImage.(Grid.Column)" Value="1" />
+                            <Setter Target="AvatarImage.Visibility" Value="Collapsed" />
+                            <Setter Target="MessageContainer.(Grid.Column)" Value="0" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup.States>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+
+
+</local:ChatMessageItemControlBase>

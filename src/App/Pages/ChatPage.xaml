@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Page
+<local:ChatPageBase
     x:Class="RichasyAssistant.App.Pages.ChatPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:components="using:RichasyAssistant.App.Controls.Components"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:items="using:RichasyAssistant.App.Controls.Items"
+    xmlns:items1="using:RichasyAssistant.App.ViewModels.Items"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid />
-</Page>
+    <Grid>
+        <Grid Visibility="{x:Bind ViewModel.InitializeErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}">
+            <Grid
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                CornerRadius="4,0,0,0"
+                Visibility="{x:Bind ViewModel.IsInitializing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid Width="{x:Bind ViewModel.ListColumnWidth, Mode=OneWay}">
+                    <components:ChatListPanel Margin="0,0,-12,0" ViewModel="{x:Bind ViewModel}" />
+                </Grid>
+                <community:PropertySizer
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Binding="{x:Bind ViewModel.ListColumnWidth, Mode=TwoWay}"
+                    Maximum="360"
+                    Minimum="240" />
+                <components:ChatSessionPanel Grid.Column="2" ViewModel="{x:Bind ViewModel.SessionDetail, Mode=OneWay}" />
+            </Grid>
+            <controls:LoadingOverlapper IsOpen="{x:Bind ViewModel.IsInitializing, Mode=OneWay}" Text="{ext:Locale Name=LoadingAndWait}" />
+        </Grid>
+        <controls:EmptyHolder
+            Title="{ext:Locale Name=SomethingWrong}"
+            Description="{x:Bind ViewModel.InitializeErrorText, Mode=OneWay}"
+            Emoji="&#x1F631;"
+            Style="{StaticResource BasicEmptyHolderStyle}"
+            Visibility="{x:Bind ViewModel.InitializeErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+    </Grid>
+
+</local:ChatPageBase>

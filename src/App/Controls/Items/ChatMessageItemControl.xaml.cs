@@ -7,12 +7,12 @@ namespace RichasyAssistant.App.Controls.Items;
 /// <summary>
 /// 聊天消息条目.
 /// </summary>
-public sealed partial class SlimChatMessageItem : ChatMessageItemBase
+public sealed partial class ChatMessageItemControl : ChatMessageItemControlBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="SlimChatMessageItem"/> class.
+    /// Initializes a new instance of the <see cref="ChatMessageItemControl"/> class.
     /// </summary>
-    public SlimChatMessageItem() => InitializeComponent();
+    public ChatMessageItemControl() => InitializeComponent();
 
     internal override void OnViewModelChanged(DependencyPropertyChangedEventArgs e)
     {
@@ -41,6 +41,6 @@ public sealed partial class SlimChatMessageItem : ChatMessageItemBase
 /// <summary>
 /// 聊天消息基类.
 /// </summary>
-public abstract class ChatMessageItemBase : ReactiveUserControl<ChatMessageItemViewModel>
+public abstract class ChatMessageItemControlBase : ReactiveUserControl<ChatMessageItemViewModel>
 {
 }

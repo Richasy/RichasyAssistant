@@ -29,4 +29,9 @@ public sealed partial class MainViewModel
     /// 设置项.
     /// </summary>
     public NavigateItemViewModel SettingsItem { get; }
+
+    /// <summary>
+    /// 当前功能.
+    /// </summary>
+    public FeatureType CurrentFeature { get; private set; }
 }

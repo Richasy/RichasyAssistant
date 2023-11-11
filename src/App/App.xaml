@@ -14,6 +14,18 @@
                 <ResourceDictionary Source="ms-appx:///Styles/Overwrites.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_black.png" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_white.png" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_white.png" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityReverseConverter" IsReverse="True" />
             <converters:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
