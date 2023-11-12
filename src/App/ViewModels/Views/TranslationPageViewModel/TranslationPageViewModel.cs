@@ -2,57 +2,61 @@
 
 using System.Globalization;
 using System.Threading;
-using RichasyAssistant.Libs.Translate;
+using RichasyAssistant.Libs.Kernel.Translation;
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Kernel;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace RichasyAssistant.App.ViewModels.Components;
 
 /// <summary>
 /// 翻译视图模型.
 /// </summary>
-public sealed partial class TranslationViewModel : ViewModelBase
+public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposable
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="TranslationViewModel"/> class.
+    /// Initializes a new instance of the <see cref="TranslationPageViewModel"/> class.
     /// </summary>
-    public TranslationViewModel()
+    public TranslationPageViewModel()
     {
         SourceLanguages = new ObservableCollection<Metadata>();
         TargetLanguages = new ObservableCollection<Metadata>();
 
-        AttachIsRunningToAsyncCommand(p => IsInitializing = p, InitializeCommand, ReloadCommand);
+        SourceFontSize = 20;
+        OutputFontSize = 20;
+
+        AttachIsRunningToAsyncCommand(p => IsInitializing = p, InitializeCommand);
         AttachIsRunningToAsyncCommand(p => IsTranslating = p, TranslateCommand);
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        SourceLanguages.Clear();
+        TargetLanguages.Clear();
+        Cancel();
+        _kernel?.Dispose();
+        _kernel = default;
     }
 
     [RelayCommand]
     private async Task InitializeAsync()
     {
-        if (IsInitialized)
+        if (_kernel != null)
         {
             return;
         }
 
-        if (AppViewModel.Instance.TranslateClient == null)
-        {
-            AppViewModel.Instance.TranslateClient = new TranslateClient();
-        }
+        var serviceName = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultTranslate, TranslateType.Azure) == TranslateType.Azure
+            ? ResourceToolkit.GetLocalizedString(StringNames.AzureTranslate)
+            : ResourceToolkit.GetLocalizedString(StringNames.BaiduTranslate);
+        PoweredBy = string.Format(ResourceToolkit.GetLocalizedString(StringNames.PoweredBy), serviceName);
 
-        await AppViewModel.Instance.TranslateClient.InitializeAsync();
-        IsAvailable = AppViewModel.Instance.TranslateClient.IsConfigValid;
+        await TranslationDataService.InitializeAsync();
+        _kernel = TranslationKernel.Create();
+        IsAvailable = _kernel.IsConfigValid;
         await LoadLanguagesAsync();
         IsInitialized = true;
-    }
-
-    [RelayCommand]
-    private async Task ReloadAsync()
-    {
-        if (!IsInitialized)
-        {
-            return;
-        }
-
-        await AppViewModel.Instance.TranslateClient.InitializeAsync();
-        await LoadLanguagesAsync();
     }
 
     [RelayCommand]
@@ -71,7 +75,7 @@ public sealed partial class TranslationViewModel : ViewModelBase
         {
             Cancel();
             _cancellationTokenSource = new CancellationTokenSource();
-            var content = await AppViewModel.Instance.TranslateClient.TranslateTextAsync(
+            var content = await _kernel.TranslateTextAsync(
                 SourceText,
                 SourceLanguage.Id,
                 TargetLanguage.Id,
@@ -92,16 +96,28 @@ public sealed partial class TranslationViewModel : ViewModelBase
     [RelayCommand]
     private void Cancel()
     {
-        if (_cancellationTokenSource != null
-                && _cancellationTokenSource.Token.CanBeCanceled)
+        _cancellationTokenSource?.Cancel();
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = default;
+    }
+
+    [RelayCommand]
+    private void CopyOutput()
+    {
+        if (string.IsNullOrEmpty(OutputText))
         {
-            _cancellationTokenSource.Cancel();
+            return;
         }
+
+        var dp = new DataPackage();
+        dp.SetText(OutputText);
+        Clipboard.SetContent(dp);
+        AppViewModel.Instance.ShowTip(StringNames.Copied, InfoType.Success);
     }
 
     private async Task LoadLanguagesAsync()
     {
-        var languages = await AppViewModel.Instance.TranslateClient.GetLanguagesAsync();
+        var languages = await _kernel.GetLanguagesAsync();
         var localLocale = languages.FirstOrDefault(p => p.Id == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
         var localSourceLanguage = SettingsToolkit.ReadLocalSetting(SettingNames.TranslationSourceLanguage, string.Empty);
         var localTargetLanguage = SettingsToolkit.ReadLocalSetting(SettingNames.TranslationTargetLanguage, localLocale?.Id ?? "en");
@@ -141,4 +157,13 @@ public sealed partial class TranslationViewModel : ViewModelBase
             TranslateCommand.Execute(default);
         }
     }
+
+    partial void OnSourceTextChanged(string value)
+    {
+        SourceCharacterCount = value.Length;
+        SourceFontSize = SourceCharacterCount < 200 ? 20 : 16;
+    }
+
+    partial void OnOutputTextChanged(string value)
+        => OutputFontSize = value.Length < 400 ? 20 : 16;
 }

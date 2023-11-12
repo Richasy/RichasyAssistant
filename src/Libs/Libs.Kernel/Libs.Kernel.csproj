@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.AI.Translation.Text" Version="1.0.0-beta.1" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.0.0-beta6" />
   </ItemGroup>
 

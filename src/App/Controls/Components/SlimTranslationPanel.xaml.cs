@@ -59,7 +59,7 @@ public sealed partial class SlimTranslationPanel : TranslationPanelBase
 
     internal override void OnViewModelChanged(DependencyPropertyChangedEventArgs e)
     {
-        if (e.OldValue is TranslationViewModel oldVM)
+        if (e.OldValue is TranslationPageViewModel oldVM)
         {
             oldVM.PropertyChanged -= OnViewModelPropertyChangedAsync;
         }
@@ -69,7 +69,7 @@ public sealed partial class SlimTranslationPanel : TranslationPanelBase
             return;
         }
 
-        var vm = e.NewValue as TranslationViewModel;
+        var vm = e.NewValue as TranslationPageViewModel;
         vm.PropertyChanged += OnViewModelPropertyChangedAsync;
         if (IsLoaded)
         {
@@ -112,6 +112,6 @@ public sealed partial class SlimTranslationPanel : TranslationPanelBase
 /// <summary>
 /// 翻译面板基类.
 /// </summary>
-public abstract class TranslationPanelBase : ReactiveUserControl<TranslationViewModel>
+public abstract class TranslationPanelBase : ReactiveUserControl<TranslationPageViewModel>
 {
 }

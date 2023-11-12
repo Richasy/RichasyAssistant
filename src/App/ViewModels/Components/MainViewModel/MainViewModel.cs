@@ -43,9 +43,9 @@ public sealed partial class MainViewModel
         var pageType = type switch
         {
             FeatureType.Chat => typeof(ChatPage),
+            FeatureType.Translate => typeof(TranslationPage),
 
             // FeatureType.Draw => typeof(DrawPage),
-            // FeatureType.Translate => typeof(TranslatePage),
             // FeatureType.Speech => typeof(SpeechPage),
             // FeatureType.Storage => typeof(StoragePage),
             // FeatureType.Settings => typeof(SettingsPage),

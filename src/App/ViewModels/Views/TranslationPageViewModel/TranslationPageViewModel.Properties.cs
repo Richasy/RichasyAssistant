@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Threading;
+using RichasyAssistant.Libs.Kernel.Translation;
 using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Components;
@@ -8,8 +9,9 @@ namespace RichasyAssistant.App.ViewModels.Components;
 /// <summary>
 /// 翻译视图模型.
 /// </summary>
-public sealed partial class TranslationViewModel
+public sealed partial class TranslationPageViewModel
 {
+    private TranslationKernel _kernel;
     private CancellationTokenSource _cancellationTokenSource;
 
     [ObservableProperty]
@@ -38,6 +40,18 @@ public sealed partial class TranslationViewModel
 
     [ObservableProperty]
     private bool _isAvailable;
+
+    [ObservableProperty]
+    private string _poweredBy;
+
+    [ObservableProperty]
+    private int _sourceCharacterCount;
+
+    [ObservableProperty]
+    private int _sourceFontSize;
+
+    [ObservableProperty]
+    private int _outputFontSize;
 
     /// <summary>
     /// 源语言列表.
