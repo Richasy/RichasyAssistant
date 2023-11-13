@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Threading;
+using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.Libs.Kernel.Translation;
 using RichasyAssistant.Models.App.Kernel;
 
@@ -53,6 +54,15 @@ public sealed partial class TranslationPageViewModel
     [ObservableProperty]
     private int _outputFontSize;
 
+    [ObservableProperty]
+    private bool _isHistoryEmpty;
+
+    [ObservableProperty]
+    private int _historyPageIndex;
+
+    [ObservableProperty]
+    private bool _historyHasMore;
+
     /// <summary>
     /// 源语言列表.
     /// </summary>
@@ -62,4 +72,9 @@ public sealed partial class TranslationPageViewModel
     /// 目标语言列表.
     /// </summary>
     public ObservableCollection<Metadata> TargetLanguages { get; }
+
+    /// <summary>
+    /// 历史记录.
+    /// </summary>
+    public ObservableCollection<TranslationRecordItemViewModel> History { get; }
 }

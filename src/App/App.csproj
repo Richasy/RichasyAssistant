@@ -39,11 +39,11 @@
     <None Remove="Controls\Components\ChatListPanel.xaml" />
     <None Remove="Controls\Components\ChatSessionPanel.xaml" />
     <None Remove="Controls\Components\NavigationPanel.xaml" />
-    <None Remove="Controls\Components\SlimTranslationPanel.xaml" />
     <None Remove="Controls\EmptyHolder.xaml" />
     <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
     <None Remove="Controls\Items\ChatSessionItemControl.xaml" />
     <None Remove="Controls\Items\NavigateItemControl.xaml" />
+    <None Remove="Controls\Items\TranslationRecordItemControl.xaml" />
     <None Remove="Controls\LoadingOverlapper.xaml" />
     <None Remove="Controls\StatusTip.xaml" />
     <None Remove="Controls\TipPopup.xaml" />
@@ -72,6 +72,8 @@
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.231030-build.1587" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.0.231003-build.754" />
+    <PackageReference Include="Humanizer.Core" Version="2.14.1" />
+    <PackageReference Include="Humanizer.Core.zh-CN" Version="2.14.1" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -114,6 +116,9 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Items\TranslationRecordItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\TranslationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,9 +132,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Pages\ChatPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Components\SlimTranslationPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Components\ChatSessionPanel.xaml">

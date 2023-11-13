@@ -67,6 +67,12 @@ public sealed partial class TranslationPage : TranslationPageBase
             }
         }
     }
+
+    private void OnHistoryButtonClick(object sender, RoutedEventArgs e)
+        => MainView.IsPaneOpen = !MainView.IsPaneOpen;
+
+    private void OnDeleteRecordClick(object sender, ViewModels.Items.TranslationRecordItemViewModel e)
+        => ViewModel.RemoveRecordCommand.Execute(e);
 }
 
 /// <summary>

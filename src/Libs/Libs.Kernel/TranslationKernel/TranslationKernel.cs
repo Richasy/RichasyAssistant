@@ -2,10 +2,8 @@
 
 using RichasyAssistant.Libs.Kernel.Translation.Services;
 using RichasyAssistant.Libs.Locator;
-using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
-using RichasyAssistant.Models.App.Translate;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Libs.Kernel.Translation;
@@ -77,16 +75,6 @@ public sealed class TranslationKernel : IDisposable
         }
 
         var text = await Service.TranslateTextAsync(input, sourceLanguageId, targetLanguageId, cancellationToken);
-
-        try
-        {
-            var record = new TranslationRecord(input, text, sourceLanguageId, targetLanguageId);
-            await TranslationDataService.AddRecordAsync(record);
-        }
-        catch (Exception)
-        {
-        }
-
         return text;
     }
 

@@ -68,4 +68,5 @@ public enum SettingNames
     ChatListColumnWidth,
     ChatListType,
     LastOpenSessionId,
+    RecordTranslationResult,
 }

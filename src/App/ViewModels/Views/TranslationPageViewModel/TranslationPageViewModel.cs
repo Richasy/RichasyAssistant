@@ -2,9 +2,11 @@
 
 using System.Globalization;
 using System.Threading;
+using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.Libs.Kernel.Translation;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Kernel;
+using RichasyAssistant.Models.App.Translate;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace RichasyAssistant.App.ViewModels.Components;
@@ -21,6 +23,7 @@ public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposabl
     {
         SourceLanguages = new ObservableCollection<Metadata>();
         TargetLanguages = new ObservableCollection<Metadata>();
+        History = new ObservableCollection<TranslationRecordItemViewModel>();
 
         SourceFontSize = 20;
         OutputFontSize = 20;
@@ -56,6 +59,7 @@ public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposabl
         _kernel = TranslationKernel.Create();
         IsAvailable = _kernel.IsConfigValid;
         await LoadLanguagesAsync();
+        LoadHistory(true);
         IsInitialized = true;
     }
 
@@ -82,6 +86,8 @@ public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposabl
                 _cancellationTokenSource.Token);
             _cancellationTokenSource = default;
             OutputText = content;
+
+            await TryAddRecordAsync();
         }
         catch (TaskCanceledException)
         {
@@ -115,6 +121,48 @@ public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposabl
         AppViewModel.Instance.ShowTip(StringNames.Copied, InfoType.Success);
     }
 
+    [RelayCommand]
+    private void LoadHistory(bool force = false)
+    {
+        if (!force && !HistoryHasMore)
+        {
+            return;
+        }
+
+        var hasMore = TranslationDataService.HasMoreHistory(HistoryPageIndex);
+        if (hasMore)
+        {
+            var list = TranslationDataService.GetHistory(HistoryPageIndex);
+            foreach (var item in list)
+            {
+                History.Add(new TranslationRecordItemViewModel(item));
+            }
+
+            HistoryPageIndex++;
+            HistoryHasMore = TranslationDataService.HasMoreHistory(HistoryPageIndex);
+        }
+
+        IsHistoryEmpty = History.Count == 0;
+    }
+
+    [RelayCommand]
+    private async Task ClearHistoryAsync()
+    {
+        await TranslationDataService.ClearHistoryAsync();
+        TryClear(History);
+        HistoryHasMore = false;
+        HistoryPageIndex = 0;
+        IsHistoryEmpty = true;
+    }
+
+    [RelayCommand]
+    private async Task RemoveRecordAsync(TranslationRecordItemViewModel item)
+    {
+        await TranslationDataService.RemoveRecordAsync(item.Data.Id);
+        History.Remove(item);
+        IsHistoryEmpty = History.Count == 0;
+    }
+
     private async Task LoadLanguagesAsync()
     {
         var languages = await _kernel.GetLanguagesAsync();
@@ -130,6 +178,25 @@ public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposabl
         SourceLanguages.Insert(0, new Metadata { Id = string.Empty, Value = ResourceToolkit.GetLocalizedString(StringNames.AutoDetect) });
         SourceLanguage = SourceLanguages.FirstOrDefault(p => p.Id == localSourceLanguage) ?? SourceLanguages[0];
         TargetLanguage = TargetLanguages.FirstOrDefault(p => p.Id == localTargetLanguage) ?? TargetLanguages.FirstOrDefault(p => p.Id.StartsWith("en"));
+    }
+
+    private async Task TryAddRecordAsync()
+    {
+        var shouldRecord = SettingsToolkit.ReadLocalSetting(SettingNames.RecordTranslationResult, true);
+        if (!shouldRecord)
+        {
+            return;
+        }
+
+        var record = new TranslationRecord(SourceText, OutputText, SourceLanguage.Id, TargetLanguage.Id);
+        await TranslationDataService.AddRecordAsync(record);
+        if (History.Count > 1)
+        {
+            History.RemoveAt(History.Count - 1);
+        }
+
+        History.Insert(0, new TranslationRecordItemViewModel(record));
+        IsHistoryEmpty = false;
     }
 
     partial void OnSourceLanguageChanged(Metadata value)

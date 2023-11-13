@@ -68,11 +68,27 @@ public static partial class TranslationDataService
     }
 
     /// <summary>
-    /// 获取历史记录.
+    /// 检查是否有更多历史记录.
     /// </summary>
+    /// <param name="page">页码.</param>
+    /// <returns>结果.</returns>
+    public static bool HasMoreHistory(int page)
+    {
+        var startIndex = page * 100;
+        return startIndex < _history.Count;
+    }
+
+    /// <summary>
+    /// 获取历史记录（分页）.
+    /// </summary>
+    /// <param name="page">页码（每页100个）.</param>
     /// <returns>历史记录.</returns>
-    public static List<TranslationRecord> GetHistory()
-        => _history;
+    public static List<TranslationRecord> GetHistory(int page)
+    {
+        return HasMoreHistory(page)
+            ? _history.Skip(page * 100).Take(100).ToList()
+            : (List<TranslationRecord>?)default;
+    }
 
     /// <summary>
     /// 添加新的语言列表.

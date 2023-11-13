@@ -201,6 +201,9 @@
   <data name="ChatModelPlaceholderText" xml:space="preserve">
     <value>部署的对话模型名称</value>
   </data>
+  <data name="ClearHistory" xml:space="preserve">
+    <value>清空历史记录</value>
+  </data>
   <data name="ClearMessage" xml:space="preserve">
     <value>清空消息</value>
   </data>
@@ -209,6 +212,12 @@
   </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
+  </data>
+  <data name="CopySourceContent" xml:space="preserve">
+    <value>复制输入内容</value>
+  </data>
+  <data name="CopyTranslationResult" xml:space="preserve">
+    <value>复制翻译结果</value>
   </data>
   <data name="CreateLibrary" xml:space="preserve">
     <value>创建存储库</value>
@@ -258,6 +267,9 @@
   <data name="GenerateResponseFailed" xml:space="preserve">
     <value>生成响应时出现异常</value>
   </data>
+  <data name="History" xml:space="preserve">
+    <value>历史记录</value>
+  </data>
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
   </data>
@@ -275,6 +287,9 @@
   </data>
   <data name="LoadingAndWait" xml:space="preserve">
     <value>加载中，请稍后</value>
+  </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>加载更多</value>
   </data>
   <data name="MaximumResponseTokens" xml:space="preserve">
     <value>输出令牌最大值</value>
@@ -314,6 +329,9 @@
   </data>
   <data name="NoSession" xml:space="preserve">
     <value>暂无可用的会话</value>
+  </data>
+  <data name="NoTranslationHistory" xml:space="preserve">
+    <value>没有翻译记录</value>
   </data>
   <data name="OpenAIDallETip" xml:space="preserve">
     <value>如果你正在使用 Open AI DALL·E 服务，请在下方填写你的令牌信息，应用将通过 DALL·E 服务提供文生图功能</value>
