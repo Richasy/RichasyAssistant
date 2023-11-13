@@ -18,7 +18,7 @@ public sealed partial class ChatSessionPanel : ChatSessionPanelBase
     {
         InitializeComponent();
         RegisterPropertyChangedCallback(VisibilityProperty, OnVisibilityChanged);
-        Loaded += OnLoaded;
+        Loaded += OnLoadedAsync;
         Unloaded += OnUnloaded;
     }
 
@@ -53,16 +53,16 @@ public sealed partial class ChatSessionPanel : ChatSessionPanelBase
         => ResetFocus();
 
     private async void OnRequestScrollToBottomAsync(object sender, EventArgs e)
-    {
-        await Task.Delay(200);
-        MessageViewer.ChangeView(0, MessageViewer.ScrollableHeight + MessageViewer.ActualHeight, default);
-    }
+        => await ScrollToBottomAsync();
 
     private void OnVisibilityChanged(DependencyObject sender, DependencyProperty dp)
         => ResetFocus();
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
-        => ResetFocus();
+    private async void OnLoadedAsync(object sender, RoutedEventArgs e)
+    {
+        ResetFocus();
+        await ScrollToBottomAsync();
+    }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
@@ -83,6 +83,12 @@ public sealed partial class ChatSessionPanel : ChatSessionPanelBase
                 ViewModel.SendMessageCommand.Execute(default);
             }
         }
+    }
+
+    private async Task ScrollToBottomAsync()
+    {
+        await Task.Delay(200);
+        MessageViewer.ChangeView(0, MessageViewer.ScrollableHeight + MessageViewer.ActualHeight + MessageViewer.VerticalOffset, default);
     }
 }
 

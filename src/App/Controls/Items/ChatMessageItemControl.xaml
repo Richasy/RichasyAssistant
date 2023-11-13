@@ -26,8 +26,8 @@
             StrokeThickness="0">
             <Grid HorizontalAlignment="Left" ColumnSpacing="12">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
+                    <ColumnDefinition x:Name="InnerLeftColumn" Width="Auto" />
+                    <ColumnDefinition x:Name="InnerRightColumn" />
                 </Grid.ColumnDefinitions>
                 <controls:ImageEx
                     x:Name="AvatarImage"
@@ -95,6 +95,8 @@
                             <Setter Target="AvatarImage.(Grid.Column)" Value="1" />
                             <Setter Target="AvatarImage.Visibility" Value="Collapsed" />
                             <Setter Target="MessageContainer.(Grid.Column)" Value="0" />
+                            <Setter Target="InnerLeftColumn.Width" Value="*" />
+                            <Setter Target="InnerRightColumn.Width" Value="Auto" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup.States>

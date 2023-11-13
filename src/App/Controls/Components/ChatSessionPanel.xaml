@@ -213,10 +213,22 @@
                         <Button
                             Grid.Row="1"
                             Grid.Column="1"
+                            Background="Transparent"
+                            BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                             Command="{x:Bind ViewModel.SendMessageCommand, Mode=OneWay}"
-                            Style="{StaticResource MiniIconButtonStyle}"
+                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                            Style="{StaticResource AccentButtonStyle}"
                             ToolTipService.ToolTip="{ext:Locale Name=SendMessage}">
-                            <controls:FluentIcon FontSize="14" Symbol="Send" />
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <controls:FluentIcon
+                                    Margin="0,2,0,0"
+                                    FontSize="14"
+                                    Symbol="Send" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{ext:Locale Name=SendMessage}" />
+                            </StackPanel>
                         </Button>
                     </StackPanel>
                 </Grid>
