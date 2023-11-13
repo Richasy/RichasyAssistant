@@ -71,7 +71,7 @@ public sealed partial class WelcomePage : WelcomePageBase
             return;
         }
 
-        ViewModel.ImageGenerateType = (ImageGenerateType)ImagePicker.SelectedIndex;
+        ViewModel.ImageGenerateType = (DrawType)ImagePicker.SelectedIndex;
     }
 }
 

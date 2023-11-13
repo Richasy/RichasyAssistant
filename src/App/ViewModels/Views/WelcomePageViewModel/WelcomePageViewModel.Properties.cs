@@ -29,7 +29,7 @@ public sealed partial class WelcomePageViewModel
     private SpeechType _speechType;
 
     [ObservableProperty]
-    private ImageGenerateType _imageGenerateType;
+    private DrawType _imageGenerateType;
 
     [ObservableProperty]
     private bool _isAIStep;

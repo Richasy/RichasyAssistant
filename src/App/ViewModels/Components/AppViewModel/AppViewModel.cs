@@ -312,11 +312,11 @@ public sealed partial class AppViewModel : ViewModelBase
 
         if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureImageKey, string.Empty)))
         {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultImage, ImageGenerateType.AzureDallE);
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultImage, DrawType.AzureDallE);
         }
         else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.OpenAIImageKey, string.Empty)))
         {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultImage, ImageGenerateType.OpenAIDallE);
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultImage, DrawType.OpenAIDallE);
         }
     }
 }

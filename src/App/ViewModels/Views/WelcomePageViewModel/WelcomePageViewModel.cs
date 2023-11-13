@@ -271,8 +271,8 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
 
     private void CheckImageType()
     {
-        IsAzureImage = ImageGenerateType == ImageGenerateType.AzureDallE;
-        IsOpenAIImage = ImageGenerateType == ImageGenerateType.OpenAIDallE;
+        IsAzureImage = ImageGenerateType == DrawType.AzureDallE;
+        IsOpenAIImage = ImageGenerateType == DrawType.OpenAIDallE;
     }
 
     partial void OnCurrentStepChanged(int value)
@@ -287,6 +287,6 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
     partial void OnSpeechTypeChanged(SpeechType value)
         => CheckSpeechType();
 
-    partial void OnImageGenerateTypeChanged(ImageGenerateType value)
+    partial void OnImageGenerateTypeChanged(DrawType value)
         => CheckImageType();
 }

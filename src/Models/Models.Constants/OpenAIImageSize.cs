@@ -3,17 +3,22 @@
 namespace RichasyAssistant.Models.Constants;
 
 /// <summary>
-/// 图片生成服务类型.
+/// Open AI 图片大小.
 /// </summary>
-public enum DrawType
+public enum OpenAIImageSize
 {
     /// <summary>
-    /// Azure Dall-E 服务.
+    /// 256x256.
     /// </summary>
-    AzureDallE,
+    Small,
 
     /// <summary>
-    /// Open AI Dall-E 服务.
+    /// 512x512.
     /// </summary>
-    OpenAIDallE,
+    Medium,
+
+    /// <summary>
+    /// 1024x1024.
+    /// </summary>
+    Large,
 }

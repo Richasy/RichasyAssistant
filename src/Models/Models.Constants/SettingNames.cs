@@ -69,4 +69,5 @@ public enum SettingNames
     ChatListType,
     LastOpenSessionId,
     RecordTranslationResult,
+    DrawImageSize,
 }

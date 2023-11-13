@@ -228,6 +228,9 @@
   <data name="Draw" xml:space="preserve">
     <value>绘图</value>
   </data>
+  <data name="DrawInputPlaceholderText" xml:space="preserve">
+    <value>描述你要绘制的图像，比如“云海间的一株雪莲”</value>
+  </data>
   <data name="EmbeddingModelName" xml:space="preserve">
     <value>嵌入模型名称</value>
   </data>
@@ -260,6 +263,9 @@
   </data>
   <data name="FrequencyPenaltyDescription" xml:space="preserve">
     <value>值越高，则后续产生的文本越不容易出现重复字符</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>生成</value>
   </data>
   <data name="GenerateResponseCancelled" xml:space="preserve">
     <value>已停止生成响应</value>
@@ -369,6 +375,9 @@
   <data name="PresetSession" xml:space="preserve">
     <value>预设会话</value>
   </data>
+  <data name="Prompt" xml:space="preserve">
+    <value>提示词</value>
+  </data>
   <data name="ProxyEndpoint" xml:space="preserve">
     <value>代理终结点（选填）</value>
   </data>
@@ -419,6 +428,9 @@
   </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>大小</value>
   </data>
   <data name="Skip" xml:space="preserve">
     <value>跳过</value>
