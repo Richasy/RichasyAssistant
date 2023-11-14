@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Diagnostics;
+using Microsoft.Windows.AppLifecycle;
 using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.Libs.Kernel;
 using RichasyAssistant.Libs.Locator;
@@ -51,14 +51,8 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         }
 
         SettingsToolkit.WriteLocalSetting(SettingNames.SkipWelcome, true);
-        Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().UnregisterKey();
-        Application.Current.Exit();
-        var process = new Process();
-        process.StartInfo.FileName = "cmd.exe";
-        process.StartInfo.Arguments = "/c start ricass://";
-        process.StartInfo.UseShellExecute = true;
-        process.StartInfo.CreateNoWindow = true;
-        process.Start();
+        AppInstance.GetCurrent().UnregisterKey();
+        AppInstance.Restart(default);
     }
 
     [RelayCommand]
