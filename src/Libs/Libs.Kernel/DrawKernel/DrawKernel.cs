@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.SemanticKernel.AI.ImageGeneration;
-using RichasyAssistant.Libs.Locator;
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
+using RichasyAssistant.Models.App.Kernel;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Libs.Kernel.DrawKernel;
@@ -19,7 +20,7 @@ public sealed partial class DrawKernel
     /// <param name="size">图片大小.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns>数据信息.</returns>
-    public async Task<string> DrawAsync(string prompt, OpenAIImageSize size, CancellationToken cancellationToken)
+    public async Task<AiImage> DrawAsync(string prompt, OpenAIImageSize size, CancellationToken cancellationToken)
     {
         var service = Kernel.GetService<IImageGeneration>();
         var width = size switch
@@ -32,8 +33,24 @@ public sealed partial class DrawKernel
 
         var url = await service.GenerateImageAsync(prompt, width, width, cancellationToken);
 
-        return Uri.TryCreate(url, UriKind.Absolute, out _)
-            ? url
-            : throw new KernelException(KernelExceptionType.GenerateImageFailed);
+        if(!Uri.TryCreate(url, UriKind.Absolute, out _))
+        {
+            // TODO: Maybe base64.
+            throw new KernelException(KernelExceptionType.GenerateImageFailed);
+        }
+
+        var now = DateTimeOffset.Now;
+        var aiImage = new AiImage
+        {
+            Id = now.ToUnixTimeMilliseconds().ToString(),
+            Prompt = prompt,
+            Link = url,
+            Time = now,
+            Width = width,
+            Height = width,
+        };
+
+        await DrawDataService.AddImageAsync(aiImage);
+        return aiImage;
     }
 }

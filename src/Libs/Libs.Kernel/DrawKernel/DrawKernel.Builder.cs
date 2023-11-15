@@ -45,6 +45,7 @@ public sealed partial class DrawKernel
         if (string.IsNullOrEmpty(accessKey)
         || string.IsNullOrEmpty(endpoint))
         {
+            kernel.IsConfigValid = false;
             throw new KernelException(KernelExceptionType.InvalidConfiguration);
         }
 
@@ -60,6 +61,7 @@ public sealed partial class DrawKernel
 
         if (string.IsNullOrEmpty(accessKey))
         {
+            kernel.IsConfigValid = false;
             throw new KernelException(KernelExceptionType.InvalidConfiguration);
         }
 

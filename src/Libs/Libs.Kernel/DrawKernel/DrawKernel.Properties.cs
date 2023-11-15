@@ -13,4 +13,9 @@ public sealed partial class DrawKernel
     /// 内核.
     /// </summary>
     public IKernel Kernel { get; private set; }
+
+    /// <summary>
+    /// 配置是否有效.
+    /// </summary>
+    public bool IsConfigValid { get; private set; }
 }

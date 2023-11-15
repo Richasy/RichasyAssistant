@@ -3,114 +3,206 @@
     x:Class="RichasyAssistant.App.Pages.DrawPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:components="using:RichasyAssistant.App.Controls.Components"
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:items="using:RichasyAssistant.App.ViewModels.Items"
     xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource LayerFillColorDefaultBrush}" CornerRadius="4,0,0,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-
-        <Grid
-            Grid.ColumnSpan="2"
-            Height="56"
-            Padding="20,0"
-            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
-            BorderThickness="0,0,0,1">
+        <Grid Visibility="{x:Bind ViewModel.ErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock
-                VerticalAlignment="Center"
-                Style="{StaticResource BodyStrongTextBlockStyle}"
-                Text="{ext:Locale Name=Draw}"
-                TextTrimming="CharacterEllipsis"
-                TextWrapping="NoWrap" />
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind ViewModel.PoweredBy, Mode=OneWay}" />
-            </StackPanel>
-        </Grid>
 
-        <Grid Grid.Row="1" Padding="20,20,20,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <StackPanel Spacing="12">
-                <TextBox
-                    x:Name="SourceBox"
-                    MinHeight="200"
-                    MaxHeight="240"
-                    HorizontalAlignment="Stretch"
-                    AcceptsReturn="True"
-                    FontSize="16"
-                    IsEnabled="{x:Bind ViewModel.IsGenerating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
-                    PlaceholderText="{ext:Locale Name=DrawInputPlaceholderText}"
-                    Text="{x:Bind ViewModel.Prompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap" />
-                <Grid ColumnSpacing="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid
+                    Height="56"
+                    Padding="20,0"
+                    BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                    BorderThickness="0,0,0,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="{ext:Locale Name=Draw}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
                         <TextBlock
                             VerticalAlignment="Center"
                             Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{ext:Locale Name=Size}" />
-                        <ComboBox
-                            x:Name="SizeComboBox"
-                            MinWidth="120"
-                            VerticalAlignment="Center"
-                            SelectionChanged="OnSizeChanged"
-                            SelectionChangedTrigger="Committed">
-                            <ComboBoxItem Content="1024 x 1024" />
-                            <ComboBoxItem Content="512 x 512" />
-                            <ComboBoxItem Content="256 x 256" />
-                        </ComboBox>
+                            Text="{x:Bind ViewModel.PoweredBy, Mode=OneWay}" />
                     </StackPanel>
-
-                    <Button
-                        Grid.Column="1"
-                        MinWidth="120"
-                        VerticalAlignment="Center"
-                        Command="{x:Bind ViewModel.DrawCommand}"
-                        Content="{ext:Locale Name=Generate}"
-                        Style="{StaticResource AccentButtonStyle}" />
                 </Grid>
-            </StackPanel>
-            <ScrollViewer
-                Grid.Row="1"
-                MaxZoomFactor="1"
-                MinZoomFactor="0.1"
-                Visibility="{x:Bind ViewModel.IsGenerating, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}"
-                ZoomMode="Enabled">
-                <controls:ImageEx
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Source="{x:Bind ViewModel.ImagePath, Mode=OneWay}"
-                    Stretch="Uniform"
-                    Visibility="{x:Bind ViewModel.ImagePath, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
-            </ScrollViewer>
-            <controls:LoadingOverlapper
-                Grid.Row="1"
-                IsOpen="{x:Bind ViewModel.IsGenerating, Mode=OneWay}"
-                Text="{ext:Locale Name=LoadingAndWait}" />
+                <Grid Grid.Row="1" RowSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <ScrollView Style="{StaticResource PageScrollViewStyle}" Visibility="{x:Bind ViewModel.IsGenerating, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                        <Grid MaxWidth="700">
+                            <StackPanel
+                                Margin="0,20,0,0"
+                                VerticalAlignment="Center"
+                                Spacing="8"
+                                Visibility="{x:Bind ViewModel.CurrentImage, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                <Grid
+                                    Padding="12"
+                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                    CornerRadius="{StaticResource ControlCornerRadius}">
+                                    <controls:ImageEx
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        CornerRadius="{StaticResource ControlCornerRadius}"
+                                        PlaceholderStretch="Uniform"
+                                        Source="{x:Bind ViewModel.CurrentImage.Data.Link, Mode=OneWay}"
+                                        Stretch="Uniform" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind ViewModel.CurrentImage.Time, Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind ViewModel.CurrentImage.TimeDetail, Mode=OneWay}" />
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <Button
+                                            Command="{x:Bind ViewModel.CurrentImage.CopyImageCommand, Mode=OneWay}"
+                                            Style="{StaticResource MiniIconButtonStyle}"
+                                            ToolTipService.ToolTip="{ext:Locale Name=CopyImage}">
+                                            <controls:FluentIcon FontSize="12" Symbol="Copy" />
+                                        </Button>
+                                        <Button
+                                            Command="{x:Bind ViewModel.CurrentImage.SaveAsCommand, Mode=OneWay}"
+                                            Style="{StaticResource MiniIconButtonStyle}"
+                                            ToolTipService.ToolTip="{ext:Locale Name=SaveAs}">
+                                            <controls:FluentIcon FontSize="12" Symbol="Save" />
+                                        </Button>
+                                        <Button
+                                            Command="{x:Bind ViewModel.CurrentImage.OpenCommand, Mode=OneWay}"
+                                            Style="{StaticResource MiniIconButtonStyle}"
+                                            ToolTipService.ToolTip="{ext:Locale Name=OpenSourceImage}">
+                                            <controls:FluentIcon FontSize="12" Symbol="Globe" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+
+                            <controls:EmptyHolder
+                                Title="{ext:Locale Name=NoDisplayImage}"
+                                Grid.RowSpan="2"
+                                Description="{ext:Locale Name=NoDisplayImageDescription}"
+                                Emoji="&#x1F3DD;"
+                                Style="{StaticResource BasicEmptyHolderStyle}"
+                                Visibility="{x:Bind ViewModel.CurrentImage, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}" />
+                        </Grid>
+                    </ScrollView>
+
+                    <controls:LoadingOverlapper IsOpen="{x:Bind ViewModel.IsGenerating, Mode=OneWay}" Text="{ext:Locale Name=LoadingAndWait}" />
+
+                    <StackPanel
+                        Grid.Row="1"
+                        MaxWidth="700"
+                        Margin="20,0,20,12"
+                        Spacing="12">
+                        <TextBox
+                            x:Name="InputBox"
+                            Grid.ColumnSpan="2"
+                            MaxHeight="120"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            AcceptsReturn="True"
+                            IsEnabled="{x:Bind ViewModel.IsGenerating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                            PlaceholderText="{ext:Locale Name=DrawInputPlaceholderText}"
+                            PreviewKeyDown="OnInputBoxKeyDown"
+                            Text="{x:Bind ViewModel.Prompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap" />
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{ext:Locale Name=Size}" />
+                                <ComboBox
+                                    x:Name="SizeComboBox"
+                                    MinWidth="120"
+                                    VerticalAlignment="Center"
+                                    IsEnabled="{x:Bind ViewModel.IsGenerating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                                    SelectionChanged="OnSizeChanged"
+                                    SelectionChangedTrigger="Committed">
+                                    <ComboBoxItem Content="256 x 256" />
+                                    <ComboBoxItem Content="512 x 512" />
+                                    <ComboBoxItem Content="1024 x 1024" />
+                                </ComboBox>
+                            </StackPanel>
+
+                            <Button
+                                Grid.Column="1"
+                                MinWidth="120"
+                                VerticalAlignment="Center"
+                                Command="{x:Bind ViewModel.DrawCommand}"
+                                Content="{ext:Locale Name=Generate}"
+                                FontSize="12"
+                                Style="{StaticResource AccentButtonStyle}" />
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <Border
+                Grid.Column="1"
+                Width="1"
+                Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+            <community:PropertySizer
+                Grid.Column="1"
+                Margin="-6,0,-6,0"
+                Binding="{x:Bind ViewModel.HistoryColumnWidth, Mode=TwoWay}"
+                IsDragInverted="True"
+                Maximum="580"
+                Minimum="380" />
+
+            <Grid Grid.Column="2" Width="{x:Bind ViewModel.HistoryColumnWidth, Mode=OneWay}">
+                <components:DrawHistoryPanel ViewModel="{x:Bind ViewModel}" />
+            </Grid>
         </Grid>
+
+        <controls:EmptyHolder
+            Title="{ext:Locale Name=SomethingWrong}"
+            Description="{x:Bind ViewModel.ErrorText, Mode=OneWay}"
+            Emoji="&#x1F628;"
+            Style="{StaticResource BasicEmptyHolderStyle}"
+            Visibility="{x:Bind ViewModel.ErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
     </Grid>
+
 </local:DrawPageBase>

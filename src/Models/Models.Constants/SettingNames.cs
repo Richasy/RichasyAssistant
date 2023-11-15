@@ -50,6 +50,7 @@ public enum SettingNames
     DefaultChatDbPath,
     DefaultSecretDbPath,
     DefaultTranslationDbPath,
+    DefaultDrawDbPath,
 
     IsAutoGenerateSessionTitle,
     IsStartupOpen,
@@ -70,4 +71,5 @@ public enum SettingNames
     LastOpenSessionId,
     RecordTranslationResult,
     DrawImageSize,
+    DrawHistoryColumnWidth,
 }

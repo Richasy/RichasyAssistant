@@ -190,7 +190,7 @@ public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposabl
 
         var record = new TranslationRecord(SourceText, OutputText, SourceLanguage.Id, TargetLanguage.Id);
         await TranslationDataService.AddRecordAsync(record);
-        if (History.Count > 1)
+        if (History.Count > 100)
         {
             History.RemoveAt(History.Count - 1);
         }

@@ -10,7 +10,8 @@ public sealed class KernelException : Exception
     /// <summary>
     /// Initializes a new instance of the <see cref="KernelException"/> class.
     /// </summary>
-    public KernelException(KernelExceptionType type) => Type = type;
+    public KernelException(KernelExceptionType type)
+        : base(type.ToString()) => Type = type;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="KernelException"/> class.

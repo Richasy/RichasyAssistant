@@ -15,6 +15,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Database\chat.db" />
+    <Content Remove="Assets\Database\draw.db" />
     <Content Remove="Assets\Database\secret.db" />
     <Content Remove="Assets\Database\trans.db" />
     <Content Remove="Assets\FolderOpen.json" />
@@ -38,6 +39,7 @@
     <None Remove="Controls\Components\AppTitleBar.xaml" />
     <None Remove="Controls\Components\ChatListPanel.xaml" />
     <None Remove="Controls\Components\ChatSessionPanel.xaml" />
+    <None Remove="Controls\Components\DrawHistoryPanel.xaml" />
     <None Remove="Controls\Components\NavigationPanel.xaml" />
     <None Remove="Controls\EmptyHolder.xaml" />
     <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
@@ -111,12 +113,18 @@
     <None Update="Assets\Database\chat.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\Database\draw.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\Database\secret.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Components\DrawHistoryPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\DrawPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

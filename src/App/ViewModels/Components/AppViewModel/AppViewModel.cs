@@ -84,11 +84,13 @@ public sealed partial class AppViewModel : ViewModelBase
         var localChatDbPath = Path.Combine(localPath, "Assets/Database/chat.db");
         var localSecretDbPath = Path.Combine(localPath, "Assets/Database/secret.db");
         var localTranslationDbPath = Path.Combine(localPath, "Assets/Database/trans.db");
+        var localDrawDbPath = Path.Combine(localPath, "Assets/Database/draw.db");
         var libraryPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
         GlobalSettings.Set(SettingNames.LibraryFolderPath, libraryPath);
         GlobalSettings.Set(SettingNames.DefaultChatDbPath, localChatDbPath);
         GlobalSettings.Set(SettingNames.DefaultSecretDbPath, localSecretDbPath);
         GlobalSettings.Set(SettingNames.DefaultTranslationDbPath, localTranslationDbPath);
+        GlobalSettings.Set(SettingNames.DefaultDrawDbPath, localDrawDbPath);
     }
 
     /// <summary>

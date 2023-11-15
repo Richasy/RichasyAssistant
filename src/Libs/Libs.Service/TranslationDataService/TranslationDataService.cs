@@ -86,7 +86,7 @@ public static partial class TranslationDataService
     public static List<TranslationRecord> GetHistory(int page)
     {
         return HasMoreHistory(page)
-            ? _history.Skip(page * 100).Take(100).ToList()
+            ? _history.Skip(page * 100).Take(100).OrderByDescending(p => p.Time).ToList()
             : (List<TranslationRecord>?)default;
     }
 
@@ -211,7 +211,7 @@ public static partial class TranslationDataService
     {
         try
         {
-            _history = await _dbContext.History.ToListAsync();
+            _history = await _dbContext.History.AsNoTracking().ToListAsync();
         }
         catch (Exception ex)
         {

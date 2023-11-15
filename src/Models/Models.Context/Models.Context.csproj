@@ -25,6 +25,9 @@
     <None Update="Assets\chat.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Assets\draw.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Assets\secret.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

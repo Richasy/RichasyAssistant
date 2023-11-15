@@ -213,6 +213,12 @@
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>
+  <data name="CopyImage" xml:space="preserve">
+    <value>复制图像</value>
+  </data>
+  <data name="CopyPrompt" xml:space="preserve">
+    <value>复制提示词</value>
+  </data>
   <data name="CopySourceContent" xml:space="preserve">
     <value>复制输入内容</value>
   </data>
@@ -231,6 +237,9 @@
   <data name="DrawInputPlaceholderText" xml:space="preserve">
     <value>描述你要绘制的图像，比如“云海间的一株雪莲”</value>
   </data>
+  <data name="DrawInvalidConfiguration" xml:space="preserve">
+    <value>绘画配置无效</value>
+  </data>
   <data name="EmbeddingModelName" xml:space="preserve">
     <value>嵌入模型名称</value>
   </data>
@@ -248,6 +257,9 @@
   </data>
   <data name="ExportHistory" xml:space="preserve">
     <value>导出聊天记录</value>
+  </data>
+  <data name="FileSaved" xml:space="preserve">
+    <value>文件已保存</value>
   </data>
   <data name="FinishDescription" xml:space="preserve">
     <value>小幻助理将基于你提供的配置信息为你提供独特的 AI 体验，祝您使用愉快</value>
@@ -324,6 +336,15 @@
   <data name="NextStep" xml:space="preserve">
     <value>下一步</value>
   </data>
+  <data name="NoDisplayImage" xml:space="preserve">
+    <value>没有显示的图片</value>
+  </data>
+  <data name="NoDisplayImageDescription" xml:space="preserve">
+    <value>生成或打开一张图片吧！</value>
+  </data>
+  <data name="NoDrawHistory" xml:space="preserve">
+    <value>没有绘图记录</value>
+  </data>
   <data name="NoMessage" xml:space="preserve">
     <value>暂无消息</value>
   </data>
@@ -356,6 +377,9 @@
   </data>
   <data name="OpenLibrary" xml:space="preserve">
     <value>打开存储库</value>
+  </data>
+  <data name="OpenSourceImage" xml:space="preserve">
+    <value>打开原图</value>
   </data>
   <data name="Organization" xml:space="preserve">
     <value>组织（选填）</value>
@@ -410,6 +434,12 @@
   </data>
   <data name="SamplingDescription" xml:space="preserve">
     <value>设置采样参数，以此决定答案的随机性</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+  <data name="SaveFileFailed" xml:space="preserve">
+    <value>保存文件失败，请稍后再试</value>
   </data>
   <data name="SearchByName" xml:space="preserve">
     <value>按名称搜索</value>
