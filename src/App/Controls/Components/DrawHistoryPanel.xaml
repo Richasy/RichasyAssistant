@@ -53,55 +53,64 @@
 
         <ScrollViewer Grid.Row="1" Style="{StaticResource PageScrollViewerStyle}">
             <Grid>
-                <ItemsRepeater Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.History}">
-                    <ItemsRepeater.ItemTemplate>
-                        <DataTemplate x:DataType="items:AiImageItemViewModel">
-                            <controls:CardPanel Click="OnHistoryItemClick" DataContext="{x:Bind}">
-                                <StackPanel Padding="12" Spacing="8">
-                                    <TextBlock
-                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                                        MaxLines="2"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind Data.Prompt}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="Wrap"
-                                        ToolTipService.ToolTip="{x:Bind Data.Prompt}" />
-                                    <controls:ImageEx
-                                        Height="160"
-                                        HorizontalAlignment="Stretch"
-                                        CornerRadius="{StaticResource ControlCornerRadius}"
-                                        Source="{x:Bind Link}"
-                                        Stretch="UniformToFill" />
-                                    <TextBlock
-                                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                                        MaxLines="2"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind Time}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="Wrap"
-                                        ToolTipService.ToolTip="{x:Bind TimeDetail}" />
-                                </StackPanel>
-                                <controls:CardPanel.ContextFlyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem Command="{x:Bind CopyImageCommand}" Text="{ext:Locale Name=CopyImage}" />
-                                        <MenuFlyoutItem Command="{x:Bind CopyPromptCommand}" Text="{ext:Locale Name=CopyPrompt}" />
-                                        <MenuFlyoutItem Command="{x:Bind SaveAsCommand}" Text="{ext:Locale Name=SaveAs}" />
-                                        <MenuFlyoutItem Command="{x:Bind OpenCommand}" Text="{ext:Locale Name=OpenSourceImage}" />
-                                        <MenuFlyoutSeparator />
-                                        <MenuFlyoutItem
-                                            Click="OnHistoryDeleteItemClick"
-                                            DataContext="{x:Bind}"
-                                            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                                            Text="{ext:Locale Name=Delete}" />
-                                    </MenuFlyout>
-                                </controls:CardPanel.ContextFlyout>
-                            </controls:CardPanel>
-                        </DataTemplate>
-                    </ItemsRepeater.ItemTemplate>
-                    <ItemsRepeater.Layout>
-                        <StackLayout Spacing="8" />
-                    </ItemsRepeater.Layout>
-                </ItemsRepeater>
+                <StackPanel Margin="0,0,0,20">
+                    <ItemsRepeater Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.History}">
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="items:AiImageItemViewModel">
+                                <controls:CardPanel Click="OnHistoryItemClick" DataContext="{x:Bind}">
+                                    <StackPanel Padding="12" Spacing="8">
+                                        <TextBlock
+                                            Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                            MaxLines="2"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
+                                            Text="{x:Bind Data.Prompt}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="Wrap"
+                                            ToolTipService.ToolTip="{x:Bind Data.Prompt}" />
+                                        <controls:ImageEx
+                                            Height="160"
+                                            HorizontalAlignment="Stretch"
+                                            CornerRadius="{StaticResource ControlCornerRadius}"
+                                            Source="{x:Bind Link}"
+                                            Stretch="UniformToFill" />
+                                        <TextBlock
+                                            Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                            MaxLines="2"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
+                                            Text="{x:Bind Time}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="Wrap"
+                                            ToolTipService.ToolTip="{x:Bind TimeDetail}" />
+                                    </StackPanel>
+                                    <controls:CardPanel.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Command="{x:Bind CopyImageCommand}" Text="{ext:Locale Name=CopyImage}" />
+                                            <MenuFlyoutItem Command="{x:Bind CopyPromptCommand}" Text="{ext:Locale Name=CopyPrompt}" />
+                                            <MenuFlyoutItem Command="{x:Bind SaveAsCommand}" Text="{ext:Locale Name=SaveAs}" />
+                                            <MenuFlyoutItem Command="{x:Bind OpenCommand}" Text="{ext:Locale Name=OpenSourceImage}" />
+                                            <MenuFlyoutSeparator />
+                                            <MenuFlyoutItem
+                                                Click="OnHistoryDeleteItemClick"
+                                                DataContext="{x:Bind}"
+                                                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                                Text="{ext:Locale Name=Delete}" />
+                                        </MenuFlyout>
+                                    </controls:CardPanel.ContextFlyout>
+                                </controls:CardPanel>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                        <ItemsRepeater.Layout>
+                            <StackLayout Spacing="8" />
+                        </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                    <HyperlinkButton
+                        Margin="0,12,0,0"
+                        HorizontalAlignment="Stretch"
+                        Command="{x:Bind ViewModel.LoadHistoryCommand}"
+                        Content="{ext:Locale Name=LoadMore}"
+                        Visibility="{x:Bind ViewModel.HistoryHasMore, Mode=OneWay}" />
+                </StackPanel>
+
                 <controls:EmptyHolder
                     Description="{ext:Locale Name=NoDrawHistory}"
                     Style="{StaticResource BasicEmptyHolderStyle}"
