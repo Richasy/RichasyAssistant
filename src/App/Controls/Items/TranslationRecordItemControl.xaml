@@ -31,24 +31,23 @@
                 Padding="12,6"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Background="{ThemeResource AccentFillColorTertiaryBrush}"
+                BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}"
                 Orientation="Horizontal"
                 Spacing="4">
                 <TextBlock
-                    FontWeight="Bold"
-                    Foreground="{ThemeResource TextOnAccentFillColorSecondaryBrush}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind ViewModel.SourceLanguage, Mode=OneWay}" />
                 <controls:FluentIcon
                     Margin="0,1,0,0"
                     VerticalAlignment="Center"
                     FontSize="14"
-                    Foreground="{ThemeResource TextOnAccentFillColorSecondaryBrush}"
+                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                     Symbol="ChevronRight" />
                 <TextBlock
-                    FontWeight="Bold"
-                    Foreground="{ThemeResource TextOnAccentFillColorSecondaryBrush}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind ViewModel.TargetLanguage, Mode=OneWay}" />
             </StackPanel>

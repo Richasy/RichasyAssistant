@@ -27,15 +27,24 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid Width="{x:Bind ViewModel.ListColumnWidth, Mode=OneWay}">
-                    <components:ChatListPanel Margin="0,0,-12,0" ViewModel="{x:Bind ViewModel}" />
+                    <components:ChatListPanel Margin="0,0,-6,0" ViewModel="{x:Bind ViewModel}" />
                 </Grid>
+                <Border
+                    Grid.Column="1"
+                    Width="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Stretch"
+                    Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
                 <community:PropertySizer
                     Grid.Column="1"
                     HorizontalAlignment="Left"
                     Binding="{x:Bind ViewModel.ListColumnWidth, Mode=TwoWay}"
                     Maximum="360"
                     Minimum="240" />
-                <components:ChatSessionPanel Grid.Column="2" ViewModel="{x:Bind ViewModel.SessionDetail, Mode=OneWay}" />
+                <components:ChatSessionPanel
+                    Grid.Column="2"
+                    Margin="-6,0,0,0"
+                    ViewModel="{x:Bind ViewModel.SessionDetail, Mode=OneWay}" />
             </Grid>
             <controls:LoadingOverlapper IsOpen="{x:Bind ViewModel.IsInitializing, Mode=OneWay}" Text="{ext:Locale Name=LoadingAndWait}" />
         </Grid>
