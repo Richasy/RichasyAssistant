@@ -26,10 +26,10 @@ public sealed partial class ChatKernel
     /// <param name="userMsgHandler">用户消息添加处理.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns>聊天信息.</returns>
-    public async Task<ChatMessage> SendMessageAsync(string message, Action<ChatMessage> userMsgHandler, CancellationToken cancellationToken = default)
+    public async Task<Models.App.Kernel.ChatMessage> SendMessageAsync(string message, Action<Models.App.Kernel.ChatMessage> userMsgHandler, CancellationToken cancellationToken = default)
     {
         var chat = GetChatCore();
-        var userMsg = new ChatMessage(ChatMessageRole.User, message);
+        var userMsg = new Models.App.Kernel.ChatMessage(ChatMessageRole.User, message);
         await ChatDataService.AddMessageAsync(userMsg, SessionId);
         userMsgHandler?.Invoke(userMsg);
 
@@ -42,7 +42,7 @@ public sealed partial class ChatKernel
                 throw new KernelException(KernelExceptionType.EmptyChatResponse);
             }
 
-            var assistantMessage = new ChatMessage(ChatMessageRole.Assistant, response);
+            var assistantMessage = new Models.App.Kernel.ChatMessage(ChatMessageRole.Assistant, response);
             await ChatDataService.AddMessageAsync(assistantMessage, SessionId);
             return assistantMessage;
         }
@@ -69,10 +69,10 @@ public sealed partial class ChatKernel
     /// <param name="streamHandler">流式消息处理.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns><see cref="ChatMessage"/>.</returns>
-    public async Task<ChatMessage> SendMessageAsync(string message, Action<ChatMessage> userMsgHandler, Action<string> streamHandler, CancellationToken cancellationToken = default)
+    public async Task<Models.App.Kernel.ChatMessage> SendMessageAsync(string message, Action<Models.App.Kernel.ChatMessage> userMsgHandler, Action<string> streamHandler, CancellationToken cancellationToken = default)
     {
         var chat = GetChatCore();
-        var userMsg = new ChatMessage(ChatMessageRole.User, message);
+        var userMsg = new Models.App.Kernel.ChatMessage(ChatMessageRole.User, message);
         await ChatDataService.AddMessageAsync(userMsg, SessionId);
         userMsgHandler?.Invoke(userMsg);
 
@@ -92,7 +92,7 @@ public sealed partial class ChatKernel
                 throw new KernelException(KernelExceptionType.EmptyChatResponse);
             }
 
-            var assistantMessage = new ChatMessage(ChatMessageRole.Assistant, resMessage);
+            var assistantMessage = new Models.App.Kernel.ChatMessage(ChatMessageRole.Assistant, resMessage);
             await ChatDataService.AddMessageAsync(assistantMessage, SessionId);
             return assistantMessage;
         }

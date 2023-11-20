@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>RichasyAssistant.Libs.Kernel</AssemblyName>
@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.AI.Translation.Text" Version="1.0.0-beta.1" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.0.0-beta6" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.0.0-beta8" />
   </ItemGroup>
 
   <ItemGroup>

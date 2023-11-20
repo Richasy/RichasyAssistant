@@ -32,34 +32,53 @@
                     Height="56"
                     Padding="16,0"
                     BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
-                    BorderThickness="0,0,0,1">
+                    BorderThickness="0,0,0,1"
+                    ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <controls:ImageEx
-                            Width="24"
-                            Height="24"
-                            VerticalAlignment="Center"
-                            CornerRadius="16"
-                            Source="{ThemeResource OpenAILogo}"
-                            Stretch="UniformToFill" />
-                        <TextBlock
-                            x:Name="TitleBlock"
-                            Grid.Column="1"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource BodyStrongTextBlockStyle}"
-                            Text="{x:Bind ViewModel.Name, Mode=OneWay}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind ViewModel.Name, Mode=OneWay}" IsEnabled="{x:Bind TitleBlock.IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
-                    </StackPanel>
+                    <controls:ImageEx
+                        Width="24"
+                        Height="24"
+                        VerticalAlignment="Center"
+                        CornerRadius="16"
+                        Source="{ThemeResource OpenAILogo}"
+                        Stretch="UniformToFill" />
+                    <TextBlock
+                        x:Name="TitleBlock"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="{x:Bind ViewModel.Name, Mode=OneWay}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind ViewModel.Name, Mode=OneWay}" IsEnabled="{x:Bind TitleBlock.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
 
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <StackPanel
+                        Grid.Column="2"
+                        Orientation="Horizontal"
+                        Spacing="4">
+                        <Button
+                            Background="Transparent"
+                            BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                            Command="{x:Bind ViewModel.ClearMessageCommand, Mode=OneWay}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <controls:FluentIcon
+                                    Margin="0,2,0,0"
+                                    FontSize="14"
+                                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                    Symbol="Eraser" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{ext:Locale Name=ClearMessage}" />
+                            </StackPanel>
+                        </Button>
                         <Button
                             VerticalAlignment="Center"
                             Command="{x:Bind ViewModel.EnterSettingsCommand, Mode=OneWay}"
@@ -202,23 +221,11 @@
                         Orientation="Horizontal"
                         Spacing="4">
                         <Button
-                            Command="{x:Bind ViewModel.ClearMessageCommand, Mode=OneWay}"
-                            Style="{StaticResource MiniIconButtonStyle}"
-                            ToolTipService.ToolTip="{ext:Locale Name=ClearMessage}">
-                            <controls:FluentIcon
-                                FontSize="14"
-                                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                                Symbol="Eraser" />
-                        </Button>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="1"
                             Background="Transparent"
                             BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                             Command="{x:Bind ViewModel.SendMessageCommand, Mode=OneWay}"
                             Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                            Style="{StaticResource AccentButtonStyle}"
-                            ToolTipService.ToolTip="{ext:Locale Name=SendMessage}">
+                            Style="{StaticResource AccentButtonStyle}">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <controls:FluentIcon
                                     Margin="0,2,0,0"
