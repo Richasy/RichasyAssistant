@@ -54,7 +54,11 @@ public sealed partial class MainViewModel
 
         var args = new AppNavigateEventArgs(pageType, data);
         RequestNavigate?.Invoke(this, args);
-        SettingsToolkit.WriteLocalSetting(SettingNames.LastOpenedPage, type);
+
+        if (type != FeatureType.Settings)
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.LastOpenedPage, type);
+        }
     }
 
     private static NavigateItemViewModel GetNavigateItem(FeatureType type)

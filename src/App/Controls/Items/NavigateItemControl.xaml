@@ -63,6 +63,7 @@
                 </animations:Implicit.ShowAnimations>
             </controls:FluentIcon>
             <TextBlock
+                x:Name="TitleBlock"
                 Grid.Row="1"
                 Margin="0,0,0,8"
                 HorizontalAlignment="Center"
@@ -91,6 +92,10 @@
                         To="1"
                         Duration="0:0:0.15" />
                 </animations:Implicit.ShowAnimations>
+
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind ViewModel.Data.Name, Mode=OneWay}" IsEnabled="{x:Bind TitleBlock.IsTextTrimmed, Mode=OneWay}" />
+                </ToolTipService.ToolTip>
             </TextBlock>
         </Grid>
     </controls:CardPanel>
