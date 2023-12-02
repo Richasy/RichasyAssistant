@@ -21,9 +21,11 @@
             HorizontalAlignment="Left"
             Background="Transparent"
             DisabledBackground="Transparent"
+            PointerEntered="OnCardPointerEntered"
+            PointerExited="OnCardPointerExited"
+            PointerMoved="OnCardPointerMoved"
             PointerOverBackground="Transparent"
             PressedBackground="Transparent"
-            StateChanged="OnRootCardStateChanged"
             StrokeThickness="0">
             <Grid HorizontalAlignment="Left" ColumnSpacing="12">
                 <Grid.ColumnDefinitions>
@@ -41,7 +43,6 @@
                     PlaceholderSource="{ThemeResource OpenAILogo}"
                     PlaceholderStretch="Uniform"
                     Stretch="UniformToFill" />
-
                 <Grid
                     x:Name="MessageContainer"
                     Grid.Column="1"
@@ -57,7 +58,10 @@
                         RadiusY="4"
                         Stroke="{ThemeResource ControlStrokeColorDefaultBrush}"
                         StrokeThickness="1" />
-                    <Grid Padding="12,8">
+                    <Grid
+                        x:Name="TextContainer"
+                        Padding="12,8"
+                        Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
                         <!--<TextBlock
                             x:Name="PlainMessageBlock"
                             Foreground="{ThemeResource TextFillColorPrimaryBrush}"
@@ -68,9 +72,57 @@
                             x:Name="MarkdownMessageBlock"
                             Background="Transparent"
                             Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                            IsTextSelectionEnabled="True"
-                            Text="{x:Bind ViewModel.Content, Mode=OneWay}"
+                            Text="{x:Bind ViewModel.Content, Mode=OneWay}" />
+                    </Grid>
+
+                    <Grid
+                        x:Name="EditContainer"
+                        Padding="12"
+                        RowSpacing="12"
+                        Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBox
+                            x:Name="Editor"
+                            MaxHeight="500"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            AcceptsReturn="True"
                             TextWrapping="Wrap" />
+                        <Grid Grid.Row="1" ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Button
+                                HorizontalAlignment="Stretch"
+                                Click="OnEditorConfirmButtonClick"
+                                Style="{StaticResource AccentButtonStyle}">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <controls:FluentIcon
+                                        Margin="0,2,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Symbol="Checkmark" />
+                                    <TextBlock VerticalAlignment="Center" Text="{ext:Locale Name=Confirm}" />
+                                </StackPanel>
+                            </Button>
+                            <Button
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                Click="OnEditorCancelButtonClick">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <controls:FluentIcon
+                                        Margin="0,2,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Symbol="Dismiss" />
+                                    <TextBlock VerticalAlignment="Center" Text="{ext:Locale Name=Cancel}" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
                     </Grid>
 
                     <TextBlock
@@ -82,12 +134,62 @@
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind ViewModel.Time, Mode=OneWay}" />
                 </Grid>
-
+                <StackPanel
+                    x:Name="Toolbar"
+                    Grid.Column="1"
+                    Margin="0,-36,4,0"
+                    Padding="4"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource OverlayCornerRadius}"
+                    Orientation="Horizontal"
+                    Visibility="Collapsed">
+                    <Button
+                        Margin="0,0,4,0"
+                        Command="{x:Bind ViewModel.CopyCommand, Mode=OneWay}"
+                        Style="{StaticResource SmallIconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=Copy}">
+                        <controls:FluentIcon FontSize="14" Symbol="Copy" />
+                    </Button>
+                    <Button
+                        Margin="0,0,4,0"
+                        Command="{x:Bind ViewModel.RegenerateCommand, Mode=OneWay}"
+                        Style="{StaticResource SmallIconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=Regenerate}"
+                        Visibility="{x:Bind ViewModel.IsRegenerateButtonShown, Mode=OneWay}">
+                        <controls:FluentIcon FontSize="14" Symbol="ArrowSync" />
+                    </Button>
+                    <Button
+                        Margin="0,0,4,0"
+                        Click="OnEditButtonClick"
+                        Style="{StaticResource SmallIconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=Edit}">
+                        <controls:FluentIcon FontSize="14" Symbol="Pen" />
+                    </Button>
+                    <Rectangle
+                        Width="1"
+                        Height="16"
+                        Margin="0,0,4,0"
+                        VerticalAlignment="Center"
+                        Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
+                    <Button
+                        Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
+                        Style="{StaticResource SmallIconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=Delete}">
+                        <controls:FluentIcon
+                            FontSize="14"
+                            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                            Symbol="Delete" />
+                    </Button>
+                </StackPanel>
             </Grid>
         </controls:CardPanel>
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup x:Name="LayoutGroup">
                 <VisualStateGroup.States>
                     <VisualState x:Name="AssistantState" />
                     <VisualState x:Name="MyState">
@@ -105,6 +207,7 @@
                             <Setter Target="MessageContainer.(Grid.Column)" Value="0" />
                             <Setter Target="InnerLeftColumn.Width" Value="*" />
                             <Setter Target="InnerRightColumn.Width" Value="Auto" />
+                            <Setter Target="Toolbar.(Grid.Column)" Value="0" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup.States>

@@ -156,6 +156,36 @@ public sealed partial class ChatDataService
     }
 
     /// <summary>
+    /// 更新会话消息.
+    /// </summary>
+    /// <param name="message">消息内容.</param>
+    /// <param name="sessionId">会话标识符.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    public static async Task UpdateMessageAsync(ChatMessage message, string sessionId)
+    {
+        var cacheSession = _sessions.FirstOrDefault(p => p.Id == sessionId);
+        if (cacheSession == null)
+        {
+            return;
+        }
+
+        var sourceSession = await _dbContext.Sessions.Include(p => p.Messages).FirstOrDefaultAsync(p => p.Id == sessionId);
+        if (sourceSession == null)
+        {
+            return;
+        }
+
+        var cacheMsg = sourceSession.Messages.FirstOrDefault(p => p.Id == message.Id);
+        var sourceMsg = sourceSession.Messages.FirstOrDefault(p => p.Id == message.Id);
+        if (message != null)
+        {
+            DoSame(sourceMsg, cacheMsg, p => p.Content = message.Content);
+            _dbContext.Sessions.Update(sourceSession);
+            await _dbContext.SaveChangesAsync();
+        }
+    }
+
+    /// <summary>
     /// 删除会话消息.
     /// </summary>
     /// <param name="sessionId">会话标识符.</param>

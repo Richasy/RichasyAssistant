@@ -75,8 +75,7 @@ public sealed partial class ChatSessionPanel : ChatSessionPanelBase
         if (e.Key == Windows.System.VirtualKey.Enter)
         {
             var shiftState = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift);
-            var isShiftDown = shiftState is(CoreVirtualKeyStates.Down
-                or CoreVirtualKeyStates.Down | CoreVirtualKeyStates.Locked);
+            var isShiftDown = shiftState == CoreVirtualKeyStates.Down || shiftState == (CoreVirtualKeyStates.Down | CoreVirtualKeyStates.Locked);
             if (!isShiftDown)
             {
                 e.Handled = true;

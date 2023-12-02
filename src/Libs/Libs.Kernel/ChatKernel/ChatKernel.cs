@@ -24,14 +24,18 @@ public sealed partial class ChatKernel
     /// </summary>
     /// <param name="message">消息.</param>
     /// <param name="userMsgHandler">用户消息添加处理.</param>
+    /// <param name="ignoreUserMessage">是否不将传入消息作为用户消息添加到历史记录.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns>聊天信息.</returns>
-    public async Task<Models.App.Kernel.ChatMessage> SendMessageAsync(string message, Action<Models.App.Kernel.ChatMessage> userMsgHandler, CancellationToken cancellationToken = default)
+    public async Task<Models.App.Kernel.ChatMessage> SendMessageAsync(string message, Action<Models.App.Kernel.ChatMessage> userMsgHandler, bool ignoreUserMessage = false, CancellationToken cancellationToken = default)
     {
         var chat = GetChatCore();
         var userMsg = new Models.App.Kernel.ChatMessage(ChatMessageRole.User, message);
-        await ChatDataService.AddMessageAsync(userMsg, SessionId);
-        userMsgHandler?.Invoke(userMsg);
+        if (!ignoreUserMessage)
+        {
+            await ChatDataService.AddMessageAsync(userMsg, SessionId);
+            userMsgHandler?.Invoke(userMsg);
+        }
 
         try
         {
@@ -67,14 +71,19 @@ public sealed partial class ChatKernel
     /// <param name="message">用户消息.</param>
     /// <param name="userMsgHandler">用户消息添加处理.</param>
     /// <param name="streamHandler">流式消息处理.</param>
+    /// <param name="ignoreUserMessage">是否不将传入消息作为用户消息添加到历史记录.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns><see cref="ChatMessage"/>.</returns>
-    public async Task<Models.App.Kernel.ChatMessage> SendMessageAsync(string message, Action<Models.App.Kernel.ChatMessage> userMsgHandler, Action<string> streamHandler, CancellationToken cancellationToken = default)
+    public async Task<Models.App.Kernel.ChatMessage> SendMessageAsync(string message, Action<Models.App.Kernel.ChatMessage> userMsgHandler, Action<string> streamHandler, bool ignoreUserMessage = false, CancellationToken cancellationToken = default)
     {
         var chat = GetChatCore();
         var userMsg = new Models.App.Kernel.ChatMessage(ChatMessageRole.User, message);
-        await ChatDataService.AddMessageAsync(userMsg, SessionId);
-        userMsgHandler?.Invoke(userMsg);
+
+        if (!ignoreUserMessage)
+        {
+            await ChatDataService.AddMessageAsync(userMsg, SessionId);
+            userMsgHandler?.Invoke(userMsg);
+        }
 
         var resMessage = string.Empty;
         try

@@ -57,7 +57,7 @@
     <None Remove="Styles\Overwrites.xaml" />
     <None Remove="Controls\ImageEx\ImageEx.xaml" />
     <None Remove="Controls\CardPanel\CardPanel.xaml" />
-    <None Remove="Controls\Markdown\MarkdownTextBlock\MarkdownTextBlock.xaml" />
+    <None Remove="Controls\Markdown\MarkdownTextBlock.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -77,6 +77,7 @@
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.231030-build.1587" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.0.231003-build.754" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
     <PackageReference Include="Humanizer.Core" Version="2.14.1" />
     <PackageReference Include="Humanizer.Core.zh-CN" Version="2.14.1" />
     <PackageReference Include="Markdig" Version="0.33.0" />
@@ -87,6 +88,7 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
     <PackageReference Include="NLog" Version="5.2.6" />
+    <PackageReference Include="Roman-Numerals" Version="2.0.0" />
     <PackageReference Include="WinUIEx" Version="2.3.3" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -113,8 +115,8 @@
     <Page Update="Controls\CardPanel\CardPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Markdown\MarkdownTextBlock\MarkdownTextBlock.xaml">
-        <Generator>MSBuild:Compile</Generator>
+    <Page Update="Controls\Markdown\MarkdownTextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="Assets\Database\chat.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

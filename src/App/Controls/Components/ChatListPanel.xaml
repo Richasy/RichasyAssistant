@@ -119,7 +119,10 @@
         <Grid Grid.Row="2" Margin="12">
             <Button
                 HorizontalAlignment="Stretch"
+                Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                 Command="{x:Bind ViewModel.CreateSessionCommand}"
+                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                 Style="{StaticResource AccentButtonStyle}"
                 Visibility="{x:Bind ViewModel.IsSessionList, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal" Spacing="8">

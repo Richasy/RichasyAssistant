@@ -7,6 +7,7 @@ using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.Libs.Kernel;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
+using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Components;
 
@@ -53,7 +54,13 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         {
             foreach (var message in _kernel.Session.Messages)
             {
-                var vm = new ChatMessageItemViewModel(message);
+                var vm = message.Role == ChatMessageRole.Assistant
+                    ? new ChatMessageItemViewModel(
+                            message,
+                            RegenerateMessageAsync,
+                            UpdateMessageAsync,
+                            DeleteMessageAsync)
+                    : new ChatMessageItemViewModel(message);
                 Messages.Add(vm);
             }
         }
@@ -71,67 +78,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
             return;
         }
 
-        CancelMessage();
-        _cancellationTokenSource = new CancellationTokenSource();
-
-        ErrorText = string.Empty;
-        var msg = UserInput;
-        UserInput = string.Empty;
-        TempMessage = string.Empty;
-        var isStream = SettingsToolkit.ReadLocalSetting(SettingNames.StreamOutput, true);
-        if (isStream)
-        {
-            var response = await _kernel.SendMessageAsync(
-                msg,
-                userMsg =>
-                {
-                    _ = _dispatcherQueue.TryEnqueue(async () =>
-                    {
-                        Messages.Add(new ChatMessageItemViewModel(userMsg));
-                        _itemRef.Update();
-                        RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
-                        if (Messages.Count <= 2)
-                        {
-                            await CheckAutoGenerateTitleAsync();
-                        }
-                    });
-                },
-                text =>
-                {
-                    _ = _dispatcherQueue.TryEnqueue(() =>
-                    {
-                        TempMessage += text;
-                    });
-                },
-                _cancellationTokenSource.Token);
-            Messages.Add(new ChatMessageItemViewModel(response));
-            _itemRef.Update();
-            TempMessage = string.Empty;
-        }
-        else
-        {
-            var response = await _kernel.SendMessageAsync(
-                msg,
-                userMsg =>
-                {
-                    _ = _dispatcherQueue.TryEnqueue(async () =>
-                    {
-                        Messages.Add(new ChatMessageItemViewModel(userMsg));
-                        RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
-                        _itemRef.Update();
-                        if (Messages.Count <= 2)
-                        {
-                            await CheckAutoGenerateTitleAsync();
-                        }
-                    });
-                },
-                _cancellationTokenSource.Token);
-            Messages.Add(new ChatMessageItemViewModel(response));
-            _itemRef.Update();
-        }
-
-        RequestFocusInput?.Invoke(this, EventArgs.Empty);
-        _cancellationTokenSource = null;
+        await SendMessageInternalAsync(UserInput);
     }
 
     [RelayCommand]
@@ -227,6 +174,118 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         TryClear(Messages);
     }
 
+    private async Task SendMessageInternalAsync(string msg, bool addUserMsg = true)
+    {
+        CancelMessage();
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        ErrorText = string.Empty;
+        UserInput = string.Empty;
+        TempMessage = string.Empty;
+        var isStream = SettingsToolkit.ReadLocalSetting(SettingNames.StreamOutput, true);
+        if (isStream)
+        {
+            var response = await _kernel.SendMessageAsync(
+                msg,
+                userMsg =>
+                {
+                    _ = _dispatcherQueue.TryEnqueue(async () =>
+                    {
+                        Messages.Add(new ChatMessageItemViewModel(userMsg));
+                        _itemRef.Update();
+                        RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
+                        if (Messages.Count <= 2)
+                        {
+                            await CheckAutoGenerateTitleAsync();
+                        }
+                    });
+                },
+                text =>
+                {
+                    _ = _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        TempMessage += text;
+                    });
+                },
+                !addUserMsg,
+                _cancellationTokenSource.Token);
+            Messages.Add(new ChatMessageItemViewModel(
+                response,
+                RegenerateMessageAsync,
+                UpdateMessageAsync,
+                DeleteMessageAsync));
+            _itemRef.Update();
+            TempMessage = string.Empty;
+        }
+        else
+        {
+            var response = await _kernel.SendMessageAsync(
+                msg,
+                userMsg =>
+                {
+                    _ = _dispatcherQueue.TryEnqueue(async () =>
+                    {
+                        Messages.Add(new ChatMessageItemViewModel(userMsg));
+                        RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
+                        _itemRef.Update();
+                        if (Messages.Count <= 2)
+                        {
+                            await CheckAutoGenerateTitleAsync();
+                        }
+                    });
+                },
+                !addUserMsg,
+                _cancellationTokenSource.Token);
+            Messages.Add(new ChatMessageItemViewModel(
+                response,
+                RegenerateMessageAsync,
+                UpdateMessageAsync,
+                DeleteMessageAsync));
+            _itemRef.Update();
+        }
+
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
+        _cancellationTokenSource = null;
+    }
+
+    private async void RegenerateMessageAsync(ChatMessage msg)
+    {
+        IsResponding = true;
+        try
+        {
+            var lastUserMsg = Messages.LastOrDefault(p => p.IsUser);
+            var lastAssistantMsg = Messages.LastOrDefault(p => p.IsAssistant);
+            Messages.Remove(lastAssistantMsg);
+            await ChatDataService.DeleteMessageAsync(_kernel.SessionId, msg.Id);
+            await SendMessageInternalAsync(lastUserMsg.Content, false);
+        }
+        catch (Exception ex)
+        {
+            LogException(ex);
+        }
+
+        IsResponding = false;
+    }
+
+    private async void UpdateMessageAsync(ChatMessage msg)
+        => await ChatDataService.UpdateMessageAsync(msg, _kernel.SessionId);
+
+    private async void DeleteMessageAsync(ChatMessage msg)
+    {
+        var source = Messages.FirstOrDefault(p => p.GetData().Equals(msg));
+        Messages.Remove(source);
+        await ChatDataService.DeleteMessageAsync(_kernel.SessionId, msg.Id);
+    }
+
+    private void ResetLastMessage()
+    {
+        var lastIndex = Messages.Count - 1;
+        for (var i = 0; i < Messages.Count; i++)
+        {
+            Messages[i].IsLastMessage = i == lastIndex;
+        }
+    }
+
     private void HandleException(Exception ex)
     {
         CancelMessage();
@@ -259,6 +318,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
             RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
         }
 
+        ResetLastMessage();
         CheckChatEmpty();
     }
 
