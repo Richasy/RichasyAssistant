@@ -11,6 +11,7 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="ms-appx:///Controls/CardPanel/CardPanel.xaml" />
                 <ResourceDictionary Source="ms-appx:///Controls/ImageEx/ImageEx.xaml" />
+                <ResourceDictionary Source="ms-appx:///Controls/Markdown/MarkdownTextBlock/MarkdownTextBlock.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Overwrites.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

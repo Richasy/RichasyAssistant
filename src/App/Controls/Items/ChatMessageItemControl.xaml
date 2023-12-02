@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
     xmlns:local="using:RichasyAssistant.App.Controls.Items"
+    xmlns:markdown="using:RichasyAssistant.App.Controls.Markdown"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -57,8 +58,15 @@
                         Stroke="{ThemeResource ControlStrokeColorDefaultBrush}"
                         StrokeThickness="1" />
                     <Grid Padding="12,8">
-                        <TextBlock
+                        <!--<TextBlock
                             x:Name="PlainMessageBlock"
+                            Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind ViewModel.Content, Mode=OneWay}"
+                            TextWrapping="Wrap" />-->
+                        <markdown:MarkdownTextBlock
+                            x:Name="MarkdownMessageBlock"
+                            Background="Transparent"
                             Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                             IsTextSelectionEnabled="True"
                             Text="{x:Bind ViewModel.Content, Mode=OneWay}"
@@ -86,7 +94,7 @@
                         <VisualState.Setters>
                             <Setter Target="MessageBackground.Fill" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                             <Setter Target="MessageBackground.Stroke" Value="{ThemeResource ControlStrokeColorOnAccentDefaultBrush}" />
-                            <Setter Target="PlainMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                            <Setter Target="MarkdownMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
                             <Setter Target="LeftColumn.Width" Value="0.2*" />
                             <Setter Target="RightColumn.Width" Value="*" />
                             <Setter Target="RootCard.(Grid.Column)" Value="1" />

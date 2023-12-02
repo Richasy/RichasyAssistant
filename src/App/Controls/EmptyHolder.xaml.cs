@@ -84,7 +84,7 @@ public sealed partial class EmptyHolder : UserControl
     /// </summary>
     public object ActionElement
     {
-        get => (object)GetValue(ActionElementProperty);
+        get => GetValue(ActionElementProperty);
         set => SetValue(ActionElementProperty, value);
     }
 }

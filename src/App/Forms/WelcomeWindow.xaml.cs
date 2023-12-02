@@ -26,7 +26,7 @@ public sealed partial class WelcomeWindow : WindowBase, ITipWindow
         Height = 460;
 
         this.CenterOnScreen();
-        MainFrame.Navigate(typeof(WelcomePage));
+        _ = MainFrame.Navigate(typeof(WelcomePage));
     }
 
     /// <inheritdoc/>

@@ -60,7 +60,7 @@ public partial class App : Application
     /// </summary>
     private void ActivateWindow(AppActivationArguments arguments = default)
     {
-        _dispatcherQueue.TryEnqueue(async () =>
+        _ = _dispatcherQueue.TryEnqueue(async () =>
         {
             var needWelcome = !SettingsToolkit.ReadLocalSetting(SettingNames.SkipWelcome, false);
             if (needWelcome)
@@ -74,12 +74,12 @@ public partial class App : Application
             }
             else if (_window.Visible && arguments?.Data == null)
             {
-                _window.Hide();
+                _ = _window.Hide();
             }
             else
             {
                 _window.Activate();
-                _window.SetForegroundWindow();
+                _ = _window.SetForegroundWindow();
             }
 
             try

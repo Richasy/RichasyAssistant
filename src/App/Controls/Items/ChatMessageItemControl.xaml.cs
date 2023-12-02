@@ -18,14 +18,9 @@ public sealed partial class ChatMessageItemControl : ChatMessageItemControlBase
     {
         if (e.NewValue is ChatMessageItemViewModel vm)
         {
-            if (vm.IsUser)
-            {
-                VisualStateManager.GoToState(this, nameof(MyState), false);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, nameof(AssistantState), false);
-            }
+            _ = vm.IsUser
+                ? VisualStateManager.GoToState(this, nameof(MyState), false)
+                : VisualStateManager.GoToState(this, nameof(AssistantState), false);
         }
     }
 

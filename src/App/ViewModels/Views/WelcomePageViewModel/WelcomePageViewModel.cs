@@ -52,7 +52,7 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
 
         SettingsToolkit.WriteLocalSetting(SettingNames.SkipWelcome, true);
         AppInstance.GetCurrent().UnregisterKey();
-        AppInstance.Restart(default);
+        _ = AppInstance.Restart(default);
     }
 
     [RelayCommand]

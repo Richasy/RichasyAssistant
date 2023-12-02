@@ -85,7 +85,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 msg,
                 userMsg =>
                 {
-                    _dispatcherQueue.TryEnqueue(async () =>
+                    _ = _dispatcherQueue.TryEnqueue(async () =>
                     {
                         Messages.Add(new ChatMessageItemViewModel(userMsg));
                         _itemRef.Update();
@@ -98,7 +98,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 },
                 text =>
                 {
-                    _dispatcherQueue.TryEnqueue(() =>
+                    _ = _dispatcherQueue.TryEnqueue(() =>
                     {
                         TempMessage += text;
                     });
@@ -114,7 +114,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 msg,
                 userMsg =>
                 {
-                    _dispatcherQueue.TryEnqueue(async () =>
+                    _ = _dispatcherQueue.TryEnqueue(async () =>
                     {
                         Messages.Add(new ChatMessageItemViewModel(userMsg));
                         RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
@@ -148,11 +148,11 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
             }
 
             _cancellationTokenSource = default;
-            _dispatcherQueue.TryEnqueue(async () =>
+            _ = _dispatcherQueue.TryEnqueue(async () =>
             {
                 TempMessage = string.Empty;
                 var lastUserMsg = Messages.LastOrDefault(p => p.IsUser);
-                Messages.Remove(lastUserMsg);
+                _ = Messages.Remove(lastUserMsg);
                 UserInput = lastUserMsg.Content;
                 await ChatDataService.DeleteMessageAsync(_kernel.SessionId, lastUserMsg.GetData().Id);
             });

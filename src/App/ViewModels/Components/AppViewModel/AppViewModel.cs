@@ -20,10 +20,7 @@ public sealed partial class AppViewModel : ViewModelBase
     /// 在应用退出前执行.
     /// </summary>
     /// <returns><see cref="Task"/>.</returns>
-    public static Task BeforeExitAsync()
-    {
-        return Task.CompletedTask;
-    }
+    public static Task BeforeExitAsync() => Task.CompletedTask;
 
     /// <summary>
     /// 重置全局设置.
@@ -192,7 +189,7 @@ public sealed partial class AppViewModel : ViewModelBase
 
             WriteSecret(dbContext, SettingNames.OpenAIImageKey);
 
-            await dbContext.SaveChangesAsync();
+            _ = await dbContext.SaveChangesAsync();
         }
     }
 
@@ -260,7 +257,7 @@ public sealed partial class AppViewModel : ViewModelBase
         if (source != null)
         {
             source.Value = value;
-            context.Metadata.Update(source);
+            _ = context.Metadata.Update(source);
         }
         else
         {
@@ -269,7 +266,7 @@ public sealed partial class AppViewModel : ViewModelBase
                 Id = name.ToString(),
                 Value = value,
             };
-            context.Metadata.Add(source);
+            _ = context.Metadata.Add(source);
         }
     }
 

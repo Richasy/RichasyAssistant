@@ -20,10 +20,7 @@ public sealed partial class ChatListPanel : ChatListPanelBase
         Loaded += OnLoaded;
     }
 
-    private void OnLoaded(object sender, RoutedEventArgs e)
-    {
-        DisplayPicker.SelectedIndex = (int)ViewModel.ListType;
-    }
+    private void OnLoaded(object sender, RoutedEventArgs e) => DisplayPicker.SelectedIndex = (int)ViewModel.ListType;
 
     private void OnDisplayPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
     {

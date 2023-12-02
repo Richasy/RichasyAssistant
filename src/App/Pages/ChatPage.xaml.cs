@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using RichasyAssistant.App.Controls;
-using RichasyAssistant.App.Controls.Items;
-using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.App.ViewModels.Views;
 
 namespace RichasyAssistant.App.Pages;

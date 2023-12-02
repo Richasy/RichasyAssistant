@@ -59,8 +59,10 @@ public sealed partial class ChatPageViewModel : ViewModelBase
     private async Task CreateSessionAsync()
     {
         var kernel = await ChatKernel.CreateAsync();
-        var sessionVM = new ChatSessionItemViewModel(kernel.Session);
-        sessionVM.Title = ResourceToolkit.GetLocalizedString(StringNames.NewSession);
+        var sessionVM = new ChatSessionItemViewModel(kernel.Session)
+        {
+            Title = ResourceToolkit.GetLocalizedString(StringNames.NewSession),
+        };
         RecentSessions.Insert(0, sessionVM);
         IsHistoryEmpty = RecentSessions.Count == 0;
 
@@ -79,7 +81,7 @@ public sealed partial class ChatPageViewModel : ViewModelBase
     private async Task DeleteSessionAsync(ChatSessionItemViewModel session)
     {
         await ChatDataService.DeleteSessionAsync(session.Id);
-        RecentSessions.Remove(session);
+        _ = RecentSessions.Remove(session);
         IsHistoryEmpty = RecentSessions.Count == 0;
 
         if (SessionDetail.SessionId == session.Id)

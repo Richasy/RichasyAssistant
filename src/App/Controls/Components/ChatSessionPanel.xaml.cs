@@ -17,7 +17,7 @@ public sealed partial class ChatSessionPanel : ChatSessionPanelBase
     public ChatSessionPanel()
     {
         InitializeComponent();
-        RegisterPropertyChangedCallback(VisibilityProperty, OnVisibilityChanged);
+        _ = RegisterPropertyChangedCallback(VisibilityProperty, OnVisibilityChanged);
         Loaded += OnLoadedAsync;
         Unloaded += OnUnloaded;
     }
@@ -75,8 +75,8 @@ public sealed partial class ChatSessionPanel : ChatSessionPanelBase
         if (e.Key == Windows.System.VirtualKey.Enter)
         {
             var shiftState = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift);
-            var isShiftDown = shiftState == CoreVirtualKeyStates.Down
-                || shiftState == (CoreVirtualKeyStates.Down | CoreVirtualKeyStates.Locked);
+            var isShiftDown = shiftState is(CoreVirtualKeyStates.Down
+                or CoreVirtualKeyStates.Down | CoreVirtualKeyStates.Locked);
             if (!isShiftDown)
             {
                 e.Handled = true;
@@ -88,7 +88,7 @@ public sealed partial class ChatSessionPanel : ChatSessionPanelBase
     private async Task ScrollToBottomAsync()
     {
         await Task.Delay(200);
-        MessageViewer.ChangeView(0, MessageViewer.ScrollableHeight + MessageViewer.ActualHeight + MessageViewer.VerticalOffset, default);
+        _ = MessageViewer.ChangeView(0, MessageViewer.ScrollableHeight + MessageViewer.ActualHeight + MessageViewer.VerticalOffset, default);
     }
 }
 

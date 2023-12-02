@@ -159,7 +159,7 @@ public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposabl
     private async Task RemoveRecordAsync(TranslationRecordItemViewModel item)
     {
         await TranslationDataService.RemoveRecordAsync(item.Data.Id);
-        History.Remove(item);
+        _ = History.Remove(item);
         IsHistoryEmpty = History.Count == 0;
     }
 

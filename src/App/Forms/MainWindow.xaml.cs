@@ -68,7 +68,7 @@ public sealed partial class MainWindow : WindowBase, ITipWindow
 
         if (e.Kind == ActivationKind.StartupTask)
         {
-            this.Hide();
+            _ = this.Hide();
         }
     }
 

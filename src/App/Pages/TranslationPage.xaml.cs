@@ -44,7 +44,7 @@ public sealed partial class TranslationPage : TranslationPageBase
     {
         if (e.PropertyName == nameof(ViewModel.OutputText) && !string.IsNullOrEmpty(ViewModel.OutputText))
         {
-            OutputBox.Focus(FocusState.Programmatic);
+            _ = OutputBox.Focus(FocusState.Programmatic);
         }
         else if (e.PropertyName == nameof(ViewModel.IsInitialized) && ViewModel.IsInitialized)
         {
@@ -58,8 +58,8 @@ public sealed partial class TranslationPage : TranslationPageBase
         if (e.Key == Windows.System.VirtualKey.Enter)
         {
             var shiftState = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift);
-            var isShiftDown = shiftState == CoreVirtualKeyStates.Down
-                || shiftState == (CoreVirtualKeyStates.Down | CoreVirtualKeyStates.Locked);
+            var isShiftDown = shiftState is(CoreVirtualKeyStates.Down
+                or CoreVirtualKeyStates.Down | CoreVirtualKeyStates.Locked);
             if (!isShiftDown)
             {
                 e.Handled = true;

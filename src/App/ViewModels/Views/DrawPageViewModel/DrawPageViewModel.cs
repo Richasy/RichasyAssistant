@@ -86,7 +86,7 @@ public sealed partial class DrawPageViewModel : ViewModelBase
             CurrentImage = null;
         }
 
-        History.Remove(vm);
+        _ = History.Remove(vm);
         await DrawDataService.RemoveImageAsync(vm.Data.Id);
         CheckHistoryCount();
     }
