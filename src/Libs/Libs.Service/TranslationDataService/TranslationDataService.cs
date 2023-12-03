@@ -98,29 +98,29 @@ public static partial class TranslationDataService
     public static async Task AddOrUpdateLanguageListAsync(LanguageList list)
     {
         var suffix = list.Id == AzureIdentify ? "_a" : "_b";
-        foreach (var item in list.Langauges)
+        foreach (var item in list.Languages)
         {
             item.Id = item.Id + suffix;
         }
 
         if (!_languages.ContainsKey(list.Id))
         {
-            _languages.Add(list.Id, list.Langauges);
+            _languages.Add(list.Id, list.Languages);
             await _dbContext.Languages.AddAsync(list);
         }
         else
         {
-            var source = await _dbContext.Languages.Include(p => p.Langauges).FirstOrDefaultAsync(p => p.Id == list.Id);
-            foreach (var item in list.Langauges)
+            var source = await _dbContext.Languages.Include(p => p.Languages).FirstOrDefaultAsync(p => p.Id == list.Id);
+            foreach (var item in list.Languages)
             {
-                if (!source.Langauges.Any(j => j.Equals(item)))
+                if (!source.Languages.Any(j => j.Equals(item)))
                 {
-                    source.Langauges.Add(item);
+                    source.Languages.Add(item);
                 }
             }
 
             _dbContext.Languages.Update(source);
-            _languages[list.Id] = list.Langauges;
+            _languages[list.Id] = list.Languages;
         }
 
         await _dbContext.SaveChangesAsync();
@@ -182,21 +182,21 @@ public static partial class TranslationDataService
     {
         try
         {
-            var languages = await _dbContext.Languages.AsNoTracking().Include(p => p.Langauges).ToListAsync();
+            var languages = await _dbContext.Languages.AsNoTracking().Include(p => p.Languages).ToListAsync();
             languages.ForEach(p =>
             {
-                if (p.Langauges != null)
+                if (p.Languages != null)
                 {
                     var id = p.Id;
                     var suffix = id == AzureIdentify ? "_a" : "_b";
-                    foreach (var item in p.Langauges)
+                    foreach (var item in p.Languages)
                     {
                         item.Id = item.Id.Replace(suffix, string.Empty);
                         var culture = new CultureInfo(item.Id);
                         item.Value = culture.DisplayName;
                     }
 
-                    _languages.Add(id, p.Langauges);
+                    _languages.Add(id, p.Languages);
                 }
             });
         }

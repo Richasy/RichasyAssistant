@@ -59,7 +59,7 @@ public sealed partial class AiImageItemViewModel : DataViewModelBase<AiImage>
     {
         try
         {
-            var file = await FileToolkit.SaveFileAsync(".png", AppViewModel.Instance.ActivatedWindow);
+            var file = await FileToolkit.SaveFileAsync(".png", $"{DateTime.Now:yyyy-mm-dd_HH_mm_ss}.png", AppViewModel.Instance.ActivatedWindow);
             if (file != null)
             {
                 await SaveFileAsync(file);

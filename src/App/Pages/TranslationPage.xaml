@@ -98,7 +98,7 @@
                     Visibility="{x:Bind ViewModel.IsHistoryEmpty, Mode=OneWay}" />
             </Grid>
         </SplitView.Pane>
-        <Grid Background="{ThemeResource LayerFillColorDefaultBrush}" CornerRadius="4,0,0,0">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />

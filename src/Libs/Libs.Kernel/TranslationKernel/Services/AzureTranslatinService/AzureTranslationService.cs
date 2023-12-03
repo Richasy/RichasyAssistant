@@ -39,7 +39,7 @@ internal sealed partial class AzureTranslationService : ITranslationService
             var languageList = new Models.App.Translate.LanguageList
             {
                 Id = TranslationDataService.AzureIdentify,
-                Langauges = data,
+                Languages = data,
             };
 
             await TranslationDataService.AddOrUpdateLanguageListAsync(languageList);

@@ -37,6 +37,8 @@
     <None Remove="Assets\openai_black.png" />
     <None Remove="Assets\openai_white.png" />
     <None Remove="Controls\Components\AppTitleBar.xaml" />
+    <None Remove="Controls\Components\AzureSpeechRecognizePanel.xaml" />
+    <None Remove="Controls\Components\AzureTextToSpeechPanel.xaml" />
     <None Remove="Controls\Components\ChatListPanel.xaml" />
     <None Remove="Controls\Components\ChatSessionPanel.xaml" />
     <None Remove="Controls\Components\DrawHistoryPanel.xaml" />
@@ -52,7 +54,9 @@
     <None Remove="Forms\WelcomeWindow.xaml" />
     <None Remove="Pages\ChatPage.xaml" />
     <None Remove="Pages\DrawPage.xaml" />
+    <None Remove="Pages\SubPages\AzureSpeechPage.xaml" />
     <None Remove="Pages\TranslationPage.xaml" />
+    <None Remove="Pages\VoicePage.xaml" />
     <None Remove="Pages\WelcomePage.xaml" />
     <None Remove="Styles\Overwrites.xaml" />
     <None Remove="Controls\ImageEx\ImageEx.xaml" />
@@ -87,7 +91,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
-    <PackageReference Include="NLog" Version="5.2.6" />
+    <PackageReference Include="NLog" Version="5.2.7" />
     <PackageReference Include="Roman-Numerals" Version="2.0.0" />
     <PackageReference Include="WinUIEx" Version="2.3.3" />
     <Manifest Include="$(ApplicationManifest)" />
@@ -130,6 +134,18 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Components\AzureSpeechRecognizePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Components\AzureTextToSpeechPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\SubPages\AzureSpeechPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\VoicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\Components\DrawHistoryPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

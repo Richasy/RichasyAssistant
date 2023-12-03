@@ -47,6 +47,7 @@ public enum SettingNames
     OpenAIImageKey,
 
     LibraryFolderPath,
+    LocalFolderPath,
     DefaultChatDbPath,
     DefaultSecretDbPath,
     DefaultTranslationDbPath,
@@ -72,4 +73,9 @@ public enum SettingNames
     RecordTranslationResult,
     DrawImageSize,
     DrawHistoryColumnWidth,
+    AzureSpeechTTSColumnWidth,
+    AzureTextToSpeechLanguage,
+    AzureTextToSpeechVoice,
+    CurrentSpeechType,
+    AzureContinuousSpeechRecognize,
 }

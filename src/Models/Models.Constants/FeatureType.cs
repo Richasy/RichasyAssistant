@@ -25,7 +25,7 @@ public enum FeatureType
     /// <summary>
     /// 语音.
     /// </summary>
-    Speech,
+    Voice,
 
     /// <summary>
     /// 文件查询.

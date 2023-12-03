@@ -48,7 +48,7 @@ internal sealed partial class BaiduTranslationService : ITranslationService
             var languageList = new Models.App.Translate.LanguageList
             {
                 Id = TranslationDataService.BaiduIdentify,
-                Langauges = result,
+                Languages = result,
             };
             await TranslationDataService.AddOrUpdateLanguageListAsync(languageList);
             list = TranslationDataService.GetLanguageList(TranslateType.Baidu);

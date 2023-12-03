@@ -13,7 +13,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}" CornerRadius="4,0,0,0">
+    <Grid>
         <Grid Visibility="{x:Bind ViewModel.ErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

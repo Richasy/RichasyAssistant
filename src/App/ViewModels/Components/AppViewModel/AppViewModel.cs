@@ -5,6 +5,7 @@ using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
 using RichasyAssistant.Models.Context;
 using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace RichasyAssistant.App.ViewModels.Components;
 
@@ -78,11 +79,13 @@ public sealed partial class AppViewModel : ViewModelBase
 
         // 配置存储设置.
         var localPath = Package.Current.InstalledPath;
+        var localFolderPath = ApplicationData.Current.LocalFolder.Path;
         var localChatDbPath = Path.Combine(localPath, "Assets/Database/chat.db");
         var localSecretDbPath = Path.Combine(localPath, "Assets/Database/secret.db");
         var localTranslationDbPath = Path.Combine(localPath, "Assets/Database/trans.db");
         var localDrawDbPath = Path.Combine(localPath, "Assets/Database/draw.db");
         var libraryPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
+        GlobalSettings.Set(SettingNames.LocalFolderPath, localFolderPath);
         GlobalSettings.Set(SettingNames.LibraryFolderPath, libraryPath);
         GlobalSettings.Set(SettingNames.DefaultChatDbPath, localChatDbPath);
         GlobalSettings.Set(SettingNames.DefaultSecretDbPath, localSecretDbPath);

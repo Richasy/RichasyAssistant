@@ -17,10 +17,7 @@
 
     <Grid>
         <Grid Visibility="{x:Bind ViewModel.InitializeErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}">
-            <Grid
-                Background="{ThemeResource LayerFillColorDefaultBrush}"
-                CornerRadius="4,0,0,0"
-                Visibility="{x:Bind ViewModel.IsInitializing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            <Grid Visibility="{x:Bind ViewModel.IsInitializing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />

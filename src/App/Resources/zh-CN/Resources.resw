@@ -213,6 +213,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>确认</value>
   </data>
+  <data name="ContinuousSpeech" xml:space="preserve">
+    <value>连续语音</value>
+  </data>
   <data name="Copied" xml:space="preserve">
     <value>已复制</value>
   </data>
@@ -300,6 +303,9 @@
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
   <data name="LaunchApp" xml:space="preserve">
     <value>启动应用</value>
   </data>
@@ -338,6 +344,12 @@
   </data>
   <data name="MoreOptions" xml:space="preserve">
     <value>更多选项</value>
+  </data>
+  <data name="NeedInputText" xml:space="preserve">
+    <value>必须输入文本</value>
+  </data>
+  <data name="NeedSelectVoice" xml:space="preserve">
+    <value>必须选择一个声音</value>
   </data>
   <data name="NewSession" xml:space="preserve">
     <value>新会话</value>
@@ -396,6 +408,9 @@
   <data name="OrganizationPlaceholderText" xml:space="preserve">
     <value>填写组织名称</value>
   </data>
+  <data name="PlayAndPause" xml:space="preserve">
+    <value>播放 / 暂停</value>
+  </data>
   <data name="PoweredBy" xml:space="preserve">
     <value>基于 {0} 提供</value>
   </data>
@@ -420,6 +435,9 @@
   <data name="RecentSession" xml:space="preserve">
     <value>近期会话</value>
   </data>
+  <data name="RecognizedText" xml:space="preserve">
+    <value>已识别的文本</value>
+  </data>
   <data name="Regenerate" xml:space="preserve">
     <value>重新生成</value>
   </data>
@@ -435,6 +453,9 @@
   <data name="RepeatabilityDescription" xml:space="preserve">
     <value>控制模型对文字或话题的重复度</value>
   </data>
+  <data name="RequestVoiceMetadataFailed" xml:space="preserve">
+    <value>请求声音数据失败</value>
+  </data>
   <data name="Resent" xml:space="preserve">
     <value>重新发送</value>
   </data>
@@ -449,6 +470,9 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>另存为</value>
+  </data>
+  <data name="SaveAudio" xml:space="preserve">
+    <value>保存音频</value>
   </data>
   <data name="SaveFileFailed" xml:space="preserve">
     <value>保存文件失败，请稍后再试</value>
@@ -486,8 +510,26 @@
   <data name="Speech" xml:space="preserve">
     <value>语音</value>
   </data>
+  <data name="SpeechConvertFailed" xml:space="preserve">
+    <value>尝试转换语音时发生了异常</value>
+  </data>
   <data name="SpeechInput" xml:space="preserve">
     <value>语音输入</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>语音识别</value>
+  </data>
+  <data name="SpeechRecognizeFailed" xml:space="preserve">
+    <value>语音识别失败</value>
+  </data>
+  <data name="SpeechService" xml:space="preserve">
+    <value>语音服务</value>
+  </data>
+  <data name="StartRecording" xml:space="preserve">
+    <value>开始录制</value>
+  </data>
+  <data name="StopRecording" xml:space="preserve">
+    <value>停止录制</value>
   </data>
   <data name="Storage" xml:space="preserve">
     <value>文件</value>
@@ -506,6 +548,9 @@
   </data>
   <data name="TextCompletionModelPlaceholderText" xml:space="preserve">
     <value>部署的文本完成模型名称</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>文本转语音</value>
   </data>
   <data name="TextTranslate" xml:space="preserve">
     <value>文本翻译</value>
@@ -536,6 +581,18 @@
   </data>
   <data name="UserInputPlaceholderText" xml:space="preserve">
     <value>输入消息</value>
+  </data>
+  <data name="Voice" xml:space="preserve">
+    <value>声音</value>
+  </data>
+  <data name="VoiceConfigInvalid" xml:space="preserve">
+    <value>请在设置中完善语音相关的服务配置</value>
+  </data>
+  <data name="VoiceDependenciesMissing" xml:space="preserve">
+    <value>你需要点击下面的链接下载 C++ 依赖才能使用该功能</value>
+  </data>
+  <data name="VoiceInvalid" xml:space="preserve">
+    <value>语音服务不可用</value>
   </data>
   <data name="WelcomeDescription" xml:space="preserve">
     <value>在开始使用前，请跟随我一起做一些简单的配置吧！</value>

@@ -30,6 +30,8 @@
             x:Name="MainFrame"
             Grid.Row="1"
             Grid.Column="1"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            CornerRadius="8,0,0,0"
             Loaded="OnFrameLoaded" />
 
         <Grid

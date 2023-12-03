@@ -38,7 +38,7 @@ public sealed partial class NavigateItemViewModel : DataViewModelBase<NavigateIt
                 DefaultIcon = FluentSymbol.Translate;
                 SelectedIcon = FluentSymbol.TranslateFilled;
                 break;
-            case FeatureType.Speech:
+            case FeatureType.Voice:
                 DefaultIcon = FluentSymbol.MicSparkle;
                 SelectedIcon = FluentSymbol.MicSparkleFilled;
                 break;

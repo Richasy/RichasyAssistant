@@ -71,9 +71,10 @@ public static class FileToolkit
     /// 保存文件.
     /// </summary>
     /// <param name="extension">扩展名.</param>
+    /// <param name="suggestName">建议名称.</param>
     /// <param name="windowInstance">窗口实例.</param>
     /// <returns>文件.</returns>
-    public static async Task<StorageFile> SaveFileAsync(string extension, object windowInstance)
+    public static async Task<StorageFile> SaveFileAsync(string extension, string suggestName, object windowInstance)
     {
         try
         {
@@ -83,6 +84,11 @@ public static class FileToolkit
             foreach (var ext in exts)
             {
                 picker.FileTypeChoices.Add(ext, new List<string> { ext });
+            }
+
+            if (!string.IsNullOrEmpty(suggestName))
+            {
+                picker.SuggestedFileName = suggestName;
             }
 
             picker.SuggestedStartLocation = PickerLocationId.Desktop;

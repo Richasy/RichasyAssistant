@@ -36,7 +36,7 @@ public sealed class TranslationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<LanguageList>()
-            .HasMany(p => p.Langauges)
+            .HasMany(p => p.Languages)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);
     }

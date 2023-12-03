@@ -19,7 +19,7 @@ public sealed partial class MainViewModel
             GetNavigateItem(FeatureType.Chat),
             GetNavigateItem(FeatureType.Draw),
             GetNavigateItem(FeatureType.Translate),
-            GetNavigateItem(FeatureType.Speech),
+            GetNavigateItem(FeatureType.Voice),
             GetNavigateItem(FeatureType.Storage),
         };
 
@@ -45,8 +45,8 @@ public sealed partial class MainViewModel
             FeatureType.Chat => typeof(ChatPage),
             FeatureType.Draw => typeof(DrawPage),
             FeatureType.Translate => typeof(TranslationPage),
+            FeatureType.Voice => typeof(VoicePage),
 
-            // FeatureType.Speech => typeof(SpeechPage),
             // FeatureType.Storage => typeof(StoragePage),
             // FeatureType.Settings => typeof(SettingsPage),
             _ => typeof(Page),
@@ -71,7 +71,7 @@ public sealed partial class MainViewModel
                 FeatureType.Chat => ResourceToolkit.GetLocalizedString(StringNames.Chat),
                 FeatureType.Draw => ResourceToolkit.GetLocalizedString(StringNames.Draw),
                 FeatureType.Translate => ResourceToolkit.GetLocalizedString(StringNames.Translate),
-                FeatureType.Speech => ResourceToolkit.GetLocalizedString(StringNames.Speech),
+                FeatureType.Voice => ResourceToolkit.GetLocalizedString(StringNames.Speech),
                 FeatureType.Storage => ResourceToolkit.GetLocalizedString(StringNames.Storage),
                 FeatureType.Settings => ResourceToolkit.GetLocalizedString(StringNames.Settings),
                 _ => string.Empty,
