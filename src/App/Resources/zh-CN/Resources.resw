@@ -147,6 +147,9 @@
   <data name="AttachImage" xml:space="preserve">
     <value>附加照片</value>
   </data>
+  <data name="AudioSearch" xml:space="preserve">
+    <value>音频搜索</value>
+  </data>
   <data name="AutoDetect" xml:space="preserve">
     <value>自动检测</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="BeginChatDescription" xml:space="preserve">
     <value>创建或打开一个会话，然后开始聊天吧！</value>
+  </data>
+  <data name="BeginStorageSearch" xml:space="preserve">
+    <value>搜索本地文件</value>
+  </data>
+  <data name="BeginStorageSearchDescription" xml:space="preserve">
+    <value>利用 Everything 开始极速搜索本地文件吧！</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
@@ -239,6 +248,12 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
+  </data>
+  <data name="DocumentSearch" xml:space="preserve">
+    <value>文档搜索</value>
+  </data>
+  <data name="DownloadEverything" xml:space="preserve">
+    <value>下载 Everything</value>
   </data>
   <data name="Draw" xml:space="preserve">
     <value>绘图</value>
@@ -297,8 +312,14 @@
   <data name="GenerateResponseFailed" xml:space="preserve">
     <value>生成响应时出现异常</value>
   </data>
+  <data name="GenericSearch" xml:space="preserve">
+    <value>通用搜索</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>历史记录</value>
+  </data>
+  <data name="ImageSearch" xml:space="preserve">
+    <value>图像搜索</value>
   </data>
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
@@ -423,6 +444,9 @@
   <data name="PresetSession" xml:space="preserve">
     <value>预设会话</value>
   </data>
+  <data name="ProgramSearch" xml:space="preserve">
+    <value>程序搜索</value>
+  </data>
   <data name="Prompt" xml:space="preserve">
     <value>提示词</value>
   </data>
@@ -453,6 +477,9 @@
   <data name="RepeatabilityDescription" xml:space="preserve">
     <value>控制模型对文字或话题的重复度</value>
   </data>
+  <data name="RepeatFile" xml:space="preserve">
+    <value>重复文件</value>
+  </data>
   <data name="RequestVoiceMetadataFailed" xml:space="preserve">
     <value>请求声音数据失败</value>
   </data>
@@ -476,6 +503,9 @@
   </data>
   <data name="SaveFileFailed" xml:space="preserve">
     <value>保存文件失败，请稍后再试</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
   </data>
   <data name="SearchByName" xml:space="preserve">
     <value>按名称搜索</value>
@@ -534,6 +564,18 @@
   <data name="Storage" xml:space="preserve">
     <value>文件</value>
   </data>
+  <data name="StorageInvalid" xml:space="preserve">
+    <value>存储搜索服务不可用</value>
+  </data>
+  <data name="StorageInvalidDescription" xml:space="preserve">
+    <value>存储搜索服务需要先在本机安装 Everything</value>
+  </data>
+  <data name="StorageSearch" xml:space="preserve">
+    <value>存储搜索</value>
+  </data>
+  <data name="StorageSearchPlaceholder" xml:space="preserve">
+    <value>基于 Everything 查找文件</value>
+  </data>
   <data name="TargetLanguage" xml:space="preserve">
     <value>目标语言</value>
   </data>
@@ -582,6 +624,9 @@
   <data name="UserInputPlaceholderText" xml:space="preserve">
     <value>输入消息</value>
   </data>
+  <data name="VideoSearch" xml:space="preserve">
+    <value>视频搜索</value>
+  </data>
   <data name="Voice" xml:space="preserve">
     <value>声音</value>
   </data>
@@ -599,5 +644,8 @@
   </data>
   <data name="WelcomeTitle" xml:space="preserve">
     <value>欢迎使用小幻助理</value>
+  </data>
+  <data name="ZipSearch" xml:space="preserve">
+    <value>压缩包搜索</value>
   </data>
 </root>

@@ -2,3 +2,7 @@
 SetWindowLong
 ShowWindow
 IsZoomed
+SHGetFileInfo
+SHGetImageList
+DestroyIcon
+Windows.Win32.UI.Controls.IImageList

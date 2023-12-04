@@ -60,7 +60,11 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                             RegenerateMessageAsync,
                             UpdateMessageAsync,
                             DeleteMessageAsync)
-                    : new ChatMessageItemViewModel(message);
+                    : new ChatMessageItemViewModel(
+                        message,
+                        default,
+                        UpdateMessageAsync,
+                        DeleteMessageAsync);
                 Messages.Add(vm);
             }
         }
@@ -191,7 +195,11 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 {
                     _ = _dispatcherQueue.TryEnqueue(async () =>
                     {
-                        Messages.Add(new ChatMessageItemViewModel(userMsg));
+                        Messages.Add(new ChatMessageItemViewModel(
+                            userMsg,
+                            default,
+                            UpdateMessageAsync,
+                            DeleteMessageAsync));
                         _itemRef.Update();
                         RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
                         if (Messages.Count <= 2)
@@ -225,7 +233,11 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 {
                     _ = _dispatcherQueue.TryEnqueue(async () =>
                     {
-                        Messages.Add(new ChatMessageItemViewModel(userMsg));
+                        Messages.Add(new ChatMessageItemViewModel(
+                            userMsg,
+                            default,
+                            UpdateMessageAsync,
+                            DeleteMessageAsync));
                         RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
                         _itemRef.Update();
                         if (Messages.Count <= 2)
