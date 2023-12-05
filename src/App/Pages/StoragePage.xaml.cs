@@ -20,17 +20,32 @@ public sealed partial class StoragePage : StoragePageBase
     }
 
     /// <inheritdoc/>
-    protected override void OnPageLoaded()
-        => ViewModel.InitializeCommand.Execute(default);
-
-    private void OnSearchBoxKeyDown(object sender, KeyRoutedEventArgs e)
+    protected override async void OnPageLoaded()
     {
-        if (e.Key == Windows.System.VirtualKey.Enter)
+        ViewModel.InitializeCommand.Execute(default);
+        LayoutPicker.SelectedIndex = ViewModel.IsGridLayout ? 0 : 1;
+        SortTypeComboBox.SelectedIndex = (int)ViewModel.SortType;
+        await Task.Delay(500);
+        if (ViewModel.IsEverythingAvailable)
         {
-            e.Handled = true;
-
-            // TODO: Search
+            SearchBox.Focus(FocusState.Programmatic);
         }
+    }
+
+    private void OnSearchSubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        => ViewModel.SearchCommand.Execute(default);
+
+    private void OnLayoutPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
+        => ViewModel.IsGridLayout = LayoutPicker.SelectedIndex == 0;
+
+    private void OnSortTypeSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!ViewModel.IsEverythingAvailable)
+        {
+            return;
+        }
+
+        ViewModel.SortType = (StorageSortType)SortTypeComboBox.SelectedIndex;
     }
 }
 

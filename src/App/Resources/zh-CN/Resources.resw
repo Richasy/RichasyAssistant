@@ -234,6 +234,9 @@
   <data name="CopyImage" xml:space="preserve">
     <value>复制图像</value>
   </data>
+  <data name="CopyPath" xml:space="preserve">
+    <value>复制路径</value>
+  </data>
   <data name="CopyPrompt" xml:space="preserve">
     <value>复制提示词</value>
   </data>
@@ -315,6 +318,9 @@
   <data name="GenericSearch" xml:space="preserve">
     <value>通用搜索</value>
   </data>
+  <data name="GridLayout" xml:space="preserve">
+    <value>网格布局</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>历史记录</value>
   </data>
@@ -338,6 +344,9 @@
   </data>
   <data name="LibraryNeedInitialized" xml:space="preserve">
     <value>您必须指定一个文件夹作为应用数据存储库</value>
+  </data>
+  <data name="ListLayout" xml:space="preserve">
+    <value>列表布局</value>
   </data>
   <data name="LoadingAndWait" xml:space="preserve">
     <value>加载中，请稍后</value>
@@ -363,8 +372,17 @@
   <data name="ModelNamePlaceholderText" xml:space="preserve">
     <value>部署的模型名称</value>
   </data>
+  <data name="ModifiedTime" xml:space="preserve">
+    <value>修改时间</value>
+  </data>
   <data name="MoreOptions" xml:space="preserve">
     <value>更多选项</value>
+  </data>
+  <data name="NameAtoZ" xml:space="preserve">
+    <value>名称（A 到 Z）</value>
+  </data>
+  <data name="NameZtoA" xml:space="preserve">
+    <value>名称（Z 到 A）</value>
   </data>
   <data name="NeedInputText" xml:space="preserve">
     <value>必须输入文本</value>
@@ -396,6 +414,12 @@
   <data name="NoName" xml:space="preserve">
     <value>未命名</value>
   </data>
+  <data name="NoSearchResult" xml:space="preserve">
+    <value>没有搜索结果</value>
+  </data>
+  <data name="NoSearchResultDescription" xml:space="preserve">
+    <value>请换个关键词再搜索试一下吧</value>
+  </data>
   <data name="NoSession" xml:space="preserve">
     <value>暂无可用的会话</value>
   </data>
@@ -417,11 +441,20 @@
   <data name="OpenFullWindow" xml:space="preserve">
     <value>打开完整窗口</value>
   </data>
+  <data name="OpenInFileExplorer" xml:space="preserve">
+    <value>在文件资源管理器中打开</value>
+  </data>
+  <data name="OpenItemFailed" xml:space="preserve">
+    <value>尝试打开项目时失败</value>
+  </data>
   <data name="OpenLibrary" xml:space="preserve">
     <value>打开存储库</value>
   </data>
   <data name="OpenSourceImage" xml:space="preserve">
     <value>打开原图</value>
+  </data>
+  <data name="OpenWith" xml:space="preserve">
+    <value>打开方式</value>
   </data>
   <data name="Organization" xml:space="preserve">
     <value>组织（选填）</value>
@@ -510,6 +543,15 @@
   <data name="SearchByName" xml:space="preserve">
     <value>按名称搜索</value>
   </data>
+  <data name="SearchingAndWaiting" xml:space="preserve">
+    <value>搜索中，请稍候</value>
+  </data>
+  <data name="SearchResultTip" xml:space="preserve">
+    <value>查找出 {0} 条结果</value>
+  </data>
+  <data name="SearchResultTipWithLimit" xml:space="preserve">
+    <value>总共有 {0} 条结果，已为您展示前 {1} 条</value>
+  </data>
   <data name="SendMessage" xml:space="preserve">
     <value>发送消息</value>
   </data>
@@ -528,11 +570,20 @@
   <data name="Size" xml:space="preserve">
     <value>大小</value>
   </data>
+  <data name="SizeLargeToSmall" xml:space="preserve">
+    <value>大小（从大到小）</value>
+  </data>
+  <data name="SizeSmallToLarge" xml:space="preserve">
+    <value>大小（从小到大）</value>
+  </data>
   <data name="Skip" xml:space="preserve">
     <value>跳过</value>
   </data>
   <data name="SomethingWrong" xml:space="preserve">
     <value>出错了！</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>排序</value>
   </data>
   <data name="SourceLanguage" xml:space="preserve">
     <value>源语言</value>
@@ -617,6 +668,9 @@
   </data>
   <data name="TranslationInputPlaceholderText" xml:space="preserve">
     <value>请输入要翻译的文本</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>发生了未知错误</value>

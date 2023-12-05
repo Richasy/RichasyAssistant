@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="ms-appx:///Controls/CardPanel/CardPanel.xaml" />
                 <ResourceDictionary Source="ms-appx:///Controls/ImageEx/ImageEx.xaml" />
                 <ResourceDictionary Source="ms-appx:///Controls/Markdown/MarkdownTextBlock.xaml" />
+                <ResourceDictionary Source="ms-appx:///Controls/Items/StorageItemControl/StorageItemControl.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Overwrites.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

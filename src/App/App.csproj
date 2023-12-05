@@ -22,8 +22,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\baiduLan.json" />
+    <None Remove="Assets\Emoji\file_folder_3d.png" />
     <None Remove="Assets\Emoji\framed_picture_3d.png" />
     <None Remove="Assets\Emoji\globe_showing_asia-australia_3d.png" />
+    <None Remove="Assets\Emoji\no_entry_3d.png" />
     <None Remove="Assets\Emoji\open_file_folder_3d.png" />
     <None Remove="Assets\Emoji\party_popper_3d.png" />
     <None Remove="Assets\Emoji\robot_3d.png" />
@@ -47,6 +49,7 @@
     <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
     <None Remove="Controls\Items\ChatSessionItemControl.xaml" />
     <None Remove="Controls\Items\NavigateItemControl.xaml" />
+    <None Remove="Controls\Items\StorageItemControl\StorageItemControl.xaml" />
     <None Remove="Controls\Items\TranslationRecordItemControl.xaml" />
     <None Remove="Controls\LoadingOverlapper.xaml" />
     <None Remove="Controls\StatusTip.xaml" />
@@ -92,6 +95,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
+    <PackageReference Include="NeoSmart.PrettySize" Version="3.1.1" />
     <PackageReference Include="NLog" Version="5.2.7" />
     <PackageReference Include="Roman-Numerals" Version="2.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
@@ -137,6 +141,9 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Items\StorageItemControl\StorageItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Pages\StoragePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -33,12 +33,5 @@
                 Style="{StaticResource CaptionTextBlockStyle}"
                 Text="{ext:Locale Name=AppName}" />
         </StackPanel>
-
-        <AutoSuggestBox
-            Grid.Column="1"
-            MaxWidth="400"
-            VerticalAlignment="Center"
-            PlaceholderText="{ext:Locale Name=UserInputPlaceholderText}"
-            QueryIcon="Find" />
     </Grid>
 </local:AppTitleBarBase>

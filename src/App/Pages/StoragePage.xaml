@@ -6,6 +6,8 @@
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:items="using:RichasyAssistant.App.ViewModels.Items"
+    xmlns:items1="using:RichasyAssistant.App.Controls.Items"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,7 +15,7 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid Visibility="{x:Bind ViewModel.IsEverythingAvailable, Mode=OneWay}">
+        <Grid RowSpacing="12" Visibility="{x:Bind ViewModel.IsEverythingAvailable, Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
@@ -23,28 +25,16 @@
                 Padding="20,0"
                 BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
                 BorderThickness="0,0,0,1"
-                ColumnSpacing="24">
+                ColumnSpacing="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Style="{StaticResource BodyStrongTextBlockStyle}"
-                    Text="{ext:Locale Name=StorageSearch}" />
-                <AutoSuggestBox
-                    Grid.Column="1"
-                    MaxWidth="640"
-                    VerticalAlignment="Center"
-                    KeyDown="OnSearchBoxKeyDown"
-                    PlaceholderText="{ext:Locale Name=StorageSearchPlaceholder}"
-                    QueryIcon="Find"
-                    Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <ComboBox
-                    Grid.Column="2"
                     MinWidth="120"
                     VerticalAlignment="Center"
+                    IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
                     ItemsSource="{x:Bind ViewModel.SearchTypes}"
                     SelectedItem="{x:Bind ViewModel.CurrentSearchType, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
@@ -60,9 +50,97 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <AutoSuggestBox
+                    x:Name="SearchBox"
+                    Grid.Column="1"
+                    MaxWidth="640"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                    PlaceholderText="{ext:Locale Name=StorageSearchPlaceholder}"
+                    QueryIcon="Find"
+                    QuerySubmitted="OnSearchSubmitted"
+                    Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel
+                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    Spacing="12">
+                    <ComboBox
+                        x:Name="SortTypeComboBox"
+                        MinWidth="120"
+                        VerticalAlignment="Center"
+                        IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                        SelectionChanged="OnSortTypeSelectionChanged">
+                        <ComboBoxItem Content="{ext:Locale Name=NameAtoZ}" />
+                        <ComboBoxItem Content="{ext:Locale Name=NameZtoA}" />
+                        <ComboBoxItem Content="{ext:Locale Name=ModifiedTime}" />
+                        <ComboBoxItem Content="{ext:Locale Name=Type}" />
+                        <ComboBoxItem Content="{ext:Locale Name=SizeLargeToSmall}" />
+                        <ComboBoxItem Content="{ext:Locale Name=SizeSmallToLarge}" />
+                    </ComboBox>
+                    <labs:Segmented
+                        x:Name="LayoutPicker"
+                        VerticalAlignment="Center"
+                        IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                        SelectionChanged="OnLayoutPickerSelectionChanged">
+                        <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=GridLayout}">
+                            <labs:SegmentedItem.Icon>
+                                <controls:FluentIcon Symbol="Grid" />
+                            </labs:SegmentedItem.Icon>
+                        </labs:SegmentedItem>
+                        <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=ListLayout}">
+                            <labs:SegmentedItem.Icon>
+                                <controls:FluentIcon Symbol="AppsListDetail" />
+                            </labs:SegmentedItem.Icon>
+                        </labs:SegmentedItem>
+                    </labs:Segmented>
+                </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
                 <!--  搜索结果  -->
+                <Grid Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                    <Grid Visibility="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                        <ScrollViewer Style="{StaticResource PageScrollViewerStyle}" Visibility="{x:Bind ViewModel.IsGridLayout, Mode=OneWay}">
+                            <ItemsRepeater Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.Items}">
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="items:StorageItemViewModel">
+                                        <items1:StorageItemControl Style="{StaticResource StorageItemCardStyle}" ViewModel="{x:Bind}" />
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                                <ItemsRepeater.Layout>
+                                    <UniformGridLayout
+                                        ItemsStretch="Fill"
+                                        MinColumnSpacing="12"
+                                        MinItemHeight="152"
+                                        MinItemWidth="180"
+                                        MinRowSpacing="12" />
+                                </ItemsRepeater.Layout>
+                            </ItemsRepeater>
+                        </ScrollViewer>
+                        <ScrollViewer Style="{StaticResource PageScrollViewerStyle}" Visibility="{x:Bind ViewModel.IsGridLayout, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                            <ItemsRepeater Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.Items}">
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="items:StorageItemViewModel">
+                                        <items1:StorageItemControl Style="{StaticResource StorageItemHorizontalStyle}" ViewModel="{x:Bind}" />
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                                <ItemsRepeater.Layout>
+                                    <StackLayout Spacing="8" />
+                                </ItemsRepeater.Layout>
+                            </ItemsRepeater>
+                        </ScrollViewer>
+                    </Grid>
+
+                    <controls:LoadingOverlapper IsOpen="{x:Bind ViewModel.IsSearching, Mode=OneWay}" Text="{ext:Locale Name=SearchingAndWaiting}" />
+                </Grid>
+
+                <controls:EmptyHolder
+                    Title="{ext:Locale Name=NoSearchResult}"
+                    Description="{ext:Locale Name=NoSearchResultDescription}"
+                    Emoji="&#x1F343;"
+                    Style="{StaticResource BasicEmptyHolderStyle}"
+                    Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay}" />
+
                 <controls:EmptyHolder
                     Title="{ext:Locale Name=BeginStorageSearch}"
                     Description="{ext:Locale Name=BeginStorageSearchDescription}"

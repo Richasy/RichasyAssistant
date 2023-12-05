@@ -79,4 +79,7 @@ public enum SettingNames
     CurrentSpeechType,
     AzureContinuousSpeechRecognize,
     StorageSearchType,
+    MaxStorageSearchCount,
+    IsStoragePageGridLayout,
+    StorageSortType,
 }

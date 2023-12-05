@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Collections.Generic;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.Win32;
-using RichasyAssistant.App.Extensions;
+using RichasyAssistant.App.ViewModels.Components;
+using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.Libs.Everything.Core;
+using RichasyAssistant.Models.App.Local;
 using RichasyAssistant.Models.App.UI;
 
 namespace RichasyAssistant.App.ViewModels.Views;
@@ -21,6 +23,11 @@ public sealed partial class StoragePageViewModel : ViewModelBase
     {
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         SearchTypes = new ObservableCollection<StorageSearchTypeItem>();
+        Items = new ObservableCollection<StorageItemViewModel>();
+        IsGridLayout = SettingsToolkit.ReadLocalSetting(SettingNames.IsStoragePageGridLayout, true);
+        SortType = SettingsToolkit.ReadLocalSetting(SettingNames.StorageSortType, StorageSortType.NameAtoZ);
+
+        AttachIsRunningToAsyncCommand(p => IsSearching = p, SearchCommand);
     }
 
     private static StorageSearchTypeItem CreateSearchTypeItem(StorageSearchType type)
@@ -115,21 +122,133 @@ public sealed partial class StoragePageViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task TestAsync()
+    private async Task SearchAsync(string text = null)
     {
-        var query = _client.Search()
-                    .Name
-                    .Contains("msbuild.exe");
-        var first = query.First(p => p.Size > 0);
-        var path = first.FullPath;
-        using var thumbnail = WindowsThumbnailProvider.GetThumbnail(path, 256, 256, ThumbnailOptions.None);
-        using var ms = new MemoryStream();
-        thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-        ms.Seek(0, SeekOrigin.Begin);
-        var image = new BitmapImage();
-        await image.SetSourceAsync(ms.AsRandomAccessStream());
+        var searchText = string.IsNullOrEmpty(text) ? SearchText : text;
+        if (string.IsNullOrEmpty(searchText))
+        {
+            IsNotStarted = true;
+            IsEmpty = false;
+            return;
+        }
+
+        _lastSearchText = searchText;
+        IsEmpty = false;
+        IsNotStarted = false;
+        var keyword = SearchText;
+        var items = new List<StorageItem>();
+        var type = CurrentSearchType.Type;
+        var totalCount = 0;
+        var displayCount = 0;
+        TryClear(Items);
+        await Task.Run(() =>
+        {
+            Libs.Everything.Interfaces.IQueryable query = default;
+            query = _client
+                .Search()
+                .Name
+                .Contains(keyword);
+
+            query = type switch
+            {
+                StorageSearchType.Document => query.And.File.Document(),
+                StorageSearchType.Audio => query.And.File.Audio(),
+                StorageSearchType.Video => query.And.File.Video(),
+                StorageSearchType.Image => query.And.File.Picture(),
+                StorageSearchType.Zip => query.And.File.Zip(),
+                StorageSearchType.Program => query.And.File.Exe(),
+                StorageSearchType.Repeat => query.And.File.Duplicates(),
+                _ => query,
+            };
+
+            var maxCount = SettingsToolkit.ReadLocalSetting(SettingNames.MaxStorageSearchCount, 100);
+            totalCount = query.Count();
+            foreach (var item in query)
+            {
+                var storageItem = new StorageItem
+                {
+                    Name = item.FileName,
+                    Path = item.FullPath,
+                    CreatedTime = item.Created,
+                    LastModifiedTime = item.Modified,
+                    ByteLength = item.Size,
+                };
+
+                items.Add(storageItem);
+            }
+
+            items = GetSortedList(items).Take(maxCount).ToList();
+            displayCount = items.Count();
+        });
+
+        foreach (var item in items)
+        {
+            var vm = new StorageItemViewModel(item);
+            Items.Add(vm);
+        }
+
+        IsEmpty = Items.Count == 0;
+
+        if (!IsEmpty)
+        {
+            var templateName = totalCount != displayCount ? StringNames.SearchResultTipWithLimit : StringNames.SearchResultTip;
+            var template = ResourceToolkit.GetLocalizedString(templateName);
+            var result = totalCount != displayCount
+                ? string.Format(template, totalCount, displayCount)
+                : string.Format(template, displayCount);
+            AppViewModel.Instance.ShowTip(result);
+        }
+    }
+
+    private List<StorageItem> GetSortedList(List<StorageItem> items)
+    {
+        var list = items.ToList();
+        switch (SortType)
+        {
+            case StorageSortType.NameAtoZ:
+                list = list.OrderBy(x => x.Name).ToList();
+                break;
+            case StorageSortType.NameZtoA:
+                list = list.OrderByDescending(x => x.Name).ToList();
+                break;
+            case StorageSortType.ModifiedTime:
+                list = list.OrderByDescending(x => x.LastModifiedTime).ToList();
+                break;
+            case StorageSortType.Type:
+                list = list.OrderBy(x => x.IsFolder()).ThenBy(x => Path.GetExtension(x.Path)).ThenBy(x => x.Name).ToList();
+                break;
+            case StorageSortType.SizeLargeToSmall:
+                list = list.OrderByDescending(x => x.ByteLength).ToList();
+                break;
+            case StorageSortType.SizeSmallToLarge:
+                list = list.OrderBy(x => x.ByteLength).ToList();
+                break;
+            default:
+                break;
+        }
+
+        return list;
     }
 
     partial void OnCurrentSearchTypeChanged(StorageSearchTypeItem value)
-        => SettingsToolkit.WriteLocalSetting(SettingNames.StorageSearchType, value.Type);
+    {
+        SettingsToolkit.WriteLocalSetting(SettingNames.StorageSearchType, value.Type);
+        if (!string.IsNullOrEmpty(SearchText) && !IsSearching)
+        {
+            SearchCommand.Execute(default);
+        }
+    }
+
+    partial void OnIsGridLayoutChanged(bool value)
+        => SettingsToolkit.WriteLocalSetting(SettingNames.IsStoragePageGridLayout, value);
+
+    partial void OnSortTypeChanged(StorageSortType value)
+    {
+        if (!string.IsNullOrEmpty(_lastSearchText))
+        {
+            SearchCommand.Execute(_lastSearchText);
+        }
+
+        SettingsToolkit.WriteLocalSetting(SettingNames.StorageSortType, value);
+    }
 }
