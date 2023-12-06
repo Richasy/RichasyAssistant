@@ -47,6 +47,10 @@ public sealed class MarkdownThemes : DependencyObject
 
     public Brush InlineCodeBorderBrush { get; set; } = (Brush)Application.Current.Resources["ControlStrokeColorDefaultBrush"];
 
+    public Brush CodeBlockForeground { get; set; } = (Brush)Application.Current.Resources["TextFillColorPrimaryBrush"];
+
+    public Brush CodeBlockBackground { get; set; } = (Brush)Application.Current.Resources["SolidBackgroundFillColorBaseAltBrush"];
+
     public Thickness InlineCodeBorderThickness { get; set; } = new(1);
 
     public CornerRadius InlineCodeCornerRadius { get; set; } = new(2);

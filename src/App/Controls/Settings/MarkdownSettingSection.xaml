@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:SettingSectionBase
+    x:Class="RichasyAssistant.App.Controls.Settings.MarkdownSettingSection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Controls.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <community:SettingsCard Description="{ext:Locale Name=UseMarkdownRendererDescription}" Header="{ext:Locale Name=UseMarkdownRenderer}">
+        <community:SettingsCard.HeaderIcon>
+            <controls:FluentIcon Symbol="Markdown" />
+        </community:SettingsCard.HeaderIcon>
+        <ToggleSwitch IsOn="{x:Bind ViewModel.UseMarkdownRenderer, Mode=TwoWay}" />
+    </community:SettingsCard>
+</local:SettingSectionBase>

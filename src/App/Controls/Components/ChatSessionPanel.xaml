@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
@@ -272,10 +273,10 @@
                                 Margin="0,16,0,8"
                                 Style="{StaticResource BodyStrongTextBlockStyle}"
                                 Text="{ext:Locale Name=ModelConfiguration}" />
-                            <labs:SettingsCard Description="{ext:Locale Name=MaximumResponseTokensDescription}" Header="{ext:Locale Name=MaximumResponseTokens}">
-                                <labs:SettingsCard.HeaderIcon>
+                            <community:SettingsCard Description="{ext:Locale Name=MaximumResponseTokensDescription}" Header="{ext:Locale Name=MaximumResponseTokens}">
+                                <community:SettingsCard.HeaderIcon>
                                     <controls:FluentIcon Symbol="CloudWords" />
-                                </labs:SettingsCard.HeaderIcon>
+                                </community:SettingsCard.HeaderIcon>
                                 <NumberBox
                                     x:Name="TokenNumberBox"
                                     MinWidth="120"
@@ -284,16 +285,16 @@
                                     SmallChange="50"
                                     SpinButtonPlacementMode="Compact"
                                     Value="{x:Bind ViewModel.MaxTokens, Mode=TwoWay}" />
-                            </labs:SettingsCard>
-                            <labs:SettingsExpander
+                            </community:SettingsCard>
+                            <community:SettingsExpander
                                 Description="{ext:Locale Name=SamplingDescription}"
                                 Header="{ext:Locale Name=Sampling}"
                                 IsExpanded="True">
-                                <labs:SettingsExpander.HeaderIcon>
+                                <community:SettingsExpander.HeaderIcon>
                                     <controls:FluentIcon Symbol="DeveloperBoardLightning" />
-                                </labs:SettingsExpander.HeaderIcon>
-                                <labs:SettingsExpander.Items>
-                                    <labs:SettingsCard Description="{ext:Locale Name=TopPDescription}" Header="{ext:Locale Name=TopP}">
+                                </community:SettingsExpander.HeaderIcon>
+                                <community:SettingsExpander.Items>
+                                    <community:SettingsCard Description="{ext:Locale Name=TopPDescription}" Header="{ext:Locale Name=TopP}">
                                         <Slider
                                             LargeChange="0.1"
                                             Maximum="1"
@@ -301,8 +302,8 @@
                                             SmallChange="0.1"
                                             StepFrequency="0.1"
                                             Value="{x:Bind ViewModel.TopP, Mode=TwoWay}" />
-                                    </labs:SettingsCard>
-                                    <labs:SettingsCard Description="{ext:Locale Name=TemperatureDescription}" Header="{ext:Locale Name=Temperature}">
+                                    </community:SettingsCard>
+                                    <community:SettingsCard Description="{ext:Locale Name=TemperatureDescription}" Header="{ext:Locale Name=Temperature}">
                                         <Slider
                                             LargeChange="0.1"
                                             Maximum="1"
@@ -310,18 +311,18 @@
                                             SmallChange="0.1"
                                             StepFrequency="0.1"
                                             Value="{x:Bind ViewModel.Temperature, Mode=TwoWay}" />
-                                    </labs:SettingsCard>
-                                </labs:SettingsExpander.Items>
-                            </labs:SettingsExpander>
-                            <labs:SettingsExpander
+                                    </community:SettingsCard>
+                                </community:SettingsExpander.Items>
+                            </community:SettingsExpander>
+                            <community:SettingsExpander
                                 Description="{ext:Locale Name=RepeatabilityDescription}"
                                 Header="{ext:Locale Name=Repeatability}"
                                 IsExpanded="True">
-                                <labs:SettingsExpander.HeaderIcon>
+                                <community:SettingsExpander.HeaderIcon>
                                     <controls:FluentIcon Symbol="ArrowSyncCheckmark" />
-                                </labs:SettingsExpander.HeaderIcon>
-                                <labs:SettingsExpander.Items>
-                                    <labs:SettingsCard Description="{ext:Locale Name=FrequencyPenaltyDescription}" Header="{ext:Locale Name=FrequencyPenalty}">
+                                </community:SettingsExpander.HeaderIcon>
+                                <community:SettingsExpander.Items>
+                                    <community:SettingsCard Description="{ext:Locale Name=FrequencyPenaltyDescription}" Header="{ext:Locale Name=FrequencyPenalty}">
                                         <Slider
                                             LargeChange="0.1"
                                             Maximum="2"
@@ -329,8 +330,8 @@
                                             SmallChange="0.1"
                                             StepFrequency="0.1"
                                             Value="{x:Bind ViewModel.FrequencyPenalty, Mode=TwoWay}" />
-                                    </labs:SettingsCard>
-                                    <labs:SettingsCard Description="{ext:Locale Name=PresencePenaltyDescription}" Header="{ext:Locale Name=PresencePenalty}">
+                                    </community:SettingsCard>
+                                    <community:SettingsCard Description="{ext:Locale Name=PresencePenaltyDescription}" Header="{ext:Locale Name=PresencePenalty}">
                                         <Slider
                                             LargeChange="0.1"
                                             Maximum="2"
@@ -338,9 +339,9 @@
                                             SmallChange="0.1"
                                             StepFrequency="0.1"
                                             Value="{x:Bind ViewModel.PresencePenalty, Mode=TwoWay}" />
-                                    </labs:SettingsCard>
-                                </labs:SettingsExpander.Items>
-                            </labs:SettingsExpander>
+                                    </community:SettingsCard>
+                                </community:SettingsExpander.Items>
+                            </community:SettingsExpander>
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>

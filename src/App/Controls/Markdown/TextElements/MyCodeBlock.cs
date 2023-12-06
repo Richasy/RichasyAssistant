@@ -24,13 +24,14 @@ internal class MyCodeBlock : IAddChild
         var container = new InlineUIContainer();
         var border = new Border
         {
-            Background = (Brush)Application.Current.Resources["ExpanderHeaderBackground"],
+            Background = config.Themes.CodeBlockBackground,
             Padding = _config.Themes.Padding,
             Margin = new Thickness(0,8,0,8),
             CornerRadius = _config.Themes.CornerRadius,
             HorizontalAlignment = HorizontalAlignment.Stretch,
         };
         var richTextBlock = new RichTextBlock();
+        richTextBlock.Foreground = config.Themes.CodeBlockForeground;
 
         if (codeBlock is FencedCodeBlock fencedCodeBlock)
         {
@@ -62,7 +63,7 @@ internal class MyCodeBlock : IAddChild
                 }
             }
 
-            formatter.FormatRichTextBlock(stringBuilder.ToString(), fencedCodeBlock.ToLanguage(), richTextBlock);
+            formatter.FormatRichTextBlock(stringBuilder.ToString().Trim(), fencedCodeBlock.ToLanguage(), richTextBlock);
         }
         else
         {

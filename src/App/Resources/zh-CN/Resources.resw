@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutThisApp" xml:space="preserve">
+    <value>关于此应用</value>
+  </data>
   <data name="AccessKey" xml:space="preserve">
     <value>访问密钥</value>
   </data>
@@ -132,6 +135,12 @@
   <data name="AppIdPlaceholderText" xml:space="preserve">
     <value>请输入 App ID</value>
   </data>
+  <data name="AppLog" xml:space="preserve">
+    <value>应用日志</value>
+  </data>
+  <data name="AppLogDescription" xml:space="preserve">
+    <value>应用日志相关的配置项</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>小幻助理</value>
   </data>
@@ -140,6 +149,12 @@
   </data>
   <data name="AppSecretPlaceholderText" xml:space="preserve">
     <value>请输入应用密钥</value>
+  </data>
+  <data name="AppTheme" xml:space="preserve">
+    <value>应用程序主题</value>
+  </data>
+  <data name="AppThemeDescription" xml:space="preserve">
+    <value>选择要显示的应用主题</value>
   </data>
   <data name="Assistant" xml:space="preserve">
     <value>助理</value>
@@ -240,6 +255,9 @@
   <data name="CopyPrompt" xml:space="preserve">
     <value>复制提示词</value>
   </data>
+  <data name="CopyrightTemplate" xml:space="preserve">
+    <value>© {0} Richasy。保留所有权利。</value>
+  </data>
   <data name="CopySourceContent" xml:space="preserve">
     <value>复制输入内容</value>
   </data>
@@ -248,6 +266,9 @@
   </data>
   <data name="CreateLibrary" xml:space="preserve">
     <value>创建存储库</value>
+  </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>深色</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
@@ -315,6 +336,9 @@
   <data name="GenerateResponseFailed" xml:space="preserve">
     <value>生成响应时出现异常</value>
   </data>
+  <data name="Generic" xml:space="preserve">
+    <value>通用</value>
+  </data>
   <data name="GenericSearch" xml:space="preserve">
     <value>通用搜索</value>
   </data>
@@ -344,6 +368,12 @@
   </data>
   <data name="LibraryNeedInitialized" xml:space="preserve">
     <value>您必须指定一个文件夹作为应用数据存储库</value>
+  </data>
+  <data name="LicenseTerms" xml:space="preserve">
+    <value>许可条款</value>
+  </data>
+  <data name="LightTheme" xml:space="preserve">
+    <value>浅色</value>
   </data>
   <data name="ListLayout" xml:space="preserve">
     <value>列表布局</value>
@@ -450,6 +480,9 @@
   <data name="OpenLibrary" xml:space="preserve">
     <value>打开存储库</value>
   </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>打开日志文件夹</value>
+  </data>
   <data name="OpenSourceImage" xml:space="preserve">
     <value>打开原图</value>
   </data>
@@ -476,6 +509,9 @@
   </data>
   <data name="PresetSession" xml:space="preserve">
     <value>预设会话</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>隐私策略</value>
   </data>
   <data name="ProgramSearch" xml:space="preserve">
     <value>程序搜索</value>
@@ -552,6 +588,9 @@
   <data name="SearchResultTipWithLimit" xml:space="preserve">
     <value>总共有 {0} 条结果，已为您展示前 {1} 条</value>
   </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>发送反馈</value>
+  </data>
   <data name="SendMessage" xml:space="preserve">
     <value>发送消息</value>
   </data>
@@ -627,6 +666,9 @@
   <data name="StorageSearchPlaceholder" xml:space="preserve">
     <value>基于 Everything 查找文件</value>
   </data>
+  <data name="SystemDefault" xml:space="preserve">
+    <value>使用系统设置</value>
+  </data>
   <data name="TargetLanguage" xml:space="preserve">
     <value>目标语言</value>
   </data>
@@ -674,6 +716,12 @@
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>发生了未知错误</value>
+  </data>
+  <data name="UseMarkdownRenderer" xml:space="preserve">
+    <value>使用 Markdown 渲染器</value>
+  </data>
+  <data name="UseMarkdownRendererDescription" xml:space="preserve">
+    <value>对话消息将使用本机 Markdown 渲染器渲染，文本选择可能受到影响</value>
   </data>
   <data name="UserInputPlaceholderText" xml:space="preserve">
     <value>输入消息</value>

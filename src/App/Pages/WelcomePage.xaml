@@ -7,9 +7,8 @@
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
-    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
     xmlns:local="using:RichasyAssistant.App.Pages"
-    xmlns:lottie="using:CommunityToolkit.WinUI.Lottie"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -143,14 +142,14 @@
 
             <!--  AI配置  -->
             <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsAIStep, Mode=OneWay}">
-                <labs:Segmented
+                <community:Segmented
                     x:Name="AIPicker"
                     Margin="0,0,32,0"
                     HorizontalAlignment="Center"
                     SelectionChanged="OnAIPickerSelectionChanged">
-                    <labs:SegmentedItem Content="Azure Open AI" />
-                    <labs:SegmentedItem Content="Open AI" />
-                </labs:Segmented>
+                    <community:SegmentedItem Content="Azure Open AI" />
+                    <community:SegmentedItem Content="Open AI" />
+                </community:Segmented>
 
                 <ScrollViewer
                     Height="260"
@@ -257,14 +256,14 @@
 
             <!--  翻译配置  -->
             <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsTranslateStep, Mode=OneWay}">
-                <labs:Segmented
+                <community:Segmented
                     x:Name="TranslatePicker"
                     Margin="0,0,32,0"
                     HorizontalAlignment="Center"
                     SelectionChanged="OnTranslatePickerSelectionChanged">
-                    <labs:SegmentedItem Content="{ext:Locale Name=AzureTranslate}" />
-                    <labs:SegmentedItem Content="{ext:Locale Name=BaiduTranslate}" />
-                </labs:Segmented>
+                    <community:SegmentedItem Content="{ext:Locale Name=AzureTranslate}" />
+                    <community:SegmentedItem Content="{ext:Locale Name=BaiduTranslate}" />
+                </community:Segmented>
 
                 <ScrollViewer
                     Height="200"
@@ -324,15 +323,15 @@
 
             <!--  声音配置  -->
             <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsSpeechStep, Mode=OneWay}">
-                <labs:Segmented
+                <community:Segmented
                     x:Name="SpeechPicker"
                     Margin="0,0,32,0"
                     HorizontalAlignment="Center"
                     SelectionChanged="OnSpeechPickerSelectionChanged">
-                    <labs:SegmentedItem Content="{ext:Locale Name=AzureSpeech}" />
-                    <labs:SegmentedItem Content="{ext:Locale Name=AzureWhisper}" />
-                    <labs:SegmentedItem Content="{ext:Locale Name=OpenAIWhisper}" />
-                </labs:Segmented>
+                    <community:SegmentedItem Content="{ext:Locale Name=AzureSpeech}" />
+                    <community:SegmentedItem Content="{ext:Locale Name=AzureWhisper}" />
+                    <community:SegmentedItem Content="{ext:Locale Name=OpenAIWhisper}" />
+                </community:Segmented>
 
                 <ScrollViewer
                     Height="220"
@@ -418,14 +417,14 @@
 
             <!--  图像配置  -->
             <StackPanel Spacing="20" Visibility="{x:Bind ViewModel.IsImageStep, Mode=OneWay}">
-                <labs:Segmented
+                <community:Segmented
                     x:Name="ImagePicker"
                     Margin="0,0,32,0"
                     HorizontalAlignment="Center"
                     SelectionChanged="OnImagePickerSelectionChanged">
-                    <labs:SegmentedItem Content="Azure DALL·E" />
-                    <labs:SegmentedItem Content="Open AI DALL·E" />
-                </labs:Segmented>
+                    <community:SegmentedItem Content="Azure DALL·E" />
+                    <community:SegmentedItem Content="Open AI DALL·E" />
+                </community:Segmented>
 
                 <ScrollViewer
                     Height="200"

@@ -105,6 +105,8 @@ public sealed partial class MainWindow : WindowBase, ITipWindow
             (AppWindow.Presenter as OverlappedPresenter).Maximize();
         }
 
+        var localTheme = SettingsToolkit.ReadLocalSetting(SettingNames.AppTheme, ElementTheme.Default);
+        AppViewModel.Instance.ChangeTheme(localTheme);
         _isActivated = true;
     }
 

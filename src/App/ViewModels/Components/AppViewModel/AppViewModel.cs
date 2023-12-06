@@ -213,6 +213,32 @@ public sealed partial class AppViewModel : ViewModelBase
         => RequestShowTip?.Invoke(this, new AppTipNotification(ResourceToolkit.GetLocalizedString(messageName), type, ActivatedWindow));
 
     /// <summary>
+    /// 修改主题.
+    /// </summary>
+    /// <param name="theme">主题类型.</param>
+    public void ChangeTheme(ElementTheme theme)
+    {
+        if (ActivatedWindow == null)
+        {
+            return;
+        }
+
+        (ActivatedWindow.Content as FrameworkElement).RequestedTheme = theme;
+        if (theme == ElementTheme.Dark)
+        {
+            ActivatedWindow.AppWindow.TitleBar.ButtonForegroundColor = Colors.White;
+        }
+        else if (theme == ElementTheme.Light)
+        {
+            ActivatedWindow.AppWindow.TitleBar.ButtonForegroundColor = Colors.Black;
+        }
+        else
+        {
+            ActivatedWindow.AppWindow.TitleBar.ButtonForegroundColor = default;
+        }
+    }
+
+    /// <summary>
     /// 获取密钥数据库上下文.
     /// </summary>
     /// <returns><see cref="Task"/>.</returns>

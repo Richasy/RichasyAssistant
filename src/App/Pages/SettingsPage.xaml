@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:SettingsPageBase
+    x:Class="RichasyAssistant.App.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="using:RichasyAssistant.App.Controls.Settings"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid
+            Height="56"
+            Padding="20,0"
+            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+            BorderThickness="0,0,0,1">
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="20"
+                Style="{StaticResource BodyStrongTextBlockStyle}"
+                Text="{ext:Locale Name=Settings}" />
+        </Grid>
+        <ScrollViewer Grid.Row="1" Style="{StaticResource PageScrollViewerStyle}">
+            <StackPanel Margin="0,0,0,20" Spacing="4">
+                <StackPanel.ChildrenTransitions>
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </StackPanel.ChildrenTransitions>
+                <TextBlock
+                    Margin="0,0,0,4"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="{ext:Locale Name=Generic}" />
+                <settings:ThemeSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:AppLogSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:MarkdownSettingSection ViewModel="{x:Bind ViewModel}" />
+
+                <TextBlock
+                    Margin="0,8,0,4"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="{ext:Locale Name=AboutThisApp}" />
+                <settings:AboutSettingSection ViewModel="{x:Bind ViewModel}" />
+                <HyperlinkButton
+                    Margin="0,4,0,0"
+                    HorizontalAlignment="Left"
+                    Content="{ext:Locale Name=SendFeedback}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</local:SettingsPageBase>

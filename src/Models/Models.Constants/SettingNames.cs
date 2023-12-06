@@ -82,4 +82,6 @@ public enum SettingNames
     MaxStorageSearchCount,
     IsStoragePageGridLayout,
     StorageSortType,
+    AppTheme,
+    UseMarkdownRenderer,
 }

@@ -3,6 +3,7 @@
     x:Class="RichasyAssistant.App.Controls.Items.ChatMessageItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
@@ -62,17 +63,19 @@
                         x:Name="TextContainer"
                         Padding="12,8"
                         Visibility="{x:Bind ViewModel.IsEditing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
-                        <!--<TextBlock
+                        <TextBlock
                             x:Name="PlainMessageBlock"
                             Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                             IsTextSelectionEnabled="True"
                             Text="{x:Bind ViewModel.Content, Mode=OneWay}"
-                            TextWrapping="Wrap" />-->
+                            TextWrapping="Wrap"
+                            Visibility="{x:Bind ViewModel.UseMarkdownRenderer, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
                         <markdown:MarkdownTextBlock
                             x:Name="MarkdownMessageBlock"
                             Background="Transparent"
                             Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                            Text="{x:Bind ViewModel.Content, Mode=OneWay}" />
+                            Text="{x:Bind ViewModel.Content, Mode=OneWay}"
+                            Visibility="{x:Bind ViewModel.UseMarkdownRenderer, Mode=OneWay}" />
                     </Grid>
 
                     <Grid
@@ -197,6 +200,7 @@
                             <Setter Target="MessageBackground.Fill" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                             <Setter Target="MessageBackground.Stroke" Value="{ThemeResource ControlStrokeColorOnAccentDefaultBrush}" />
                             <Setter Target="MarkdownMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                            <Setter Target="PlainMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
                             <Setter Target="LeftColumn.Width" Value="0.2*" />
                             <Setter Target="RightColumn.Width" Value="*" />
                             <Setter Target="RootCard.(Grid.Column)" Value="1" />

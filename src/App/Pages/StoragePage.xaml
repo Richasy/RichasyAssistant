@@ -3,12 +3,12 @@
     x:Class="RichasyAssistant.App.Pages.StoragePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
     xmlns:items="using:RichasyAssistant.App.ViewModels.Items"
     xmlns:items1="using:RichasyAssistant.App.Controls.Items"
-    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:RichasyAssistant.Models.App.UI"
@@ -78,22 +78,22 @@
                         <ComboBoxItem Content="{ext:Locale Name=SizeLargeToSmall}" />
                         <ComboBoxItem Content="{ext:Locale Name=SizeSmallToLarge}" />
                     </ComboBox>
-                    <labs:Segmented
+                    <community:Segmented
                         x:Name="LayoutPicker"
                         VerticalAlignment="Center"
                         IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
                         SelectionChanged="OnLayoutPickerSelectionChanged">
-                        <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=GridLayout}">
-                            <labs:SegmentedItem.Icon>
+                        <community:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=GridLayout}">
+                            <community:SegmentedItem.Icon>
                                 <controls:FluentIcon Symbol="Grid" />
-                            </labs:SegmentedItem.Icon>
-                        </labs:SegmentedItem>
-                        <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=ListLayout}">
-                            <labs:SegmentedItem.Icon>
+                            </community:SegmentedItem.Icon>
+                        </community:SegmentedItem>
+                        <community:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=ListLayout}">
+                            <community:SegmentedItem.Icon>
                                 <controls:FluentIcon Symbol="AppsListDetail" />
-                            </labs:SegmentedItem.Icon>
-                        </labs:SegmentedItem>
-                    </labs:Segmented>
+                            </community:SegmentedItem.Icon>
+                        </community:SegmentedItem>
+                    </community:Segmented>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">

@@ -37,6 +37,9 @@ public sealed partial class ChatMessageItemViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isRegenerateButtonShown;
 
+    [ObservableProperty]
+    private bool _useMarkdownRenderer;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatMessageItemViewModel"/> class.
     /// </summary>
@@ -54,6 +57,7 @@ public sealed partial class ChatMessageItemViewModel : ViewModelBase
         _regenerateAction = regenerateAction;
         _editAction = editAction;
         _deleteAction = deleteAction;
+        UseMarkdownRenderer = SettingsToolkit.ReadLocalSetting(SettingNames.UseMarkdownRenderer, true);
         CheckRegenerateButtonState();
     }
 

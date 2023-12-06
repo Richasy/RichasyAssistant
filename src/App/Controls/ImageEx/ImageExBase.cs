@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using CommunityToolkit.WinUI.UI;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml.Media;
 

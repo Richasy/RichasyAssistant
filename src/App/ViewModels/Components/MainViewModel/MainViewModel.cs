@@ -47,8 +47,7 @@ public sealed partial class MainViewModel
             FeatureType.Translate => typeof(TranslationPage),
             FeatureType.Voice => typeof(VoicePage),
             FeatureType.Storage => typeof(StoragePage),
-
-            // FeatureType.Settings => typeof(SettingsPage),
+            FeatureType.Settings => typeof(SettingsPage),
             _ => typeof(Page),
         };
 
