@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using RichasyAssistant.App.ViewModels.Components;
+
 namespace RichasyAssistant.App.ViewModels.Views;
 
 /// <summary>
@@ -39,39 +41,6 @@ public sealed partial class WelcomePageViewModel
 
     [ObservableProperty]
     private bool _isOpenAI;
-
-    [ObservableProperty]
-    private string _azureOpenAIAccessKey;
-
-    [ObservableProperty]
-    private string _azureOpenAIEndpoint;
-
-    [ObservableProperty]
-    private string _azureOpenAIChatModelName;
-
-    [ObservableProperty]
-    private string _azureOpenAICompletionModelName;
-
-    [ObservableProperty]
-    private string _azureOpenAIEmbeddingModelName;
-
-    [ObservableProperty]
-    private string _openAIAccessKey;
-
-    [ObservableProperty]
-    private string _openAICustomEndpoint;
-
-    [ObservableProperty]
-    private string _openAIOrganization;
-
-    [ObservableProperty]
-    private string _openAIChatModelName;
-
-    [ObservableProperty]
-    private string _openAICompletionModelName;
-
-    [ObservableProperty]
-    private string _openAIEmbeddingModelName;
 
     [ObservableProperty]
     private bool _isLastStep;
@@ -145,38 +114,19 @@ public sealed partial class WelcomePageViewModel
     [ObservableProperty]
     private string _openAIImageKey;
 
+    [ObservableProperty]
+    private bool _isPreviousStepShown;
+
+    [ObservableProperty]
+    private bool _isNextStepButtonEnabled;
+
     /// <summary>
     /// 实例.
     /// </summary>
     public static WelcomePageViewModel Instance { get; } = new();
 
     /// <summary>
-    /// Azure Open AI 的对话模型集合.
+    /// 内部内核视图模型.
     /// </summary>
-    public ObservableCollection<string> AzureOpenAIChatModelCollection { get; set; }
-
-    /// <summary>
-    /// Azure Open AI 的文本生成模型集合.
-    /// </summary>
-    public ObservableCollection<string> AzureOpenAICompletionModelCollection { get; set; }
-
-    /// <summary>
-    /// Azure Open AI 的嵌入模型集合.
-    /// </summary>
-    public ObservableCollection<string> AzureOpenAIEmbeddingModelCollection { get; set; }
-
-    /// <summary>
-    /// Open AI 的对话模型集合.
-    /// </summary>
-    public ObservableCollection<string> OpenAIChatModelCollection { get; set; }
-
-    /// <summary>
-    /// Open AI 的文本生成模型集合.
-    /// </summary>
-    public ObservableCollection<string> OpenAICompletionModelCollection { get; set; }
-
-    /// <summary>
-    /// Open AI 的嵌入模型集合.
-    /// </summary>
-    public ObservableCollection<string> OpenAIEmbeddingModelCollection { get; set; }
+    public InternalKernelViewModel InternalKernel { get; }
 }

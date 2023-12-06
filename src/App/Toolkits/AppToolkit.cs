@@ -95,4 +95,14 @@ public static class AppToolkit
         var decodeText = Encoding.UTF8.GetString(bytes);
         return decodeText;
     }
+
+    /// <summary>
+    /// 重置控件主题.
+    /// </summary>
+    /// <param name="element">控件.</param>
+    public static void ResetControlTheme(FrameworkElement element)
+    {
+        var localTheme = SettingsToolkit.ReadLocalSetting(SettingNames.AppTheme, ElementTheme.Default);
+        element.RequestedTheme = localTheme;
+    }
 }

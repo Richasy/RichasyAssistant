@@ -1,5 +1,8 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using RichasyAssistant.App.ViewModels.Components;
+using RichasyAssistant.Models.App.Kernel;
+
 namespace RichasyAssistant.App.ViewModels.Views;
 
 /// <summary>
@@ -23,4 +26,20 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
     [ObservableProperty]
     private string _copyright;
+
+    [ObservableProperty]
+    private string _libraryPath;
+
+    [ObservableProperty]
+    private KernelMetadata _chatKernel;
+
+    /// <summary>
+    /// 对话模型服务列表.
+    /// </summary>
+    public ObservableCollection<KernelMetadata> ChatKernels { get; }
+
+    /// <summary>
+    /// 内部内核视图模型.
+    /// </summary>
+    public InternalKernelViewModel InternalKernel { get; }
 }

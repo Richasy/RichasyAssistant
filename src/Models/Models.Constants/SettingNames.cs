@@ -17,15 +17,11 @@ public enum SettingNames
     AzureOpenAIAccessKey,
     AzureOpenAIEndpoint,
     DefaultAzureOpenAIChatModelName,
-    AzureOpenAIEmbeddingModelName,
-    AzureOpenAICompletionModelName,
 
     OpenAIAccessKey,
     OpenAIOrganization,
     OpenAICustomEndpoint,
     DefaultOpenAIChatModelName,
-    OpenAIEmbeddingModelName,
-    OpenAICompletionModelName,
 
     AzureTranslateKey,
     AzureTranslateRegion,
@@ -84,4 +80,5 @@ public enum SettingNames
     StorageSortType,
     AppTheme,
     UseMarkdownRenderer,
+    CustomKernelId,
 }

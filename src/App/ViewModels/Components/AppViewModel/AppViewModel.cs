@@ -34,21 +34,21 @@ public sealed partial class AppViewModel : ViewModelBase
         UpdateGlobalSetting(SettingNames.DefaultFrequencyPenalty, 0d);
         UpdateGlobalSetting(SettingNames.DefaultPresencePenalty, 0d);
         UpdateGlobalSetting(SettingNames.DefaultMaxResponseTokens, 1000);
+        UpdateGlobalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
+        UpdateGlobalSetting(SettingNames.DefaultTranslate, TranslateType.Azure);
+        UpdateGlobalSetting(SettingNames.DefaultSpeech, SpeechType.Azure);
+        UpdateGlobalSetting(SettingNames.DefaultImage, DrawType.AzureDallE);
 
         // 配置 Azure OpenAI 设置.
         UpdateGlobalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);
         UpdateGlobalSetting(SettingNames.AzureOpenAIEndpoint, string.Empty);
         UpdateGlobalSetting(SettingNames.DefaultAzureOpenAIChatModelName, string.Empty);
-        UpdateGlobalSetting(SettingNames.AzureOpenAICompletionModelName, string.Empty);
-        UpdateGlobalSetting(SettingNames.AzureOpenAIEmbeddingModelName, string.Empty);
 
         // 配置 Open AI 设置.
         UpdateGlobalSetting(SettingNames.OpenAIAccessKey, string.Empty);
         UpdateGlobalSetting(SettingNames.OpenAIOrganization, string.Empty);
         UpdateGlobalSetting(SettingNames.OpenAICustomEndpoint, string.Empty);
         UpdateGlobalSetting(SettingNames.DefaultOpenAIChatModelName, string.Empty);
-        UpdateGlobalSetting(SettingNames.OpenAICompletionModelName, string.Empty);
-        UpdateGlobalSetting(SettingNames.OpenAIEmbeddingModelName, string.Empty);
 
         // 配置 Azure 翻译设置.
         UpdateGlobalSetting(SettingNames.AzureTranslateKey, string.Empty);
@@ -111,15 +111,11 @@ public sealed partial class AppViewModel : ViewModelBase
             RetrieveSecret(metas, SettingNames.AzureOpenAIAccessKey);
             RetrieveSecret(metas, SettingNames.AzureOpenAIEndpoint);
             RetrieveSecret(metas, SettingNames.DefaultAzureOpenAIChatModelName);
-            RetrieveSecret(metas, SettingNames.AzureOpenAICompletionModelName);
-            RetrieveSecret(metas, SettingNames.AzureOpenAIEmbeddingModelName);
 
             RetrieveSecret(metas, SettingNames.OpenAIAccessKey);
             RetrieveSecret(metas, SettingNames.OpenAICustomEndpoint);
             RetrieveSecret(metas, SettingNames.OpenAIOrganization);
             RetrieveSecret(metas, SettingNames.DefaultOpenAIChatModelName);
-            RetrieveSecret(metas, SettingNames.OpenAICompletionModelName);
-            RetrieveSecret(metas, SettingNames.OpenAIEmbeddingModelName);
 
             RetrieveSecret(metas, SettingNames.AzureTranslateKey);
             RetrieveSecret(metas, SettingNames.AzureTranslateRegion);
@@ -149,7 +145,47 @@ public sealed partial class AppViewModel : ViewModelBase
     /// 重置密钥数据库.
     /// </summary>
     /// <returns><see cref="Task"/>.</returns>
-    public static async Task ResetSecretsAsync()
+    public static Task ResetSecretsAsync()
+    {
+#pragma warning disable SA1115 // Parameter should follow comma
+        return ResetSecretsAsync(
+            SettingNames.AzureOpenAIAccessKey,
+            SettingNames.AzureOpenAIEndpoint,
+            SettingNames.DefaultAzureOpenAIChatModelName,
+
+            SettingNames.OpenAIAccessKey,
+            SettingNames.OpenAICustomEndpoint,
+            SettingNames.OpenAIOrganization,
+            SettingNames.DefaultOpenAIChatModelName,
+
+            SettingNames.AzureTranslateKey,
+            SettingNames.AzureTranslateRegion,
+
+            SettingNames.BaiduTranslateAppId,
+            SettingNames.BaiduTranslateAppKey,
+
+            SettingNames.AzureSpeechKey,
+            SettingNames.AzureSpeechRegion,
+
+            SettingNames.AzureWhisperKey,
+            SettingNames.AzureWhisperEndpoint,
+            SettingNames.DefaultAzureWhisperModelName,
+
+            SettingNames.OpenAIWhisperKey,
+
+            SettingNames.AzureImageKey,
+            SettingNames.AzureImageEndpoint,
+
+            SettingNames.OpenAIImageKey);
+#pragma warning restore SA1115 // Parameter should follow comma
+    }
+
+    /// <summary>
+    /// 重置指定的密钥.
+    /// </summary>
+    /// <param name="names">密钥列表.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    public static async Task ResetSecretsAsync(params SettingNames[] names)
     {
         var dbContext = await GetSecretDbContextAsync();
         if (dbContext == null)
@@ -159,40 +195,10 @@ public sealed partial class AppViewModel : ViewModelBase
 
         using (dbContext)
         {
-            WriteSecret(dbContext, SettingNames.AzureOpenAIAccessKey);
-            WriteSecret(dbContext, SettingNames.AzureOpenAIEndpoint);
-            WriteSecret(dbContext, SettingNames.DefaultAzureOpenAIChatModelName);
-            WriteSecret(dbContext, SettingNames.AzureOpenAICompletionModelName);
-            WriteSecret(dbContext, SettingNames.AzureOpenAIEmbeddingModelName);
-
-            WriteSecret(dbContext, SettingNames.OpenAIAccessKey);
-            WriteSecret(dbContext, SettingNames.OpenAICustomEndpoint);
-            WriteSecret(dbContext, SettingNames.OpenAIOrganization);
-            WriteSecret(dbContext, SettingNames.DefaultOpenAIChatModelName);
-            WriteSecret(dbContext, SettingNames.OpenAICompletionModelName);
-            WriteSecret(dbContext, SettingNames.OpenAIEmbeddingModelName);
-
-            WriteSecret(dbContext, SettingNames.AzureTranslateKey);
-            WriteSecret(dbContext, SettingNames.AzureTranslateRegion);
-
-            WriteSecret(dbContext, SettingNames.BaiduTranslateAppId);
-            WriteSecret(dbContext, SettingNames.BaiduTranslateAppKey);
-
-            WriteSecret(dbContext, SettingNames.AzureSpeechKey);
-            WriteSecret(dbContext, SettingNames.AzureSpeechRegion);
-
-            WriteSecret(dbContext, SettingNames.AzureWhisperKey);
-            WriteSecret(dbContext, SettingNames.AzureWhisperEndpoint);
-            WriteSecret(dbContext, SettingNames.DefaultAzureWhisperModelName);
-
-            WriteSecret(dbContext, SettingNames.OpenAIWhisperKey);
-
-            WriteSecret(dbContext, SettingNames.AzureImageKey);
-            WriteSecret(dbContext, SettingNames.AzureImageEndpoint);
-
-            WriteSecret(dbContext, SettingNames.OpenAIImageKey);
-
-            _ = await dbContext.SaveChangesAsync();
+            foreach (var name in names)
+            {
+                WriteSecret(dbContext, name);
+            }
         }
     }
 

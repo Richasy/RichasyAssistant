@@ -201,6 +201,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
                         AcceptsReturn="True"
+                        IsEnabled="{x:Bind ViewModel.IsChatAvailable, Mode=OneWay}"
                         PlaceholderText="{ext:Locale Name=UserInputPlaceholderText}"
                         PreviewKeyDown="OnInputBoxKeyDown"
                         Text="{x:Bind ViewModel.UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -214,6 +215,7 @@
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         Command="{x:Bind ViewModel.SendMessageCommand, Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.IsChatAvailable, Mode=OneWay}"
                         Style="{StaticResource AccentButtonStyle}"
                         ToolTipService.ToolTip="{ext:Locale Name=SendMessage}">
                         <controls:FluentIcon FontSize="16" Symbol="Send" />

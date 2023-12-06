@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:SettingSectionBase
+    x:Class="RichasyAssistant.App.Controls.Settings.KernelSettingSection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:kernel="using:RichasyAssistant.Models.App.Kernel"
+    xmlns:local="using:RichasyAssistant.App.Controls.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <community:SettingsExpander Description="{ext:Locale Name=KernelSettingDescription}" Header="{ext:Locale Name=KernelSetting}">
+        <community:SettingsExpander.HeaderIcon>
+            <controls:FluentIcon Symbol="BotSparkle" />
+        </community:SettingsExpander.HeaderIcon>
+
+        <Button MinWidth="120" Content="{ext:Locale Name=AddKernel}" />
+
+        <community:SettingsExpander.Items>
+            <community:SettingsCard Description="{ext:Locale Name=DefaultChatKernelDescription}" Header="{ext:Locale Name=DefaultChatKernel}">
+                <ComboBox
+                    MinWidth="120"
+                    ItemsSource="{x:Bind ViewModel.ChatKernels, Mode=OneWay}"
+                    SelectedItem="{x:Bind ViewModel.ChatKernel, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="kernel:KernelMetadata">
+                            <TextBlock Text="{x:Bind Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </community:SettingsCard>
+            <community:SettingsCard Header="Azure Open AI">
+                <Button
+                    MinWidth="120"
+                    Click="OnAzureOpenAIEditButtonClickAsync"
+                    Content="{ext:Locale Name=EditConfiguration}" />
+            </community:SettingsCard>
+            <community:SettingsCard Header="Open AI">
+                <Button
+                    MinWidth="120"
+                    Click="OnOpenAIEditButtonClickAsync"
+                    Content="{ext:Locale Name=EditConfiguration}" />
+            </community:SettingsCard>
+        </community:SettingsExpander.Items>
+    </community:SettingsExpander>
+</local:SettingSectionBase>

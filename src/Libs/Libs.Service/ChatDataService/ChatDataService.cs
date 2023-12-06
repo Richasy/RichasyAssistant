@@ -92,7 +92,12 @@ public sealed partial class ChatDataService
                 var exist = sourceSession.Messages.Any(p => p.Id == msg.Id);
                 if (!exist)
                 {
-                    DoSame(cacheSession, sourceSession, d => d.Messages.Add(msg));
+                    if (!cacheSession.Messages.Contains(msg))
+                    {
+                        cacheSession.Messages.Add(msg);
+                    }
+
+                    sourceSession.Messages.Add(msg);
                 }
             }
 
@@ -150,7 +155,12 @@ public sealed partial class ChatDataService
             return;
         }
 
-        DoSame(cacheSession, sourceSession, p => p.Messages.Add(message));
+        if (!cacheSession.Messages.Contains(message))
+        {
+            cacheSession.Messages.Add(message);
+        }
+
+        sourceSession.Messages.Add(message);
         _dbContext.Sessions.Update(sourceSession);
         await _dbContext.SaveChangesAsync();
     }

@@ -42,7 +42,14 @@
                 <settings:MarkdownSettingSection ViewModel="{x:Bind ViewModel}" />
 
                 <TextBlock
-                    Margin="0,8,0,4"
+                    Margin="0,12,0,4"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="{ext:Locale Name=Services}" />
+                <settings:KernelSettingSection ViewModel="{x:Bind ViewModel}" />
+
+                <TextBlock
+                    Margin="0,12,0,4"
                     HorizontalAlignment="Left"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="{ext:Locale Name=AboutThisApp}" />

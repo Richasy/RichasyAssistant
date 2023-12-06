@@ -45,6 +45,9 @@
     <None Remove="Controls\Components\ChatSessionPanel.xaml" />
     <None Remove="Controls\Components\DrawHistoryPanel.xaml" />
     <None Remove="Controls\Components\NavigationPanel.xaml" />
+    <None Remove="Controls\Configuration\AzureOpenAIConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\OpenAIConfigPanel.xaml" />
+    <None Remove="Controls\Dialogs\InternalKernelConfigDialog.xaml" />
     <None Remove="Controls\EmptyHolder.xaml" />
     <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
     <None Remove="Controls\Items\ChatSessionItemControl.xaml" />
@@ -54,6 +57,7 @@
     <None Remove="Controls\LoadingOverlapper.xaml" />
     <None Remove="Controls\Settings\AboutSettingSection.xaml" />
     <None Remove="Controls\Settings\AppLogSettingSection.xaml" />
+    <None Remove="Controls\Settings\KernelSettingSection.xaml" />
     <None Remove="Controls\Settings\MarkdownSettingSection.xaml" />
     <None Remove="Controls\Settings\ThemeSettingSection.xaml" />
     <None Remove="Controls\StatusTip.xaml" />
@@ -146,6 +150,18 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Dialogs\InternalKernelConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\OpenAIConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\AzureOpenAIConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\KernelSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\Settings\AboutSettingSection.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

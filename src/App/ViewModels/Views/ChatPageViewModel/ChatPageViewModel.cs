@@ -53,6 +53,7 @@ public sealed partial class ChatPageViewModel : ViewModelBase
         }
 
         IsHistoryEmpty = RecentSessions.Count == 0;
+        IsDefaultChatAvailable = ChatKernel.IsDefaultKernelValid();
     }
 
     [RelayCommand]

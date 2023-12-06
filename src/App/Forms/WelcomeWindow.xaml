@@ -43,14 +43,15 @@
                 Orientation="Horizontal"
                 Spacing="12"
                 Visibility="{x:Bind local:WelcomeWindow.IsNavButtonShown(_viewModel.IsLastStep), Mode=OneWay}">
-                <Button
+                <HyperlinkButton
                     MinWidth="120"
-                    Command="{x:Bind _viewModel.RestartCommand}"
-                    Content="{ext:Locale Name=Skip}" />
+                    Content="{ext:Locale Name=PrevStep}"
+                    Visibility="{x:Bind _viewModel.IsPreviousStepShown, Mode=OneWay}" />
                 <Button
                     MinWidth="120"
                     Command="{x:Bind _viewModel.GoNextCommand, Mode=OneWay}"
                     Content="{ext:Locale Name=NextStep}"
+                    IsEnabled="{x:Bind _viewModel.IsNextStepButtonEnabled, Mode=OneWay}"
                     Style="{StaticResource AccentButtonStyle}" />
             </StackPanel>
             <Button

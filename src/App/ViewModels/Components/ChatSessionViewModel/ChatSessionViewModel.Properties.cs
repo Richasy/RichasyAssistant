@@ -56,6 +56,9 @@ public sealed partial class ChatSessionViewModel
     [ObservableProperty]
     private bool _isInSettings;
 
+    [ObservableProperty]
+    private bool _isChatAvailable;
+
     /// <summary>
     /// 请求滚动到底部.
     /// </summary>

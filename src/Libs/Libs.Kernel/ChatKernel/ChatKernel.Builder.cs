@@ -81,6 +81,28 @@ public sealed partial class ChatKernel
         return Create(id);
     }
 
+    /// <summary>
+    /// 默认内核是否有效.
+    /// </summary>
+    /// <returns>是否有效.</returns>
+    public static bool IsDefaultKernelValid()
+    {
+        var defaultKernel = GlobalSettings.TryGet<KernelType>(SettingNames.DefaultKernel);
+        if (defaultKernel == KernelType.AzureOpenAI)
+        {
+            return !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIAccessKey))
+                && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIEndpoint))
+                && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.DefaultAzureOpenAIChatModelName));
+        }
+        else if (defaultKernel == KernelType.OpenAI)
+        {
+            return !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.OpenAIAccessKey))
+                && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.DefaultOpenAIChatModelName));
+        }
+
+        return false;
+    }
+
     private static void LoadDefaultConfiguration(ChatKernel kernel)
     {
         var defaultKernel = GlobalSettings.TryGet<KernelType>(SettingNames.DefaultKernel);

@@ -124,6 +124,7 @@
                 BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                 Command="{x:Bind ViewModel.CreateSessionCommand}"
                 Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                IsEnabled="{x:Bind ViewModel.IsDefaultChatAvailable, Mode=OneWay}"
                 Style="{StaticResource AccentButtonStyle}"
                 Visibility="{x:Bind ViewModel.IsSessionList, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal" Spacing="8">

@@ -37,6 +37,9 @@ public sealed partial class ChatPageViewModel
     [ObservableProperty]
     private bool _isAssistantList;
 
+    [ObservableProperty]
+    private bool _isDefaultChatAvailable;
+
     /// <summary>
     /// 近期会话.
     /// </summary>

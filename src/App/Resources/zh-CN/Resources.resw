@@ -126,6 +126,9 @@
   <data name="AccessKeyPlaceholderText" xml:space="preserve">
     <value>访问服务的密钥</value>
   </data>
+  <data name="AddKernel" xml:space="preserve">
+    <value>添加内核</value>
+  </data>
   <data name="AIMessageWarning" xml:space="preserve">
     <value>免责声明：模型并非全知全能，AI可能生成不正确的信息，请自行核实</value>
   </data>
@@ -270,6 +273,12 @@
   <data name="DarkTheme" xml:space="preserve">
     <value>深色</value>
   </data>
+  <data name="DefaultChatKernel" xml:space="preserve">
+    <value>默认对话内核</value>
+  </data>
+  <data name="DefaultChatKernelDescription" xml:space="preserve">
+    <value>创建新会话时默认使用的内核</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
@@ -291,6 +300,9 @@
   <data name="Edit" xml:space="preserve">
     <value>编辑</value>
   </data>
+  <data name="EditConfiguration" xml:space="preserve">
+    <value>编辑配置</value>
+  </data>
   <data name="EmbeddingModelName" xml:space="preserve">
     <value>嵌入模型名称</value>
   </data>
@@ -308,6 +320,9 @@
   </data>
   <data name="ExportHistory" xml:space="preserve">
     <value>导出聊天记录</value>
+  </data>
+  <data name="ExtraKernelLoadFailed" xml:space="preserve">
+    <value>内核加载失败，请在存储库内检查内核配置</value>
   </data>
   <data name="FileSaved" xml:space="preserve">
     <value>文件已保存</value>
@@ -353,6 +368,15 @@
   </data>
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
+  </data>
+  <data name="KernelConfiguration" xml:space="preserve">
+    <value>内核配置</value>
+  </data>
+  <data name="KernelSetting" xml:space="preserve">
+    <value>内核设置</value>
+  </data>
+  <data name="KernelSettingDescription" xml:space="preserve">
+    <value>选择合适的内核提供 AI 对话功能</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>语言</value>
@@ -510,6 +534,9 @@
   <data name="PresetSession" xml:space="preserve">
     <value>预设会话</value>
   </data>
+  <data name="PrevStep" xml:space="preserve">
+    <value>上一步</value>
+  </data>
   <data name="PrivacyPolicy" xml:space="preserve">
     <value>隐私策略</value>
   </data>
@@ -593,6 +620,9 @@
   </data>
   <data name="SendMessage" xml:space="preserve">
     <value>发送消息</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>服务</value>
   </data>
   <data name="Session" xml:space="preserve">
     <value>会话</value>

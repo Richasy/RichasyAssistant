@@ -43,16 +43,16 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         _itemRef = item;
         TryClear(Messages);
         UserInput = string.Empty;
-        _kernel = ChatKernel.Create(item.Id);
-        UserInput = string.Empty;
+        IsChatAvailable = true;
+        var sessionData = ChatDataService.GetSession(item.Id);
         ErrorText = string.Empty;
-        Name = string.IsNullOrEmpty(_kernel.Session.Title)
+        Name = string.IsNullOrEmpty(sessionData.Title)
             ? ResourceToolkit.GetLocalizedString(StringNames.NoName)
-            : _kernel.Session.Title;
+            : sessionData.Title;
 
-        if (_kernel.Session.Messages?.Any() == true)
+        if (sessionData.Messages?.Any() == true)
         {
-            foreach (var message in _kernel.Session.Messages)
+            foreach (var message in sessionData.Messages.Distinct())
             {
                 var vm = message.Role == ChatMessageRole.Assistant
                     ? new ChatMessageItemViewModel(
@@ -69,8 +69,19 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
             }
         }
 
+        try
+        {
+            _kernel = ChatKernel.Create(item.Id);
+        }
+        catch (Exception ex)
+        {
+            LogException(ex);
+            IsChatAvailable = false;
+        }
+
         IsReady = true;
         CheckChatEmpty();
+
         RequestFocusInput?.Invoke(this, EventArgs.Empty);
     }
 
@@ -152,9 +163,12 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         await ChatDataService.AddOrUpdateSessionAsync(session);
 
         _itemRef.Update();
-        Name = string.IsNullOrEmpty(_kernel.Session.Title)
-            ? ResourceToolkit.GetLocalizedString(StringNames.NoName)
-            : _kernel.Session.Title;
+
+        if (string.IsNullOrEmpty(Name))
+        {
+            Name = ResourceToolkit.GetLocalizedString(StringNames.NoName);
+        }
+
         IsInSettings = false;
     }
 
