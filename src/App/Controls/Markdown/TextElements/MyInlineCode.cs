@@ -10,7 +10,7 @@ namespace RichasyAssistant.App.Controls.Markdown.TextElements;
 internal class MyInlineCode : IAddChild
 {
     private readonly CodeInline _codeInline;
-    private InlineUIContainer _inlineContainer;
+    private Run _inlineContainer;
     private readonly MarkdownConfig _config;
 
     public TextElement TextElement => _inlineContainer;
@@ -19,30 +19,12 @@ internal class MyInlineCode : IAddChild
     {
         _codeInline = codeInline;
         _config = config;
-        _inlineContainer = new InlineUIContainer();
-        var border = new Border
-        {
-            VerticalAlignment = VerticalAlignment.Bottom,
-            Background = _config.Themes.InlineCodeBackground,
-            BorderBrush = _config.Themes.InlineCodeBorderBrush,
-            BorderThickness = _config.Themes.InlineCodeBorderThickness,
-            CornerRadius = _config.Themes.InlineCodeCornerRadius,
-            Padding = _config.Themes.InlineCodePadding,
-        };
-        var transform = new CompositeTransform3D
-        {
-            TranslateY = 6,
-        };
-        border.Transform3D = transform;
-        var textBlock = new TextBlock
-        {
-            FontSize = _config.Themes.InlineCodeFontSize,
-            FontWeight = _config.Themes.InlineCodeFontWeight,
-            Text = codeInline.Content.ToString(),
-            IsTextSelectionEnabled = true,
-        };
-        border.Child = textBlock;
-        _inlineContainer.Child = border;
+        _inlineContainer = new Run();
+        _inlineContainer.Text=codeInline.Content.ToString();
+        _inlineContainer.FontStyle = Windows.UI.Text.FontStyle.Italic;
+        _inlineContainer.FontFamily = new Microsoft.UI.Xaml.Media.FontFamily("Cascadia Code");
+        _inlineContainer.FontSize = config.Themes.InlineCodeFontSize;
+        _inlineContainer.FontWeight = config.Themes.InlineCodeFontWeight;
     }
 
     public void AddChild(IAddChild child)

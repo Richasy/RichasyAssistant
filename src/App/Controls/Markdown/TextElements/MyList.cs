@@ -18,7 +18,7 @@ internal class MyList : IAddChild
     private readonly bool _isOrdered;
     private readonly int _startIndex = 1;
     private int _index = 1;
-    private const string _dot = "• ";
+    private const string _dot = "•";
 
     public TextElement TextElement => _paragraph;
 
@@ -49,6 +49,8 @@ internal class MyList : IAddChild
     public void AddChild(IAddChild child)
     {
         var grid = new Grid();
+        grid.ColumnSpacing = 8;
+        grid.Padding = new Thickness(0, 4, 0, 4);
         grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Auto) });
         grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
         string bullet;

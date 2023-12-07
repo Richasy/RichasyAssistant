@@ -200,7 +200,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         ErrorText = string.Empty;
         UserInput = string.Empty;
         TempMessage = string.Empty;
-        var isStream = SettingsToolkit.ReadLocalSetting(SettingNames.StreamOutput, true);
+        var isStream = SettingsToolkit.ReadLocalSetting(SettingNames.UseStreamOutput, true);
         if (isStream)
         {
             var response = await _kernel.SendMessageAsync(

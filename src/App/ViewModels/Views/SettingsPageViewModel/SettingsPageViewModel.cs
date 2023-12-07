@@ -42,6 +42,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
     {
         AppTheme = SettingsToolkit.ReadLocalSetting(SettingNames.AppTheme, ElementTheme.Default);
         UseMarkdownRenderer = SettingsToolkit.ReadLocalSetting(SettingNames.UseMarkdownRenderer, true);
+        UseStreamOutput = SettingsToolkit.ReadLocalSetting(SettingNames.UseStreamOutput, true);
         AppVersion = AppToolkit.GetPackageVersion();
         var copyrightTemplate = ResourceToolkit.GetLocalizedString(StringNames.CopyrightTemplate);
         Copyright = string.Format(copyrightTemplate, BuildYear);
@@ -216,6 +217,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
     partial void OnUseMarkdownRendererChanged(bool value)
         => SettingsToolkit.WriteLocalSetting(SettingNames.UseMarkdownRenderer, value);
+
+    partial void OnUseStreamOutputChanged(bool value)
+        => SettingsToolkit.WriteLocalSetting(SettingNames.UseStreamOutput, value);
 
     partial void OnStorageMaxDisplayCountChanged(int value)
         => SettingsToolkit.WriteLocalSetting(SettingNames.MaxStorageSearchCount, value);

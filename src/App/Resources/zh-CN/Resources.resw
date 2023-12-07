@@ -396,6 +396,12 @@
   <data name="GenericSearch" xml:space="preserve">
     <value>通用搜索</value>
   </data>
+  <data name="GlobalChatSetting" xml:space="preserve">
+    <value>全局对话设置</value>
+  </data>
+  <data name="GlobalChatSettingDescription" xml:space="preserve">
+    <value>这里的设置将影响所有 AI 对话</value>
+  </data>
   <data name="GridLayout" xml:space="preserve">
     <value>网格布局</value>
   </data>
@@ -824,6 +830,12 @@
   </data>
   <data name="UserInputPlaceholderText" xml:space="preserve">
     <value>输入消息</value>
+  </data>
+  <data name="UseStreamOutput" xml:space="preserve">
+    <value>使用流式输出</value>
+  </data>
+  <data name="UseStreamOutputDescription" xml:space="preserve">
+    <value>模型会逐字逐句生成响应（打字机模式）</value>
   </data>
   <data name="VideoSearch" xml:space="preserve">
     <value>视频搜索</value>

@@ -40,7 +40,7 @@
                 <settings:ThemeSettingSection ViewModel="{x:Bind ViewModel}" />
                 <settings:AppLogSettingSection ViewModel="{x:Bind ViewModel}" />
                 <settings:LibrarySettingSection ViewModel="{x:Bind ViewModel}" />
-                <settings:MarkdownSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:GlobalChatSettingSection ViewModel="{x:Bind ViewModel}" />
                 <settings:StorageSettingSection ViewModel="{x:Bind ViewModel}" />
 
                 <TextBlock

@@ -56,7 +56,7 @@ public enum SettingNames
     DefaultTranslate,
     DefaultSpeech,
     DefaultDrawService,
-    StreamOutput,
+    UseStreamOutput,
     TranslationSourceLanguage,
     TranslationTargetLanguage,
     LastWindowWidth,

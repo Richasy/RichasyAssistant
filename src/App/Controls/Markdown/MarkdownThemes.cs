@@ -31,11 +31,11 @@ public sealed class MarkdownThemes : DependencyObject
 
     public Brush HeadingForeground { get; set; } = Extensions.GetAccentColorBrush();
 
-    public FontWeight H1FontWeight { get; set; } = FontWeights.Bold;
+    public FontWeight H1FontWeight { get; set; } = FontWeights.Black;
 
-    public FontWeight H2FontWeight { get; set; } = FontWeights.Normal;
+    public FontWeight H2FontWeight { get; set; } = FontWeights.Bold;
 
-    public FontWeight H3FontWeight { get; set; } = FontWeights.Normal;
+    public FontWeight H3FontWeight { get; set; } = FontWeights.Bold;
 
     public FontWeight H4FontWeight { get; set; } = FontWeights.Normal;
 

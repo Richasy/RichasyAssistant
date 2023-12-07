@@ -36,6 +36,9 @@ public sealed partial class SettingsPageViewModel
     private bool _useMarkdownRenderer;
 
     [ObservableProperty]
+    private bool _useStreamOutput;
+
+    [ObservableProperty]
     private string _appVersion;
 
     [ObservableProperty]

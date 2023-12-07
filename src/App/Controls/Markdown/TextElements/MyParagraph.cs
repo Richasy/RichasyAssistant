@@ -17,6 +17,8 @@ internal class MyParagraph : IAddChild
     {
         _paragraphBlock = paragraphBlock;
         _paragraph = new Paragraph();
+        _paragraph.LineHeight = 1.3 * _paragraph.FontSize;
+        _paragraph.Margin = new Thickness(0, 0, 0, _paragraph.FontSize / 2);
     }
 
     public void AddChild(IAddChild child)

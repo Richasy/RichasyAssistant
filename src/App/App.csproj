@@ -68,9 +68,9 @@
     <None Remove="Controls\Settings\AboutSettingSection.xaml" />
     <None Remove="Controls\Settings\AppLogSettingSection.xaml" />
     <None Remove="Controls\Settings\DrawSettingSection.xaml" />
+    <None Remove="Controls\Settings\GlobalChatSettingSection.xaml" />
     <None Remove="Controls\Settings\KernelSettingSection.xaml" />
     <None Remove="Controls\Settings\LibrarySettingSection.xaml" />
-    <None Remove="Controls\Settings\MarkdownSettingSection.xaml" />
     <None Remove="Controls\Settings\SpeechSettingSection.xaml" />
     <None Remove="Controls\Settings\StorageSettingSection.xaml" />
     <None Remove="Controls\Settings\ThemeSettingSection.xaml" />
@@ -165,6 +165,9 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Settings\GlobalChatSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\Settings\StorageSettingSection.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -220,9 +223,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Settings\AboutSettingSection.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Settings\MarkdownSettingSection.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Settings\AppLogSettingSection.xaml">
