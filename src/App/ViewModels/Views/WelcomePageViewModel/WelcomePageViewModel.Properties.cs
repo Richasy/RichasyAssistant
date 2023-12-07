@@ -55,18 +55,6 @@ public sealed partial class WelcomePageViewModel
     private bool _isBaiduTranslate;
 
     [ObservableProperty]
-    private string _azureTranslateKey;
-
-    [ObservableProperty]
-    private string _azureTranslateRegion;
-
-    [ObservableProperty]
-    private string _baiduTranslateAppId;
-
-    [ObservableProperty]
-    private string _baiduTranslateKey;
-
-    [ObservableProperty]
     private bool _isSpeechStep;
 
     [ObservableProperty]
@@ -79,24 +67,6 @@ public sealed partial class WelcomePageViewModel
     private bool _isOpenAIWhisper;
 
     [ObservableProperty]
-    private string _azureSpeechKey;
-
-    [ObservableProperty]
-    private string _azureSpeechRegion;
-
-    [ObservableProperty]
-    private string _azureWhisperKey;
-
-    [ObservableProperty]
-    private string _azureWhisperEndpoint;
-
-    [ObservableProperty]
-    private string _azureWhisperModelName;
-
-    [ObservableProperty]
-    private string _openAIWhisperKey;
-
-    [ObservableProperty]
     private bool _isImageStep;
 
     [ObservableProperty]
@@ -104,15 +74,6 @@ public sealed partial class WelcomePageViewModel
 
     [ObservableProperty]
     private bool _isOpenAIImage;
-
-    [ObservableProperty]
-    private string _azureImageKey;
-
-    [ObservableProperty]
-    private string _azureImageEndpoint;
-
-    [ObservableProperty]
-    private string _openAIImageKey;
 
     [ObservableProperty]
     private bool _isPreviousStepShown;
@@ -129,4 +90,19 @@ public sealed partial class WelcomePageViewModel
     /// 内部内核视图模型.
     /// </summary>
     public InternalKernelViewModel InternalKernel { get; }
+
+    /// <summary>
+    /// 内部绘图服务视图模型.
+    /// </summary>
+    public InternalDrawServiceViewModel InternalDrawService { get; }
+
+    /// <summary>
+    /// 内部翻译服务视图模型.
+    /// </summary>
+    public InternalTranslateServiceViewModel InternalTranslate { get; }
+
+    /// <summary>
+    /// 内部语音服务视图模型.
+    /// </summary>
+    public InternalSpeechServiceViewModel InternalSpeech { get; }
 }

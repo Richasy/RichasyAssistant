@@ -35,7 +35,7 @@ public sealed partial class DrawPageViewModel : ViewModelBase
         TryClear(History);
         IsAvailable = _kernel.IsConfigValid;
 
-        var defaultType = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultImage, DrawType.AzureDallE);
+        var defaultType = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultDrawService, DrawType.AzureDallE);
         var identify = defaultType switch
         {
             DrawType.OpenAIDallE => "OpenAI DALL·E",

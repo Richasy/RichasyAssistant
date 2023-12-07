@@ -28,9 +28,6 @@ public sealed partial class WelcomePage : WelcomePageBase
         ImagePicker.SelectedIndex = (int)ViewModel.ImageGenerateType;
     }
 
-    private void OnWhisperKeyBoxLostFocus(object sender, RoutedEventArgs e)
-        => ViewModel.TryLoadWhisperModelCommand.Execute(default);
-
     private void OnAIPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (!IsLoaded)

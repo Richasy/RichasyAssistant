@@ -45,9 +45,19 @@
     <None Remove="Controls\Components\ChatSessionPanel.xaml" />
     <None Remove="Controls\Components\DrawHistoryPanel.xaml" />
     <None Remove="Controls\Components\NavigationPanel.xaml" />
-    <None Remove="Controls\Configuration\AzureOpenAIConfigPanel.xaml" />
-    <None Remove="Controls\Configuration\OpenAIConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\AzureDrawConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\AzureOpenAIKernelConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\AzureSpeechConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\AzureTranslateConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\AzureWhisperConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\BaiduTranslateConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\OpenAIDrawConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\OpenAIKernelConfigPanel.xaml" />
+    <None Remove="Controls\Configuration\OpenAIWhisperConfigPanel.xaml" />
+    <None Remove="Controls\Dialogs\InternalDrawConfigDialog.xaml" />
     <None Remove="Controls\Dialogs\InternalKernelConfigDialog.xaml" />
+    <None Remove="Controls\Dialogs\InternalSpeechConfigDialog.xaml" />
+    <None Remove="Controls\Dialogs\InternalTranslateConfigDialog.xaml" />
     <None Remove="Controls\EmptyHolder.xaml" />
     <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
     <None Remove="Controls\Items\ChatSessionItemControl.xaml" />
@@ -57,9 +67,14 @@
     <None Remove="Controls\LoadingOverlapper.xaml" />
     <None Remove="Controls\Settings\AboutSettingSection.xaml" />
     <None Remove="Controls\Settings\AppLogSettingSection.xaml" />
+    <None Remove="Controls\Settings\DrawSettingSection.xaml" />
     <None Remove="Controls\Settings\KernelSettingSection.xaml" />
+    <None Remove="Controls\Settings\LibrarySettingSection.xaml" />
     <None Remove="Controls\Settings\MarkdownSettingSection.xaml" />
+    <None Remove="Controls\Settings\SpeechSettingSection.xaml" />
+    <None Remove="Controls\Settings\StorageSettingSection.xaml" />
     <None Remove="Controls\Settings\ThemeSettingSection.xaml" />
+    <None Remove="Controls\Settings\TranslateSettingSection.xaml" />
     <None Remove="Controls\StatusTip.xaml" />
     <None Remove="Controls\TipPopup.xaml" />
     <None Remove="Forms\WelcomeWindow.xaml" />
@@ -150,13 +165,55 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Settings\StorageSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\SpeechSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Dialogs\InternalSpeechConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\OpenAIWhisperConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\AzureWhisperConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\AzureSpeechConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\TranslateSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Dialogs\InternalTranslateConfigDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\BaiduTranslateConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\AzureTranslateConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\DrawSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\OpenAIDrawConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Configuration\AzureDrawConfigPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\LibrarySettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\Dialogs\InternalKernelConfigDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Configuration\OpenAIConfigPanel.xaml">
+    <Page Update="Controls\Configuration\OpenAIKernelConfigPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Configuration\AzureOpenAIConfigPanel.xaml">
+    <Page Update="Controls\Configuration\AzureOpenAIKernelConfigPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Settings\KernelSettingSection.xaml">
@@ -279,5 +336,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Controls\Components\ChatListPanel.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Controls\Dialogs\InternalDrawConfigDialog.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="Controls\Dialogs\InternalDrawConfigDialog.xaml" />
   </ItemGroup>
 </Project>

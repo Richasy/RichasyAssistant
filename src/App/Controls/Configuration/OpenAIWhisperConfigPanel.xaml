@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:InternalSpeechConfigPanelBase
+    x:Class="RichasyAssistant.App.Controls.Configuration.OpenAIWhisperConfigPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Controls.Configuration"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Spacing="12">
+        <TextBlock
+            Foreground="{ThemeResource TextFillColorDisabledBrush}"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="{ext:Locale Name=OpenAIWhisperTip}" />
+        <PasswordBox
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=AccessKey}"
+            HeaderTemplate="{StaticResource InputHeaderTemplate}"
+            Password="{x:Bind ViewModel.OpenAIWhisperKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+        <TextBox
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=ProxyEndpoint}"
+            HeaderTemplate="{StaticResource InputHeaderTemplate}"
+            PlaceholderText="{ext:Locale Name=ProxyEndpointPlaceholderText}"
+            Text="{x:Bind ViewModel.OpenAICustomEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+    </StackPanel>
+</local:InternalSpeechConfigPanelBase>

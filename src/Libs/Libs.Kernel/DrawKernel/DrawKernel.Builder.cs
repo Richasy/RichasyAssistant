@@ -2,7 +2,6 @@
 
 using Microsoft.SemanticKernel;
 using RichasyAssistant.Libs.Locator;
-using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Libs.Kernel.DrawKernel;
@@ -26,7 +25,7 @@ public sealed partial class DrawKernel
 
     private static void LoadDefaultConfiguration(DrawKernel kernel)
     {
-        var defaultKernel = GlobalSettings.TryGet<DrawType>(SettingNames.DefaultImage);
+        var defaultKernel = GlobalSettings.TryGet<DrawType>(SettingNames.DefaultDrawService);
         if (defaultKernel == DrawType.AzureDallE)
         {
             LoadAzureConfiguration(kernel);
@@ -42,11 +41,10 @@ public sealed partial class DrawKernel
         var accessKey = GlobalSettings.TryGet<string>(SettingNames.AzureImageKey);
         var endpoint = GlobalSettings.TryGet<string>(SettingNames.AzureImageEndpoint);
 
-        if (string.IsNullOrEmpty(accessKey)
-        || string.IsNullOrEmpty(endpoint))
+        kernel.IsConfigValid = !string.IsNullOrEmpty(accessKey) && !string.IsNullOrEmpty(endpoint);
+        if (!kernel.IsConfigValid)
         {
-            kernel.IsConfigValid = false;
-            throw new KernelException(KernelExceptionType.InvalidConfiguration);
+            return;
         }
 
         kernel.Kernel = new KernelBuilder()
@@ -59,10 +57,10 @@ public sealed partial class DrawKernel
         var accessKey = GlobalSettings.TryGet<string>(SettingNames.OpenAIImageKey);
         var endpoint = GlobalSettings.TryGet<string>(SettingNames.OpenAICustomEndpoint);
 
-        if (string.IsNullOrEmpty(accessKey))
+        kernel.IsConfigValid = !string.IsNullOrEmpty(accessKey);
+        if (!kernel.IsConfigValid)
         {
-            kernel.IsConfigValid = false;
-            throw new KernelException(KernelExceptionType.InvalidConfiguration);
+            return;
         }
 
         var hasCustomEndpoint = !string.IsNullOrEmpty(endpoint) && Uri.TryCreate(endpoint, UriKind.Absolute, out var _);

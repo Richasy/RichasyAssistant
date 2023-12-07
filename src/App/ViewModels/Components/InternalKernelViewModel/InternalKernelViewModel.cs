@@ -64,7 +64,7 @@ public sealed partial class InternalKernelViewModel : ViewModelBase
 
                 var localChatModelName = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultAzureOpenAIChatModelName, string.Empty);
                 AzureOpenAIChatModelName = string.IsNullOrEmpty(localChatModelName)
-                    ? chatModels.First()
+                    ? chatModels.FirstOrDefault()
                     : chatModels.FirstOrDefault(p => p.Equals(localChatModelName));
             }
             else
@@ -79,13 +79,13 @@ public sealed partial class InternalKernelViewModel : ViewModelBase
 
                 var localChatModelName = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultOpenAIChatModelName, string.Empty);
                 OpenAIChatModelName = string.IsNullOrEmpty(localChatModelName)
-                    ? chatModels.First()
+                    ? chatModels.FirstOrDefault()
                     : chatModels.FirstOrDefault(p => p.Equals(localChatModelName));
             }
         }
         catch (Exception ex)
         {
-            Logger.Debug(ex.Message);
+            LogException(ex);
         }
     }
 }

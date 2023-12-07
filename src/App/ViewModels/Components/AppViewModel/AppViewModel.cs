@@ -37,7 +37,7 @@ public sealed partial class AppViewModel : ViewModelBase
         UpdateGlobalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
         UpdateGlobalSetting(SettingNames.DefaultTranslate, TranslateType.Azure);
         UpdateGlobalSetting(SettingNames.DefaultSpeech, SpeechType.Azure);
-        UpdateGlobalSetting(SettingNames.DefaultImage, DrawType.AzureDallE);
+        UpdateGlobalSetting(SettingNames.DefaultDrawService, DrawType.AzureDallE);
 
         // 配置 Azure OpenAI 设置.
         UpdateGlobalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);
@@ -346,11 +346,11 @@ public sealed partial class AppViewModel : ViewModelBase
 
         if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureImageKey, string.Empty)))
         {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultImage, DrawType.AzureDallE);
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultDrawService, DrawType.AzureDallE);
         }
         else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.OpenAIImageKey, string.Empty)))
         {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultImage, DrawType.OpenAIDallE);
+            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultDrawService, DrawType.OpenAIDallE);
         }
     }
 }

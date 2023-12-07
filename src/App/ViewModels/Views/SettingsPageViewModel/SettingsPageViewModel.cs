@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Text.Json;
+using Microsoft.Windows.AppLifecycle;
 using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.Models.App.Kernel;
+using Windows.Storage;
+using Windows.System;
 
 namespace RichasyAssistant.App.ViewModels.Views;
 
@@ -16,8 +18,23 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
     /// </summary>
     public SettingsPageViewModel()
     {
-        ChatKernels = new ObservableCollection<KernelMetadata>();
+        ChatKernels = new ObservableCollection<ServiceMetadata>();
+        DrawServices = new ObservableCollection<ServiceMetadata>();
+        TranslateServices = new ObservableCollection<ServiceMetadata>();
+        SpeechServices = new ObservableCollection<ServiceMetadata>();
+        StorageDisplayCountCollection = new ObservableCollection<int>()
+        {
+            50,
+            100,
+            200,
+            500,
+            1000,
+            -1,
+        };
         InternalKernel = new InternalKernelViewModel();
+        InternalDrawService = new InternalDrawServiceViewModel();
+        InternalTranslate = new InternalTranslateServiceViewModel();
+        InternalSpeech = new InternalSpeechServiceViewModel();
     }
 
     [RelayCommand]
@@ -30,7 +47,13 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
         Copyright = string.Format(copyrightTemplate, BuildYear);
 
         LibraryPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
+
+        StorageMaxDisplayCount = SettingsToolkit.ReadLocalSetting(SettingNames.MaxStorageSearchCount, 100);
+
         await InitializeChatKernelsAsync();
+        await InitializeDrawServicesAsync();
+        await InitializeTranslateServicesAsync();
+        await InitializeSpeechServicesAsync();
     }
 
     [RelayCommand]
@@ -65,52 +88,114 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
         AppViewModel.ResetGlobalSettings();
     }
 
-    private async Task InitializeChatKernelsAsync()
+    [RelayCommand]
+    private async Task SaveAzureDrawSettingsAsync()
     {
-        TryClear(ChatKernels);
-        ChatKernels.Add(new KernelMetadata("AzureOpenAI", "Azure Open AI"));
-        ChatKernels.Add(new KernelMetadata("OpenAI", "Open AI"));
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageKey, InternalDrawService.AzureImageKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageEndpoint, InternalDrawService.AzureImageEndpoint);
 
-        var extraServicesPath = Path.Combine(LibraryPath, "_extraKernels.json");
-        if (File.Exists(extraServicesPath))
-        {
-            try
-            {
-                var json = await File.ReadAllTextAsync(extraServicesPath);
-                var data = JsonSerializer.Deserialize<List<KernelMetadata>>(json);
-                foreach (var metadata in data)
-                {
-                    ChatKernels.Add(metadata);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogException(new Exception("Extra kernels load error", ex));
-            }
-        }
+        await AppViewModel.ResetSecretsAsync(
+            SettingNames.AzureImageKey,
+            SettingNames.AzureImageEndpoint);
 
-        var defaultKernel = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
-        if (defaultKernel == KernelType.AzureOpenAI)
-        {
-            ChatKernel = ChatKernels.First();
-        }
-        else if (defaultKernel == KernelType.OpenAI)
-        {
-            ChatKernel = ChatKernels[1];
-        }
-        else
-        {
-            var chatKernelId = SettingsToolkit.ReadLocalSetting(SettingNames.CustomKernelId, string.Empty);
-            if (!string.IsNullOrEmpty(chatKernelId))
-            {
-                ChatKernel = ChatKernels.FirstOrDefault(p => p.Id == chatKernelId);
-            }
-        }
+        AppViewModel.ResetGlobalSettings();
+    }
 
-        if (ChatKernel == null)
-        {
-            AppViewModel.Instance.ShowTip(StringNames.ExtraKernelLoadFailed, InfoType.Warning);
-        }
+    [RelayCommand]
+    private async Task SaveOpenAIDrawSettingsAsync()
+    {
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIImageKey, InternalDrawService.OpenAIImageKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICustomEndpoint, InternalDrawService.OpenAICustomEndpoint);
+
+        await AppViewModel.ResetSecretsAsync(
+            SettingNames.OpenAIImageKey,
+            SettingNames.OpenAICustomEndpoint);
+
+        AppViewModel.ResetGlobalSettings();
+    }
+
+    [RelayCommand]
+    private async Task SaveAzureTranslateSettingsAsync()
+    {
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateKey, InternalTranslate.AzureTranslateKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateRegion, InternalTranslate.AzureTranslateRegion);
+
+        await AppViewModel.ResetSecretsAsync(
+            SettingNames.AzureTranslateKey,
+            SettingNames.AzureTranslateRegion);
+
+        AppViewModel.ResetGlobalSettings();
+    }
+
+    [RelayCommand]
+    private async Task SaveBaiduTranslateSettingsAsync()
+    {
+        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppId, InternalTranslate.BaiduTranslateAppId);
+        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppKey, InternalTranslate.BaiduTranslateKey);
+
+        await AppViewModel.ResetSecretsAsync(
+            SettingNames.BaiduTranslateAppId,
+            SettingNames.BaiduTranslateAppKey);
+
+        AppViewModel.ResetGlobalSettings();
+    }
+
+    [RelayCommand]
+    private async Task SaveAzureSpeechSettingsAsync()
+    {
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechKey, InternalSpeech.AzureSpeechKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechRegion, InternalSpeech.AzureSpeechRegion);
+
+        await AppViewModel.ResetSecretsAsync(
+            SettingNames.AzureSpeechKey,
+            SettingNames.AzureSpeechRegion);
+
+        AppViewModel.ResetGlobalSettings();
+    }
+
+    [RelayCommand]
+    private async Task SaveAzureWhisperSettingsAsync()
+    {
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperKey, InternalSpeech.AzureWhisperKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperEndpoint, InternalSpeech.AzureWhisperEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureWhisperModelName, InternalSpeech.AzureWhisperModelName);
+
+        await AppViewModel.ResetSecretsAsync(
+            SettingNames.AzureWhisperKey,
+            SettingNames.AzureWhisperEndpoint,
+            SettingNames.DefaultAzureWhisperModelName);
+
+        AppViewModel.ResetGlobalSettings();
+    }
+
+    [RelayCommand]
+    private async Task SaveOpenAIWhisperSettingsAsync()
+    {
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIWhisperKey, InternalSpeech.OpenAIWhisperKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICustomEndpoint, InternalSpeech.OpenAICustomEndpoint);
+
+        await AppViewModel.ResetSecretsAsync(
+            SettingNames.OpenAIWhisperKey,
+            SettingNames.OpenAICustomEndpoint);
+
+        AppViewModel.ResetGlobalSettings();
+    }
+
+    [RelayCommand]
+    private async Task OpenLibraryAsync()
+    {
+        var folder = await StorageFolder.GetFolderFromPathAsync(LibraryPath);
+        await Launcher.LaunchFolderAsync(folder);
+    }
+
+    [RelayCommand]
+    private void CloseLibrary()
+    {
+        LibraryPath = string.Empty;
+        SettingsToolkit.DeleteLocalSetting(SettingNames.LibraryFolderPath);
+        SettingsToolkit.DeleteLocalSetting(SettingNames.SkipWelcome);
+
+        AppInstance.Restart(string.Empty);
     }
 
     private void CheckTheme()
@@ -132,27 +217,6 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
     partial void OnUseMarkdownRendererChanged(bool value)
         => SettingsToolkit.WriteLocalSetting(SettingNames.UseMarkdownRenderer, value);
 
-    partial void OnChatKernelChanged(KernelMetadata value)
-    {
-        if (value == null)
-        {
-            return;
-        }
-
-        if (value.Id == "AzureOpenAI")
-        {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
-        }
-        else if (value.Id == "OpenAI")
-        {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultKernel, KernelType.OpenAI);
-        }
-        else
-        {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultKernel, KernelType.Custom);
-            SettingsToolkit.WriteLocalSetting(SettingNames.CustomKernelId, value.Id);
-        }
-
-        AppViewModel.ResetGlobalSettings();
-    }
+    partial void OnStorageMaxDisplayCountChanged(int value)
+        => SettingsToolkit.WriteLocalSetting(SettingNames.MaxStorageSearchCount, value);
 }

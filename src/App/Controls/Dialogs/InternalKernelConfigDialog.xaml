@@ -18,8 +18,8 @@
     <Grid Width="400" MaxHeight="560">
         <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
             <StackPanel>
-                <configuration:AzureOpenAIConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureOpenAI, Mode=OneWay}" />
-                <configuration:OpenAIConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureOpenAI, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+                <configuration:AzureOpenAIKernelConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureOpenAI}" />
+                <configuration:OpenAIKernelConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureOpenAI, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -21,4 +21,9 @@ public enum SpeechType
     /// Open AI 语音服务.
     /// </summary>
     OpenAIWhisper,
+
+    /// <summary>
+    /// 自定义语音服务.
+    /// </summary>
+    Custom,
 }

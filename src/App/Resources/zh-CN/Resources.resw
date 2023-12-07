@@ -129,6 +129,9 @@
   <data name="AddKernel" xml:space="preserve">
     <value>添加内核</value>
   </data>
+  <data name="AddService" xml:space="preserve">
+    <value>添加服务</value>
+  </data>
   <data name="AIMessageWarning" xml:space="preserve">
     <value>免责声明：模型并非全知全能，AI可能生成不正确的信息，请自行核实</value>
   </data>
@@ -237,6 +240,9 @@
   <data name="ClearMessage" xml:space="preserve">
     <value>清空消息</value>
   </data>
+  <data name="CloseLibrary" xml:space="preserve">
+    <value>关闭存储库</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>确认</value>
   </data>
@@ -267,6 +273,9 @@
   <data name="CopyTranslationResult" xml:space="preserve">
     <value>复制翻译结果</value>
   </data>
+  <data name="CountLimitTemplate" xml:space="preserve">
+    <value>前 {0} 条</value>
+  </data>
   <data name="CreateLibrary" xml:space="preserve">
     <value>创建存储库</value>
   </data>
@@ -278,6 +287,15 @@
   </data>
   <data name="DefaultChatKernelDescription" xml:space="preserve">
     <value>创建新会话时默认使用的内核</value>
+  </data>
+  <data name="DefaultDrawService" xml:space="preserve">
+    <value>默认绘图服务</value>
+  </data>
+  <data name="DefaultSpeechService" xml:space="preserve">
+    <value>默认语音服务</value>
+  </data>
+  <data name="DefaultTranslateService" xml:space="preserve">
+    <value>默认翻译服务</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
@@ -291,11 +309,23 @@
   <data name="Draw" xml:space="preserve">
     <value>绘图</value>
   </data>
+  <data name="DrawConfiguration" xml:space="preserve">
+    <value>绘图配置</value>
+  </data>
   <data name="DrawInputPlaceholderText" xml:space="preserve">
     <value>描述你要绘制的图像，比如“云海间的一株雪莲”</value>
   </data>
   <data name="DrawInvalidConfiguration" xml:space="preserve">
     <value>绘画配置无效</value>
+  </data>
+  <data name="DrawInvalidConfigurationDescription" xml:space="preserve">
+    <value>请在设置页面中调整绘图相关的配置</value>
+  </data>
+  <data name="DrawSetting" xml:space="preserve">
+    <value>绘图设置</value>
+  </data>
+  <data name="DrawSettingDescription" xml:space="preserve">
+    <value>编辑或添加 AI 绘图配置</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>编辑</value>
@@ -321,8 +351,17 @@
   <data name="ExportHistory" xml:space="preserve">
     <value>导出聊天记录</value>
   </data>
+  <data name="ExtraDrawLoadFailed" xml:space="preserve">
+    <value>自定义绘图服务加载失败，请在存储库检查自定义绘图服务配置</value>
+  </data>
   <data name="ExtraKernelLoadFailed" xml:space="preserve">
-    <value>内核加载失败，请在存储库内检查内核配置</value>
+    <value>自定义内核加载失败，请在存储库内检查自定义内核配置</value>
+  </data>
+  <data name="ExtraSpeechLoadFailed" xml:space="preserve">
+    <value>自定义语音服务加载失败，请在存储库内检查自定义语音服务配置</value>
+  </data>
+  <data name="ExtraTranslateLoadFailed" xml:space="preserve">
+    <value>自定义翻译服务加载失败，请在存储库内检查自定义翻译服务配置</value>
   </data>
   <data name="FileSaved" xml:space="preserve">
     <value>文件已保存</value>
@@ -393,6 +432,9 @@
   <data name="LibraryNeedInitialized" xml:space="preserve">
     <value>您必须指定一个文件夹作为应用数据存储库</value>
   </data>
+  <data name="LibrarySetting" xml:space="preserve">
+    <value>存储库设置</value>
+  </data>
   <data name="LicenseTerms" xml:space="preserve">
     <value>许可条款</value>
   </data>
@@ -458,6 +500,9 @@
   </data>
   <data name="NoDrawHistory" xml:space="preserve">
     <value>没有绘图记录</value>
+  </data>
+  <data name="NoLimit" xml:space="preserve">
+    <value>不限</value>
   </data>
   <data name="NoMessage" xml:space="preserve">
     <value>暂无消息</value>
@@ -660,6 +705,9 @@
   <data name="Speech" xml:space="preserve">
     <value>语音</value>
   </data>
+  <data name="SpeechConfiguration" xml:space="preserve">
+    <value>语音配置</value>
+  </data>
   <data name="SpeechConvertFailed" xml:space="preserve">
     <value>尝试转换语音时发生了异常</value>
   </data>
@@ -674,6 +722,12 @@
   </data>
   <data name="SpeechService" xml:space="preserve">
     <value>语音服务</value>
+  </data>
+  <data name="SpeechSetting" xml:space="preserve">
+    <value>语音设置</value>
+  </data>
+  <data name="SpeechSettingDescription" xml:space="preserve">
+    <value>编辑或添加语音服务</value>
   </data>
   <data name="StartRecording" xml:space="preserve">
     <value>开始录制</value>
@@ -692,6 +746,12 @@
   </data>
   <data name="StorageSearch" xml:space="preserve">
     <value>存储搜索</value>
+  </data>
+  <data name="StorageSearchMaxCount" xml:space="preserve">
+    <value>存储搜索最大显示条目</value>
+  </data>
+  <data name="StorageSearchMaxCountDescription" xml:space="preserve">
+    <value>设置在本地存储搜索中最多显示多少条搜索结果</value>
   </data>
   <data name="StorageSearchPlaceholder" xml:space="preserve">
     <value>基于 Everything 查找文件</value>
@@ -729,6 +789,9 @@
   <data name="Translate" xml:space="preserve">
     <value>翻译</value>
   </data>
+  <data name="TranslateConfiguration" xml:space="preserve">
+    <value>翻译配置</value>
+  </data>
   <data name="TranslatedContentPlaceholderText" xml:space="preserve">
     <value>翻译后的文本将显示在这里</value>
   </data>
@@ -737,6 +800,12 @@
   </data>
   <data name="TranslateInvalidDescription" xml:space="preserve">
     <value>请在设置中完成翻译服务相关的配置</value>
+  </data>
+  <data name="TranslateSetting" xml:space="preserve">
+    <value>翻译设置</value>
+  </data>
+  <data name="TranslateSettingDescription" xml:space="preserve">
+    <value>编辑或添加翻译服务</value>
   </data>
   <data name="TranslationInputPlaceholderText" xml:space="preserve">
     <value>请输入要翻译的文本</value>

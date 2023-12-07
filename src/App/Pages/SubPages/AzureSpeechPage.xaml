@@ -33,9 +33,13 @@
             <controls:EmptyHolder
                 Title="{ext:Locale Name=VoiceInvalid}"
                 Description="{x:Bind ViewModel.ErrorDescription, Mode=OneWay}"
+                Emoji="&#x1F625;"
                 Visibility="{x:Bind ViewModel.IsConfigInvalid, Mode=OneWay}">
                 <controls:EmptyHolder.ActionElement>
-                    <HyperlinkButton Content="Microsoft Visual C++ Redistributable" NavigateUri="https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2015-2017-2019-and-2022" />
+                    <HyperlinkButton
+                        Content="Microsoft Visual C++ Redistributable"
+                        NavigateUri="https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2015-2017-2019-and-2022"
+                        Visibility="{x:Bind ViewModel.NeedDependencies, Mode=OneWay}" />
                 </controls:EmptyHolder.ActionElement>
             </controls:EmptyHolder>
         </Grid>

@@ -55,7 +55,7 @@ public enum SettingNames
     DefaultKernel,
     DefaultTranslate,
     DefaultSpeech,
-    DefaultImage,
+    DefaultDrawService,
     StreamOutput,
     TranslationSourceLanguage,
     TranslationTargetLanguage,
@@ -81,4 +81,7 @@ public enum SettingNames
     AppTheme,
     UseMarkdownRenderer,
     CustomKernelId,
+    CustomDrawId,
+    CustomTranslateId,
+    CustomSpeechId,
 }

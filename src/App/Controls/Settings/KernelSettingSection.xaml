@@ -26,7 +26,7 @@
                     ItemsSource="{x:Bind ViewModel.ChatKernels, Mode=OneWay}"
                     SelectedItem="{x:Bind ViewModel.ChatKernel, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="kernel:KernelMetadata">
+                        <DataTemplate x:DataType="kernel:ServiceMetadata">
                             <TextBlock Text="{x:Bind Name}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>

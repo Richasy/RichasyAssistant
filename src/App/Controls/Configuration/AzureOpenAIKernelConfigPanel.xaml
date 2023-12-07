@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:InternalKernelConfigPanelBase
+    x:Class="RichasyAssistant.App.Controls.Configuration.AzureOpenAIKernelConfigPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Controls.Configuration"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Spacing="12">
+        <TextBlock
+            Foreground="{ThemeResource TextFillColorDisabledBrush}"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="{ext:Locale Name=AzureOpenAITip}" />
+        <PasswordBox
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=AccessKey}"
+            HeaderTemplate="{StaticResource InputHeaderTemplate}"
+            LostFocus="OnAIKeyBoxLostFocus"
+            Password="{x:Bind ViewModel.AzureOpenAIAccessKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
+        <TextBox
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=Endpoint}"
+            HeaderTemplate="{StaticResource InputHeaderTemplate}"
+            LostFocus="OnAIKeyBoxLostFocus"
+            PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
+            Text="{x:Bind ViewModel.AzureOpenAIEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <ComboBox
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=ChatModelName}"
+            HeaderTemplate="{StaticResource InputHeaderTemplate}"
+            ItemsSource="{x:Bind ViewModel.AzureOpenAIChatModelCollection, Mode=OneWay}"
+            PlaceholderText="{ext:Locale Name=ChatModelPlaceholderText}"
+            SelectedItem="{x:Bind ViewModel.AzureOpenAIChatModelName, Mode=TwoWay}"
+            Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+        <ProgressBar
+            HorizontalAlignment="Stretch"
+            IsIndeterminate="True"
+            Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
+    </StackPanel>
+</local:InternalKernelConfigPanelBase>

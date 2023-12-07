@@ -16,4 +16,9 @@ public enum TranslateType
     /// 百度翻译.
     /// </summary>
     Baidu,
+
+    /// <summary>
+    /// 自定义翻译.
+    /// </summary>
+    Custom,
 }

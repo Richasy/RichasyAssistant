@@ -45,6 +45,7 @@
                 Visibility="{x:Bind local:WelcomeWindow.IsNavButtonShown(_viewModel.IsLastStep), Mode=OneWay}">
                 <HyperlinkButton
                     MinWidth="120"
+                    Command="{x:Bind _viewModel.GoPrevCommand, Mode=OneWay}"
                     Content="{ext:Locale Name=PrevStep}"
                     Visibility="{x:Bind _viewModel.IsPreviousStepShown, Mode=OneWay}" />
                 <Button

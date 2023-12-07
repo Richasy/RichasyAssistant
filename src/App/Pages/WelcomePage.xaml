@@ -150,8 +150,8 @@
                     Padding="0,0,32,0"
                     Style="{StaticResource PageScrollViewerStyle}">
                     <Grid>
-                        <configuration:AzureOpenAIConfigPanel ViewModel="{x:Bind ViewModel.InternalKernel}" Visibility="{x:Bind ViewModel.IsAzureOpenAI, Mode=OneWay}" />
-                        <configuration:OpenAIConfigPanel ViewModel="{x:Bind ViewModel.InternalKernel}" Visibility="{x:Bind ViewModel.IsOpenAI, Mode=OneWay}" />
+                        <configuration:AzureOpenAIKernelConfigPanel ViewModel="{x:Bind ViewModel.InternalKernel}" Visibility="{x:Bind ViewModel.IsAzureOpenAI, Mode=OneWay}" />
+                        <configuration:OpenAIKernelConfigPanel ViewModel="{x:Bind ViewModel.InternalKernel}" Visibility="{x:Bind ViewModel.IsOpenAI, Mode=OneWay}" />
                     </Grid>
                 </ScrollViewer>
 
@@ -183,42 +183,8 @@
                     Padding="0,0,32,0"
                     Style="{StaticResource PageScrollViewerStyle}">
                     <Grid>
-                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureTranslate, Mode=OneWay}">
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{ext:Locale Name=AzureTranslateTip}" />
-                            <PasswordBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=AccessKey}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                Password="{x:Bind ViewModel.AzureTranslateKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
-                            <TextBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=Region}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                PlaceholderText="{ext:Locale Name=RegionPlaceholderText}"
-                                Text="{x:Bind ViewModel.AzureTranslateRegion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsBaiduTranslate, Mode=OneWay}">
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{ext:Locale Name=BaiduTranslateTip}" />
-                            <TextBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=AppId}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                PlaceholderText="{ext:Locale Name=AppIdPlaceholderText}"
-                                Text="{x:Bind ViewModel.BaiduTranslateAppId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <PasswordBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=AppSecret}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                Password="{x:Bind ViewModel.BaiduTranslateKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="{ext:Locale Name=AppSecretPlaceholderText}" />
-                        </StackPanel>
+                        <configuration:AzureTranslateConfigPanel ViewModel="{x:Bind ViewModel.InternalTranslate}" Visibility="{x:Bind ViewModel.IsAzureTranslate, Mode=OneWay}" />
+                        <configuration:BaiduTranslateConfigPanel ViewModel="{x:Bind ViewModel.InternalTranslate}" Visibility="{x:Bind ViewModel.IsBaiduTranslate, Mode=OneWay}" />
                     </Grid>
                 </ScrollViewer>
 
@@ -251,68 +217,9 @@
                     Padding="0,0,32,0"
                     Style="{StaticResource PageScrollViewerStyle}">
                     <Grid>
-                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureSpeech, Mode=OneWay}">
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{ext:Locale Name=AzureSpeechTip}" />
-                            <PasswordBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=AccessKey}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                Password="{x:Bind ViewModel.AzureSpeechKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
-                            <TextBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=Region}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                PlaceholderText="{ext:Locale Name=RegionPlaceholderText}"
-                                Text="{x:Bind ViewModel.AzureSpeechRegion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureWhisper, Mode=OneWay}">
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{ext:Locale Name=AzureWhisperTip}" />
-                            <PasswordBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=AccessKey}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                LostFocus="OnWhisperKeyBoxLostFocus"
-                                Password="{x:Bind ViewModel.AzureWhisperKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
-                            <TextBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=Endpoint}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                LostFocus="OnWhisperKeyBoxLostFocus"
-                                PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
-                                Text="{x:Bind ViewModel.AzureWhisperEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=ModelName}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                PlaceholderText="{ext:Locale Name=ModelNamePlaceholderText}"
-                                Text="{x:Bind ViewModel.AzureWhisperModelName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsOpenAIWhisper, Mode=OneWay}">
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{ext:Locale Name=OpenAIWhisperTip}" />
-                            <PasswordBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=AccessKey}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                Password="{x:Bind ViewModel.OpenAIWhisperKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
-                            <TextBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=ProxyEndpoint}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                PlaceholderText="{ext:Locale Name=ProxyEndpointPlaceholderText}"
-                                Text="{x:Bind ViewModel.InternalKernel.OpenAICustomEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
+                        <configuration:AzureSpeechConfigPanel ViewModel="{x:Bind ViewModel.InternalSpeech}" Visibility="{x:Bind ViewModel.IsAzureSpeech, Mode=OneWay}" />
+                        <configuration:AzureWhisperConfigPanel ViewModel="{x:Bind ViewModel.InternalSpeech}" Visibility="{x:Bind ViewModel.IsAzureWhisper, Mode=OneWay}" />
+                        <configuration:OpenAIWhisperConfigPanel ViewModel="{x:Bind ViewModel.InternalSpeech}" Visibility="{x:Bind ViewModel.IsOpenAIWhisper, Mode=OneWay}" />
                     </Grid>
                 </ScrollViewer>
 
@@ -344,42 +251,8 @@
                     Padding="0,0,32,0"
                     Style="{StaticResource PageScrollViewerStyle}">
                     <Grid>
-                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsAzureImage, Mode=OneWay}">
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{ext:Locale Name=AzureDallETip}" />
-                            <PasswordBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=AccessKey}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                Password="{x:Bind ViewModel.AzureImageKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
-                            <TextBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=Endpoint}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
-                                Text="{x:Bind ViewModel.AzureImageEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                        <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.IsOpenAIImage, Mode=OneWay}">
-                            <TextBlock
-                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                                Style="{StaticResource CaptionTextBlockStyle}"
-                                Text="{ext:Locale Name=OpenAIDallETip}" />
-                            <PasswordBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=AccessKey}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                Password="{x:Bind ViewModel.OpenAIImageKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
-                            <TextBox
-                                HorizontalAlignment="Stretch"
-                                Header="{ext:Locale Name=ProxyEndpoint}"
-                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
-                                PlaceholderText="{ext:Locale Name=ProxyEndpointPlaceholderText}"
-                                Text="{x:Bind ViewModel.InternalKernel.OpenAICustomEndpoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
+                        <configuration:AzureDrawConfigPanel ViewModel="{x:Bind ViewModel.InternalDrawService}" Visibility="{x:Bind ViewModel.IsAzureImage, Mode=OneWay}" />
+                        <configuration:OpenAIDrawConfigPanel ViewModel="{x:Bind ViewModel.InternalDrawService}" Visibility="{x:Bind ViewModel.IsOpenAIImage, Mode=OneWay}" />
                     </Grid>
                 </ScrollViewer>
 

@@ -2,7 +2,6 @@
 
 using Microsoft.Windows.AppLifecycle;
 using RichasyAssistant.App.ViewModels.Components;
-using RichasyAssistant.Libs.Locator;
 using Windows.Storage;
 
 namespace RichasyAssistant.App.ViewModels.Views;
@@ -26,6 +25,9 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         CheckImageType();
 
         InternalKernel = new InternalKernelViewModel();
+        InternalDrawService = new InternalDrawServiceViewModel();
+        InternalTranslate = new InternalTranslateServiceViewModel();
+        InternalSpeech = new InternalSpeechServiceViewModel();
     }
 
     [RelayCommand]
@@ -105,31 +107,6 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
-    private async Task TryLoadWhisperModelAsync()
-    {
-        if (!IsAzureWhisper
-            || string.IsNullOrEmpty(AzureWhisperKey)
-            || string.IsNullOrEmpty(AzureWhisperEndpoint))
-        {
-            return;
-        }
-
-        try
-        {
-            GlobalSettings.Set(SettingNames.AzureWhisperKey, AzureWhisperKey);
-            GlobalSettings.Set(SettingNames.AzureWhisperEndpoint, AzureWhisperEndpoint);
-
-            // TODO: 加载模型.
-            await Task.Delay(200);
-            AzureWhisperModelName = "whisper";
-        }
-        catch (Exception ex)
-        {
-            Logger.Debug(ex.Message);
-        }
-    }
-
     private void WriteSettings()
     {
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIAccessKey, InternalKernel.AzureOpenAIAccessKey);
@@ -141,25 +118,25 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIOrganization, InternalKernel.OpenAIOrganization);
         SettingsToolkit.WriteLocalSetting(SettingNames.DefaultOpenAIChatModelName, InternalKernel.OpenAIChatModelName);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateKey, AzureTranslateKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateRegion, AzureTranslateRegion);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateKey, InternalTranslate.AzureTranslateKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateRegion, InternalTranslate.AzureTranslateRegion);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppId, BaiduTranslateAppId);
-        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppKey, BaiduTranslateKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppId, InternalTranslate.BaiduTranslateAppId);
+        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppKey, InternalTranslate.BaiduTranslateKey);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechKey, AzureSpeechKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechRegion, AzureSpeechRegion);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechKey, InternalSpeech.AzureSpeechKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechRegion, InternalSpeech.AzureSpeechRegion);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperKey, AzureWhisperKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperEndpoint, AzureWhisperEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureWhisperModelName, AzureWhisperModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperKey, InternalSpeech.AzureWhisperKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperEndpoint, InternalSpeech.AzureWhisperEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureWhisperModelName, InternalSpeech.AzureWhisperModelName);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIWhisperKey, OpenAIWhisperKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIWhisperKey, InternalSpeech.OpenAIWhisperKey);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageKey, AzureImageKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageEndpoint, AzureImageEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageKey, InternalDrawService.AzureImageKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageEndpoint, InternalDrawService.AzureImageEndpoint);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIImageKey, OpenAIImageKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIImageKey, InternalDrawService.OpenAIImageKey);
     }
 
     private void CheckStep()

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Collections.Generic;
 using Microsoft.UI.Dispatching;
 using Microsoft.Win32;
 using RichasyAssistant.App.ViewModels.Components;
@@ -177,7 +176,12 @@ public sealed partial class StoragePageViewModel : ViewModelBase
                 items.Add(storageItem);
             }
 
-            items = GetSortedList(items).Take(maxCount).ToList();
+            items = GetSortedList(items).ToList();
+            if (maxCount > 0)
+            {
+                items = items.Take(maxCount).ToList();
+            }
+
             displayCount = items.Count();
         });
 

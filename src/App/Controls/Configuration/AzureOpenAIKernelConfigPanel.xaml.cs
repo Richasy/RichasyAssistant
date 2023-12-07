@@ -7,13 +7,12 @@ namespace RichasyAssistant.App.Controls.Configuration;
 /// <summary>
 /// Azure Open AI 配置面板.
 /// </summary>
-public sealed partial class AzureOpenAIConfigPanel : InternalKernelConfigPanelBase
+public sealed partial class AzureOpenAIKernelConfigPanel : InternalKernelConfigPanelBase
 {
-#pragma warning disable SA1600 // Elements should be documented
     /// <summary>
-    /// Initializes a new instance of the <see cref="AzureOpenAIConfigPanel"/> class.
+    /// Initializes a new instance of the <see cref="AzureOpenAIKernelConfigPanel"/> class.
     /// </summary>
-    public AzureOpenAIConfigPanel() => InitializeComponent();
+    public AzureOpenAIKernelConfigPanel() => InitializeComponent();
 
     private void OnAIKeyBoxLostFocus(object sender, RoutedEventArgs e)
         => ViewModel.TryLoadAIModelSourceCommand.Execute(true);

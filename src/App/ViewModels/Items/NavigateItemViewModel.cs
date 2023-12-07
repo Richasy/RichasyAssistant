@@ -31,8 +31,8 @@ public sealed partial class NavigateItemViewModel : DataViewModelBase<NavigateIt
                 SelectedIcon = FluentSymbol.ChatFilled;
                 break;
             case FeatureType.Draw:
-                DefaultIcon = FluentSymbol.PenSparkle;
-                SelectedIcon = FluentSymbol.PenSparkleFilled;
+                DefaultIcon = FluentSymbol.ImageSparkle;
+                SelectedIcon = FluentSymbol.ImageSparkleFilled;
                 break;
             case FeatureType.Translate:
                 DefaultIcon = FluentSymbol.Translate;
@@ -43,8 +43,8 @@ public sealed partial class NavigateItemViewModel : DataViewModelBase<NavigateIt
                 SelectedIcon = FluentSymbol.MicSparkleFilled;
                 break;
             case FeatureType.Storage:
-                DefaultIcon = FluentSymbol.Folder;
-                SelectedIcon = FluentSymbol.FolderFilled;
+                DefaultIcon = FluentSymbol.BoxSearch;
+                SelectedIcon = FluentSymbol.BoxSearchFilled;
                 break;
             case FeatureType.Settings:
                 DefaultIcon = FluentSymbol.Settings;

@@ -39,7 +39,9 @@
                     Text="{ext:Locale Name=Generic}" />
                 <settings:ThemeSettingSection ViewModel="{x:Bind ViewModel}" />
                 <settings:AppLogSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:LibrarySettingSection ViewModel="{x:Bind ViewModel}" />
                 <settings:MarkdownSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:StorageSettingSection ViewModel="{x:Bind ViewModel}" />
 
                 <TextBlock
                     Margin="0,12,0,4"
@@ -47,6 +49,9 @@
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="{ext:Locale Name=Services}" />
                 <settings:KernelSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:TranslateSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:SpeechSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:DrawSettingSection ViewModel="{x:Bind ViewModel}" />
 
                 <TextBlock
                     Margin="0,12,0,4"

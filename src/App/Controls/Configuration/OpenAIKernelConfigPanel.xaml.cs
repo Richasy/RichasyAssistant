@@ -5,12 +5,12 @@ namespace RichasyAssistant.App.Controls.Configuration;
 /// <summary>
 /// Open AI 配置面板.
 /// </summary>
-public sealed partial class OpenAIConfigPanel : InternalKernelConfigPanelBase
+public sealed partial class OpenAIKernelConfigPanel : InternalKernelConfigPanelBase
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="OpenAIConfigPanel"/> class.
+    /// Initializes a new instance of the <see cref="OpenAIKernelConfigPanel"/> class.
     /// </summary>
-    public OpenAIConfigPanel()
+    public OpenAIKernelConfigPanel()
         => InitializeComponent();
 
     private void OnAIKeyBoxLostFocus(object sender, RoutedEventArgs e)

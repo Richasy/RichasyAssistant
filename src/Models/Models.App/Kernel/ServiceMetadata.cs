@@ -5,19 +5,19 @@ namespace RichasyAssistant.Models.App.Kernel;
 /// <summary>
 /// 模型元数据.
 /// </summary>
-public class KernelMetadata
+public class ServiceMetadata
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="KernelMetadata"/> class.
+    /// Initializes a new instance of the <see cref="ServiceMetadata"/> class.
     /// </summary>
-    public KernelMetadata()
+    public ServiceMetadata()
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="KernelMetadata"/> class.
+    /// Initializes a new instance of the <see cref="ServiceMetadata"/> class.
     /// </summary>
-    public KernelMetadata(string id, string name)
+    public ServiceMetadata(string id, string name)
     {
         Id = id;
         Name = name;
@@ -34,7 +34,7 @@ public class KernelMetadata
     public string Name { get; set; }
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) => obj is KernelMetadata metadata && Id == metadata.Id;
+    public override bool Equals(object? obj) => obj is ServiceMetadata metadata && Id == metadata.Id;
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(Id);

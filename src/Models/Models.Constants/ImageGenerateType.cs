@@ -16,4 +16,9 @@ public enum DrawType
     /// Open AI Dall-E 服务.
     /// </summary>
     OpenAIDallE,
+
+    /// <summary>
+    /// 自定义服务.
+    /// </summary>
+    Custom,
 }
