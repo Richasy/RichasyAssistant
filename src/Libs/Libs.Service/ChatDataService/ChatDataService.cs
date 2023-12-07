@@ -60,7 +60,7 @@ public sealed partial class ChatDataService
     /// </summary>
     /// <returns>会话列表.</returns>
     public static List<ChatSession> GetSessions()
-        => _sessions;
+        => _sessions.OrderByDescending(p => p.Messages.LastOrDefault()?.Time ?? DateTimeOffset.MinValue).ToList();
 
     /// <summary>
     /// 获取会话.
