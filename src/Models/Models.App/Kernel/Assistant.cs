@@ -58,6 +58,11 @@ public sealed class Assistant
     public string? Model { get; set; }
 
     /// <summary>
+    /// 模型部署名称（可选）.
+    /// </summary>
+    public string? ModelDeploymentName { get; set; }
+
+    /// <summary>
     /// 指令（系统提示词）.
     /// </summary>
     public string? Instruction { get; set; }

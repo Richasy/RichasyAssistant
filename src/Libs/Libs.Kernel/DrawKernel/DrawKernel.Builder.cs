@@ -48,7 +48,7 @@ public sealed partial class DrawKernel
         }
 
         kernel.Kernel = new KernelBuilder()
-            .WithAzureOpenAIImageGenerationService(endpoint, accessKey)
+            .AddAzureOpenAITextToImage(endpoint, string.Empty, accessKey)
             .Build();
     }
 
@@ -69,7 +69,7 @@ public sealed partial class DrawKernel
             : default;
 
         kernel.Kernel = new KernelBuilder()
-            .WithOpenAIImageGenerationService(accessKey, httpClient: customHttpClient)
+            .AddOpenAITextToImage(accessKey, httpClient: customHttpClient)
             .Build();
     }
 }

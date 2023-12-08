@@ -189,8 +189,8 @@
                     Margin="-6,0,-6,0"
                     Binding="{x:Bind ViewModel.HistoryColumnWidth, Mode=TwoWay}"
                     IsDragInverted="True"
-                    Maximum="580"
-                    Minimum="380" />
+                    Maximum="380"
+                    Minimum="260" />
 
                 <Grid Grid.Column="2" Width="{x:Bind ViewModel.HistoryColumnWidth, Mode=OneWay}">
                     <components:DrawHistoryPanel ViewModel="{x:Bind ViewModel}" />

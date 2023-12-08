@@ -10,6 +10,22 @@ namespace RichasyAssistant.Models.App.Kernel;
 public sealed class Metadata
 {
     /// <summary>
+    /// Initializes a new instance of the <see cref="Metadata"/> class.
+    /// </summary>
+    public Metadata()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Metadata"/> class.
+    /// </summary>
+    public Metadata(string id, string value)
+    {
+        Id = id;
+        Value = value;
+    }
+
+    /// <summary>
     /// 标识符.
     /// </summary>
     [Key]

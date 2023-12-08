@@ -6,6 +6,7 @@ using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AI.OpenAI;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Models.App.Args;
+using RichasyAssistant.Models.App.Kernel;
 using RichasyAssistant.Models.Constants;
 
 namespace RichasyAssistant.Libs.Kernel;
@@ -20,7 +21,7 @@ public sealed partial class ChatKernel
     /// </summary>
     /// <param name="type">当前使用的内核类型.</param>
     /// <returns>模型列表.</returns>
-    public static async Task<(IEnumerable<string> ChatModels, IEnumerable<string> TextCompletions, IEnumerable<string> Embeddings)> GetSupportModelsAsync(KernelType type)
+    public static async Task<(IEnumerable<Metadata> ChatModels, IEnumerable<Metadata> TextCompletions, IEnumerable<Metadata> Embeddings)> GetSupportModelsAsync(KernelType type)
     {
         using var client = new HttpClient();
         if (type == KernelType.AzureOpenAI)
@@ -29,9 +30,9 @@ public sealed partial class ChatKernel
             var key = GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIAccessKey);
             var url = $"{endpoint.TrimEnd('/')}/openai/deployments?api-version=2022-12-01";
 
-            var aoaiChatModels = new List<string>();
-            var aoaiCompletionModels = new List<string>();
-            var aoaiEmbeddingsModels = new List<string>();
+            var aoaiChatModels = new List<Metadata>();
+            var aoaiCompletionModels = new List<Metadata>();
+            var aoaiEmbeddingsModels = new List<Metadata>();
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("api-key", key);
@@ -50,16 +51,17 @@ public sealed partial class ChatKernel
                         continue;
                     }
 
+                    var metadata = new Metadata(item.Id, item.Model);
                     switch (mt)
                     {
                         case "chat":
-                            aoaiChatModels.Add(item.Id);
+                            aoaiChatModels.Add(metadata);
                             break;
                         case "embedding":
-                            aoaiEmbeddingsModels.Add(item.Id);
+                            aoaiEmbeddingsModels.Add(metadata);
                             break;
                         case "text":
-                            aoaiCompletionModels.Add(item.Id);
+                            aoaiCompletionModels.Add(metadata);
                             break;
                     }
                 }
@@ -71,9 +73,9 @@ public sealed partial class ChatKernel
         {
             var key = GlobalSettings.TryGet<string>(SettingNames.OpenAIAccessKey);
             var url = $"https://api.openai.com/v1/models";
-            var oaiChatModels = new List<string>();
-            var oaiCompletionModels = new List<string>();
-            var oaiEmbeddingsModels = new List<string>();
+            var oaiChatModels = new List<Metadata>();
+            var oaiCompletionModels = new List<Metadata>();
+            var oaiEmbeddingsModels = new List<Metadata>();
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", key);
@@ -91,16 +93,17 @@ public sealed partial class ChatKernel
                         continue;
                     }
 
+                    var metadata = new Metadata(item.Id, item.Id);
                     switch (mt)
                     {
                         case "chat":
-                            oaiChatModels.Add(item.Id);
+                            oaiChatModels.Add(metadata);
                             break;
                         case "embedding":
-                            oaiEmbeddingsModels.Add(item.Id);
+                            oaiEmbeddingsModels.Add(metadata);
                             break;
                         case "text":
-                            oaiCompletionModels.Add(item.Id);
+                            oaiCompletionModels.Add(metadata);
                             break;
                     }
                 }
@@ -130,9 +133,9 @@ public sealed partial class ChatKernel
         return string.Empty;
     }
 
-    private IChatCompletion GetChatCore()
+    private IChatCompletionService GetChatCore()
     {
-        var chatCore = Kernel.GetService<IChatCompletion>()
+        var chatCore = Kernel.GetRequiredService<IChatCompletionService>()
             ?? throw new KernelException(KernelExceptionType.ChatNotInitialized);
         return chatCore;
     }
@@ -153,9 +156,9 @@ public sealed partial class ChatKernel
         return history;
     }
 
-    private OpenAIRequestSettings GetOpenAIRequestSettings()
+    private OpenAIPromptExecutionSettings GetOpenAIRequestSettings()
     {
-        var settings = new OpenAIRequestSettings
+        var settings = new OpenAIPromptExecutionSettings
         {
             Temperature = Session.Options.Temperature,
             MaxTokens = Session.Options.MaxResponseTokens,

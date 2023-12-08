@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:kernel="using:RichasyAssistant.Models.App.Kernel"
     xmlns:local="using:RichasyAssistant.App.Controls.Configuration"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -41,8 +42,14 @@
             HeaderTemplate="{StaticResource InputHeaderTemplate}"
             ItemsSource="{x:Bind ViewModel.OpenAIChatModelCollection, Mode=OneWay}"
             PlaceholderText="{ext:Locale Name=ChatModelPlaceholderText}"
-            SelectedItem="{x:Bind ViewModel.OpenAIChatModelName, Mode=TwoWay}"
-            Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+            SelectedItem="{x:Bind ViewModel.OpenAIChatModel, Mode=TwoWay}"
+            Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="kernel:Metadata">
+                    <TextBlock Text="{x:Bind Id}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <ProgressBar
             HorizontalAlignment="Stretch"
             IsIndeterminate="True"

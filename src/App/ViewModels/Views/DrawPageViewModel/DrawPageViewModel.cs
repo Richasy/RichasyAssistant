@@ -19,11 +19,11 @@ public sealed partial class DrawPageViewModel : ViewModelBase
     public DrawPageViewModel()
     {
         Size = SettingsToolkit.ReadLocalSetting(SettingNames.DrawImageSize, OpenAIImageSize.Medium);
-        HistoryColumnWidth = SettingsToolkit.ReadLocalSetting(SettingNames.DrawHistoryColumnWidth, 320d);
+        HistoryColumnWidth = SettingsToolkit.ReadLocalSetting(SettingNames.DrawHistoryColumnWidth, 260d);
         History = new ObservableCollection<AiImageItemViewModel>();
 
         AttachIsRunningToAsyncCommand(p => IsGenerating = p, DrawCommand);
-        AttachExceptionHandlerToAsyncCommand(ShowError, InitializeCommand);
+        AttachExceptionHandlerToAsyncCommand(ShowError, InitializeCommand, DrawCommand);
     }
 
     [RelayCommand]
@@ -138,6 +138,7 @@ public sealed partial class DrawPageViewModel : ViewModelBase
             ? kex.Type switch
             {
                 KernelExceptionType.InvalidConfiguration => ResourceToolkit.GetLocalizedString(StringNames.ChatInvalidConfiguration),
+                KernelExceptionType.GenerateImageFailed => ResourceToolkit.GetLocalizedString(StringNames.GenerateImageFailed),
                 _ => ResourceToolkit.GetLocalizedString(StringNames.SomethingWrong) + $"\n{kex.Type}",
             }
             : ex.Message;
@@ -152,5 +153,10 @@ public sealed partial class DrawPageViewModel : ViewModelBase
         => SettingsToolkit.WriteLocalSetting(SettingNames.DrawImageSize, value);
 
     partial void OnHistoryColumnWidthChanged(double value)
-        => SettingsToolkit.WriteLocalSetting(SettingNames.DrawHistoryColumnWidth, value);
+    {
+        if (value >= 260)
+        {
+            SettingsToolkit.WriteLocalSetting(SettingNames.DrawHistoryColumnWidth, value);
+        }
+    }
 }

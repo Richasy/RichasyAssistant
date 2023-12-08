@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Text.Json;
 using Microsoft.SemanticKernel;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Libs.Service;
@@ -31,7 +32,7 @@ public sealed partial class ChatKernel
             var assistant = ChatDataService.GetAssistant(sessionData.Assistants.First());
             if (assistant.Kernel == KernelType.AzureOpenAI)
             {
-                LoadAzureConfiguration(kernel, assistant.Model);
+                LoadAzureConfiguration(kernel, new Metadata(assistant.Model, assistant.ModelDeploymentName));
             }
             else if (assistant.Kernel == KernelType.OpenAI)
             {
@@ -92,7 +93,7 @@ public sealed partial class ChatKernel
         {
             return !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIAccessKey))
                 && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIEndpoint))
-                && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.DefaultAzureOpenAIChatModelName));
+                && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.DefaultAzureOpenAIChatModel));
         }
         else if (defaultKernel == KernelType.OpenAI)
         {
@@ -116,23 +117,29 @@ public sealed partial class ChatKernel
         }
     }
 
-    private static void LoadAzureConfiguration(ChatKernel kernel, string modelName = default)
+    private static void LoadAzureConfiguration(ChatKernel kernel, Metadata model = default)
     {
         var accessKey = GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIAccessKey);
         var endpoint = GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIEndpoint);
-        var model = string.IsNullOrEmpty(modelName)
-            ? GlobalSettings.TryGet<string>(SettingNames.DefaultAzureOpenAIChatModelName)
-            : modelName;
+
+        if (model == null)
+        {
+            var modelJson = GlobalSettings.TryGet<string>(SettingNames.DefaultAzureOpenAIChatModel);
+            if (!string.IsNullOrEmpty(modelJson))
+            {
+                model = JsonSerializer.Deserialize<Metadata>(modelJson);
+            }
+        }
 
         if (string.IsNullOrEmpty(accessKey)
         || string.IsNullOrEmpty(endpoint)
-        || string.IsNullOrEmpty(model))
+        || model == null)
         {
-            throw new KernelException(KernelExceptionType.InvalidConfiguration);
+            throw new Models.App.Args.KernelException(KernelExceptionType.InvalidConfiguration);
         }
 
         kernel.Kernel = new KernelBuilder()
-            .WithAzureOpenAIChatCompletionService(model, endpoint, accessKey)
+            .AddAzureOpenAIChatCompletion(model.Id, model.Value, endpoint, accessKey)
             .Build();
     }
 
@@ -148,7 +155,7 @@ public sealed partial class ChatKernel
         if (string.IsNullOrEmpty(accessKey)
             || string.IsNullOrEmpty(model))
         {
-            throw new KernelException(KernelExceptionType.InvalidConfiguration);
+            throw new Models.App.Args.KernelException(KernelExceptionType.InvalidConfiguration);
         }
 
         var hasCustomEndpoint = !string.IsNullOrEmpty(customEndpoint) && Uri.TryCreate(customEndpoint, UriKind.Absolute, out var _);
@@ -157,7 +164,7 @@ public sealed partial class ChatKernel
             : default;
 
         kernel.Kernel = new KernelBuilder()
-            .WithOpenAIChatCompletionService(model, accessKey, org, httpClient: customHttpClient)
+            .AddOpenAIChatCompletion(model, accessKey, org, httpClient: customHttpClient)
             .Build();
     }
 }

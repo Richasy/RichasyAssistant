@@ -21,7 +21,7 @@ var aoaiConfigContent = File.ReadAllText("Assets/azure-config.json");
 var aoaiConfig = JsonSerializer.Deserialize<AzureOpenAIConfig>(aoaiConfigContent);
 GlobalSettings.Set(SettingNames.AzureOpenAIAccessKey, aoaiConfig.AccessKey);
 GlobalSettings.Set(SettingNames.AzureOpenAIEndpoint, aoaiConfig.Endpoint);
-GlobalSettings.Set(SettingNames.DefaultAzureOpenAIChatModelName, aoaiConfig.ChatModel);
+GlobalSettings.Set(SettingNames.DefaultAzureOpenAIChatModel, aoaiConfig.ChatModel);
 GlobalSettings.Set(SettingNames.AzureOpenAICompletionModelName, aoaiConfig.CompletionModel);
 GlobalSettings.Set(SettingNames.AzureOpenAIEmbeddingModelName, aoaiConfig.EmbeddingModel);
 GlobalSettings.Set(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
@@ -115,7 +115,7 @@ assistantStart:
     {
         var name = AnsiConsole.Ask<string>("[grey]助理名称: [/]");
         var desc = AnsiConsole.Ask<string>("[grey]助理描述: [/]");
-        var model = AnsiConsole.Ask<string>("[grey]模型: [/]", GlobalSettings.TryGet<string>(SettingNames.DefaultAzureOpenAIChatModelName));
+        var model = AnsiConsole.Ask<string>("[grey]模型: [/]", GlobalSettings.TryGet<string>(SettingNames.DefaultAzureOpenAIChatModel));
         var instruction = AnsiConsole.Ask<string>("[grey]指令: [/]");
         var newAssistant = new Assistant(name, desc, instruction, KernelType.AzureOpenAI, model);
         await ChatDataService.AddOrUpdateAssistantAsync(newAssistant);

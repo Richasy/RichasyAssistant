@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using RichasyAssistant.Models.App.Kernel;
+
 namespace RichasyAssistant.App.ViewModels.Components;
 
 /// <summary>
@@ -14,7 +16,7 @@ public sealed partial class InternalKernelViewModel
     private string _azureOpenAIEndpoint;
 
     [ObservableProperty]
-    private string _azureOpenAIChatModelName;
+    private Metadata _azureOpenAIChatModel;
 
     [ObservableProperty]
     private string _openAIAccessKey;
@@ -26,7 +28,7 @@ public sealed partial class InternalKernelViewModel
     private string _openAIOrganization;
 
     [ObservableProperty]
-    private string _openAIChatModelName;
+    private Metadata _openAIChatModel;
 
     [ObservableProperty]
     private bool _isLoading;
@@ -34,10 +36,10 @@ public sealed partial class InternalKernelViewModel
     /// <summary>
     /// Azure Open AI 的对话模型集合.
     /// </summary>
-    public ObservableCollection<string> AzureOpenAIChatModelCollection { get; set; }
+    public ObservableCollection<Metadata> AzureOpenAIChatModelCollection { get; set; }
 
     /// <summary>
     /// Open AI 的对话模型集合.
     /// </summary>
-    public ObservableCollection<string> OpenAIChatModelCollection { get; set; }
+    public ObservableCollection<Metadata> OpenAIChatModelCollection { get; set; }
 }

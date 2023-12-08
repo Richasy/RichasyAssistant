@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Text.Json;
 using Microsoft.Windows.AppLifecycle;
 using RichasyAssistant.App.ViewModels.Components;
 using Windows.Storage;
@@ -111,12 +112,12 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
     {
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIAccessKey, InternalKernel.AzureOpenAIAccessKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIEndpoint, InternalKernel.AzureOpenAIEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureOpenAIChatModelName, InternalKernel.AzureOpenAIChatModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureOpenAIChatModel, JsonSerializer.Serialize(InternalKernel.AzureOpenAIChatModel ?? new Models.App.Kernel.Metadata()));
 
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIAccessKey, InternalKernel.OpenAIAccessKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICustomEndpoint, InternalKernel.OpenAICustomEndpoint);
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIOrganization, InternalKernel.OpenAIOrganization);
-        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultOpenAIChatModelName, InternalKernel.OpenAIChatModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultOpenAIChatModelName, InternalKernel.OpenAIChatModel?.Id ?? string.Empty);
 
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateKey, InternalTranslate.AzureTranslateKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateRegion, InternalTranslate.AzureTranslateRegion);

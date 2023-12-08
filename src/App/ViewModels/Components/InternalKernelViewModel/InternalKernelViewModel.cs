@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Text.Json;
 using RichasyAssistant.Libs.Kernel;
 using RichasyAssistant.Libs.Locator;
+using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Components;
 
@@ -15,8 +17,8 @@ public sealed partial class InternalKernelViewModel : ViewModelBase
     /// </summary>
     public InternalKernelViewModel()
     {
-        AzureOpenAIChatModelCollection = new ObservableCollection<string>();
-        OpenAIChatModelCollection = new ObservableCollection<string>();
+        AzureOpenAIChatModelCollection = new ObservableCollection<Metadata>();
+        OpenAIChatModelCollection = new ObservableCollection<Metadata>();
         AttachIsRunningToAsyncCommand(p => IsLoading = p, InitializeCommand, TryLoadAIModelSourceCommand);
     }
 
@@ -62,14 +64,15 @@ public sealed partial class InternalKernelViewModel : ViewModelBase
                     AzureOpenAIChatModelCollection.Add(item);
                 }
 
-                var localChatModelName = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultAzureOpenAIChatModelName, string.Empty);
-                AzureOpenAIChatModelName = string.IsNullOrEmpty(localChatModelName)
+                var localChatModel = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultAzureOpenAIChatModel, "{}");
+                var meta = JsonSerializer.Deserialize<Metadata>(localChatModel);
+                AzureOpenAIChatModel = meta == null
                     ? chatModels.FirstOrDefault()
-                    : chatModels.FirstOrDefault(p => p.Equals(localChatModelName));
+                    : chatModels.FirstOrDefault(p => p.Equals(meta));
             }
             else
             {
-                GlobalSettings.Set(SettingNames.OpenAIAccessKey, AzureOpenAIAccessKey);
+                GlobalSettings.Set(SettingNames.OpenAIAccessKey, OpenAIAccessKey);
                 var (chatModels, textCompletions, embeddings) = await ChatKernel.GetSupportModelsAsync(KernelType.OpenAI);
                 TryClear(OpenAIChatModelCollection);
                 foreach (var item in chatModels)
@@ -77,10 +80,10 @@ public sealed partial class InternalKernelViewModel : ViewModelBase
                     OpenAIChatModelCollection.Add(item);
                 }
 
-                var localChatModelName = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultOpenAIChatModelName, string.Empty);
-                OpenAIChatModelName = string.IsNullOrEmpty(localChatModelName)
+                var localChatModel = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultOpenAIChatModelName, string.Empty);
+                OpenAIChatModel = string.IsNullOrEmpty(localChatModel)
                     ? chatModels.FirstOrDefault()
-                    : chatModels.FirstOrDefault(p => p.Equals(localChatModelName));
+                    : chatModels.FirstOrDefault(p => p.Id.Equals(localChatModel));
             }
         }
         catch (Exception ex)

@@ -16,7 +16,7 @@ public enum SettingNames
 
     AzureOpenAIAccessKey,
     AzureOpenAIEndpoint,
-    DefaultAzureOpenAIChatModelName,
+    DefaultAzureOpenAIChatModel,
 
     OpenAIAccessKey,
     OpenAIOrganization,

@@ -22,7 +22,7 @@ public sealed partial class ChatKernel
         if (firstMsg is not null)
         {
             var actionFunction = _coreFunctions[SummarizePlugin.TitleGeneratorFunctionName];
-            var titleResult = await Kernel.RunAsync(firstMsg.Content, actionFunction);
+            var titleResult = await Kernel.InvokeAsync(actionFunction, new KernelArguments(firstMsg.Content));
             var newTitle = titleResult.GetValue<string>();
             if (!string.IsNullOrEmpty(newTitle))
             {
@@ -40,11 +40,11 @@ public sealed partial class ChatKernel
     /// </summary>
     private void InitializeCorePlugins()
     {
-        var summaryPlugin = new SummarizePlugin(Kernel);
-        var summarizeFunctions = Kernel.ImportFunctions(summaryPlugin);
+        var summaryPlugin = new SummarizePlugin();
+        var summarizeFunctions = Kernel.ImportPluginFromObject(summaryPlugin);
         foreach (var f in summarizeFunctions)
         {
-            _coreFunctions.Add(f.Key, f.Value);
+            _coreFunctions.Add(f.Name, f);
         }
     }
 }

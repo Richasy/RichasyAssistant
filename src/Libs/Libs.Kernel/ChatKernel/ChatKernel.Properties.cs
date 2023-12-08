@@ -11,8 +11,8 @@ namespace RichasyAssistant.Libs.Kernel;
 /// </summary>
 public sealed partial class ChatKernel
 {
-    private readonly Dictionary<string, ISKFunction> _coreFunctions;
-    private IKernel _kernel;
+    private readonly Dictionary<string, KernelFunction> _coreFunctions;
+    private Microsoft.SemanticKernel.Kernel _kernel;
 
     /// <summary>
     /// 会话标识符.
@@ -22,7 +22,7 @@ public sealed partial class ChatKernel
     /// <summary>
     /// 语义内核.
     /// </summary>
-    public IKernel Kernel
+    public Microsoft.SemanticKernel.Kernel Kernel
     {
         get => _kernel;
         set

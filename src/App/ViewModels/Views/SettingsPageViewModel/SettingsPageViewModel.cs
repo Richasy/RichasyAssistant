@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Text.Json;
 using Microsoft.Windows.AppLifecycle;
 using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.Models.App.Kernel;
@@ -62,12 +63,12 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
     {
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIAccessKey, InternalKernel.AzureOpenAIAccessKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIEndpoint, InternalKernel.AzureOpenAIEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureOpenAIChatModelName, InternalKernel.AzureOpenAIChatModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureOpenAIChatModel, JsonSerializer.Serialize(InternalKernel.AzureOpenAIChatModel ?? new Metadata()));
 
         await AppViewModel.ResetSecretsAsync(
             SettingNames.AzureOpenAIAccessKey,
             SettingNames.AzureOpenAIEndpoint,
-            SettingNames.DefaultAzureOpenAIChatModelName);
+            SettingNames.DefaultAzureOpenAIChatModel);
 
         AppViewModel.ResetGlobalSettings();
     }
@@ -77,14 +78,14 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
     {
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIAccessKey, InternalKernel.OpenAIAccessKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICustomEndpoint, InternalKernel.OpenAICustomEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureOpenAIChatModelName, InternalKernel.OpenAIChatModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultOpenAIChatModelName, InternalKernel.OpenAIChatModel?.Id ?? string.Empty);
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIOrganization, InternalKernel.OpenAIOrganization);
 
         await AppViewModel.ResetSecretsAsync(
             SettingNames.OpenAIAccessKey,
             SettingNames.OpenAICustomEndpoint,
             SettingNames.OpenAIOrganization,
-            SettingNames.DefaultAzureOpenAIChatModelName);
+            SettingNames.DefaultAzureOpenAIChatModel);
 
         AppViewModel.ResetGlobalSettings();
     }

@@ -16,7 +16,7 @@ public sealed partial class ChatKernel
 {
     private ChatKernel()
     {
-        _coreFunctions = new Dictionary<string, ISKFunction>();
+        _coreFunctions = new Dictionary<string, KernelFunction>();
     }
 
     /// <summary>
@@ -39,18 +39,18 @@ public sealed partial class ChatKernel
 
         try
         {
-            var response = await chat.GenerateMessageAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken);
+            var response = await chat.GetChatMessageContentAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken: cancellationToken);
 
             if (string.IsNullOrEmpty(response))
             {
-                throw new KernelException(KernelExceptionType.EmptyChatResponse);
+                throw new Models.App.Args.KernelException(KernelExceptionType.EmptyChatResponse);
             }
 
             var assistantMessage = new Models.App.Kernel.ChatMessage(ChatMessageRole.Assistant, response);
             await ChatDataService.AddMessageAsync(assistantMessage, SessionId);
             return assistantMessage;
         }
-        catch (KernelException)
+        catch (Models.App.Args.KernelException)
         {
             throw;
         }
@@ -58,10 +58,10 @@ public sealed partial class ChatKernel
         {
             if (ex is TaskCanceledException)
             {
-                throw new KernelException(KernelExceptionType.ChatResponseCancelled, ex);
+                throw new Models.App.Args.KernelException(KernelExceptionType.ChatResponseCancelled, ex);
             }
 
-            throw new KernelException(KernelExceptionType.GenerateChatResponseFailed, ex);
+            throw new Models.App.Args.KernelException(KernelExceptionType.GenerateChatResponseFailed, ex);
         }
     }
 
@@ -88,7 +88,7 @@ public sealed partial class ChatKernel
         var resMessage = string.Empty;
         try
         {
-            var response = chat.GenerateMessageStreamAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken);
+            var response = chat.GetStreamingChatMessageContentsAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken: cancellationToken);
             await foreach (var item in response)
             {
                 resMessage += item;
@@ -98,7 +98,7 @@ public sealed partial class ChatKernel
             resMessage = resMessage.Trim();
             if (string.IsNullOrEmpty(resMessage))
             {
-                throw new KernelException(KernelExceptionType.EmptyChatResponse);
+                throw new Models.App.Args.KernelException(KernelExceptionType.EmptyChatResponse);
             }
 
             var assistantMessage = new Models.App.Kernel.ChatMessage(ChatMessageRole.Assistant, resMessage);
@@ -109,10 +109,10 @@ public sealed partial class ChatKernel
         {
             if (ex is TaskCanceledException)
             {
-                throw new KernelException(KernelExceptionType.ChatResponseCancelled, ex);
+                throw new Models.App.Args.KernelException(KernelExceptionType.ChatResponseCancelled, ex);
             }
 
-            throw new KernelException(KernelExceptionType.GenerateChatResponseFailed, ex);
+            throw new Models.App.Args.KernelException(KernelExceptionType.GenerateChatResponseFailed, ex);
         }
     }
 }

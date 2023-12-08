@@ -198,3 +198,9 @@ csharp_style_prefer_top_level_statements = true:silent
 csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent
 dotnet_diagnostic.SA1633.severity = error
+
+# SKEXP0002: 类型仅用于评估，在将来的更新中可能会被更改或删除。取消此诊断以继续。
+dotnet_diagnostic.SKEXP0002.severity = suggestion
+
+# SKEXP0012: 类型仅用于评估，在将来的更新中可能会被更改或删除。取消此诊断以继续。
+dotnet_diagnostic.SKEXP0012.severity = suggestion

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using Microsoft.SemanticKernel.AI.ImageGeneration;
+using Microsoft.SemanticKernel.AI.TextToImage;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
@@ -22,7 +22,7 @@ public sealed partial class DrawKernel
     /// <returns>数据信息.</returns>
     public async Task<AiImage> DrawAsync(string prompt, OpenAIImageSize size, CancellationToken cancellationToken)
     {
-        var service = Kernel.GetService<IImageGeneration>();
+        var service = Kernel.GetRequiredService<ITextToImageService>();
         var width = size switch
         {
             OpenAIImageSize.Small => 256,
@@ -31,7 +31,7 @@ public sealed partial class DrawKernel
             _ => throw new NotImplementedException(),
         };
 
-        var url = await service.GenerateImageAsync(prompt, width, width, cancellationToken);
+        var url = await service.GenerateImageAsync(prompt, width, width, cancellationToken: cancellationToken);
 
         if(!Uri.TryCreate(url, UriKind.Absolute, out _))
         {

@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using Microsoft.SemanticKernel;
-
 namespace RichasyAssistant.Libs.Kernel.DrawKernel;
 
 /// <summary>
@@ -12,7 +10,7 @@ public sealed partial class DrawKernel
     /// <summary>
     /// 内核.
     /// </summary>
-    public IKernel Kernel { get; private set; }
+    public Microsoft.SemanticKernel.Kernel Kernel { get; private set; }
 
     /// <summary>
     /// 配置是否有效.

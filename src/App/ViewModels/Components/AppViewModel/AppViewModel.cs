@@ -42,7 +42,7 @@ public sealed partial class AppViewModel : ViewModelBase
         // 配置 Azure OpenAI 设置.
         UpdateGlobalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);
         UpdateGlobalSetting(SettingNames.AzureOpenAIEndpoint, string.Empty);
-        UpdateGlobalSetting(SettingNames.DefaultAzureOpenAIChatModelName, string.Empty);
+        UpdateGlobalSetting(SettingNames.DefaultAzureOpenAIChatModel, "{}");
 
         // 配置 Open AI 设置.
         UpdateGlobalSetting(SettingNames.OpenAIAccessKey, string.Empty);
@@ -110,7 +110,7 @@ public sealed partial class AppViewModel : ViewModelBase
             var metas = dbContext.Metadata.ToList();
             RetrieveSecret(metas, SettingNames.AzureOpenAIAccessKey);
             RetrieveSecret(metas, SettingNames.AzureOpenAIEndpoint);
-            RetrieveSecret(metas, SettingNames.DefaultAzureOpenAIChatModelName);
+            RetrieveSecret(metas, SettingNames.DefaultAzureOpenAIChatModel);
 
             RetrieveSecret(metas, SettingNames.OpenAIAccessKey);
             RetrieveSecret(metas, SettingNames.OpenAICustomEndpoint);
@@ -151,7 +151,7 @@ public sealed partial class AppViewModel : ViewModelBase
         return ResetSecretsAsync(
             SettingNames.AzureOpenAIAccessKey,
             SettingNames.AzureOpenAIEndpoint,
-            SettingNames.DefaultAzureOpenAIChatModelName,
+            SettingNames.DefaultAzureOpenAIChatModel,
 
             SettingNames.OpenAIAccessKey,
             SettingNames.OpenAICustomEndpoint,

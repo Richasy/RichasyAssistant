@@ -384,6 +384,9 @@
   <data name="Generate" xml:space="preserve">
     <value>生成</value>
   </data>
+  <data name="GenerateImageFailed" xml:space="preserve">
+    <value>生成图片失败，请稍后再试</value>
+  </data>
   <data name="GenerateResponseCancelled" xml:space="preserve">
     <value>已停止生成响应</value>
   </data>
