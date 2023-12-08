@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.IO.Compression;
 using System.Text.Json;
 using RichasyAssistant.App.ViewModels.Components;
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Views;
@@ -11,27 +13,18 @@ namespace RichasyAssistant.App.ViewModels.Views;
 /// </summary>
 public sealed partial class SettingsPageViewModel
 {
-    private async Task InitializeChatKernelsAsync()
+    private void InitializeChatKernels()
     {
         TryClear(ChatKernels);
         ChatKernels.Add(new ServiceMetadata(AzureOpenAIId, "Azure Open AI"));
         ChatKernels.Add(new ServiceMetadata(OpenAIId, "Open AI"));
 
-        var extraServicesPath = Path.Combine(LibraryPath, ExtraKernelFileName);
-        if (File.Exists(extraServicesPath))
+        var extraServices = ChatDataService.GetExtraKernels();
+        if (extraServices.Count > 0)
         {
-            try
+            foreach (var metadata in extraServices)
             {
-                var json = await File.ReadAllTextAsync(extraServicesPath);
-                var data = JsonSerializer.Deserialize<List<ServiceMetadata>>(json);
-                foreach (var metadata in data)
-                {
-                    ChatKernels.Add(metadata);
-                }
-            }
-            catch (Exception ex)
-            {
-                LogException(new Exception("Extra kernels load error", ex));
+                ChatKernels.Add(metadata);
             }
         }
 
@@ -206,6 +199,66 @@ public sealed partial class SettingsPageViewModel
         {
             AppViewModel.Instance.ShowTip(StringNames.ExtraSpeechLoadFailed, InfoType.Warning);
         }
+    }
+
+    private async Task ExtractExtraServiceAsync(string servicePackagePath, string folderName)
+    {
+        var parentFolder = Path.Combine(LibraryPath, "Extensions", folderName);
+        if (!Directory.Exists(parentFolder))
+        {
+            Directory.CreateDirectory(parentFolder);
+        }
+
+        var tempFolder = Path.Combine(parentFolder, ".temp_unzip");
+
+        var isSuccess = false;
+        ServiceMetadata metadata = null;
+        await Task.Run(() =>
+        {
+            ZipFile.ExtractToDirectory(servicePackagePath, tempFolder);
+            var configFilePath = Path.Combine(tempFolder, "config.json");
+            if (!File.Exists(configFilePath))
+            {
+                Directory.Delete(tempFolder, true);
+                return;
+            }
+
+            var json = File.ReadAllText(configFilePath);
+            var data = JsonSerializer.Deserialize<ServiceMetadata>(json);
+            metadata = data;
+
+            if (string.IsNullOrEmpty(metadata.Id) || string.IsNullOrEmpty(metadata.Name))
+            {
+                Directory.Delete(tempFolder, true);
+                return;
+            }
+
+            var targetFolder = Path.Combine(parentFolder, data.Id);
+            if (Directory.Exists(targetFolder))
+            {
+                Directory.Delete(targetFolder, true);
+            }
+
+            Directory.CreateDirectory(targetFolder);
+
+            // Move all files under temp folder to target folder but not the temp folder itself.
+            foreach (var file in Directory.GetFiles(tempFolder))
+            {
+                var fileName = Path.GetFileName(file);
+                var targetFilePath = Path.Combine(targetFolder, fileName);
+                File.Move(file, targetFilePath);
+            }
+
+            Directory.Delete(tempFolder, true);
+            isSuccess = true;
+        });
+
+        if (!isSuccess)
+        {
+            throw new Exception(ResourceToolkit.GetLocalizedString(StringNames.ImportServiceFailed));
+        }
+
+        await ChatDataService.AddOrUpdateExtraKernelAsync(metadata);
     }
 
     partial void OnChatKernelChanged(ServiceMetadata value)

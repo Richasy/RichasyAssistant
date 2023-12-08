@@ -414,6 +414,9 @@
   <data name="ImageSearch" xml:space="preserve">
     <value>图像搜索</value>
   </data>
+  <data name="ImportServiceFailed" xml:space="preserve">
+    <value>导入服务失败，请稍后重试</value>
+  </data>
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
   </data>

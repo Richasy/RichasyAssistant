@@ -166,7 +166,7 @@ if (string.IsNullOrEmpty(selectSessionId))
 }
 else
 {
-    kernel = ChatKernel.Create(selectSessionId);
+    kernel = await ChatKernel.CreateAsync(selectSessionId);
     AnsiConsole.MarkupLine($"[grey]已加载会话: {selectSessionId}[/]");
 }
 

@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Text.Json.Serialization;
+
 namespace RichasyAssistant.Models.App.Kernel;
 
 /// <summary>
@@ -26,11 +28,13 @@ public class ServiceMetadata
     /// <summary>
     /// 标识符.
     /// </summary>
+    [JsonPropertyName("id")]
     public string Id { get; set; }
 
     /// <summary>
     /// 名称.
     /// </summary>
+    [JsonPropertyName("name")]
     public string Name { get; set; }
 
     /// <inheritdoc/>

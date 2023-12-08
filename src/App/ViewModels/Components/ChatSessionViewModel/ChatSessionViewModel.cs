@@ -71,7 +71,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
 
         try
         {
-            _kernel = ChatKernel.Create(item.Id);
+            _kernel = await ChatKernel.CreateAsync(item.Id);
         }
         catch (Exception ex)
         {
@@ -227,6 +227,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                     _ = _dispatcherQueue.TryEnqueue(() =>
                     {
                         TempMessage += text;
+                        TempMessage = TempMessage.TrimStart();
                     });
                 },
                 !addUserMsg,

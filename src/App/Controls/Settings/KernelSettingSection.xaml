@@ -17,7 +17,10 @@
             <controls:FluentIcon Symbol="BotSparkle" />
         </community:SettingsExpander.HeaderIcon>
 
-        <Button MinWidth="120" Content="{ext:Locale Name=AddKernel}" />
+        <Button
+            MinWidth="120"
+            Command="{x:Bind ViewModel.ImportCustomKernelCommand, Mode=OneWay}"
+            Content="{ext:Locale Name=AddKernel}" />
 
         <community:SettingsExpander.Items>
             <community:SettingsCard Description="{ext:Locale Name=DefaultChatKernelDescription}" Header="{ext:Locale Name=DefaultChatKernel}">

@@ -21,14 +21,20 @@ public sealed partial class ChatKernel
         var firstMsg = session.Messages.FirstOrDefault(p => p.Role == Models.Constants.ChatMessageRole.User);
         if (firstMsg is not null)
         {
-            var actionFunction = _coreFunctions[SummarizePlugin.TitleGeneratorFunctionName];
-            var titleResult = await Kernel.InvokeAsync(actionFunction, new KernelArguments(firstMsg.Content));
-            var newTitle = titleResult.GetValue<string>();
-            if (!string.IsNullOrEmpty(newTitle))
+            try
             {
-                session.Title = newTitle;
-                await ChatDataService.AddOrUpdateSessionAsync(session);
-                return newTitle;
+                var actionFunction = _coreFunctions[SummarizePlugin.TitleGeneratorFunctionName];
+                var titleResult = await Kernel.InvokeAsync(actionFunction, new KernelArguments(firstMsg.Content));
+                var newTitle = titleResult.GetValue<string>();
+                if (!string.IsNullOrEmpty(newTitle))
+                {
+                    session.Title = newTitle;
+                    await ChatDataService.AddOrUpdateSessionAsync(session);
+                    return newTitle;
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 

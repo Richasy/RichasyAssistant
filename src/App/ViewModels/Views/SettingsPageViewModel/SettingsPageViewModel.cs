@@ -52,7 +52,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
         StorageMaxDisplayCount = SettingsToolkit.ReadLocalSetting(SettingNames.MaxStorageSearchCount, 100);
 
-        await InitializeChatKernelsAsync();
+        InitializeChatKernels();
         await InitializeDrawServicesAsync();
         await InitializeTranslateServicesAsync();
         await InitializeSpeechServicesAsync();
@@ -198,6 +198,27 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
         SettingsToolkit.DeleteLocalSetting(SettingNames.SkipWelcome);
 
         AppInstance.Restart(string.Empty);
+    }
+
+    [RelayCommand]
+    private async Task ImportCustomKernelAsync()
+    {
+        var fileObj = await FileToolkit.PickFileAsync(".rapkg", AppViewModel.Instance.ActivatedWindow);
+        if (fileObj is not StorageFile file)
+        {
+            return;
+        }
+
+        try
+        {
+            await ExtractExtraServiceAsync(file.Path, "Kernel");
+            InitializeChatKernels();
+        }
+        catch (Exception ex)
+        {
+            AppViewModel.Instance.ShowTip(ex.Message, InfoType.Error);
+            LogException(ex);
+        }
     }
 
     private void CheckTheme()

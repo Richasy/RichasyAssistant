@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Models.App.Args;
@@ -53,6 +54,7 @@ public sealed partial class ChatDataService
 
         await InitializeSessionsAsync();
         await InitializeAssistantsAsync();
+        await InitializeExtraKernelsAsync();
     }
 
     /// <summary>
@@ -322,6 +324,61 @@ public sealed partial class ChatDataService
     }
 
     /// <summary>
+    /// 获取自定义内核列表.
+    /// </summary>
+    /// <returns>列表.</returns>
+    public static List<ServiceMetadata> GetExtraKernels()
+        => _extraKernels;
+
+    /// <summary>
+    /// 获取自定义内核.
+    /// </summary>
+    /// <param name="kernelId">内核标识符.</param>
+    /// <returns>内核数据.</returns>
+    public static ServiceMetadata GetExtraKernel(string kernelId)
+        => _extraKernels.FirstOrDefault(p => p.Id == kernelId);
+
+    /// <summary>
+    /// 添加或更新自定义内核.
+    /// </summary>
+    /// <param name="kernel">内核指针.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    /// <exception cref="Exception">内核可能已经存在.</exception>
+    public static async Task AddOrUpdateExtraKernelAsync(ServiceMetadata kernel)
+    {
+        if (_extraKernels.Contains(kernel))
+        {
+            var sourceKernel = _extraKernels.First(p => p.Id == kernel.Id);
+            sourceKernel.Name = kernel.Name;
+        }
+        else
+        {
+            _extraKernels.Add(kernel);
+        }
+
+        var filePath = GetExtraKernelFilePath();
+        var content = JsonSerializer.Serialize(_extraKernels);
+        await File.WriteAllTextAsync(filePath, content);
+    }
+
+    /// <summary>
+    /// 删除自定义内核.
+    /// </summary>
+    /// <param name="kernelId">自定义内核 Id.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    public static async Task DeleteKernelAsync(string kernelId)
+    {
+        var localKernel = _extraKernels.FirstOrDefault(p => p.Id == kernelId);
+        if (localKernel != null)
+        {
+            _extraKernels.Remove(localKernel);
+            var filePath = GetExtraKernelFilePath();
+            var content = JsonSerializer.Serialize(_extraKernels);
+            await File.WriteAllTextAsync(filePath, content);
+        }
+    }
+
+    /// <summary>
     /// 初始化会话.
     /// </summary>
     /// <returns><see cref="Task"/>.</returns>
@@ -353,6 +410,31 @@ public sealed partial class ChatDataService
             var kex = new KernelException(KernelExceptionType.SessionInitializeFailed, ex);
             throw kex;
         }
+    }
+
+    private static async Task InitializeExtraKernelsAsync()
+    {
+        var filePath = GetExtraKernelFilePath();
+        _extraKernels = new List<ServiceMetadata>();
+        if (!File.Exists(filePath))
+        {
+            return;
+        }
+
+        var content = await File.ReadAllTextAsync(filePath);
+        var data = JsonSerializer.Deserialize<List<ServiceMetadata>>(content);
+        if (data != null)
+        {
+            _extraKernels.AddRange(data);
+        }
+    }
+
+    private static string GetExtraKernelFilePath()
+    {
+        var libPath = GlobalSettings.TryGet<string>(SettingNames.LibraryFolderPath);
+        return string.IsNullOrEmpty(libPath)
+            ? throw new KernelException(KernelExceptionType.LibraryNotInitialized)
+            : Path.Combine(libPath, ExtraKernelFileName);
     }
 
     private static void DoSame<T>(T obj1, T obj2, Action<T> handler)

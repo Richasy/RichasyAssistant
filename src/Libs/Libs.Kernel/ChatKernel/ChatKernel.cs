@@ -74,10 +74,10 @@ public sealed partial class ChatKernel
     /// <param name="ignoreUserMessage">是否不将传入消息作为用户消息添加到历史记录.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns><see cref="ChatMessage"/>.</returns>
-    public async Task<Models.App.Kernel.ChatMessage> SendMessageAsync(string message, Action<Models.App.Kernel.ChatMessage> userMsgHandler, Action<string> streamHandler, bool ignoreUserMessage = false, CancellationToken cancellationToken = default)
+    public async Task<ChatMessage> SendMessageAsync(string message, Action<ChatMessage> userMsgHandler, Action<string> streamHandler, bool ignoreUserMessage = false, CancellationToken cancellationToken = default)
     {
         var chat = GetChatCore();
-        var userMsg = new Models.App.Kernel.ChatMessage(ChatMessageRole.User, message);
+        var userMsg = new ChatMessage(ChatMessageRole.User, message);
 
         if (!ignoreUserMessage)
         {
@@ -101,7 +101,7 @@ public sealed partial class ChatKernel
                 throw new Models.App.Args.KernelException(KernelExceptionType.EmptyChatResponse);
             }
 
-            var assistantMessage = new Models.App.Kernel.ChatMessage(ChatMessageRole.Assistant, resMessage);
+            var assistantMessage = new ChatMessage(ChatMessageRole.Assistant, resMessage);
             await ChatDataService.AddMessageAsync(assistantMessage, SessionId);
             return assistantMessage;
         }

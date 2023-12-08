@@ -21,4 +21,9 @@ public enum ChatMessageRole
     /// 用户.
     /// </summary>
     User,
+
+    /// <summary>
+    /// 工具.
+    /// </summary>
+    Tool,
 }

@@ -38,6 +38,7 @@ public sealed partial class AppViewModel : ViewModelBase
         UpdateGlobalSetting(SettingNames.DefaultTranslate, TranslateType.Azure);
         UpdateGlobalSetting(SettingNames.DefaultSpeech, SpeechType.Azure);
         UpdateGlobalSetting(SettingNames.DefaultDrawService, DrawType.AzureDallE);
+        UpdateGlobalSetting(SettingNames.CustomKernelId, string.Empty);
 
         // 配置 Azure OpenAI 设置.
         UpdateGlobalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);

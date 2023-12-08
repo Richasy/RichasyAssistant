@@ -11,8 +11,10 @@ namespace RichasyAssistant.Libs.Service;
 public sealed partial class ChatDataService
 {
     private const string DbName = "chat.db";
+    private const string ExtraKernelFileName = "_extraKernels.json";
     private static ChatDbContext _dbContext;
 
     private static List<ChatSession> _sessions;
     private static List<Assistant> _assistants;
+    private static List<ServiceMetadata> _extraKernels;
 }
