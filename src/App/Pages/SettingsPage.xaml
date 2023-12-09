@@ -49,9 +49,9 @@
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="{ext:Locale Name=Services}" />
                 <settings:KernelSettingSection ViewModel="{x:Bind ViewModel}" />
+                <settings:DrawSettingSection ViewModel="{x:Bind ViewModel}" />
                 <settings:TranslateSettingSection ViewModel="{x:Bind ViewModel}" />
                 <settings:SpeechSettingSection ViewModel="{x:Bind ViewModel}" />
-                <settings:DrawSettingSection ViewModel="{x:Bind ViewModel}" />
 
                 <TextBlock
                     Margin="0,12,0,4"

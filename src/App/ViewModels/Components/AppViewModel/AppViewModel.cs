@@ -14,14 +14,7 @@ namespace RichasyAssistant.App.ViewModels.Components;
 /// </summary>
 public sealed partial class AppViewModel : ViewModelBase
 {
-    private AppViewModel()
-        => ResetGlobalSettings();
-
-    /// <summary>
-    /// 在应用退出前执行.
-    /// </summary>
-    /// <returns><see cref="Task"/>.</returns>
-    public static Task BeforeExitAsync() => Task.CompletedTask;
+    private AppViewModel() => ResetGlobalSettings();
 
     /// <summary>
     /// 重置全局设置.
@@ -201,6 +194,17 @@ public sealed partial class AppViewModel : ViewModelBase
                 WriteSecret(dbContext, name);
             }
         }
+    }
+
+    /// <summary>
+    /// 在应用退出前执行.
+    /// </summary>
+    /// <returns><see cref="Task"/>.</returns>
+    public Task BeforeExitAsync()
+    {
+        _ = this;
+        ExtraServiceViewModel.Instance.Clean();
+        return Task.CompletedTask;
     }
 
     /// <summary>

@@ -300,6 +300,9 @@
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
+  <data name="DeleteCustomKernelWarning" xml:space="preserve">
+    <value>是否要删除该自定义内核？删除后，相关的助理将不再可用</value>
+  </data>
   <data name="DocumentSearch" xml:space="preserve">
     <value>文档搜索</value>
   </data>
@@ -320,6 +323,9 @@
   </data>
   <data name="DrawInvalidConfigurationDescription" xml:space="preserve">
     <value>请在设置页面中调整绘图相关的配置</value>
+  </data>
+  <data name="DrawService" xml:space="preserve">
+    <value>绘图服务</value>
   </data>
   <data name="DrawSetting" xml:space="preserve">
     <value>绘图设置</value>
@@ -375,6 +381,9 @@
   <data name="FolderMustEmpty" xml:space="preserve">
     <value>您必须选择一个空文件夹</value>
   </data>
+  <data name="FolderNotExist" xml:space="preserve">
+    <value>文件夹不存在</value>
+  </data>
   <data name="FrequencyPenalty" xml:space="preserve">
     <value>文本重复</value>
   </data>
@@ -423,6 +432,12 @@
   <data name="KernelConfiguration" xml:space="preserve">
     <value>内核配置</value>
   </data>
+  <data name="KernelLaunchedTip" xml:space="preserve">
+    <value>内核 {0} 已启动</value>
+  </data>
+  <data name="KernelService" xml:space="preserve">
+    <value>内核服务</value>
+  </data>
   <data name="KernelSetting" xml:space="preserve">
     <value>内核设置</value>
   </data>
@@ -432,8 +447,17 @@
   <data name="Language" xml:space="preserve">
     <value>语言</value>
   </data>
+  <data name="Launch" xml:space="preserve">
+    <value>启动</value>
+  </data>
   <data name="LaunchApp" xml:space="preserve">
     <value>启动应用</value>
+  </data>
+  <data name="Launching" xml:space="preserve">
+    <value>启动中...</value>
+  </data>
+  <data name="LaunchingKernelTip" xml:space="preserve">
+    <value>正在启动内核：{0}</value>
   </data>
   <data name="LibraryChooseDescription" xml:space="preserve">
     <value>选择一个空白文件夹作为聊天记录、提示词列表等应用数据的存储库。你也可以打开一个已有的存储库以跳过初始配置</value>
@@ -503,6 +527,12 @@
   </data>
   <data name="NextStep" xml:space="preserve">
     <value>下一步</value>
+  </data>
+  <data name="NoAvailableService" xml:space="preserve">
+    <value>暂无可用的扩展服务</value>
+  </data>
+  <data name="NoAvailableServiceDescription" xml:space="preserve">
+    <value>你可以在设置页面中添加新的扩展服务</value>
   </data>
   <data name="NoDisplayImage" xml:space="preserve">
     <value>没有显示的图片</value>
@@ -639,6 +669,9 @@
   <data name="Resent" xml:space="preserve">
     <value>重新发送</value>
   </data>
+  <data name="Restart" xml:space="preserve">
+    <value>重新启动</value>
+  </data>
   <data name="Retry" xml:space="preserve">
     <value>重试</value>
   </data>
@@ -677,6 +710,9 @@
   </data>
   <data name="SendMessage" xml:space="preserve">
     <value>发送消息</value>
+  </data>
+  <data name="Service" xml:space="preserve">
+    <value>服务</value>
   </data>
   <data name="Services" xml:space="preserve">
     <value>服务</value>
@@ -744,6 +780,9 @@
   <data name="StartRecording" xml:space="preserve">
     <value>开始录制</value>
   </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
   <data name="StopRecording" xml:space="preserve">
     <value>停止录制</value>
   </data>
@@ -792,6 +831,9 @@
   <data name="TextTranslate" xml:space="preserve">
     <value>文本翻译</value>
   </data>
+  <data name="Tip" xml:space="preserve">
+    <value>提醒</value>
+  </data>
   <data name="TopP" xml:space="preserve">
     <value>Top-P</value>
   </data>
@@ -812,6 +854,9 @@
   </data>
   <data name="TranslateInvalidDescription" xml:space="preserve">
     <value>请在设置中完成翻译服务相关的配置</value>
+  </data>
+  <data name="TranslateService" xml:space="preserve">
+    <value>翻译服务</value>
   </data>
   <data name="TranslateSetting" xml:space="preserve">
     <value>翻译设置</value>

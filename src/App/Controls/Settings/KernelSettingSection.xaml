@@ -7,6 +7,7 @@
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:items="using:RichasyAssistant.App.ViewModels.Items"
     xmlns:kernel="using:RichasyAssistant.Models.App.Kernel"
     xmlns:local="using:RichasyAssistant.App.Controls.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -48,5 +49,38 @@
                     Content="{ext:Locale Name=EditConfiguration}" />
             </community:SettingsCard>
         </community:SettingsExpander.Items>
+        <community:SettingsExpander.ItemsFooter>
+            <ItemsRepeater ItemsSource="{x:Bind ViewModel.KernelExtraServices}">
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="items:SlimServiceItemViewModel">
+                        <community:SettingsCard
+                            MinHeight="52"
+                            Padding="58,8,44,8"
+                            BorderThickness="0,1,0,0"
+                            CornerRadius="0"
+                            Description="{x:Bind Path}"
+                            Header="{x:Bind Data.Name}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Button
+                                    Command="{x:Bind OpenFolderCommand}"
+                                    Style="{StaticResource IconButtonStyle}"
+                                    ToolTipService.ToolTip="{ext:Locale Name=OpenInFileExplorer}">
+                                    <controls:FluentIcon FontSize="14" Symbol="Folder" />
+                                </Button>
+                                <Button
+                                    Command="{x:Bind DeleteCommand}"
+                                    Style="{StaticResource IconButtonStyle}"
+                                    ToolTipService.ToolTip="{ext:Locale Name=Delete}">
+                                    <controls:FluentIcon
+                                        FontSize="14"
+                                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                        Symbol="Delete" />
+                                </Button>
+                            </StackPanel>
+                        </community:SettingsCard>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </community:SettingsExpander.ItemsFooter>
     </community:SettingsExpander>
 </local:SettingSectionBase>

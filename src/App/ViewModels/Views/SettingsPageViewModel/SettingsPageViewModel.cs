@@ -23,6 +23,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
         DrawServices = new ObservableCollection<ServiceMetadata>();
         TranslateServices = new ObservableCollection<ServiceMetadata>();
         SpeechServices = new ObservableCollection<ServiceMetadata>();
+        KernelExtraServices = new ObservableCollection<Items.SlimServiceItemViewModel>();
         StorageDisplayCountCollection = new ObservableCollection<int>()
         {
             50,

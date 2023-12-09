@@ -16,6 +16,7 @@ public sealed partial class SettingsPageViewModel
     private void InitializeChatKernels()
     {
         TryClear(ChatKernels);
+        TryClear(KernelExtraServices);
         ChatKernels.Add(new ServiceMetadata(AzureOpenAIId, "Azure Open AI"));
         ChatKernels.Add(new ServiceMetadata(OpenAIId, "Open AI"));
 
@@ -25,6 +26,7 @@ public sealed partial class SettingsPageViewModel
             foreach (var metadata in extraServices)
             {
                 ChatKernels.Add(metadata);
+                KernelExtraServices.Add(new Items.SlimServiceItemViewModel(metadata, ServiceType.Kernel, DeleteCustomKernelAsync));
             }
         }
 
@@ -199,6 +201,21 @@ public sealed partial class SettingsPageViewModel
         {
             AppViewModel.Instance.ShowTip(StringNames.ExtraSpeechLoadFailed, InfoType.Warning);
         }
+    }
+
+    private async Task DeleteCustomKernelAsync(ServiceMetadata data)
+    {
+        ChatKernel = ChatKernels.First();
+        ChatKernels.Remove(data);
+        var service = KernelExtraServices.FirstOrDefault(p => p.Data.Equals(data));
+        var path = service.Path;
+        KernelExtraServices.Remove(service);
+        await ExtraServiceViewModel.Instance.TryRemoveKernelServiceCommand.ExecuteAsync(data);
+        await ChatDataService.DeleteKernelAsync(data.Id);
+        await Task.Run(() =>
+        {
+            Directory.Delete(path, true);
+        });
     }
 
     private async Task ExtractExtraServiceAsync(string servicePackagePath, string folderName)

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:ExtraServiceControlBase
+    x:Class="RichasyAssistant.App.Controls.Components.ExtraServiceButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:items="using:RichasyAssistant.App.ViewModels.Items"
+    xmlns:items1="using:RichasyAssistant.App.Controls.Items"
+    xmlns:local="using:RichasyAssistant.App.Controls.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Visibility="{x:Bind ViewModel.HasService, Mode=OneWay}"
+    mc:Ignorable="d">
+
+    <controls:CardPanel
+        x:Name="RootButton"
+        Background="Transparent"
+        Click="OnRootButtonClick"
+        IsEnableCheck="False"
+        Loaded="OnLoaded"
+        StrokeThickness="0">
+        <Grid
+            Width="56"
+            Height="56"
+            Padding="8,0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <controls:FluentIcon
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="20"
+                Symbol="PuzzlePiece" />
+            <TextBlock
+                x:Name="TitleBlock"
+                Grid.Row="1"
+                Margin="0,0,0,8"
+                HorizontalAlignment="Center"
+                MaxLines="1"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{ext:Locale Name=Service}"
+                TextTrimming="CharacterEllipsis">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{ext:Locale Name=Service}" IsEnabled="{x:Bind TitleBlock.IsTextTrimmed, Mode=OneWay}" />
+                </ToolTipService.ToolTip>
+            </TextBlock>
+        </Grid>
+
+        <FlyoutBase.AttachedFlyout>
+            <Flyout
+                Closed="OnFlyoutClosed"
+                Opened="OnFlyoutOpened"
+                Placement="Right"
+                ShouldConstrainToRootBounds="False">
+                <local:ExtraServicePanel MinWidth="300" />
+            </Flyout>
+        </FlyoutBase.AttachedFlyout>
+    </controls:CardPanel>
+</local:ExtraServiceControlBase>

@@ -7,26 +7,8 @@ namespace RichasyAssistant.Models.App.Kernel;
 /// <summary>
 /// 自定义内核配置.
 /// </summary>
-public sealed class CustomKernelConfig : ServiceMetadata
+public sealed class CustomKernelConfig : ExtraServiceConfig
 {
-    /// <summary>
-    /// 访问路径.
-    /// </summary>
-    [JsonPropertyName("base_url")]
-    public string BaseUrl { get; set; }
-
-    /// <summary>
-    /// 脚本路径.
-    /// </summary>
-    [JsonPropertyName("run_script")]
-    public string RunScript { get; set; }
-
-    /// <summary>
-    /// 初始化脚本路径.
-    /// </summary>
-    [JsonPropertyName("initial_script")]
-    public string InitialScript { get; set; }
-
     /// <summary>
     /// 是否支持流输出.
     /// </summary>

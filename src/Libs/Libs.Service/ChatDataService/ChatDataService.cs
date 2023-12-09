@@ -58,6 +58,32 @@ public sealed partial class ChatDataService
     }
 
     /// <summary>
+    /// 初始化自定义内核列表.
+    /// </summary>
+    /// <returns><see cref="Task"/>.</returns>
+    public static async Task InitializeExtraKernelsAsync()
+    {
+        if (_extraKernels != null)
+        {
+            return;
+        }
+
+        var filePath = GetExtraKernelFilePath();
+        _extraKernels = new List<ServiceMetadata>();
+        if (!File.Exists(filePath))
+        {
+            return;
+        }
+
+        var content = await File.ReadAllTextAsync(filePath);
+        var data = JsonSerializer.Deserialize<List<ServiceMetadata>>(content);
+        if (data != null)
+        {
+            _extraKernels.AddRange(data);
+        }
+    }
+
+    /// <summary>
     /// 获取会话列表.
     /// </summary>
     /// <returns>会话列表.</returns>
@@ -409,23 +435,6 @@ public sealed partial class ChatDataService
         {
             var kex = new KernelException(KernelExceptionType.SessionInitializeFailed, ex);
             throw kex;
-        }
-    }
-
-    private static async Task InitializeExtraKernelsAsync()
-    {
-        var filePath = GetExtraKernelFilePath();
-        _extraKernels = new List<ServiceMetadata>();
-        if (!File.Exists(filePath))
-        {
-            return;
-        }
-
-        var content = await File.ReadAllTextAsync(filePath);
-        var data = JsonSerializer.Deserialize<List<ServiceMetadata>>(content);
-        if (data != null)
-        {
-            _extraKernels.AddRange(data);
         }
     }
 

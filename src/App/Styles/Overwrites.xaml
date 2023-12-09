@@ -2,8 +2,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:RichasyAssistant.App.Controls"
-    xmlns:ext="using:RichasyAssistant.App.Extensions">
+    xmlns:controls="using:RichasyAssistant.App.Controls">
 
     <Style x:Key="PageScrollViewerStyle" TargetType="ScrollViewer">
         <Setter Property="HorizontalScrollMode" Value="Disabled" />

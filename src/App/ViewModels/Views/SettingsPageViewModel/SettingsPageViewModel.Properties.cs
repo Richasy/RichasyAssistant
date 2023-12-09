@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using RichasyAssistant.App.ViewModels.Components;
+using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Views;
@@ -80,6 +81,11 @@ public sealed partial class SettingsPageViewModel
     /// 语音服务列表.
     /// </summary>
     public ObservableCollection<ServiceMetadata> SpeechServices { get; }
+
+    /// <summary>
+    /// 内核扩展服务列表.
+    /// </summary>
+    public ObservableCollection<SlimServiceItemViewModel> KernelExtraServices { get; }
 
     /// <summary>
     /// 文件搜索最大显示条目数集合.

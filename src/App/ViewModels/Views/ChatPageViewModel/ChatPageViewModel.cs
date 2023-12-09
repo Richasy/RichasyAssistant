@@ -38,6 +38,17 @@ public sealed partial class ChatPageViewModel : ViewModelBase
     {
         await ChatDataService.InitializeAsync();
 
+        var defaultService = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
+        if (defaultService == KernelType.Custom)
+        {
+            var kernelId = SettingsToolkit.ReadLocalSetting(SettingNames.CustomKernelId, string.Empty);
+            var customKernel = ChatDataService.GetExtraKernel(kernelId);
+            if (customKernel != null)
+            {
+                await ExtraServiceViewModel.Instance.LaunchKernelServiceCommand.ExecuteAsync(customKernel);
+            }
+        }
+
         var sessions = ChatDataService.GetSessions();
         TryClear(RecentSessions);
         foreach (var item in sessions)

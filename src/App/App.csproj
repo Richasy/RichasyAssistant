@@ -44,6 +44,8 @@
     <None Remove="Controls\Components\ChatListPanel.xaml" />
     <None Remove="Controls\Components\ChatSessionPanel.xaml" />
     <None Remove="Controls\Components\DrawHistoryPanel.xaml" />
+    <None Remove="Controls\Components\ExtraServiceButton.xaml" />
+    <None Remove="Controls\Components\ExtraServicePanel.xaml" />
     <None Remove="Controls\Components\NavigationPanel.xaml" />
     <None Remove="Controls\Configuration\AzureDrawConfigPanel.xaml" />
     <None Remove="Controls\Configuration\AzureOpenAIKernelConfigPanel.xaml" />
@@ -61,6 +63,7 @@
     <None Remove="Controls\EmptyHolder.xaml" />
     <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
     <None Remove="Controls\Items\ChatSessionItemControl.xaml" />
+    <None Remove="Controls\Items\ExtraServiceItemControl.xaml" />
     <None Remove="Controls\Items\NavigateItemControl.xaml" />
     <None Remove="Controls\Items\StorageItemControl\StorageItemControl.xaml" />
     <None Remove="Controls\Items\TranslationRecordItemControl.xaml" />
@@ -165,6 +168,15 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Components\ExtraServicePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Items\ExtraServiceItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Components\ExtraServiceButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\Settings\GlobalChatSettingSection.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

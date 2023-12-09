@@ -24,7 +24,7 @@ public sealed partial class MainWindow : WindowBase, ITipWindow
     {
         InitializeComponent();
         _launchArgs = args;
-        Closed += OnClosed;
+        Closed += OnClosedAsync;
         Activated += OnWindowActivated;
 
         MinWidth = 800;
@@ -80,8 +80,9 @@ public sealed partial class MainWindow : WindowBase, ITipWindow
         }
     }
 
-    private void OnClosed(object sender, WindowEventArgs args)
+    private async void OnClosedAsync(object sender, WindowEventArgs args)
     {
+        await AppViewModel.Instance.BeforeExitAsync();
         var isMaximized = PInvoke.IsZoomed(new HWND(this.GetWindowHandle()));
         SettingsToolkit.WriteLocalSetting(SettingNames.IsWindowMaximized, (bool)isMaximized);
 

@@ -1840,6 +1840,7 @@ public enum FluentSymbol : int
     Stethoscope = 0xEE37,
     Sticker = 0xEE39,
     StickerAdd = 0xEE3B,
+    StopFilled = 0xEE3C,
     Stop = 0xEE3D,
     Storage = 0xEE3F,
     StoreMicrosoft = 0xEE41,

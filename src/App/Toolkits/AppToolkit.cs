@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Diagnostics;
 using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Text;
 using Windows.ApplicationModel;
 using Windows.UI;
@@ -104,5 +106,36 @@ public static class AppToolkit
     {
         var localTheme = SettingsToolkit.ReadLocalSetting(SettingNames.AppTheme, ElementTheme.Default);
         element.RequestedTheme = localTheme;
+    }
+
+    /// <summary>
+    /// 杀掉占用当前端口的进程.
+    /// </summary>
+    /// <param name="port">端口号.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    public static async Task KillProcessIfUsingPortAsync(int port)
+    {
+        var ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
+        var listeners = ipGlobalProperties.GetActiveTcpListeners();
+        var hasProcess = listeners.Any(p => p.Port == port);
+        if (hasProcess)
+        {
+            await Task.Run(() =>
+            {
+                var process = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = "powershell.exe",
+                        Arguments = $"-Command \"Get-NetTCPConnection -LocalPort {port} | Select-Object -ExpandProperty OwningProcess | ForEach-Object {{ Stop-Process -Id $_ -Force }}\"",
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                    },
+                };
+
+                _ = process.Start();
+                process.WaitForExit();
+            });
+        }
     }
 }
