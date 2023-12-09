@@ -126,11 +126,14 @@
   <data name="AccessKeyPlaceholderText" xml:space="preserve">
     <value>访问服务的密钥</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
   <data name="AddKernel" xml:space="preserve">
-    <value>添加内核</value>
+    <value>添加新的内核</value>
   </data>
   <data name="AddService" xml:space="preserve">
-    <value>添加服务</value>
+    <value>添加新的服务</value>
   </data>
   <data name="AIMessageWarning" xml:space="preserve">
     <value>免责声明：模型并非全知全能，AI可能生成不正确的信息，请自行核实</value>
@@ -354,6 +357,9 @@
   <data name="EndpointPlaceholderText" xml:space="preserve">
     <value>访问接口的地址</value>
   </data>
+  <data name="Execute" xml:space="preserve">
+    <value>运行</value>
+  </data>
   <data name="ExportHistory" xml:space="preserve">
     <value>导出聊天记录</value>
   </data>
@@ -425,6 +431,12 @@
   </data>
   <data name="ImportServiceFailed" xml:space="preserve">
     <value>导入服务失败，请稍后重试</value>
+  </data>
+  <data name="InitialScriptRunningTip" xml:space="preserve">
+    <value>正在执行初始化脚本，请等待脚本执行完成</value>
+  </data>
+  <data name="InitialScriptWarning" xml:space="preserve">
+    <value>该扩展服务要求在导入前运行初始化脚本，请手动验证该服务是否可信</value>
   </data>
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>

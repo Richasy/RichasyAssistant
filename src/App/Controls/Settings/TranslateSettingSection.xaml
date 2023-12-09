@@ -17,20 +17,20 @@
             <controls:FluentIcon Symbol="Translate" />
         </community:SettingsExpander.HeaderIcon>
 
-        <Button MinWidth="120" Content="{ext:Locale Name=AddService}" />
+        <ComboBox
+            MinWidth="120"
+            ItemsSource="{x:Bind ViewModel.TranslateServices, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.TranslateService, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="kernel:ServiceMetadata">
+                    <TextBlock Text="{x:Bind Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <community:SettingsExpander.Items>
-            <community:SettingsCard Header="{ext:Locale Name=DefaultTranslateService}">
-                <ComboBox
-                    MinWidth="120"
-                    ItemsSource="{x:Bind ViewModel.TranslateServices, Mode=OneWay}"
-                    SelectedItem="{x:Bind ViewModel.TranslateService, Mode=TwoWay}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="kernel:ServiceMetadata">
-                            <TextBlock Text="{x:Bind Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+            <community:SettingsCard Header="{ext:Locale Name=AddService}">
+                <Button MinWidth="120" Content="{ext:Locale Name=Add}" />
             </community:SettingsCard>
             <community:SettingsCard Header="{ext:Locale Name=AzureTranslate}">
                 <Button

@@ -18,23 +18,23 @@
             <controls:FluentIcon Symbol="BotSparkle" />
         </community:SettingsExpander.HeaderIcon>
 
-        <Button
+        <ComboBox
             MinWidth="120"
-            Command="{x:Bind ViewModel.ImportCustomKernelCommand, Mode=OneWay}"
-            Content="{ext:Locale Name=AddKernel}" />
+            ItemsSource="{x:Bind ViewModel.ChatKernels, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.ChatKernel, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="kernel:ServiceMetadata">
+                    <TextBlock Text="{x:Bind Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <community:SettingsExpander.Items>
-            <community:SettingsCard Description="{ext:Locale Name=DefaultChatKernelDescription}" Header="{ext:Locale Name=DefaultChatKernel}">
-                <ComboBox
+            <community:SettingsCard Header="{ext:Locale Name=AddKernel}">
+                <Button
                     MinWidth="120"
-                    ItemsSource="{x:Bind ViewModel.ChatKernels, Mode=OneWay}"
-                    SelectedItem="{x:Bind ViewModel.ChatKernel, Mode=TwoWay}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="kernel:ServiceMetadata">
-                            <TextBlock Text="{x:Bind Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                    Command="{x:Bind ViewModel.ImportCustomKernelCommand, Mode=OneWay}"
+                    Content="{ext:Locale Name=Add}" />
             </community:SettingsCard>
             <community:SettingsCard Header="Azure Open AI">
                 <Button

@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json;
 using RichasyAssistant.App.ViewModels.Components;
@@ -212,6 +213,8 @@ public sealed partial class SettingsPageViewModel
         KernelExtraServices.Remove(service);
         await ExtraServiceViewModel.Instance.TryRemoveKernelServiceCommand.ExecuteAsync(data);
         await ChatDataService.DeleteKernelAsync(data.Id);
+
+        await Task.Delay(1000);
         await Task.Run(() =>
         {
             Directory.Delete(path, true);
@@ -229,7 +232,7 @@ public sealed partial class SettingsPageViewModel
         var tempFolder = Path.Combine(parentFolder, ".temp_unzip");
 
         var isSuccess = false;
-        ServiceMetadata metadata = null;
+        ExtraServiceConfig metadata = null;
         await Task.Run(() =>
         {
             ZipFile.ExtractToDirectory(servicePackagePath, tempFolder);
@@ -241,16 +244,69 @@ public sealed partial class SettingsPageViewModel
             }
 
             var json = File.ReadAllText(configFilePath);
-            var data = JsonSerializer.Deserialize<ServiceMetadata>(json);
-            metadata = data;
+            metadata = JsonSerializer.Deserialize<ExtraServiceConfig>(json);
 
             if (string.IsNullOrEmpty(metadata.Id) || string.IsNullOrEmpty(metadata.Name))
             {
                 Directory.Delete(tempFolder, true);
                 return;
             }
+        });
 
-            var targetFolder = Path.Combine(parentFolder, data.Id);
+        // 尝试运行初始化脚本.
+        if (!string.IsNullOrEmpty(metadata.InitialScript))
+        {
+            var initScriptPath = Path.Combine(tempFolder, metadata.InitialScript);
+            if (File.Exists(initScriptPath))
+            {
+                var dialog = new ContentDialog()
+                {
+                    Title = ResourceToolkit.GetLocalizedString(StringNames.Tip),
+                    Content = ResourceToolkit.GetLocalizedString(StringNames.InitialScriptWarning),
+                    PrimaryButtonText = ResourceToolkit.GetLocalizedString(StringNames.Execute),
+                    SecondaryButtonText = ResourceToolkit.GetLocalizedString(StringNames.Skip),
+                    CloseButtonText = ResourceToolkit.GetLocalizedString(StringNames.Cancel),
+                    DefaultButton = ContentDialogButton.Primary,
+                    XamlRoot = AppViewModel.Instance.ActivatedWindow.Content.XamlRoot,
+                };
+
+                var dialogResult = await dialog.ShowAsync();
+                if (dialogResult == ContentDialogResult.Primary)
+                {
+                    var tipDialog = new ContentDialog()
+                    {
+                        Title = ResourceToolkit.GetLocalizedString(StringNames.Tip),
+                        Content = ResourceToolkit.GetLocalizedString(StringNames.InitialScriptRunningTip),
+                        CloseButtonText = ResourceToolkit.GetLocalizedString(StringNames.Confirm),
+                        DefaultButton = ContentDialogButton.Close,
+                        XamlRoot = AppViewModel.Instance.ActivatedWindow.Content.XamlRoot,
+                    };
+
+                    tipDialog.Loaded += async (_, _) =>
+                    {
+                        var initialProcess = new Process();
+                        initialProcess.StartInfo.FileName = "powershell.exe";
+                        initialProcess.StartInfo.Arguments = $"-ExecutionPolicy Bypass -File \"{initScriptPath}\"";
+                        initialProcess.StartInfo.UseShellExecute = true;
+                        initialProcess.StartInfo.WorkingDirectory = tempFolder;
+                        initialProcess.Start();
+                        await initialProcess.WaitForExitAsync();
+                        tipDialog.Hide();
+                    };
+
+                    await tipDialog.ShowAsync();
+                }
+                else if (dialogResult == ContentDialogResult.None)
+                {
+                    Directory.Delete(tempFolder, true);
+                    return;
+                }
+            }
+        }
+
+        await Task.Run(() =>
+        {
+            var targetFolder = Path.Combine(parentFolder, metadata.Id);
             if (Directory.Exists(targetFolder))
             {
                 Directory.Delete(targetFolder, true);
