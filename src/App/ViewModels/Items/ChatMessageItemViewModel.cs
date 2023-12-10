@@ -9,9 +9,8 @@ namespace RichasyAssistant.App.ViewModels.Items;
 /// <summary>
 /// 聊天消息条目视图模型.
 /// </summary>
-public sealed partial class ChatMessageItemViewModel : ViewModelBase
+public sealed partial class ChatMessageItemViewModel : DataViewModelBase<ChatMessage>
 {
-    private readonly ChatMessage _data;
     private readonly Action<ChatMessage> _regenerateAction;
     private readonly Action<ChatMessage> _editAction;
     private readonly Action<ChatMessage> _deleteAction;
@@ -40,6 +39,12 @@ public sealed partial class ChatMessageItemViewModel : ViewModelBase
     [ObservableProperty]
     private bool _useMarkdownRenderer;
 
+    [ObservableProperty]
+    private bool _isDefaultChat;
+
+    [ObservableProperty]
+    private string _avatar;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatMessageItemViewModel"/> class.
     /// </summary>
@@ -48,31 +53,26 @@ public sealed partial class ChatMessageItemViewModel : ViewModelBase
         Action<ChatMessage> regenerateAction = default,
         Action<ChatMessage> editAction = default,
         Action<ChatMessage> deleteAction = default)
+        : base(message)
     {
-        _data = message;
         Content = message.Content;
         IsAssistant = message.Role == ChatMessageRole.Assistant;
         IsUser = message.Role == ChatMessageRole.User;
         Time = message.Time.ToString("MM/dd HH:mm:ss");
+        IsDefaultChat = string.IsNullOrEmpty(message.AssistantId);
+
+        if (!IsDefaultChat)
+        {
+            var libPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
+            Avatar = Path.Combine(libPath, "Assistants", message.AssistantId + ".png");
+        }
+
         _regenerateAction = regenerateAction;
         _editAction = editAction;
         _deleteAction = deleteAction;
         UseMarkdownRenderer = SettingsToolkit.ReadLocalSetting(SettingNames.UseMarkdownRenderer, true);
         CheckRegenerateButtonState();
     }
-
-    /// <summary>
-    /// 获取数据.
-    /// </summary>
-    /// <returns>消息数据.</returns>
-    public ChatMessage GetData()
-        => _data;
-
-    /// <inheritdoc/>
-    public override bool Equals(object obj) => obj is ChatMessageItemViewModel model && EqualityComparer<ChatMessage>.Default.Equals(_data, model._data);
-
-    /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(_data);
 
     [RelayCommand]
     private void Copy()
@@ -85,7 +85,7 @@ public sealed partial class ChatMessageItemViewModel : ViewModelBase
 
     [RelayCommand]
     private void Regenerate()
-        => _regenerateAction?.Invoke(_data);
+        => _regenerateAction?.Invoke(Data);
 
     [RelayCommand]
     private void Edit()
@@ -96,13 +96,13 @@ public sealed partial class ChatMessageItemViewModel : ViewModelBase
             return;
         }
 
-        _data.Content = Content;
-        _editAction?.Invoke(_data);
+        Data.Content = Content;
+        _editAction?.Invoke(Data);
     }
 
     [RelayCommand]
     private void Delete()
-        => _deleteAction?.Invoke(_data);
+        => _deleteAction?.Invoke(Data);
 
     private void CheckRegenerateButtonState()
         => IsRegenerateButtonShown = !IsUser && IsLastMessage;

@@ -16,6 +16,7 @@ public sealed partial class ChatMessageItemControl : ChatMessageItemControlBase
     {
         InitializeComponent();
         MarkdownMessageBlock.Config = new Markdown.MarkdownConfig();
+        Loaded += OnLoaded;
     }
 
     internal override void OnViewModelChanged(DependencyPropertyChangedEventArgs e)
@@ -26,6 +27,10 @@ public sealed partial class ChatMessageItemControl : ChatMessageItemControlBase
                 ? VisualStateManager.GoToState(this, nameof(MyState), false)
                 : VisualStateManager.GoToState(this, nameof(AssistantState), false);
         }
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
     }
 
     private void OnCardPointerEntered(object sender, PointerRoutedEventArgs e)

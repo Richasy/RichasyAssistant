@@ -21,11 +21,12 @@ public sealed class ChatMessage
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatMessage"/> class.
     /// </summary>
-    public ChatMessage(ChatMessageRole role, string message, DateTimeOffset time = default, string extension = default)
+    public ChatMessage(ChatMessageRole role, string message, DateTimeOffset time = default, string assistantId = default, string extension = default)
     {
         Role = role;
         Content = message;
         Time = time == default ? DateTimeOffset.Now : time;
+        AssistantId = assistantId;
         Extension = extension;
         Id = Time.ToUnixTimeMilliseconds().ToString();
     }
@@ -53,6 +54,12 @@ public sealed class ChatMessage
     /// </summary>
     [JsonPropertyName("extension")]
     public string? Extension { get; set; }
+
+    /// <summary>
+    /// Assistant identifier.
+    /// </summary>
+    [JsonPropertyName("assistant_id")]
+    public string? AssistantId { get; set; }
 
     /// <summary>
     /// 标识符.

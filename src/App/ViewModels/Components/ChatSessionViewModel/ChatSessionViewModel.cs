@@ -32,6 +32,24 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         AttachExceptionHandlerToAsyncCommand(HandleException, SendMessageCommand);
     }
 
+    private static bool RunCustomKernelIfNotStarted(string kernelId)
+    {
+        var kernel = ChatDataService.GetExtraKernel(kernelId);
+        if (kernel != null)
+        {
+            var service = ExtraServiceViewModel.Instance.CustomKernels.FirstOrDefault(p => p.Data.Equals(kernel));
+            if (service == null || !service.IsRunning)
+            {
+                ExtraServiceViewModel.Instance.LaunchKernelServiceCommand.Execute(kernel);
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     [RelayCommand]
     private async Task InitializeAsync(ChatSessionItemViewModel item)
     {
@@ -41,6 +59,12 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         }
 
         _itemRef = item;
+        Type = item.Type;
+        IsQuickChat = item.IsQuickChat;
+        IsSingleChat = item.IsSingleChat;
+        IsGroupChat = item.IsGroupChat;
+        AssistantAvatar = item.AssistantAvatar;
+        CheckMessageKernelRunning();
         TryClear(Messages);
         UserInput = string.Empty;
         IsChatAvailable = true;
@@ -116,7 +140,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 var lastUserMsg = Messages.LastOrDefault(p => p.IsUser);
                 _ = Messages.Remove(lastUserMsg);
                 UserInput = lastUserMsg.Content;
-                await ChatDataService.DeleteMessageAsync(_kernel.SessionId, lastUserMsg.GetData().Id);
+                await ChatDataService.DeleteMessageAsync(_kernel.SessionId, lastUserMsg.Data.Id);
             });
         }
 
@@ -126,7 +150,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
     [RelayCommand]
     private async Task ClearMessageAsync()
     {
-        var msgIds = Messages.Where(p => p.IsUser || p.IsAssistant).Select(p => p.GetData().Id).ToArray();
+        var msgIds = Messages.Where(p => p.IsUser || p.IsAssistant).Select(p => p.Data.Id).ToArray();
         TryClear(Messages);
         UserInput = string.Empty;
         await ChatDataService.ClearMessageAsync(_kernel.SessionId);
@@ -195,6 +219,13 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
     private async Task SendMessageInternalAsync(string msg, bool addUserMsg = true)
     {
         CancelMessage();
+
+        if (!CheckMessageKernelRunning())
+        {
+            AppViewModel.Instance.ShowTip(StringNames.WaitServiceLaunching, InfoType.Warning);
+            return;
+        }
+
         _cancellationTokenSource = new CancellationTokenSource();
 
         ErrorText = string.Empty;
@@ -298,7 +329,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
 
     private async void DeleteMessageAsync(ChatMessage msg)
     {
-        var source = Messages.FirstOrDefault(p => p.GetData().Equals(msg));
+        var source = Messages.FirstOrDefault(p => p.Data.Equals(msg));
         Messages.Remove(source);
         await ChatDataService.DeleteMessageAsync(_kernel.SessionId, msg.Id);
     }
@@ -332,6 +363,38 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                     break;
             }
         }
+    }
+
+    private bool CheckMessageKernelRunning()
+    {
+        var session = ChatDataService.GetSession(_itemRef.Id);
+        var canSend = true;
+        if (session.Assistants.Count != 0)
+        {
+            foreach (var item in session.Assistants)
+            {
+                var assistant = ChatDataService.GetAssistant(item);
+                if (assistant.Kernel == KernelType.Custom)
+                {
+                    var isRunning = RunCustomKernelIfNotStarted(assistant.Model);
+                    if (!isRunning)
+                    {
+                        canSend = false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            var defaultService = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
+            if (defaultService == KernelType.Custom)
+            {
+                var kernelId = SettingsToolkit.ReadLocalSetting(SettingNames.CustomKernelId, string.Empty);
+                canSend = RunCustomKernelIfNotStarted(kernelId);
+            }
+        }
+
+        return canSend;
     }
 
     private void CheckChatEmpty()

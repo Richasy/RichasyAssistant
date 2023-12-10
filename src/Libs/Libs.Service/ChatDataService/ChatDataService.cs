@@ -51,6 +51,7 @@ public sealed partial class ChatDataService
 
         var context = new ChatDbContext(localDbPath);
         _dbContext = context;
+        await _dbContext.Database.MigrateAsync();
 
         await InitializeSessionsAsync();
         await InitializeAssistantsAsync();

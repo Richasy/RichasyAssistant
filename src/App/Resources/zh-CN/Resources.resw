@@ -915,6 +915,9 @@
   <data name="VoiceInvalid" xml:space="preserve">
     <value>语音服务不可用</value>
   </data>
+  <data name="WaitServiceLaunching" xml:space="preserve">
+    <value>请等待服务启动完成后再操作</value>
+  </data>
   <data name="WelcomeDescription" xml:space="preserve">
     <value>在开始使用前，请跟随我一起做一些简单的配置吧！</value>
   </data>

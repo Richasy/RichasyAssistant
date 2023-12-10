@@ -59,6 +59,21 @@ public sealed partial class ChatSessionViewModel
     [ObservableProperty]
     private bool _isChatAvailable;
 
+    [ObservableProperty]
+    private ChatSessionType _type;
+
+    [ObservableProperty]
+    private bool _isQuickChat;
+
+    [ObservableProperty]
+    private bool _isSingleChat;
+
+    [ObservableProperty]
+    private bool _isGroupChat;
+
+    [ObservableProperty]
+    private string _assistantAvatar;
+
     /// <summary>
     /// 请求滚动到底部.
     /// </summary>

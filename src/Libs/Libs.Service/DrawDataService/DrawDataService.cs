@@ -51,6 +51,7 @@ public sealed partial class DrawDataService
         var context = new DrawDbContext(localDbPath);
         _dbContext = context;
 
+        await _dbContext.Database.MigrateAsync();
         await InitializeHistoryAsync();
     }
 

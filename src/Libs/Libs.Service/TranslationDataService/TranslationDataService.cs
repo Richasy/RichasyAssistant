@@ -53,6 +53,7 @@ public static partial class TranslationDataService
         var context = new TranslationDbContext(localDbPath);
         _dbContext = context;
 
+        await _dbContext.Database.MigrateAsync();
         await InitializeLanguagesAsync();
         await InitializeHistoryAsync();
     }

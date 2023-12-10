@@ -59,7 +59,7 @@ public sealed partial class ExtraServiceItemViewModel : DataViewModelBase<Servic
     [RelayCommand]
     private async Task InitializeAsync()
     {
-        if (_process != null && !_process.HasExited)
+        if ((_process != null && !_process.HasExited) || IsLaunching)
         {
             return;
         }

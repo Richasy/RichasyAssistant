@@ -25,6 +25,21 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isSelected;
 
+    [ObservableProperty]
+    private ChatSessionType _type;
+
+    [ObservableProperty]
+    private bool _isQuickChat;
+
+    [ObservableProperty]
+    private bool _isSingleChat;
+
+    [ObservableProperty]
+    private bool _isGroupChat;
+
+    [ObservableProperty]
+    private string _assistantAvatar;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSessionItemViewModel"/> class.
     /// </summary>
@@ -33,6 +48,7 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     {
         Id = session.Id;
         Update(session);
+        CheckSessionType();
     }
 
     /// <summary>
@@ -84,4 +100,31 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     /// <returns><see cref="ChatMessage"/>.</returns>
     private static ChatMessage GetLastMessage(ChatSession session)
         => session.Messages.OrderByDescending(p => p.Time).FirstOrDefault();
+
+    private void CheckSessionType()
+    {
+        var session = ChatDataService.GetSession(Id);
+        if (session.Assistants.Count == 0)
+        {
+            Type = ChatSessionType.Quick;
+        }
+        else if (session.Assistants.Count == 1)
+        {
+            Type = ChatSessionType.Single;
+        }
+        else
+        {
+            Type = ChatSessionType.Group;
+        }
+
+        IsQuickChat = Type == ChatSessionType.Quick;
+        IsSingleChat = Type == ChatSessionType.Single;
+        IsGroupChat = Type == ChatSessionType.Group;
+
+        if (IsSingleChat)
+        {
+            var libPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
+            AssistantAvatar = Path.Combine(libPath, "Assistants", session.Assistants.First() + ".png");
+        }
+    }
 }

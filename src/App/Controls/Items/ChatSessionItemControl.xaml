@@ -30,13 +30,22 @@
                 Height="32"
                 VerticalAlignment="Center"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                CornerRadius="16">
+                CornerRadius="16"
+                Visibility="{x:Bind ViewModel.IsQuickChat, Mode=OneWay}">
                 <controls:FluentIcon
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="16"
                     Symbol="{x:Bind ViewModel.Icon, Mode=OneWay}" />
             </Grid>
+            <controls:ImageEx
+                Width="32"
+                Height="32"
+                VerticalAlignment="Center"
+                CornerRadius="16"
+                Source="{x:Bind ViewModel.AssistantAvatar, Mode=OneWay}"
+                Stretch="UniformToFill"
+                Visibility="{x:Bind ViewModel.IsSingleChat, Mode=OneWay}" />
             <StackPanel
                 Grid.Column="1"
                 VerticalAlignment="Center"

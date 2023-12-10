@@ -41,9 +41,10 @@
                     VerticalAlignment="Top"
                     Background="{ThemeResource AppBarBackgroundThemeBrush}"
                     CornerRadius="16"
-                    PlaceholderSource="{ThemeResource OpenAILogo}"
                     PlaceholderStretch="Uniform"
-                    Stretch="UniformToFill" />
+                    Source="{x:Bind ViewModel.Avatar, Mode=OneWay}"
+                    Stretch="UniformToFill"
+                    Visibility="{x:Bind ViewModel.IsDefaultChat, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
                 <Grid
                     x:Name="MessageContainer"
                     Grid.Column="1"

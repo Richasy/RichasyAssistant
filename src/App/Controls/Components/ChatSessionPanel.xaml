@@ -40,13 +40,23 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <controls:ImageEx
-                        Width="24"
-                        Height="24"
-                        VerticalAlignment="Center"
-                        CornerRadius="16"
-                        Source="{ThemeResource OpenAILogo}"
-                        Stretch="UniformToFill" />
+                    <Grid>
+                        <controls:FluentIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Symbol="ChatFilled"
+                            Visibility="{x:Bind ViewModel.IsQuickChat, Mode=OneWay}" />
+                        <controls:ImageEx
+                            Width="24"
+                            Height="24"
+                            VerticalAlignment="Center"
+                            CornerRadius="16"
+                            Source="{x:Bind ViewModel.AssistantAvatar, Mode=OneWay}"
+                            Stretch="UniformToFill"
+                            Visibility="{x:Bind ViewModel.IsSingleChat, Mode=OneWay}" />
+                    </Grid>
+
                     <TextBlock
                         x:Name="TitleBlock"
                         Grid.Column="1"

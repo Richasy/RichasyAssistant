@@ -38,6 +38,8 @@
         HorizontalAlignment="Center"
         VerticalAlignment="Bottom"
         Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+        BorderThickness="1"
         CornerRadius="{StaticResource OverlayCornerRadius}"
         Text="{x:Bind Text, Mode=OneWay}">
         <animations:Implicit.ShowAnimations>
