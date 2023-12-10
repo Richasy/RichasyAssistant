@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Net.Http.Headers;
 using System.Text.Json;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.AI.ChatCompletion;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
@@ -173,7 +172,7 @@ public sealed partial class ChatKernel
 
         var hasCustomEndpoint = !string.IsNullOrEmpty(customEndpoint) && Uri.TryCreate(customEndpoint, UriKind.Absolute, out var _);
         var customHttpClient = hasCustomEndpoint
-            ? new HttpClient(new ProxyOpenAIHandler(customEndpoint))
+            ? GetProxyClient(customEndpoint)
             : default;
 
         kernel.Kernel = new KernelBuilder()
@@ -202,9 +201,16 @@ public sealed partial class ChatKernel
 
         var configPath = Path.Combine(modelFolder, "config.json");
         var config = JsonSerializer.Deserialize<CustomKernelConfig>(await File.ReadAllTextAsync(configPath));
-        var builder = new KernelBuilder();
-        builder.Services.AddSingleton(NLog.LogManager.GetCurrentClassLogger());
-        builder.Services.AddKeyedSingleton<IChatCompletionService>(config.Id, new LocalChatCompletionService(config));
-        kernel.Kernel = builder.Build();
+        var proxyClient = GetProxyClient(config.BaseUrl);
+        kernel.Kernel = new KernelBuilder()
+            .AddOpenAIChatCompletion(config.Id, "RichasyAssistant", httpClient: proxyClient)
+            .Build();
+    }
+
+    private static HttpClient GetProxyClient(string baseUrl)
+    {
+        var httpClient = new HttpClient(new ProxyOpenAIHandler(baseUrl));
+        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/event-stream"));
+        return httpClient;
     }
 }

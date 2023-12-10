@@ -50,6 +50,23 @@ public sealed partial class ExtraServiceViewModel : ViewModelBase
         CheckServicesAvailable();
     }
 
+    [RelayCommand]
+    private void Refresh()
+    {
+        var kernels = ChatDataService.GetExtraKernels();
+        foreach (var kernel in kernels)
+        {
+            if (CustomKernels.Any(p => p.Data.Equals(kernel)))
+            {
+                continue;
+            }
+
+            CustomKernels.Add(new ExtraServiceItemViewModel(kernel, ServiceType.Kernel));
+        }
+
+        CheckServicesAvailable();
+    }
+
     /// <summary>
     /// 启动内核服务.
     /// </summary>

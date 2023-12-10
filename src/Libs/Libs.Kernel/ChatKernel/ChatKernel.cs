@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.Diagnostics;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using RichasyAssistant.Libs.Service;
@@ -88,12 +89,15 @@ public sealed partial class ChatKernel
         var resMessage = string.Empty;
         try
         {
-            var response = chat.GetStreamingChatMessageContentsAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken: cancellationToken);
-            await foreach (var item in response)
+            await Task.Run(async () =>
             {
-                resMessage += item;
-                streamHandler?.Invoke(item);
-            }
+                var response = chat.GetStreamingChatMessageContentsAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken: cancellationToken);
+                await foreach (var item in response)
+                {
+                    resMessage += item;
+                    streamHandler?.Invoke(resMessage);
+                }
+            });
 
             resMessage = resMessage.Trim();
             if (string.IsNullOrEmpty(resMessage))

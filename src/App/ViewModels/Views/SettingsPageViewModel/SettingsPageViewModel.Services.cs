@@ -221,9 +221,9 @@ public sealed partial class SettingsPageViewModel
         });
     }
 
-    private async Task ExtractExtraServiceAsync(string servicePackagePath, string folderName)
+    private async Task ExtractExtraServiceAsync(string servicePackagePath, ServiceType type)
     {
-        var parentFolder = Path.Combine(LibraryPath, "Extensions", folderName);
+        var parentFolder = Path.Combine(LibraryPath, "Extensions", type.ToString());
         if (!Directory.Exists(parentFolder))
         {
             Directory.CreateDirectory(parentFolder);

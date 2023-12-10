@@ -212,8 +212,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
 
         try
         {
-            await ExtractExtraServiceAsync(file.Path, "Kernel");
+            await ExtractExtraServiceAsync(file.Path, ServiceType.Kernel);
             InitializeChatKernels();
+            ExtraServiceViewModel.Instance.RefreshCommand.Execute(default);
         }
         catch (Exception ex)
         {

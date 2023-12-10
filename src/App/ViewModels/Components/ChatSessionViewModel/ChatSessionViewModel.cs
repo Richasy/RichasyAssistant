@@ -226,8 +226,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
                 {
                     _ = _dispatcherQueue.TryEnqueue(() =>
                     {
-                        TempMessage += text;
-                        TempMessage = TempMessage.TrimStart();
+                        TempMessage = text.TrimStart();
                     });
                 },
                 !addUserMsg,
