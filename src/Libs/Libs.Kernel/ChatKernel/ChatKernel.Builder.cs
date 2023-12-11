@@ -33,7 +33,7 @@ public sealed partial class ChatKernel
             var assistant = ChatDataService.GetAssistant(sessionData.Assistants.First());
             if (assistant.Kernel == KernelType.AzureOpenAI)
             {
-                LoadAzureConfiguration(kernel, new Metadata(assistant.Model, assistant.ModelDeploymentName));
+                LoadAzureConfiguration(kernel, new Metadata(assistant.Model, assistant.Remark));
             }
             else if (assistant.Kernel == KernelType.OpenAI)
             {

@@ -52,6 +52,8 @@
                 </community:SegmentedItem>
             </community:Segmented>
         </Grid>
+
+        <!--  会话列表  -->
         <ScrollViewer
             Grid.Row="1"
             Margin="0,12,0,0"
@@ -116,6 +118,54 @@
                     Duration="0:0:0.5" />
             </animations:Implicit.ShowAnimations>
         </ScrollViewer>
+
+        <!--  助理列表  -->
+        <ScrollViewer
+            Grid.Row="1"
+            Margin="0,12,0,0"
+            Padding="8,0"
+            Style="{StaticResource PageScrollViewerStyle}"
+            Visibility="{x:Bind ViewModel.IsAssistantList, Mode=OneWay}">
+            <Grid>
+                <ItemsRepeater Margin="0,0,0,12" Visibility="{x:Bind ViewModel.IsAssistantsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate />
+                    </ItemsRepeater.ItemTemplate>
+                    <ItemsRepeater.Layout>
+                        <StackLayout Spacing="4" />
+                    </ItemsRepeater.Layout>
+                </ItemsRepeater>
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="8"
+                    Visibility="{x:Bind ViewModel.IsAssistantsEmpty, Mode=OneWay}">
+                    <controls:FluentIcon
+                        FontSize="80"
+                        Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                        Symbol="People"
+                        ToolTipService.ToolTip="{ext:Locale Name=NoAssistants}" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{ext:Locale Name=NoAssistants}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation
+                    From="0,20,0"
+                    To="0,0,0"
+                    Duration="0:0:0.5" />
+                <animations:OpacityAnimation
+                    From="0"
+                    To="1.0"
+                    Duration="0:0:0.5" />
+            </animations:Implicit.ShowAnimations>
+        </ScrollViewer>
         <Grid Grid.Row="2" Margin="12">
             <Button
                 Height="36"
@@ -133,6 +183,22 @@
                         FontSize="14"
                         Symbol="ChatAdd" />
                     <TextBlock VerticalAlignment="Center" Text="{ext:Locale Name=NewSession}" />
+                </StackPanel>
+            </Button>
+            <Button
+                Height="36"
+                HorizontalAlignment="Stretch"
+                Background="{ThemeResource SubtleFillColorSecondaryBrush}"
+                BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                Style="{StaticResource AccentButtonStyle}"
+                Visibility="{x:Bind ViewModel.IsAssistantList, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <controls:FluentIcon
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Symbol="PersonAdd" />
+                    <TextBlock VerticalAlignment="Center" Text="{ext:Locale Name=NewAssistant}" />
                 </StackPanel>
             </Button>
         </Grid>

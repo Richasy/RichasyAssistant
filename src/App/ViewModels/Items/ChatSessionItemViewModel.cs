@@ -123,8 +123,7 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
 
         if (IsSingleChat)
         {
-            var libPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
-            AssistantAvatar = Path.Combine(libPath, "Assistants", session.Assistants.First() + ".png");
+            AssistantAvatar = ResourceToolkit.GetAssistantAvatarPath(session.Assistants.First());
         }
     }
 }

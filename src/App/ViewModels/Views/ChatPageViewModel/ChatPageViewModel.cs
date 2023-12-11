@@ -19,6 +19,7 @@ public sealed partial class ChatPageViewModel : ViewModelBase
     public ChatPageViewModel()
     {
         RecentSessions = new ObservableCollection<ChatSessionItemViewModel>();
+        Assistants = new ObservableCollection<AssistantItemViewModel>();
         SessionDetail = new ChatSessionViewModel();
 
         ListColumnWidth = SettingsToolkit.ReadLocalSetting(SettingNames.ChatListColumnWidth, 300d);
@@ -38,10 +39,17 @@ public sealed partial class ChatPageViewModel : ViewModelBase
     {
         await ChatDataService.InitializeAsync();
         var sessions = ChatDataService.GetSessions();
+        var assistants = ChatDataService.GetAssistants();
         TryClear(RecentSessions);
+        TryClear(Assistants);
         foreach (var item in sessions)
         {
             RecentSessions.Add(new ChatSessionItemViewModel(item));
+        }
+
+        foreach (var item in assistants)
+        {
+            Assistants.Add(new AssistantItemViewModel(item));
         }
 
         var lastOpenSession = SettingsToolkit.ReadLocalSetting(SettingNames.LastOpenSessionId, string.Empty);
@@ -52,6 +60,7 @@ public sealed partial class ChatPageViewModel : ViewModelBase
         }
 
         IsHistoryEmpty = RecentSessions.Count == 0;
+        IsAssistantsEmpty = Assistants.Count == 0;
         IsDefaultChatAvailable = ChatKernel.IsDefaultKernelValid();
     }
 

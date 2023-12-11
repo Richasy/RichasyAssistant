@@ -63,8 +63,7 @@ public sealed partial class ChatMessageItemViewModel : DataViewModelBase<ChatMes
 
         if (!IsDefaultChat)
         {
-            var libPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
-            Avatar = Path.Combine(libPath, "Assistants", message.AssistantId + ".png");
+            Avatar = ResourceToolkit.GetAssistantAvatarPath(message.AssistantId);
         }
 
         _regenerateAction = regenerateAction;

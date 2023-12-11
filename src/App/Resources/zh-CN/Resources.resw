@@ -534,11 +534,17 @@
   <data name="NeedSelectVoice" xml:space="preserve">
     <value>必须选择一个声音</value>
   </data>
+  <data name="NewAssistant" xml:space="preserve">
+    <value>新的助理</value>
+  </data>
   <data name="NewSession" xml:space="preserve">
     <value>新会话</value>
   </data>
   <data name="NextStep" xml:space="preserve">
     <value>下一步</value>
+  </data>
+  <data name="NoAssistants" xml:space="preserve">
+    <value>没有可用的助理</value>
   </data>
   <data name="NoAvailableService" xml:space="preserve">
     <value>暂无可用的扩展服务</value>

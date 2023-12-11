@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RichasyAssistant.Models.Context;
 
@@ -10,9 +11,11 @@ using RichasyAssistant.Models.Context;
 namespace RichasyAssistant.Models.Context.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    partial class ChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231211140737_ChatDbRemoveAssistantModelDeploymentName")]
+    partial class ChatDbRemoveAssistantModelDeploymentName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -40,9 +43,6 @@ namespace RichasyAssistant.Models.Context.Migrations
 
                     b.Property<string>("Remark")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("UseDefaultKernel")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

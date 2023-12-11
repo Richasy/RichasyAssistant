@@ -46,6 +46,11 @@ public sealed partial class ChatPageViewModel
     public ObservableCollection<ChatSessionItemViewModel> RecentSessions { get; }
 
     /// <summary>
+    /// 助手列表.
+    /// </summary>
+    public ObservableCollection<AssistantItemViewModel> Assistants { get; }
+
+    /// <summary>
     /// 会话详情.
     /// </summary>
     public ChatSessionViewModel SessionDetail { get; }

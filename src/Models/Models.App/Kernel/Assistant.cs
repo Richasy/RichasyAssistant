@@ -20,15 +20,25 @@ public sealed class Assistant
     /// <summary>
     /// Initializes a new instance of the <see cref="Assistant"/> class.
     /// </summary>
-    public Assistant(string name, string desc, string instruction, KernelType kernel, string modelName)
+    public Assistant(string name, string desc, string instruction)
     {
         Id = Guid.NewGuid().ToString("N");
         Name = name;
         Description = desc;
         Instruction = instruction;
+        UseDefaultKernel = true;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Assistant"/> class.
+    /// </summary>
+    public Assistant(string name, string desc, string instruction, KernelType kernel, string modelName, string modelDeployName = null)
+        : this(name, desc, instruction)
+    {
+        UseDefaultKernel = false;
         Kernel = kernel;
         Model = modelName;
-        Remark = string.Empty;
+        Remark = modelDeployName ?? string.Empty;
     }
 
     /// <summary>
@@ -58,11 +68,6 @@ public sealed class Assistant
     public string? Model { get; set; }
 
     /// <summary>
-    /// 模型部署名称（可选）.
-    /// </summary>
-    public string? ModelDeploymentName { get; set; }
-
-    /// <summary>
     /// 指令（系统提示词）.
     /// </summary>
     public string? Instruction { get; set; }
@@ -71,6 +76,11 @@ public sealed class Assistant
     /// 备注信息.
     /// </summary>
     public string? Remark { get; set; }
+
+    /// <summary>
+    /// 是否使用默认内核.
+    /// </summary>
+    public bool UseDefaultKernel { get; set; }
 
     /// <inheritdoc/>
     public override bool Equals(object? obj) => obj is Assistant assistant && Id == assistant.Id;

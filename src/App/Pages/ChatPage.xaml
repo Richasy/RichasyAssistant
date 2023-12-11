@@ -41,7 +41,8 @@
                 <components:ChatSessionPanel
                     Grid.Column="2"
                     Margin="-6,0,0,0"
-                    ViewModel="{x:Bind ViewModel.SessionDetail, Mode=OneWay}" />
+                    ViewModel="{x:Bind ViewModel.SessionDetail, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.IsSessionList, Mode=OneWay}" />
             </Grid>
             <controls:LoadingOverlapper IsOpen="{x:Bind ViewModel.IsInitializing, Mode=OneWay}" Text="{ext:Locale Name=LoadingAndWait}" />
         </Grid>
