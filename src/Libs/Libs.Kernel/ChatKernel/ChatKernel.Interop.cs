@@ -51,7 +51,7 @@ public sealed partial class ChatKernel
                         continue;
                     }
 
-                    var metadata = new Metadata(item.Id, item.Model);
+                    var metadata = new Metadata(item.Model, item.Id);
                     switch (mt)
                     {
                         case "chat":

@@ -168,6 +168,30 @@
   <data name="Assistant" xml:space="preserve">
     <value>助理</value>
   </data>
+  <data name="AssistantDescription" xml:space="preserve">
+    <value>助理描述</value>
+  </data>
+  <data name="AssistantDescriptionPlaceholderText" xml:space="preserve">
+    <value>简单描述下助理的职责吧</value>
+  </data>
+  <data name="AssistantDetail" xml:space="preserve">
+    <value>助理详情</value>
+  </data>
+  <data name="AssistantDetailDescription" xml:space="preserve">
+    <value>选择或创建一个助理吧！</value>
+  </data>
+  <data name="AssistantInstruction" xml:space="preserve">
+    <value>助理指令（系统提示词）</value>
+  </data>
+  <data name="AssistantInstructionPlaceholderText" xml:space="preserve">
+    <value>助理的提示指令，将作为系统提示词发送</value>
+  </data>
+  <data name="AssistantName" xml:space="preserve">
+    <value>助理名称</value>
+  </data>
+  <data name="AssistantNamePlaceholderText" xml:space="preserve">
+    <value>起个名吧，必填项</value>
+  </data>
   <data name="AttachImage" xml:space="preserve">
     <value>附加照片</value>
   </data>
@@ -176,6 +200,9 @@
   </data>
   <data name="AutoDetect" xml:space="preserve">
     <value>自动检测</value>
+  </data>
+  <data name="AvatarCropper" xml:space="preserve">
+    <value>头像裁剪</value>
   </data>
   <data name="AzureDallETip" xml:space="preserve">
     <value>如果你正在使用 Azure DALL·E 服务，请在资源部署完成后填写下面的表单，应用将通过 DALL·E 服务提供文生图功能</value>
@@ -279,6 +306,9 @@
   <data name="CountLimitTemplate" xml:space="preserve">
     <value>前 {0} 条</value>
   </data>
+  <data name="CreateAssistant" xml:space="preserve">
+    <value>创建助理</value>
+  </data>
   <data name="CreateLibrary" xml:space="preserve">
     <value>创建存储库</value>
   </data>
@@ -303,8 +333,14 @@
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
   </data>
+  <data name="DeleteAssistantWarning" xml:space="preserve">
+    <value>是否要移除该助理？移除后，相关的会话也会被移除</value>
+  </data>
   <data name="DeleteCustomKernelWarning" xml:space="preserve">
     <value>是否要删除该自定义内核？删除后，相关的助理将不再可用</value>
+  </data>
+  <data name="Discard" xml:space="preserve">
+    <value>放弃</value>
   </data>
   <data name="DocumentSearch" xml:space="preserve">
     <value>文档搜索</value>
@@ -338,6 +374,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>编辑</value>
+  </data>
+  <data name="EditAssistant" xml:space="preserve">
+    <value>编辑助理</value>
   </data>
   <data name="EditConfiguration" xml:space="preserve">
     <value>编辑配置</value>
@@ -440,6 +479,9 @@
   </data>
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
+  </data>
+  <data name="Kernel" xml:space="preserve">
+    <value>内核</value>
   </data>
   <data name="KernelConfiguration" xml:space="preserve">
     <value>内核配置</value>
@@ -699,6 +741,9 @@
   <data name="SamplingDescription" xml:space="preserve">
     <value>设置采样参数，以此决定答案的随机性</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>另存为</value>
   </data>
@@ -890,6 +935,12 @@
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>发生了未知错误</value>
+  </data>
+  <data name="UseDefaultKernel" xml:space="preserve">
+    <value>使用默认内核</value>
+  </data>
+  <data name="UseDefaultKernelDescription" xml:space="preserve">
+    <value>与该助理对话时将使用当前默认的内核</value>
   </data>
   <data name="UseMarkdownRenderer" xml:space="preserve">
     <value>使用 Markdown 渲染器</value>

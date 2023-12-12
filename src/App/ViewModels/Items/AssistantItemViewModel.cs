@@ -10,7 +10,7 @@ namespace RichasyAssistant.App.ViewModels.Items;
 public sealed partial class AssistantItemViewModel : DataViewModelBase<Assistant>
 {
     [ObservableProperty]
-    private string _avatar;
+    private bool _isSelected;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AssistantItemViewModel"/> class.
@@ -18,10 +18,5 @@ public sealed partial class AssistantItemViewModel : DataViewModelBase<Assistant
     public AssistantItemViewModel(Assistant data)
         : base(data)
     {
-        var avatarPath = ResourceToolkit.GetAssistantAvatarPath(data.Id);
-        if (File.Exists(avatarPath))
-        {
-            Avatar = avatarPath;
-        }
     }
 }

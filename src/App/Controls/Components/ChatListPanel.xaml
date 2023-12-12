@@ -127,9 +127,14 @@
             Style="{StaticResource PageScrollViewerStyle}"
             Visibility="{x:Bind ViewModel.IsAssistantList, Mode=OneWay}">
             <Grid>
-                <ItemsRepeater Margin="0,0,0,12" Visibility="{x:Bind ViewModel.IsAssistantsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                <ItemsRepeater
+                    Margin="0,0,0,12"
+                    ItemsSource="{x:Bind ViewModel.Assistants}"
+                    Visibility="{x:Bind ViewModel.IsAssistantsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
                     <ItemsRepeater.ItemTemplate>
-                        <DataTemplate />
+                        <DataTemplate x:DataType="items1:AssistantItemViewModel">
+                            <items:AssistantItemControl Click="OnAssistantItemClick" ViewModel="{x:Bind}" />
+                        </DataTemplate>
                     </ItemsRepeater.ItemTemplate>
                     <ItemsRepeater.Layout>
                         <StackLayout Spacing="4" />
@@ -190,7 +195,9 @@
                 HorizontalAlignment="Stretch"
                 Background="{ThemeResource SubtleFillColorSecondaryBrush}"
                 BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                Command="{x:Bind ViewModel.CreateAssistantCommand, Mode=OneWay}"
                 Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                IsEnabled="{x:Bind ViewModel.AssistantDetail.IsCreateMode, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
                 Style="{StaticResource AccentButtonStyle}"
                 Visibility="{x:Bind ViewModel.IsAssistantList, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal" Spacing="8">

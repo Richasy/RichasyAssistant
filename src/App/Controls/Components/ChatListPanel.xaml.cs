@@ -43,6 +43,12 @@ public sealed partial class ChatListPanel : ChatListPanelBase
         var vm = (sender as FrameworkElement).DataContext as ChatSessionItemViewModel;
         ViewModel.DeleteSessionCommand.Execute(vm);
     }
+
+    private void OnAssistantItemClick(object sender, EventArgs e)
+    {
+        var vm = (sender as AssistantItemControl)?.ViewModel;
+        ViewModel.OpenAssistantCommand.Execute(vm);
+    }
 }
 
 /// <summary>

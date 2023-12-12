@@ -54,4 +54,9 @@ public sealed partial class ChatPageViewModel
     /// 会话详情.
     /// </summary>
     public ChatSessionViewModel SessionDetail { get; }
+
+    /// <summary>
+    /// 助手详情.
+    /// </summary>
+    public AssistantDetailViewModel AssistantDetail { get; }
 }

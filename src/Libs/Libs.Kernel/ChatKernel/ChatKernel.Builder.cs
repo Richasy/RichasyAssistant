@@ -94,13 +94,23 @@ public sealed partial class ChatKernel
     public static bool IsDefaultKernelValid()
     {
         var defaultKernel = GlobalSettings.TryGet<KernelType>(SettingNames.DefaultKernel);
-        if (defaultKernel == KernelType.AzureOpenAI)
+        return IsConfigValid(defaultKernel);
+    }
+
+    /// <summary>
+    /// 检查配置是否有效.
+    /// </summary>
+    /// <param name="type">内核类型.</param>
+    /// <returns>是否有效.</returns>
+    public static bool IsConfigValid(KernelType type)
+    {
+        if (type == KernelType.AzureOpenAI)
         {
             return !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIAccessKey))
                 && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIEndpoint))
                 && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.DefaultAzureOpenAIChatModel));
         }
-        else if (defaultKernel == KernelType.OpenAI)
+        else if (type == KernelType.OpenAI)
         {
             return !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.OpenAIAccessKey))
                 && !string.IsNullOrEmpty(GlobalSettings.TryGet<string>(SettingNames.DefaultOpenAIChatModelName));

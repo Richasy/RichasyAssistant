@@ -5,6 +5,7 @@ using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.Libs.Kernel;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
+using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Views;
 
@@ -21,6 +22,7 @@ public sealed partial class ChatPageViewModel : ViewModelBase
         RecentSessions = new ObservableCollection<ChatSessionItemViewModel>();
         Assistants = new ObservableCollection<AssistantItemViewModel>();
         SessionDetail = new ChatSessionViewModel();
+        AssistantDetail = new AssistantDetailViewModel(this);
 
         ListColumnWidth = SettingsToolkit.ReadLocalSetting(SettingNames.ChatListColumnWidth, 300d);
         ListType = SettingsToolkit.ReadLocalSetting(SettingNames.ChatListType, ChatListType.Session);
@@ -99,6 +101,33 @@ public sealed partial class ChatPageViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private void CreateAssistant()
+    {
+        var assistant = new Assistant();
+        AssistantDetail.InitializeCommand.Execute(assistant);
+    }
+
+    [RelayCommand]
+    private void OpenAssistant(AssistantItemViewModel assistant)
+    {
+        CheckSelectedAssistant(assistant.Data.Id);
+        AssistantDetail.InitializeCommand.Execute(assistant.Data);
+    }
+
+    [RelayCommand]
+    private void RefreshAssistants()
+    {
+        TryClear(Assistants);
+        var assistants = ChatDataService.GetAssistants();
+        foreach (var item in assistants)
+        {
+            Assistants.Add(new AssistantItemViewModel(item));
+        }
+
+        IsAssistantsEmpty = Assistants.Count == 0;
+    }
+
     private void ShowError(Exception ex)
     {
         if (ex is KernelException kex)
@@ -134,6 +163,14 @@ public sealed partial class ChatPageViewModel : ViewModelBase
         }
 
         SettingsToolkit.WriteLocalSetting(SettingNames.LastOpenSessionId, sessionId);
+    }
+
+    private void CheckSelectedAssistant(string assistantId)
+    {
+        foreach (var item in Assistants)
+        {
+            item.IsSelected = item.Data.Id == assistantId;
+        }
     }
 
     partial void OnListColumnWidthChanged(double value)

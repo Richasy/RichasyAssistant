@@ -39,6 +39,8 @@
     <None Remove="Assets\openai_black.png" />
     <None Remove="Assets\openai_white.png" />
     <None Remove="Controls\Components\AppTitleBar.xaml" />
+    <None Remove="Controls\Components\AssistantAvatar.xaml" />
+    <None Remove="Controls\Components\AssistantDetailPanel.xaml" />
     <None Remove="Controls\Components\AzureSpeechRecognizePanel.xaml" />
     <None Remove="Controls\Components\AzureTextToSpeechPanel.xaml" />
     <None Remove="Controls\Components\ChatListPanel.xaml" />
@@ -61,6 +63,7 @@
     <None Remove="Controls\Dialogs\InternalSpeechConfigDialog.xaml" />
     <None Remove="Controls\Dialogs\InternalTranslateConfigDialog.xaml" />
     <None Remove="Controls\EmptyHolder.xaml" />
+    <None Remove="Controls\Items\AssistantItemControl.xaml" />
     <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
     <None Remove="Controls\Items\ChatSessionItemControl.xaml" />
     <None Remove="Controls\Items\ExtraServiceItemControl.xaml" />
@@ -109,6 +112,7 @@
     <PackageReference Include="ColorCode.WinUI" Version="2.0.15" />
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.231030-build.1587" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.ImageCropper" Version="8.0.231128-build.783" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.0.231128-build.783" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.0.231128-build.783" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.0.231128-build.783" />
@@ -168,6 +172,15 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Items\AssistantItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Components\AssistantAvatar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Components\AssistantDetailPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\Components\ExtraServicePanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

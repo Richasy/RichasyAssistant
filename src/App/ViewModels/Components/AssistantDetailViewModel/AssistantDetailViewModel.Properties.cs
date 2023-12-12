@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Xaml.Media.Imaging;
+using RichasyAssistant.App.ViewModels.Views;
 using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Components;
@@ -10,8 +11,11 @@ namespace RichasyAssistant.App.ViewModels.Components;
 /// </summary>
 public sealed partial class AssistantDetailViewModel
 {
+    private const string AzureOpenAIId = "AzureOpenAI";
+    private const string OpenAIId = "OpenAI";
     private readonly List<ServiceMetadata> _azureOpenAIModels;
     private readonly List<ServiceMetadata> _openAIModels;
+    private readonly ChatPageViewModel _parentViewModel;
 
     [ObservableProperty]
     private string _name;
@@ -33,6 +37,27 @@ public sealed partial class AssistantDetailViewModel
 
     [ObservableProperty]
     private Assistant _source;
+
+    [ObservableProperty]
+    private string _title;
+
+    [ObservableProperty]
+    private bool _isCreateMode;
+
+    [ObservableProperty]
+    private bool _isSaveButtonEnabled;
+
+    [ObservableProperty]
+    private bool _isImageCropper;
+
+    [ObservableProperty]
+    private ServiceMetadata _selectedKernel;
+
+    [ObservableProperty]
+    private ServiceMetadata _selectedModel;
+
+    [ObservableProperty]
+    private bool _isModelLoading;
 
     /// <summary>
     /// 显示的模型列表.
