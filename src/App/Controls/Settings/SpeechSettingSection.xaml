@@ -29,16 +29,16 @@
         </ComboBox>
 
         <community:SettingsExpander.Items>
-            <community:SettingsCard Header="{ext:Locale Name=AddService}">
+            <!--<community:SettingsCard Header="{ext:Locale Name=AddService}">
                 <Button MinWidth="120" Content="{ext:Locale Name=Add}" />
-            </community:SettingsCard>
+            </community:SettingsCard>-->
             <community:SettingsCard Header="{ext:Locale Name=AzureSpeech}">
                 <Button
                     MinWidth="120"
                     Click="OnAzureSpeechEditButtonClickAsync"
                     Content="{ext:Locale Name=EditConfiguration}" />
             </community:SettingsCard>
-            <community:SettingsCard Header="{ext:Locale Name=AzureWhisper}">
+            <!--<community:SettingsCard Header="{ext:Locale Name=AzureWhisper}">
                 <Button
                     MinWidth="120"
                     Click="OnAzureWhisperEditButtonClickAsync"
@@ -49,7 +49,7 @@
                     MinWidth="120"
                     Click="OnOpenAIWhisperEditButtonClickAsync"
                     Content="{ext:Locale Name=EditConfiguration}" />
-            </community:SettingsCard>
+            </community:SettingsCard>-->
         </community:SettingsExpander.Items>
     </community:SettingsExpander>
 </local:SettingSectionBase>

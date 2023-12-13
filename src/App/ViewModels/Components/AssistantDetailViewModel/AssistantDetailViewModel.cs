@@ -141,7 +141,12 @@ public sealed partial class AssistantDetailViewModel : ViewModelBase
             }
 
             assistant.Kernel = kernelType;
-            if (SelectedModel != null)
+            if (assistant.Kernel == KernelType.Custom)
+            {
+                assistant.Model = SelectedKernel.Id;
+                assistant.Remark = SelectedKernel.Name;
+            }
+            else if (SelectedModel != null)
             {
                 assistant.Model = SelectedModel.Id;
                 assistant.Remark = SelectedModel.Name;

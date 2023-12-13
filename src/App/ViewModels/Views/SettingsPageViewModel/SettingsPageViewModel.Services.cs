@@ -156,9 +156,10 @@ public sealed partial class SettingsPageViewModel
     {
         TryClear(SpeechServices);
         SpeechServices.Add(new ServiceMetadata(AzureSpeechId, ResourceToolkit.GetLocalizedString(StringNames.AzureSpeech)));
-        SpeechServices.Add(new ServiceMetadata(AzureWhisperId, ResourceToolkit.GetLocalizedString(StringNames.AzureWhisper)));
-        SpeechServices.Add(new ServiceMetadata(OpenAIWhisperId, ResourceToolkit.GetLocalizedString(StringNames.OpenAIWhisper)));
 
+        // TODO: 支持耳语.
+        // SpeechServices.Add(new ServiceMetadata(AzureWhisperId, ResourceToolkit.GetLocalizedString(StringNames.AzureWhisper)));
+        // SpeechServices.Add(new ServiceMetadata(OpenAIWhisperId, ResourceToolkit.GetLocalizedString(StringNames.OpenAIWhisper)));
         var extraServicesPath = Path.Combine(LibraryPath, ExtraSpeechFileName);
         if (File.Exists(extraServicesPath))
         {

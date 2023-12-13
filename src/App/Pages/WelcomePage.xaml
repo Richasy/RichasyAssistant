@@ -208,8 +208,8 @@
                     HorizontalAlignment="Center"
                     SelectionChanged="OnSpeechPickerSelectionChanged">
                     <community:SegmentedItem Content="{ext:Locale Name=AzureSpeech}" />
-                    <community:SegmentedItem Content="{ext:Locale Name=AzureWhisper}" />
-                    <community:SegmentedItem Content="{ext:Locale Name=OpenAIWhisper}" />
+                    <!--<community:SegmentedItem Content="{ext:Locale Name=AzureWhisper}" IsEnabled="False" />
+                    <community:SegmentedItem Content="{ext:Locale Name=OpenAIWhisper}" IsEnabled="False" />-->
                 </community:Segmented>
 
                 <ScrollViewer
@@ -218,8 +218,8 @@
                     Style="{StaticResource PageScrollViewerStyle}">
                     <Grid>
                         <configuration:AzureSpeechConfigPanel ViewModel="{x:Bind ViewModel.InternalSpeech}" Visibility="{x:Bind ViewModel.IsAzureSpeech, Mode=OneWay}" />
-                        <configuration:AzureWhisperConfigPanel ViewModel="{x:Bind ViewModel.InternalSpeech}" Visibility="{x:Bind ViewModel.IsAzureWhisper, Mode=OneWay}" />
-                        <configuration:OpenAIWhisperConfigPanel ViewModel="{x:Bind ViewModel.InternalSpeech}" Visibility="{x:Bind ViewModel.IsOpenAIWhisper, Mode=OneWay}" />
+                        <!--<configuration:AzureWhisperConfigPanel ViewModel="{x:Bind ViewModel.InternalSpeech}" Visibility="{x:Bind ViewModel.IsAzureWhisper, Mode=OneWay}" />
+                        <configuration:OpenAIWhisperConfigPanel ViewModel="{x:Bind ViewModel.InternalSpeech}" Visibility="{x:Bind ViewModel.IsOpenAIWhisper, Mode=OneWay}" />-->
                     </Grid>
                 </ScrollViewer>
 

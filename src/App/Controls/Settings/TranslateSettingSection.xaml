@@ -29,9 +29,9 @@
         </ComboBox>
 
         <community:SettingsExpander.Items>
-            <community:SettingsCard Header="{ext:Locale Name=AddService}">
+            <!--<community:SettingsCard Header="{ext:Locale Name=AddService}">
                 <Button MinWidth="120" Content="{ext:Locale Name=Add}" />
-            </community:SettingsCard>
+            </community:SettingsCard>-->
             <community:SettingsCard Header="{ext:Locale Name=AzureTranslate}">
                 <Button
                     MinWidth="120"

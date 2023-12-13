@@ -42,7 +42,7 @@
                         <controls:FluentIcon Symbol="Bot" />
                     </community:SegmentedItem.Icon>
                 </community:SegmentedItem>
-                <community:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=DrawService}">
+                <!--<community:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=DrawService}">
                     <community:SegmentedItem.Icon>
                         <controls:FluentIcon Symbol="ImageSparkle" />
                     </community:SegmentedItem.Icon>
@@ -56,7 +56,7 @@
                     <community:SegmentedItem.Icon>
                         <controls:FluentIcon Symbol="MicSparkle" />
                     </community:SegmentedItem.Icon>
-                </community:SegmentedItem>
+                </community:SegmentedItem>-->
             </community:Segmented>
         </Grid>
         <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
