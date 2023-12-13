@@ -12,18 +12,23 @@ public sealed partial class AssistantItemControl : AssistantItemControlBase
     /// <summary>
     /// Initializes a new instance of the <see cref="AssistantItemControl"/> class.
     /// </summary>
-    public AssistantItemControl()
-    {
-        InitializeComponent();
-    }
+    public AssistantItemControl() => InitializeComponent();
 
     /// <summary>
     /// 点击.
     /// </summary>
     public event EventHandler Click;
 
+    /// <summary>
+    /// 聊天按钮点击.
+    /// </summary>
+    public event EventHandler ChatButtonClick;
+
     private void OnPanelClick(object sender, RoutedEventArgs e)
         => Click?.Invoke(this, EventArgs.Empty);
+
+    private void OnChatButtonClick(object sender, RoutedEventArgs e)
+        => ChatButtonClick?.Invoke(this, EventArgs.Empty);
 }
 
 /// <summary>

@@ -3,6 +3,7 @@
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json;
+using RichasyAssistant.App.Controls.Dialogs;
 using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Kernel;
@@ -259,24 +260,20 @@ public sealed partial class SettingsPageViewModel
             var initScriptPath = Path.Combine(tempFolder, metadata.InitialScript);
             if (File.Exists(initScriptPath))
             {
-                var dialog = new ContentDialog()
+                var dialog = new TipDialog(ResourceToolkit.GetLocalizedString(StringNames.InitialScriptWarning))
                 {
-                    Title = ResourceToolkit.GetLocalizedString(StringNames.Tip),
-                    Content = ResourceToolkit.GetLocalizedString(StringNames.InitialScriptWarning),
                     PrimaryButtonText = ResourceToolkit.GetLocalizedString(StringNames.Execute),
                     SecondaryButtonText = ResourceToolkit.GetLocalizedString(StringNames.Skip),
                     CloseButtonText = ResourceToolkit.GetLocalizedString(StringNames.Cancel),
-                    DefaultButton = ContentDialogButton.Primary,
                     XamlRoot = AppViewModel.Instance.ActivatedWindow.Content.XamlRoot,
                 };
 
                 var dialogResult = await dialog.ShowAsync();
                 if (dialogResult == ContentDialogResult.Primary)
                 {
-                    var tipDialog = new ContentDialog()
+                    var tipDialog = new TipDialog(ResourceToolkit.GetLocalizedString(StringNames.InitialScriptRunningTip))
                     {
-                        Title = ResourceToolkit.GetLocalizedString(StringNames.Tip),
-                        Content = ResourceToolkit.GetLocalizedString(StringNames.InitialScriptRunningTip),
+                        PrimaryButtonText = string.Empty,
                         CloseButtonText = ResourceToolkit.GetLocalizedString(StringNames.Confirm),
                         DefaultButton = ContentDialogButton.Close,
                         XamlRoot = AppViewModel.Instance.ActivatedWindow.Content.XamlRoot,

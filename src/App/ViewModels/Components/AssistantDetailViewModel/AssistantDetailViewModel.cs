@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Xaml.Media.Imaging;
+using RichasyAssistant.App.Controls.Dialogs;
 using RichasyAssistant.App.ViewModels.Views;
 using RichasyAssistant.Libs.Kernel;
 using RichasyAssistant.Libs.Service;
@@ -167,13 +168,8 @@ public sealed partial class AssistantDetailViewModel : ViewModelBase
     [RelayCommand]
     private async Task DeleteAsync()
     {
-        var dialog = new ContentDialog();
-        dialog.Content = ResourceToolkit.GetLocalizedString(StringNames.DeleteAssistantWarning);
-        dialog.PrimaryButtonText = ResourceToolkit.GetLocalizedString(StringNames.Confirm);
-        dialog.CloseButtonText = ResourceToolkit.GetLocalizedString(StringNames.Cancel);
+        var dialog = new TipDialog(ResourceToolkit.GetLocalizedString(StringNames.DeleteAssistantWarning));
         dialog.XamlRoot = AppViewModel.Instance.ActivatedWindow.Content.XamlRoot;
-        dialog.DefaultButton = ContentDialogButton.Primary;
-        dialog.Title = ResourceToolkit.GetLocalizedString(StringNames.Tip);
         var result = await dialog.ShowAsync();
         if (result == ContentDialogResult.Primary)
         {

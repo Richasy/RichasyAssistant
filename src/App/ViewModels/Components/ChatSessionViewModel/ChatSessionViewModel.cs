@@ -63,7 +63,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         IsQuickChat = item.IsQuickChat;
         IsSingleChat = item.IsSingleChat;
         IsGroupChat = item.IsGroupChat;
-        AssistantAvatar = item.AssistantAvatar;
+        AssistantId = item.AssistantId;
         CheckMessageKernelRunning();
         TryClear(Messages);
         UserInput = string.Empty;
@@ -78,6 +78,11 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         {
             foreach (var message in sessionData.Messages.Distinct())
             {
+                if (message.Role == ChatMessageRole.System)
+                {
+                    continue;
+                }
+
                 var vm = message.Role == ChatMessageRole.Assistant
                     ? new ChatMessageItemViewModel(
                             message,

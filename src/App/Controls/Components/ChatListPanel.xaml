@@ -133,7 +133,10 @@
                     Visibility="{x:Bind ViewModel.IsAssistantsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="items1:AssistantItemViewModel">
-                            <items:AssistantItemControl Click="OnAssistantItemClick" ViewModel="{x:Bind}" />
+                            <items:AssistantItemControl
+                                ChatButtonClick="OnAssistantChatButtonClick"
+                                Click="OnAssistantItemClick"
+                                ViewModel="{x:Bind}" />
                         </DataTemplate>
                     </ItemsRepeater.ItemTemplate>
                     <ItemsRepeater.Layout>

@@ -143,7 +143,7 @@ public sealed partial class ChatKernel
     private ChatHistory GetHistory()
     {
         var history = new ChatHistory();
-        foreach (var item in Session.Messages)
+        foreach (var item in Session.Messages.Distinct())
         {
             var role = item.Role == ChatMessageRole.System
                 ? AuthorRole.System

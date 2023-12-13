@@ -43,7 +43,7 @@ public sealed partial class ChatMessageItemViewModel : DataViewModelBase<ChatMes
     private bool _isDefaultChat;
 
     [ObservableProperty]
-    private string _avatar;
+    private string _assistantId;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatMessageItemViewModel"/> class.
@@ -63,7 +63,7 @@ public sealed partial class ChatMessageItemViewModel : DataViewModelBase<ChatMes
 
         if (!IsDefaultChat)
         {
-            Avatar = ResourceToolkit.GetAssistantAvatarPath(message.AssistantId);
+            AssistantId = message.AssistantId;
         }
 
         _regenerateAction = regenerateAction;

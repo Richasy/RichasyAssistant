@@ -72,7 +72,7 @@ public sealed partial class ChatSessionViewModel
     private bool _isGroupChat;
 
     [ObservableProperty]
-    private string _assistantAvatar;
+    private string _assistantId;
 
     /// <summary>
     /// 请求滚动到底部.

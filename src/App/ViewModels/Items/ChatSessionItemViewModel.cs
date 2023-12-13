@@ -38,7 +38,7 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     private bool _isGroupChat;
 
     [ObservableProperty]
-    private string _assistantAvatar;
+    private string _assistantId;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSessionItemViewModel"/> class.
@@ -68,6 +68,7 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
         Icon = hasSystemPrompt ? FluentSymbol.ChatSparkle : FluentSymbol.Chat;
         LastMessage = GetLastMessageText(session);
         Date = GetLastMessage(session)?.Time.ToString("MM/dd") ?? string.Empty;
+        AssistantId = session.Assistants.FirstOrDefault() ?? string.Empty;
     }
 
     /// <inheritdoc/>
@@ -79,15 +80,26 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     private static string GetLastMessageText(ChatSession session)
     {
         var lastMsg = GetLastMessage(session);
-        if (lastMsg == null)
+        if (lastMsg == null || lastMsg.Role == ChatMessageRole.System)
         {
             return ResourceToolkit.GetLocalizedString(StringNames.NoMessage);
         }
         else
         {
-            var role = lastMsg.Role == ChatMessageRole.Assistant
-                ? ResourceToolkit.GetLocalizedString(StringNames.Assistant)
-                : ResourceToolkit.GetLocalizedString(StringNames.Me);
+            string role;
+            if (lastMsg.Role == ChatMessageRole.User)
+            {
+                role = ResourceToolkit.GetLocalizedString(StringNames.Me);
+            }
+            else if (!string.IsNullOrEmpty(lastMsg.AssistantId))
+            {
+                var assistant = ChatDataService.GetAssistant(session.Assistants.First());
+                role = assistant.Name;
+            }
+            else
+            {
+                role = ResourceToolkit.GetLocalizedString(StringNames.Assistant);
+            }
 
             return $"{role}: {lastMsg.Content}";
         }
@@ -120,10 +132,5 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
         IsQuickChat = Type == ChatSessionType.Quick;
         IsSingleChat = Type == ChatSessionType.Single;
         IsGroupChat = Type == ChatSessionType.Group;
-
-        if (IsSingleChat)
-        {
-            AssistantAvatar = ResourceToolkit.GetAssistantAvatarPath(session.Assistants.First());
-        }
     }
 }

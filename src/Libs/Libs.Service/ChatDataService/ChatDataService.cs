@@ -109,6 +109,15 @@ public sealed partial class ChatDataService
         var sourceSession = await _dbContext.Sessions.Include(p => p.Messages).Include(p => p.Options).FirstOrDefaultAsync(p => p.Id == payload.Id);
         if (sourceSession == null)
         {
+            if (payload.Assistants.Count == 1)
+            {
+                var assistant = _assistants.FirstOrDefault(p => p.Id == payload.Assistants.First());
+                if (assistant != null)
+                {
+                    payload.Messages.Add(new ChatMessage(ChatMessageRole.System, assistant.Instruction));
+                }
+            }
+
             await _dbContext.Sessions.AddAsync(payload);
             _sessions.Add(payload);
         }
@@ -121,14 +130,11 @@ public sealed partial class ChatDataService
                 var exist = sourceSession.Messages.Any(p => p.Id == msg.Id);
                 if (!exist)
                 {
-                    if (!cacheSession.Messages.Contains(msg))
-                    {
-                        cacheSession.Messages.Add(msg);
-                    }
-
                     sourceSession.Messages.Add(msg);
                 }
             }
+
+            cacheSession.Messages = cacheSession.Messages.Distinct().ToList();
 
             DoSame(cacheSession, sourceSession, p => p.Options.PresencePenalty = payload.Options.PresencePenalty);
             DoSame(cacheSession, sourceSession, p => p.Options.FrequencyPenalty = payload.Options.FrequencyPenalty);
@@ -190,6 +196,7 @@ public sealed partial class ChatDataService
         }
 
         sourceSession.Messages.Add(message);
+        sourceSession.Messages = sourceSession.Messages.Distinct().ToList();
         _dbContext.Sessions.Update(sourceSession);
         await _dbContext.SaveChangesAsync();
     }
@@ -261,12 +268,23 @@ public sealed partial class ChatDataService
     public static async Task ClearMessageAsync(string sessionId)
     {
         var cacheSession = _sessions.FirstOrDefault(p => p.Id == sessionId);
+        var systemMessage = cacheSession?.Messages.FirstOrDefault(p => p.Role == ChatMessageRole.System);
         cacheSession?.Messages.Clear();
+        if (systemMessage != null)
+        {
+            cacheSession.Messages.Add(systemMessage);
+        }
 
         var session = await _dbContext.Sessions.Include(p => p.Messages).FirstOrDefaultAsync(p => p.Id == sessionId);
         if (session != null)
         {
+            systemMessage = session.Messages.FirstOrDefault(p => p.Role == ChatMessageRole.System);
             session.Messages.Clear();
+            if (systemMessage != null)
+            {
+                session.Messages.Add(systemMessage);
+            }
+
             await _dbContext.SaveChangesAsync();
         }
     }
@@ -344,9 +362,19 @@ public sealed partial class ChatDataService
             await _dbContext.SaveChangesAsync();
         }
 
-        _sessions.RemoveAll(p => p.Assistants.Count == 1 && p.Assistants.Contains(assistantId));
-        var session = _dbContext.Sessions.Where(p => p.Assistants.Count == 1 && p.Assistants.Contains(assistantId));
-        _dbContext.Sessions.RemoveRange(session);
+        var removeSessions = _sessions.Where(p => p.Assistants.Contains(assistantId));
+
+        if (removeSessions.Count() == 0)
+        {
+            return;
+        }
+
+        _sessions.RemoveAll(p => p.Assistants.Contains(assistantId));
+        foreach (var item in removeSessions)
+        {
+            _dbContext.Sessions.Remove(item);
+        }
+
         await _dbContext.SaveChangesAsync();
     }
 

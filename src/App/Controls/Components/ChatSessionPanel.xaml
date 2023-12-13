@@ -47,13 +47,12 @@
                             FontSize="24"
                             Symbol="ChatFilled"
                             Visibility="{x:Bind ViewModel.IsQuickChat, Mode=OneWay}" />
-                        <controls:ImageEx
+                        <local:AssistantAvatar
                             Width="24"
                             Height="24"
                             VerticalAlignment="Center"
-                            CornerRadius="16"
-                            Source="{x:Bind ViewModel.AssistantAvatar, Mode=OneWay}"
-                            Stretch="UniformToFill"
+                            CornerRadius="12"
+                            Id="{x:Bind ViewModel.AssistantId, Mode=OneWay}"
                             Visibility="{x:Bind ViewModel.IsSingleChat, Mode=OneWay}" />
                     </Grid>
 
@@ -112,7 +111,7 @@
                         Style="{StaticResource PageScrollViewerStyle}"
                         UseLayoutRounding="False">
                         <Grid Margin="0,12,0,0">
-                            <StackPanel MaxWidth="740">
+                            <StackPanel MaxWidth="700">
                                 <ItemsControl Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -193,7 +192,7 @@
                 <Grid
                     Grid.Row="2"
                     MaxWidth="700"
-                    Padding="24,12"
+                    Margin="24,12"
                     ColumnSpacing="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Xaml.Media.Imaging;
+using RichasyAssistant.Libs.Service;
 
 namespace RichasyAssistant.App.Controls.Components;
 
@@ -41,6 +42,7 @@ public sealed partial class AssistantAvatar : UserControl
         if (string.IsNullOrEmpty(Id))
         {
             ShowPlaceholder();
+            return;
         }
 
         var avatarPath = ResourceToolkit.GetAssistantAvatarPath(Id);
@@ -53,6 +55,16 @@ public sealed partial class AssistantAvatar : UserControl
         else
         {
             ShowPlaceholder();
+        }
+
+        var assistant = ChatDataService.GetAssistant(Id);
+        if (assistant != null)
+        {
+            ToolTipService.SetToolTip(this, assistant.Name);
+        }
+        else
+        {
+            ToolTipService.SetToolTip(this, default);
         }
 
         void ShowPlaceholder()

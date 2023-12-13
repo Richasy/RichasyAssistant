@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using System.ComponentModel;
 using RichasyAssistant.App.Controls.Items;
 using RichasyAssistant.App.ViewModels.Items;
 using RichasyAssistant.App.ViewModels.Views;
@@ -18,9 +19,25 @@ public sealed partial class ChatListPanel : ChatListPanelBase
     {
         InitializeComponent();
         Loaded += OnLoaded;
+        Unloaded += OnUnloaded;
     }
 
-    private void OnLoaded(object sender, RoutedEventArgs e) => DisplayPicker.SelectedIndex = (int)ViewModel.ListType;
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        DisplayPicker.SelectedIndex = (int)ViewModel.ListType;
+        ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+    }
+
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+        => ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+
+    private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(ViewModel.ListType))
+        {
+            DisplayPicker.SelectedIndex = (int)ViewModel.ListType;
+        }
+    }
 
     private void OnDisplayPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -48,6 +65,12 @@ public sealed partial class ChatListPanel : ChatListPanelBase
     {
         var vm = (sender as AssistantItemControl)?.ViewModel;
         ViewModel.OpenAssistantCommand.Execute(vm);
+    }
+
+    private void OnAssistantChatButtonClick(object sender, EventArgs e)
+    {
+        var vm = (sender as AssistantItemControl)?.ViewModel;
+        ViewModel.CreateSessionCommand.Execute(vm.Data);
     }
 }
 

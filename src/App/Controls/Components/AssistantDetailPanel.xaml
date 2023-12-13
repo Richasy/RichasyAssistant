@@ -114,7 +114,7 @@
                     <ColumnDefinition Width="340" />
                 </Grid.ColumnDefinitions>
                 <ScrollViewer Style="{StaticResource PageScrollViewerStyle}">
-                    <StackPanel Spacing="20">
+                    <StackPanel Margin="0,0,0,20" Spacing="20">
 
                         <Grid ColumnSpacing="12">
                             <Grid.ColumnDefinitions>
@@ -150,6 +150,7 @@
 
                         <TextBox
                             MinHeight="300"
+                            MaxHeight="600"
                             HorizontalAlignment="Stretch"
                             AcceptsReturn="False"
                             Header="{ext:Locale Name=AssistantInstruction}"

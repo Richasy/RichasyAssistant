@@ -62,6 +62,7 @@
     <None Remove="Controls\Dialogs\InternalKernelConfigDialog.xaml" />
     <None Remove="Controls\Dialogs\InternalSpeechConfigDialog.xaml" />
     <None Remove="Controls\Dialogs\InternalTranslateConfigDialog.xaml" />
+    <None Remove="Controls\Dialogs\TipDialog.xaml" />
     <None Remove="Controls\EmptyHolder.xaml" />
     <None Remove="Controls\Items\AssistantItemControl.xaml" />
     <None Remove="Controls\Items\ChatMessageItemControl.xaml" />
@@ -172,6 +173,9 @@
     <None Update="Assets\Database\trans.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Controls\Dialogs\TipDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Controls\Items\AssistantItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

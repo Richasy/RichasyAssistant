@@ -264,6 +264,9 @@
   <data name="ChatModelPlaceholderText" xml:space="preserve">
     <value>部署的对话模型名称</value>
   </data>
+  <data name="ChatWithMe" xml:space="preserve">
+    <value>和我对话</value>
+  </data>
   <data name="ClearHistory" xml:space="preserve">
     <value>清空历史记录</value>
   </data>

@@ -3,6 +3,7 @@
     x:Class="RichasyAssistant.App.Controls.Items.ChatSessionItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="using:RichasyAssistant.App.Controls.Components"
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:RichasyAssistant.App.Extensions"
@@ -38,13 +39,12 @@
                     FontSize="16"
                     Symbol="{x:Bind ViewModel.Icon, Mode=OneWay}" />
             </Grid>
-            <controls:ImageEx
+            <components:AssistantAvatar
                 Width="32"
                 Height="32"
                 VerticalAlignment="Center"
                 CornerRadius="16"
-                Source="{x:Bind ViewModel.AssistantAvatar, Mode=OneWay}"
-                Stretch="UniformToFill"
+                Id="{x:Bind ViewModel.AssistantId}"
                 Visibility="{x:Bind ViewModel.IsSingleChat, Mode=OneWay}" />
             <StackPanel
                 Grid.Column="1"

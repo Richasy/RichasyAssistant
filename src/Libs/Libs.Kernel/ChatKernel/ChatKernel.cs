@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Diagnostics;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using RichasyAssistant.Libs.Service;
@@ -28,10 +27,10 @@ public sealed partial class ChatKernel
     /// <param name="ignoreUserMessage">是否不将传入消息作为用户消息添加到历史记录.</param>
     /// <param name="cancellationToken">终止令牌.</param>
     /// <returns>聊天信息.</returns>
-    public async Task<Models.App.Kernel.ChatMessage> SendMessageAsync(string message, Action<Models.App.Kernel.ChatMessage> userMsgHandler, bool ignoreUserMessage = false, CancellationToken cancellationToken = default)
+    public async Task<ChatMessage> SendMessageAsync(string message, Action<ChatMessage> userMsgHandler, bool ignoreUserMessage = false, CancellationToken cancellationToken = default)
     {
         var chat = GetChatCore();
-        var userMsg = new Models.App.Kernel.ChatMessage(ChatMessageRole.User, message);
+        var userMsg = new ChatMessage(ChatMessageRole.User, message);
         if (!ignoreUserMessage)
         {
             await ChatDataService.AddMessageAsync(userMsg, SessionId);
@@ -47,7 +46,8 @@ public sealed partial class ChatKernel
                 throw new Models.App.Args.KernelException(KernelExceptionType.EmptyChatResponse);
             }
 
-            var assistantMessage = new Models.App.Kernel.ChatMessage(ChatMessageRole.Assistant, response);
+            var assistantMessage = new ChatMessage(ChatMessageRole.Assistant, response);
+            ApplyAssistantIdIfExist(assistantMessage);
             await ChatDataService.AddMessageAsync(assistantMessage, SessionId);
             return assistantMessage;
         }
@@ -106,6 +106,7 @@ public sealed partial class ChatKernel
             }
 
             var assistantMessage = new ChatMessage(ChatMessageRole.Assistant, resMessage);
+            ApplyAssistantIdIfExist(assistantMessage);
             await ChatDataService.AddMessageAsync(assistantMessage, SessionId);
             return assistantMessage;
         }
@@ -117,6 +118,14 @@ public sealed partial class ChatKernel
             }
 
             throw new Models.App.Args.KernelException(KernelExceptionType.GenerateChatResponseFailed, ex);
+        }
+    }
+
+    private void ApplyAssistantIdIfExist(ChatMessage message)
+    {
+        if (Session.Assistants.Count == 1)
+        {
+            message.AssistantId = Session.Assistants[0];
         }
     }
 }

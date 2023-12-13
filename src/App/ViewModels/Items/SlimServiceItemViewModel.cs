@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using RichasyAssistant.App.Controls.Dialogs;
 using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.Models.App.Kernel;
 using Windows.Storage;
@@ -47,13 +48,8 @@ public sealed partial class SlimServiceItemViewModel : DataViewModelBase<Service
     [RelayCommand]
     private async Task DeleteAsync()
     {
-        var dialog = new ContentDialog()
+        var dialog = new TipDialog(ResourceToolkit.GetLocalizedString(StringNames.DeleteCustomKernelWarning))
         {
-            Title = ResourceToolkit.GetLocalizedString(StringNames.Tip),
-            Content = ResourceToolkit.GetLocalizedString(StringNames.DeleteCustomKernelWarning),
-            PrimaryButtonText = ResourceToolkit.GetLocalizedString(StringNames.Confirm),
-            CloseButtonText = ResourceToolkit.GetLocalizedString(StringNames.Cancel),
-            DefaultButton = ContentDialogButton.Primary,
             XamlRoot = AppViewModel.Instance.ActivatedWindow.Content.XamlRoot,
         };
 

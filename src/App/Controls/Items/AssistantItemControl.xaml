@@ -6,6 +6,7 @@
     xmlns:components="using:RichasyAssistant.App.Controls.Components"
     xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
     xmlns:local="using:RichasyAssistant.App.Controls.Items"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -23,6 +24,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <components:AssistantAvatar
                 Width="32"
@@ -53,6 +55,23 @@
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="NoWrap" />
             </StackPanel>
+            <Button
+                Grid.Column="2"
+                Width="36"
+                Height="36"
+                Padding="0"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderThickness="0"
+                Click="OnChatButtonClick"
+                ToolTipService.ToolTip="{ext:Locale Name=ChatWithMe}">
+                <controls:FluentIcon
+                    Width="16"
+                    Height="16"
+                    FontSize="16"
+                    Symbol="ChatAdd" />
+            </Button>
         </Grid>
     </controls:CardPanel>
 </local:AssistantItemControlBase>

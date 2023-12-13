@@ -67,9 +67,9 @@ public sealed partial class ChatPageViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task CreateSessionAsync()
+    private async Task CreateSessionAsync(Assistant assistant = default)
     {
-        var kernel = await ChatKernel.CreateAsync();
+        var kernel = await ChatKernel.CreateAsync(assistant);
         var sessionVM = new ChatSessionItemViewModel(kernel.Session)
         {
             Title = ResourceToolkit.GetLocalizedString(StringNames.NewSession),
@@ -79,6 +79,7 @@ public sealed partial class ChatPageViewModel : ViewModelBase
 
         CheckSelectedSession(sessionVM.Id);
         SessionDetail.InitializeCommand.Execute(sessionVM);
+        ListType = ChatListType.Session;
     }
 
     [RelayCommand]
