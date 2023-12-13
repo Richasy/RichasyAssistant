@@ -144,6 +144,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppServices\AppServices.csproj" />
     <ProjectReference Include="..\Libs\Libs.Everything\Libs.Everything.csproj" />
     <ProjectReference Include="..\Libs\Libs.Kernel\Libs.Kernel.csproj" />
     <ProjectReference Include="..\Libs\Libs.Locator\Libs.Locator.csproj" />
