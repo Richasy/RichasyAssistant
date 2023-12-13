@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.Text.Json;
+using Microsoft.Windows.AppLifecycle;
 using RichasyAssistant.App.ViewModels.Components;
-using RichasyAssistant.Libs.Kernel;
-using RichasyAssistant.Libs.Locator;
 using Windows.Storage;
 
 namespace RichasyAssistant.App.ViewModels.Views;
@@ -27,12 +25,10 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         CheckSpeechType();
         CheckImageType();
 
-        AzureOpenAIChatModelCollection = new ObservableCollection<string>();
-        AzureOpenAICompletionModelCollection = new ObservableCollection<string>();
-        AzureOpenAIEmbeddingModelCollection = new ObservableCollection<string>();
-        OpenAIChatModelCollection = new ObservableCollection<string>();
-        OpenAICompletionModelCollection = new ObservableCollection<string>();
-        OpenAIEmbeddingModelCollection = new ObservableCollection<string>();
+        InternalKernel = new InternalKernelViewModel();
+        InternalDrawService = new InternalDrawServiceViewModel();
+        InternalTranslate = new InternalTranslateServiceViewModel();
+        InternalSpeech = new InternalSpeechServiceViewModel();
     }
 
     [RelayCommand]
@@ -52,14 +48,8 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         }
 
         SettingsToolkit.WriteLocalSetting(SettingNames.SkipWelcome, true);
-        Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().UnregisterKey();
-        Application.Current.Exit();
-        var process = new Process();
-        process.StartInfo.FileName = "cmd.exe";
-        process.StartInfo.Arguments = "/c start ricass://";
-        process.StartInfo.UseShellExecute = true;
-        process.StartInfo.CreateNoWindow = true;
-        process.Start();
+        AppInstance.GetCurrent().UnregisterKey();
+        _ = AppInstance.Restart(default);
     }
 
     [RelayCommand]
@@ -74,6 +64,10 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
             await RestartAsync();
         }
     }
+
+    [RelayCommand]
+    private void GoPrev()
+        => CurrentStep--;
 
     [RelayCommand]
     private async Task CreateLibraryAsync()
@@ -114,130 +108,36 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
-    private async Task TryLoadAIModelSourceAsync()
-    {
-        if ((IsAzureOpenAI && AzureOpenAIChatModelCollection.Count > 0)
-            || (IsOpenAI && OpenAIChatModelCollection.Count > 0)
-            || (IsAzureOpenAI && (string.IsNullOrEmpty(AzureOpenAIAccessKey) || string.IsNullOrEmpty(AzureOpenAIEndpoint)))
-            || (IsOpenAI && string.IsNullOrEmpty(OpenAIAccessKey)))
-        {
-            return;
-        }
-
-        try
-        {
-            if (IsAzureOpenAI)
-            {
-                GlobalSettings.Set(SettingNames.AzureOpenAIAccessKey, AzureOpenAIAccessKey);
-                GlobalSettings.Set(SettingNames.AzureOpenAIEndpoint, AzureOpenAIEndpoint);
-                var (chatModels, textCompletions, embeddings) = await ChatClient.GetSupportModelsAsync(KernelType.AzureOpenAI);
-                TryClear(AzureOpenAIChatModelCollection);
-                TryClear(AzureOpenAICompletionModelCollection);
-                TryClear(AzureOpenAIEmbeddingModelCollection);
-                foreach (var item in chatModels)
-                {
-                    AzureOpenAIChatModelCollection.Add(item);
-                }
-
-                foreach (var item in textCompletions)
-                {
-                    AzureOpenAICompletionModelCollection.Add(item);
-                }
-
-                foreach (var item in embeddings)
-                {
-                    AzureOpenAIEmbeddingModelCollection.Add(item);
-                }
-            }
-            else
-            {
-                GlobalSettings.Set(SettingNames.OpenAIAccessKey, AzureOpenAIAccessKey);
-                var (chatModels, textCompletions, embeddings) = await ChatClient.GetSupportModelsAsync(KernelType.OpenAI);
-                TryClear(OpenAIChatModelCollection);
-                TryClear(OpenAICompletionModelCollection);
-                TryClear(OpenAIEmbeddingModelCollection);
-                foreach (var item in chatModels)
-                {
-                    OpenAIChatModelCollection.Add(item);
-                }
-
-                foreach (var item in textCompletions)
-                {
-                    OpenAICompletionModelCollection.Add(item);
-                }
-
-                foreach (var item in embeddings)
-                {
-                    OpenAIEmbeddingModelCollection.Add(item);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Logger.Debug(ex.Message);
-        }
-    }
-
-    [RelayCommand]
-    private async Task TryLoadWhisperModelAsync()
-    {
-        if (!IsAzureWhisper
-            || string.IsNullOrEmpty(AzureWhisperKey)
-            || string.IsNullOrEmpty(AzureWhisperEndpoint))
-        {
-            return;
-        }
-
-        try
-        {
-            GlobalSettings.Set(SettingNames.AzureWhisperKey, AzureWhisperKey);
-            GlobalSettings.Set(SettingNames.AzureWhisperEndpoint, AzureWhisperEndpoint);
-
-            // TODO: 加载模型.
-            await Task.Delay(200);
-            AzureWhisperModelName = "whisper";
-        }
-        catch (Exception ex)
-        {
-            Logger.Debug(ex.Message);
-        }
-    }
-
     private void WriteSettings()
     {
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIAccessKey, AzureOpenAIAccessKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIEndpoint, AzureOpenAIEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIChatModelName, AzureOpenAIChatModelName);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAICompletionModelName, AzureOpenAICompletionModelName);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIEmbeddingModelName, AzureOpenAIEmbeddingModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIAccessKey, InternalKernel.AzureOpenAIAccessKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureOpenAIEndpoint, InternalKernel.AzureOpenAIEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureOpenAIChatModel, JsonSerializer.Serialize(InternalKernel.AzureOpenAIChatModel ?? new Models.App.Kernel.Metadata()));
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIAccessKey, OpenAIAccessKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICustomEndpoint, OpenAICustomEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIOrganization, OpenAIOrganization);
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIChatModelName, OpenAIChatModelName);
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICompletionModelName, OpenAICompletionModelName);
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIEmbeddingModelName, OpenAIEmbeddingModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIAccessKey, InternalKernel.OpenAIAccessKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICustomEndpoint, InternalKernel.OpenAICustomEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIOrganization, InternalKernel.OpenAIOrganization);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultOpenAIChatModelName, InternalKernel.OpenAIChatModel?.Id ?? string.Empty);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateKey, AzureTranslateKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateRegion, AzureTranslateRegion);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateKey, InternalTranslate.AzureTranslateKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureTranslateRegion, InternalTranslate.AzureTranslateRegion);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppId, BaiduTranslateAppId);
-        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppKey, BaiduTranslateKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppId, InternalTranslate.BaiduTranslateAppId);
+        SettingsToolkit.WriteLocalSetting(SettingNames.BaiduTranslateAppKey, InternalTranslate.BaiduTranslateKey);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechKey, AzureSpeechKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechRegion, AzureSpeechRegion);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechKey, InternalSpeech.AzureSpeechKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechRegion, InternalSpeech.AzureSpeechRegion);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperKey, AzureWhisperKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperEndpoint, AzureWhisperEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperModelName, AzureWhisperModelName);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperKey, InternalSpeech.AzureWhisperKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperEndpoint, InternalSpeech.AzureWhisperEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureWhisperModelName, InternalSpeech.AzureWhisperModelName);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIWhisperKey, OpenAIWhisperKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIWhisperKey, InternalSpeech.OpenAIWhisperKey);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageKey, AzureImageKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageEndpoint, AzureImageEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageKey, InternalDrawService.AzureImageKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageEndpoint, InternalDrawService.AzureImageEndpoint);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIImageKey, OpenAIImageKey);
+        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIImageKey, InternalDrawService.OpenAIImageKey);
     }
 
     private void CheckStep()
@@ -249,6 +149,9 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         IsSpeechStep = CurrentStep == 4;
         IsImageStep = CurrentStep == 5;
         IsLastStep = CurrentStep == StepCount - 1;
+
+        IsNextStepButtonEnabled = !IsLibraryStep;
+        IsPreviousStepShown = CurrentStep >= 2 && !IsLastStep;
     }
 
     private void CheckKernelType()
@@ -272,8 +175,8 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
 
     private void CheckImageType()
     {
-        IsAzureImage = ImageGenerateType == ImageGenerateType.AzureDallE;
-        IsOpenAIImage = ImageGenerateType == ImageGenerateType.OpenAIDallE;
+        IsAzureImage = ImageGenerateType == DrawType.AzureDallE;
+        IsOpenAIImage = ImageGenerateType == DrawType.OpenAIDallE;
     }
 
     partial void OnCurrentStepChanged(int value)
@@ -288,6 +191,6 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
     partial void OnSpeechTypeChanged(SpeechType value)
         => CheckSpeechType();
 
-    partial void OnImageGenerateTypeChanged(ImageGenerateType value)
+    partial void OnImageGenerateTypeChanged(DrawType value)
         => CheckImageType();
 }

@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutThisApp" xml:space="preserve">
+    <value>关于此应用</value>
+  </data>
   <data name="AccessKey" xml:space="preserve">
     <value>访问密钥</value>
   </data>
   <data name="AccessKeyPlaceholderText" xml:space="preserve">
     <value>访问服务的密钥</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="AddKernel" xml:space="preserve">
+    <value>添加新的内核</value>
+  </data>
+  <data name="AddService" xml:space="preserve">
+    <value>添加新的服务</value>
+  </data>
+  <data name="AIMessageWarning" xml:space="preserve">
+    <value>免责声明：模型并非全知全能，AI可能生成不正确的信息，请自行核实</value>
   </data>
   <data name="AppId" xml:space="preserve">
     <value>应用 ID</value>
@@ -129,8 +144,11 @@
   <data name="AppIdPlaceholderText" xml:space="preserve">
     <value>请输入 App ID</value>
   </data>
-  <data name="AppInTrayTip" xml:space="preserve">
-    <value>小幻助理已隐藏在后台，需要时可以在任务栏托盘中打开</value>
+  <data name="AppLog" xml:space="preserve">
+    <value>应用日志</value>
+  </data>
+  <data name="AppLogDescription" xml:space="preserve">
+    <value>应用日志相关的配置项</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>小幻助理</value>
@@ -141,11 +159,50 @@
   <data name="AppSecretPlaceholderText" xml:space="preserve">
     <value>请输入应用密钥</value>
   </data>
+  <data name="AppTheme" xml:space="preserve">
+    <value>应用程序主题</value>
+  </data>
+  <data name="AppThemeDescription" xml:space="preserve">
+    <value>选择要显示的应用主题</value>
+  </data>
   <data name="Assistant" xml:space="preserve">
     <value>助理</value>
   </data>
+  <data name="AssistantDescription" xml:space="preserve">
+    <value>助理描述</value>
+  </data>
+  <data name="AssistantDescriptionPlaceholderText" xml:space="preserve">
+    <value>简单描述下助理的职责吧</value>
+  </data>
+  <data name="AssistantDetail" xml:space="preserve">
+    <value>助理详情</value>
+  </data>
+  <data name="AssistantDetailDescription" xml:space="preserve">
+    <value>选择或创建一个助理吧！</value>
+  </data>
+  <data name="AssistantInstruction" xml:space="preserve">
+    <value>助理指令（系统提示词）</value>
+  </data>
+  <data name="AssistantInstructionPlaceholderText" xml:space="preserve">
+    <value>助理的提示指令，将作为系统提示词发送</value>
+  </data>
+  <data name="AssistantName" xml:space="preserve">
+    <value>助理名称</value>
+  </data>
+  <data name="AssistantNamePlaceholderText" xml:space="preserve">
+    <value>起个名吧，必填项</value>
+  </data>
+  <data name="AttachImage" xml:space="preserve">
+    <value>附加照片</value>
+  </data>
+  <data name="AudioSearch" xml:space="preserve">
+    <value>音频搜索</value>
+  </data>
   <data name="AutoDetect" xml:space="preserve">
     <value>自动检测</value>
+  </data>
+  <data name="AvatarCropper" xml:space="preserve">
+    <value>头像裁剪</value>
   </data>
   <data name="AzureDallETip" xml:space="preserve">
     <value>如果你正在使用 Azure DALL·E 服务，请在资源部署完成后填写下面的表单，应用将通过 DALL·E 服务提供文生图功能</value>
@@ -180,8 +237,23 @@
   <data name="BaiduTranslateTip" xml:space="preserve">
     <value>如果你注册了百度翻译开放平台，请将你的应用信息填入下面的表单，应用会使用 百度翻译 作为你的默认翻译服务</value>
   </data>
+  <data name="BeginChat" xml:space="preserve">
+    <value>开始对话吧！</value>
+  </data>
+  <data name="BeginChatDescription" xml:space="preserve">
+    <value>创建或打开一个会话，然后开始聊天吧！</value>
+  </data>
+  <data name="BeginStorageSearch" xml:space="preserve">
+    <value>搜索本地文件</value>
+  </data>
+  <data name="BeginStorageSearchDescription" xml:space="preserve">
+    <value>利用 Everything 开始极速搜索本地文件吧！</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>聊天</value>
   </data>
   <data name="ChatInvalidConfiguration" xml:space="preserve">
     <value>聊天服务配置无效</value>
@@ -192,14 +264,125 @@
   <data name="ChatModelPlaceholderText" xml:space="preserve">
     <value>部署的对话模型名称</value>
   </data>
+  <data name="ChatWithMe" xml:space="preserve">
+    <value>和我对话</value>
+  </data>
+  <data name="ClearHistory" xml:space="preserve">
+    <value>清空历史记录</value>
+  </data>
   <data name="ClearMessage" xml:space="preserve">
     <value>清空消息</value>
+  </data>
+  <data name="CloseLibrary" xml:space="preserve">
+    <value>关闭存储库</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="ContinuousSpeech" xml:space="preserve">
+    <value>连续语音</value>
+  </data>
+  <data name="Copied" xml:space="preserve">
+    <value>已复制</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="CopyImage" xml:space="preserve">
+    <value>复制图像</value>
+  </data>
+  <data name="CopyPath" xml:space="preserve">
+    <value>复制路径</value>
+  </data>
+  <data name="CopyPrompt" xml:space="preserve">
+    <value>复制提示词</value>
+  </data>
+  <data name="CopyrightTemplate" xml:space="preserve">
+    <value>© {0} Richasy。保留所有权利。</value>
+  </data>
+  <data name="CopySourceContent" xml:space="preserve">
+    <value>复制输入内容</value>
+  </data>
+  <data name="CopyTranslationResult" xml:space="preserve">
+    <value>复制翻译结果</value>
+  </data>
+  <data name="CountLimitTemplate" xml:space="preserve">
+    <value>前 {0} 条</value>
+  </data>
+  <data name="CreateAssistant" xml:space="preserve">
+    <value>创建助理</value>
   </data>
   <data name="CreateLibrary" xml:space="preserve">
     <value>创建存储库</value>
   </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="DefaultChatKernel" xml:space="preserve">
+    <value>默认对话内核</value>
+  </data>
+  <data name="DefaultChatKernelDescription" xml:space="preserve">
+    <value>创建新会话时默认使用的内核</value>
+  </data>
+  <data name="DefaultDrawService" xml:space="preserve">
+    <value>默认绘图服务</value>
+  </data>
+  <data name="DefaultSpeechService" xml:space="preserve">
+    <value>默认语音服务</value>
+  </data>
+  <data name="DefaultTranslateService" xml:space="preserve">
+    <value>默认翻译服务</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>删除</value>
+  </data>
+  <data name="DeleteAssistantWarning" xml:space="preserve">
+    <value>是否要移除该助理？移除后，相关的会话也会被移除</value>
+  </data>
+  <data name="DeleteCustomKernelWarning" xml:space="preserve">
+    <value>是否要删除该自定义内核？删除后，相关的助理将不再可用</value>
+  </data>
+  <data name="Discard" xml:space="preserve">
+    <value>放弃</value>
+  </data>
+  <data name="DocumentSearch" xml:space="preserve">
+    <value>文档搜索</value>
+  </data>
+  <data name="DownloadEverything" xml:space="preserve">
+    <value>下载 Everything</value>
+  </data>
+  <data name="Draw" xml:space="preserve">
+    <value>绘图</value>
+  </data>
+  <data name="DrawConfiguration" xml:space="preserve">
+    <value>绘图配置</value>
+  </data>
+  <data name="DrawInputPlaceholderText" xml:space="preserve">
+    <value>描述你要绘制的图像，比如“云海间的一株雪莲”</value>
+  </data>
+  <data name="DrawInvalidConfiguration" xml:space="preserve">
+    <value>绘画配置无效</value>
+  </data>
+  <data name="DrawInvalidConfigurationDescription" xml:space="preserve">
+    <value>请在设置页面中调整绘图相关的配置</value>
+  </data>
+  <data name="DrawService" xml:space="preserve">
+    <value>绘图服务</value>
+  </data>
+  <data name="DrawSetting" xml:space="preserve">
+    <value>绘图设置</value>
+  </data>
+  <data name="DrawSettingDescription" xml:space="preserve">
+    <value>编辑或添加 AI 绘图配置</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="EditAssistant" xml:space="preserve">
+    <value>编辑助理</value>
+  </data>
+  <data name="EditConfiguration" xml:space="preserve">
+    <value>编辑配置</value>
   </data>
   <data name="EmbeddingModelName" xml:space="preserve">
     <value>嵌入模型名称</value>
@@ -216,8 +399,26 @@
   <data name="EndpointPlaceholderText" xml:space="preserve">
     <value>访问接口的地址</value>
   </data>
+  <data name="Execute" xml:space="preserve">
+    <value>运行</value>
+  </data>
   <data name="ExportHistory" xml:space="preserve">
     <value>导出聊天记录</value>
+  </data>
+  <data name="ExtraDrawLoadFailed" xml:space="preserve">
+    <value>自定义绘图服务加载失败，请在存储库检查自定义绘图服务配置</value>
+  </data>
+  <data name="ExtraKernelLoadFailed" xml:space="preserve">
+    <value>自定义内核加载失败，请在存储库内检查自定义内核配置</value>
+  </data>
+  <data name="ExtraSpeechLoadFailed" xml:space="preserve">
+    <value>自定义语音服务加载失败，请在存储库内检查自定义语音服务配置</value>
+  </data>
+  <data name="ExtraTranslateLoadFailed" xml:space="preserve">
+    <value>自定义翻译服务加载失败，请在存储库内检查自定义翻译服务配置</value>
+  </data>
+  <data name="FileSaved" xml:space="preserve">
+    <value>文件已保存</value>
   </data>
   <data name="FinishDescription" xml:space="preserve">
     <value>小幻助理将基于你提供的配置信息为你提供独特的 AI 体验，祝您使用愉快</value>
@@ -228,17 +429,92 @@
   <data name="FolderMustEmpty" xml:space="preserve">
     <value>您必须选择一个空文件夹</value>
   </data>
+  <data name="FolderNotExist" xml:space="preserve">
+    <value>文件夹不存在</value>
+  </data>
+  <data name="FrequencyPenalty" xml:space="preserve">
+    <value>文本重复</value>
+  </data>
+  <data name="FrequencyPenaltyDescription" xml:space="preserve">
+    <value>值越高，则后续产生的文本越不容易出现重复字符</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>生成</value>
+  </data>
+  <data name="GenerateImageFailed" xml:space="preserve">
+    <value>生成图片失败，请稍后再试</value>
+  </data>
   <data name="GenerateResponseCancelled" xml:space="preserve">
     <value>已停止生成响应</value>
   </data>
   <data name="GenerateResponseFailed" xml:space="preserve">
     <value>生成响应时出现异常</value>
   </data>
+  <data name="Generic" xml:space="preserve">
+    <value>通用</value>
+  </data>
+  <data name="GenericSearch" xml:space="preserve">
+    <value>通用搜索</value>
+  </data>
+  <data name="GlobalChatSetting" xml:space="preserve">
+    <value>全局对话设置</value>
+  </data>
+  <data name="GlobalChatSettingDescription" xml:space="preserve">
+    <value>这里的设置将影响所有 AI 对话</value>
+  </data>
+  <data name="GridLayout" xml:space="preserve">
+    <value>网格布局</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>历史记录</value>
+  </data>
+  <data name="ImageSearch" xml:space="preserve">
+    <value>图像搜索</value>
+  </data>
+  <data name="ImportServiceFailed" xml:space="preserve">
+    <value>导入服务失败，请稍后重试</value>
+  </data>
+  <data name="InitialScriptRunningTip" xml:space="preserve">
+    <value>正在执行初始化脚本，请等待脚本执行完成</value>
+  </data>
+  <data name="InitialScriptWarning" xml:space="preserve">
+    <value>该扩展服务要求在导入前运行初始化脚本，请手动验证该服务是否可信</value>
+  </data>
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
   </data>
+  <data name="Kernel" xml:space="preserve">
+    <value>内核</value>
+  </data>
+  <data name="KernelConfiguration" xml:space="preserve">
+    <value>内核配置</value>
+  </data>
+  <data name="KernelLaunchedTip" xml:space="preserve">
+    <value>内核 {0} 已启动</value>
+  </data>
+  <data name="KernelService" xml:space="preserve">
+    <value>内核服务</value>
+  </data>
+  <data name="KernelSetting" xml:space="preserve">
+    <value>内核设置</value>
+  </data>
+  <data name="KernelSettingDescription" xml:space="preserve">
+    <value>选择合适的内核提供 AI 对话功能</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Launch" xml:space="preserve">
+    <value>启动</value>
+  </data>
   <data name="LaunchApp" xml:space="preserve">
     <value>启动应用</value>
+  </data>
+  <data name="Launching" xml:space="preserve">
+    <value>启动中...</value>
+  </data>
+  <data name="LaunchingKernelTip" xml:space="preserve">
+    <value>正在启动内核：{0}</value>
   </data>
   <data name="LibraryChooseDescription" xml:space="preserve">
     <value>选择一个空白文件夹作为聊天记录、提示词列表等应用数据的存储库。你也可以打开一个已有的存储库以跳过初始配置</value>
@@ -249,11 +525,35 @@
   <data name="LibraryNeedInitialized" xml:space="preserve">
     <value>您必须指定一个文件夹作为应用数据存储库</value>
   </data>
+  <data name="LibrarySetting" xml:space="preserve">
+    <value>存储库设置</value>
+  </data>
+  <data name="LicenseTerms" xml:space="preserve">
+    <value>许可条款</value>
+  </data>
+  <data name="LightTheme" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="ListLayout" xml:space="preserve">
+    <value>列表布局</value>
+  </data>
   <data name="LoadingAndWait" xml:space="preserve">
     <value>加载中，请稍后</value>
   </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>加载更多</value>
+  </data>
+  <data name="MaximumResponseTokens" xml:space="preserve">
+    <value>输出令牌最大值</value>
+  </data>
+  <data name="MaximumResponseTokensDescription" xml:space="preserve">
+    <value>大约4个字符为1个令牌</value>
+  </data>
   <data name="Me" xml:space="preserve">
     <value>我</value>
+  </data>
+  <data name="ModelConfiguration" xml:space="preserve">
+    <value>模型配置</value>
   </data>
   <data name="ModelName" xml:space="preserve">
     <value>模型名称</value>
@@ -261,8 +561,26 @@
   <data name="ModelNamePlaceholderText" xml:space="preserve">
     <value>部署的模型名称</value>
   </data>
+  <data name="ModifiedTime" xml:space="preserve">
+    <value>修改时间</value>
+  </data>
   <data name="MoreOptions" xml:space="preserve">
     <value>更多选项</value>
+  </data>
+  <data name="NameAtoZ" xml:space="preserve">
+    <value>名称（A 到 Z）</value>
+  </data>
+  <data name="NameZtoA" xml:space="preserve">
+    <value>名称（Z 到 A）</value>
+  </data>
+  <data name="NeedInputText" xml:space="preserve">
+    <value>必须输入文本</value>
+  </data>
+  <data name="NeedSelectVoice" xml:space="preserve">
+    <value>必须选择一个声音</value>
+  </data>
+  <data name="NewAssistant" xml:space="preserve">
+    <value>新的助理</value>
   </data>
   <data name="NewSession" xml:space="preserve">
     <value>新会话</value>
@@ -270,14 +588,47 @@
   <data name="NextStep" xml:space="preserve">
     <value>下一步</value>
   </data>
+  <data name="NoAssistants" xml:space="preserve">
+    <value>没有可用的助理</value>
+  </data>
+  <data name="NoAvailableService" xml:space="preserve">
+    <value>暂无可用的扩展服务</value>
+  </data>
+  <data name="NoAvailableServiceDescription" xml:space="preserve">
+    <value>你可以在设置页面中添加新的扩展服务</value>
+  </data>
+  <data name="NoDisplayImage" xml:space="preserve">
+    <value>没有显示的图片</value>
+  </data>
+  <data name="NoDisplayImageDescription" xml:space="preserve">
+    <value>生成或打开一张图片吧！</value>
+  </data>
+  <data name="NoDrawHistory" xml:space="preserve">
+    <value>没有绘图记录</value>
+  </data>
+  <data name="NoLimit" xml:space="preserve">
+    <value>不限</value>
+  </data>
   <data name="NoMessage" xml:space="preserve">
     <value>暂无消息</value>
   </data>
   <data name="NoMessageDescription" xml:space="preserve">
     <value>在下方的文本框中输入内容发送消息吧！</value>
   </data>
+  <data name="NoName" xml:space="preserve">
+    <value>未命名</value>
+  </data>
+  <data name="NoSearchResult" xml:space="preserve">
+    <value>没有搜索结果</value>
+  </data>
+  <data name="NoSearchResultDescription" xml:space="preserve">
+    <value>请换个关键词再搜索试一下吧</value>
+  </data>
   <data name="NoSession" xml:space="preserve">
     <value>暂无可用的会话</value>
+  </data>
+  <data name="NoTranslationHistory" xml:space="preserve">
+    <value>没有翻译记录</value>
   </data>
   <data name="OpenAIDallETip" xml:space="preserve">
     <value>如果你正在使用 Open AI DALL·E 服务，请在下方填写你的令牌信息，应用将通过 DALL·E 服务提供文生图功能</value>
@@ -294,8 +645,23 @@
   <data name="OpenFullWindow" xml:space="preserve">
     <value>打开完整窗口</value>
   </data>
+  <data name="OpenInFileExplorer" xml:space="preserve">
+    <value>在文件资源管理器中打开</value>
+  </data>
+  <data name="OpenItemFailed" xml:space="preserve">
+    <value>尝试打开项目时失败</value>
+  </data>
   <data name="OpenLibrary" xml:space="preserve">
     <value>打开存储库</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>打开日志文件夹</value>
+  </data>
+  <data name="OpenSourceImage" xml:space="preserve">
+    <value>打开原图</value>
+  </data>
+  <data name="OpenWith" xml:space="preserve">
+    <value>打开方式</value>
   </data>
   <data name="Organization" xml:space="preserve">
     <value>组织（选填）</value>
@@ -303,8 +669,32 @@
   <data name="OrganizationPlaceholderText" xml:space="preserve">
     <value>填写组织名称</value>
   </data>
+  <data name="PlayAndPause" xml:space="preserve">
+    <value>播放 / 暂停</value>
+  </data>
+  <data name="PoweredBy" xml:space="preserve">
+    <value>基于 {0} 提供</value>
+  </data>
+  <data name="PresencePenalty" xml:space="preserve">
+    <value>话题重复</value>
+  </data>
+  <data name="PresencePenaltyDescription" xml:space="preserve">
+    <value>值越高，则后续文本越容易讨论新的话题</value>
+  </data>
   <data name="PresetSession" xml:space="preserve">
     <value>预设会话</value>
+  </data>
+  <data name="PrevStep" xml:space="preserve">
+    <value>上一步</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>隐私策略</value>
+  </data>
+  <data name="ProgramSearch" xml:space="preserve">
+    <value>程序搜索</value>
+  </data>
+  <data name="Prompt" xml:space="preserve">
+    <value>提示词</value>
   </data>
   <data name="ProxyEndpoint" xml:space="preserve">
     <value>代理终结点（选填）</value>
@@ -312,11 +702,14 @@
   <data name="ProxyEndpointPlaceholderText" xml:space="preserve">
     <value>填写可信的代理服务地址</value>
   </data>
-  <data name="QuitApp" xml:space="preserve">
-    <value>退出应用</value>
-  </data>
   <data name="RecentSession" xml:space="preserve">
     <value>近期会话</value>
+  </data>
+  <data name="RecognizedText" xml:space="preserve">
+    <value>已识别的文本</value>
+  </data>
+  <data name="Regenerate" xml:space="preserve">
+    <value>重新生成</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地区</value>
@@ -324,20 +717,92 @@
   <data name="RegionPlaceholderText" xml:space="preserve">
     <value>服务所在地区</value>
   </data>
+  <data name="Repeatability" xml:space="preserve">
+    <value>重复度</value>
+  </data>
+  <data name="RepeatabilityDescription" xml:space="preserve">
+    <value>控制模型对文字或话题的重复度</value>
+  </data>
+  <data name="RepeatFile" xml:space="preserve">
+    <value>重复文件</value>
+  </data>
+  <data name="RequestVoiceMetadataFailed" xml:space="preserve">
+    <value>请求声音数据失败</value>
+  </data>
   <data name="Resent" xml:space="preserve">
     <value>重新发送</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>重新启动</value>
   </data>
   <data name="Retry" xml:space="preserve">
     <value>重试</value>
   </data>
+  <data name="Sampling" xml:space="preserve">
+    <value>采样</value>
+  </data>
+  <data name="SamplingDescription" xml:space="preserve">
+    <value>设置采样参数，以此决定答案的随机性</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+  <data name="SaveAudio" xml:space="preserve">
+    <value>保存音频</value>
+  </data>
+  <data name="SaveFileFailed" xml:space="preserve">
+    <value>保存文件失败，请稍后再试</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
   <data name="SearchByName" xml:space="preserve">
     <value>按名称搜索</value>
+  </data>
+  <data name="SearchingAndWaiting" xml:space="preserve">
+    <value>搜索中，请稍候</value>
+  </data>
+  <data name="SearchResultTip" xml:space="preserve">
+    <value>查找出 {0} 条结果</value>
+  </data>
+  <data name="SearchResultTipWithLimit" xml:space="preserve">
+    <value>总共有 {0} 条结果，已为您展示前 {1} 条</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>发送反馈</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>发送消息</value>
+  </data>
+  <data name="Service" xml:space="preserve">
+    <value>服务</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>服务</value>
   </data>
   <data name="Session" xml:space="preserve">
     <value>会话</value>
   </data>
+  <data name="SessionOption" xml:space="preserve">
+    <value>会话设置</value>
+  </data>
+  <data name="SessionTitle" xml:space="preserve">
+    <value>会话标题</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="SizeLargeToSmall" xml:space="preserve">
+    <value>大小（从大到小）</value>
+  </data>
+  <data name="SizeSmallToLarge" xml:space="preserve">
+    <value>大小（从小到大）</value>
   </data>
   <data name="Skip" xml:space="preserve">
     <value>跳过</value>
@@ -345,11 +810,80 @@
   <data name="SomethingWrong" xml:space="preserve">
     <value>出错了！</value>
   </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>排序</value>
+  </data>
   <data name="SourceLanguage" xml:space="preserve">
     <value>源语言</value>
   </data>
+  <data name="Speech" xml:space="preserve">
+    <value>语音</value>
+  </data>
+  <data name="SpeechConfiguration" xml:space="preserve">
+    <value>语音配置</value>
+  </data>
+  <data name="SpeechConvertFailed" xml:space="preserve">
+    <value>尝试转换语音时发生了异常</value>
+  </data>
+  <data name="SpeechInput" xml:space="preserve">
+    <value>语音输入</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>语音识别</value>
+  </data>
+  <data name="SpeechRecognizeFailed" xml:space="preserve">
+    <value>语音识别失败</value>
+  </data>
+  <data name="SpeechService" xml:space="preserve">
+    <value>语音服务</value>
+  </data>
+  <data name="SpeechSetting" xml:space="preserve">
+    <value>语音设置</value>
+  </data>
+  <data name="SpeechSettingDescription" xml:space="preserve">
+    <value>编辑或添加语音服务</value>
+  </data>
+  <data name="StartRecording" xml:space="preserve">
+    <value>开始录制</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="StopRecording" xml:space="preserve">
+    <value>停止录制</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="StorageInvalid" xml:space="preserve">
+    <value>存储搜索服务不可用</value>
+  </data>
+  <data name="StorageInvalidDescription" xml:space="preserve">
+    <value>存储搜索服务需要先在本机安装 Everything</value>
+  </data>
+  <data name="StorageSearch" xml:space="preserve">
+    <value>存储搜索</value>
+  </data>
+  <data name="StorageSearchMaxCount" xml:space="preserve">
+    <value>存储搜索最大显示条目</value>
+  </data>
+  <data name="StorageSearchMaxCountDescription" xml:space="preserve">
+    <value>设置在本地存储搜索中最多显示多少条搜索结果</value>
+  </data>
+  <data name="StorageSearchPlaceholder" xml:space="preserve">
+    <value>基于 Everything 查找文件</value>
+  </data>
+  <data name="SystemDefault" xml:space="preserve">
+    <value>使用系统设置</value>
+  </data>
   <data name="TargetLanguage" xml:space="preserve">
     <value>目标语言</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="TemperatureDescription" xml:space="preserve">
+    <value>控制随机性，降低 temperature 会导致更少的随机完成。</value>
   </data>
   <data name="TextCompletionModelName" xml:space="preserve">
     <value>文本完成模型名称</value>
@@ -357,8 +891,26 @@
   <data name="TextCompletionModelPlaceholderText" xml:space="preserve">
     <value>部署的文本完成模型名称</value>
   </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>文本转语音</value>
+  </data>
   <data name="TextTranslate" xml:space="preserve">
     <value>文本翻译</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>提醒</value>
+  </data>
+  <data name="TopP" xml:space="preserve">
+    <value>Top-P</value>
+  </data>
+  <data name="TopPDescription" xml:space="preserve">
+    <value>通过核采样控制多样性</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>翻译</value>
+  </data>
+  <data name="TranslateConfiguration" xml:space="preserve">
+    <value>翻译配置</value>
   </data>
   <data name="TranslatedContentPlaceholderText" xml:space="preserve">
     <value>翻译后的文本将显示在这里</value>
@@ -369,19 +921,70 @@
   <data name="TranslateInvalidDescription" xml:space="preserve">
     <value>请在设置中完成翻译服务相关的配置</value>
   </data>
+  <data name="TranslateService" xml:space="preserve">
+    <value>翻译服务</value>
+  </data>
+  <data name="TranslateSetting" xml:space="preserve">
+    <value>翻译设置</value>
+  </data>
+  <data name="TranslateSettingDescription" xml:space="preserve">
+    <value>编辑或添加翻译服务</value>
+  </data>
   <data name="TranslationInputPlaceholderText" xml:space="preserve">
     <value>请输入要翻译的文本</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
   </data>
   <data name="UnknownError" xml:space="preserve">
     <value>发生了未知错误</value>
   </data>
+  <data name="UseDefaultKernel" xml:space="preserve">
+    <value>使用默认内核</value>
+  </data>
+  <data name="UseDefaultKernelDescription" xml:space="preserve">
+    <value>与该助理对话时将使用当前默认的内核</value>
+  </data>
+  <data name="UseMarkdownRenderer" xml:space="preserve">
+    <value>使用 Markdown 渲染器</value>
+  </data>
+  <data name="UseMarkdownRendererDescription" xml:space="preserve">
+    <value>对话消息将使用本机 Markdown 渲染器渲染，文本选择可能受到影响</value>
+  </data>
   <data name="UserInputPlaceholderText" xml:space="preserve">
     <value>输入消息</value>
+  </data>
+  <data name="UseStreamOutput" xml:space="preserve">
+    <value>使用流式输出</value>
+  </data>
+  <data name="UseStreamOutputDescription" xml:space="preserve">
+    <value>模型会逐字逐句生成响应（打字机模式）</value>
+  </data>
+  <data name="VideoSearch" xml:space="preserve">
+    <value>视频搜索</value>
+  </data>
+  <data name="Voice" xml:space="preserve">
+    <value>声音</value>
+  </data>
+  <data name="VoiceConfigInvalid" xml:space="preserve">
+    <value>请在设置中完善语音相关的服务配置</value>
+  </data>
+  <data name="VoiceDependenciesMissing" xml:space="preserve">
+    <value>你需要点击下面的链接下载 C++ 依赖才能使用该功能</value>
+  </data>
+  <data name="VoiceInvalid" xml:space="preserve">
+    <value>语音服务不可用</value>
+  </data>
+  <data name="WaitServiceLaunching" xml:space="preserve">
+    <value>请等待服务启动完成后再操作</value>
   </data>
   <data name="WelcomeDescription" xml:space="preserve">
     <value>在开始使用前，请跟随我一起做一些简单的配置吧！</value>
   </data>
   <data name="WelcomeTitle" xml:space="preserve">
     <value>欢迎使用小幻助理</value>
+  </data>
+  <data name="ZipSearch" xml:space="preserve">
+    <value>压缩包搜索</value>
   </data>
 </root>

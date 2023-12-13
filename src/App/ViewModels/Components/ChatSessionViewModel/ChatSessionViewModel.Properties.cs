@@ -3,7 +3,7 @@
 using System.Threading;
 using Microsoft.UI.Dispatching;
 using RichasyAssistant.App.ViewModels.Items;
-using RichasyAssistant.Models.App.Kernel;
+using RichasyAssistant.Libs.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Components;
 
@@ -13,7 +13,8 @@ namespace RichasyAssistant.App.ViewModels.Components;
 public sealed partial class ChatSessionViewModel
 {
     private readonly DispatcherQueue _dispatcherQueue;
-    private SessionPayload _sourceSession;
+    private ChatSessionItemViewModel _itemRef;
+    private ChatKernel _kernel;
     private CancellationTokenSource _cancellationTokenSource;
 
     [ObservableProperty]
@@ -34,19 +35,68 @@ public sealed partial class ChatSessionViewModel
     [ObservableProperty]
     private bool _isChatEmpty;
 
+    [ObservableProperty]
+    private bool _isReady;
+
+    [ObservableProperty]
+    private double _maxTokens;
+
+    [ObservableProperty]
+    private double _topP;
+
+    [ObservableProperty]
+    private double _temperature;
+
+    [ObservableProperty]
+    private double _frequencyPenalty;
+
+    [ObservableProperty]
+    private double _presencePenalty;
+
+    [ObservableProperty]
+    private bool _isInSettings;
+
+    [ObservableProperty]
+    private bool _isChatAvailable;
+
+    [ObservableProperty]
+    private ChatSessionType _type;
+
+    [ObservableProperty]
+    private bool _isQuickChat;
+
+    [ObservableProperty]
+    private bool _isSingleChat;
+
+    [ObservableProperty]
+    private bool _isGroupChat;
+
+    [ObservableProperty]
+    private string _assistantId;
+
     /// <summary>
     /// 请求滚动到底部.
     /// </summary>
     public event EventHandler RequestScrollToBottom;
 
     /// <summary>
+    /// 请求聚焦于输入框.
+    /// </summary>
+    public event EventHandler RequestFocusInput;
+
+    /// <summary>
     /// 消息列表.
     /// </summary>
     public ObservableCollection<ChatMessageItemViewModel> Messages { get; }
 
-    /// <inheritdoc/>
-    public override bool Equals(object obj) => obj is ChatSessionViewModel model && EqualityComparer<SessionPayload>.Default.Equals(_sourceSession, model._sourceSession);
+    /// <summary>
+    /// 会话标识符.
+    /// </summary>
+    public string SessionId => _itemRef?.Id ?? string.Empty;
 
     /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(_sourceSession);
+    public override bool Equals(object obj) => obj is ChatSessionViewModel model && EqualityComparer<ChatKernel>.Default.Equals(_kernel, model._kernel);
+
+    /// <inheritdoc/>
+    public override int GetHashCode() => HashCode.Combine(_kernel);
 }

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Collections.ObjectModel;
+using RichasyAssistant.App.ViewModels.Components;
 
 namespace RichasyAssistant.App.ViewModels.Views;
 
@@ -31,7 +31,7 @@ public sealed partial class WelcomePageViewModel
     private SpeechType _speechType;
 
     [ObservableProperty]
-    private ImageGenerateType _imageGenerateType;
+    private DrawType _imageGenerateType;
 
     [ObservableProperty]
     private bool _isAIStep;
@@ -41,39 +41,6 @@ public sealed partial class WelcomePageViewModel
 
     [ObservableProperty]
     private bool _isOpenAI;
-
-    [ObservableProperty]
-    private string _azureOpenAIAccessKey;
-
-    [ObservableProperty]
-    private string _azureOpenAIEndpoint;
-
-    [ObservableProperty]
-    private string _azureOpenAIChatModelName;
-
-    [ObservableProperty]
-    private string _azureOpenAICompletionModelName;
-
-    [ObservableProperty]
-    private string _azureOpenAIEmbeddingModelName;
-
-    [ObservableProperty]
-    private string _openAIAccessKey;
-
-    [ObservableProperty]
-    private string _openAICustomEndpoint;
-
-    [ObservableProperty]
-    private string _openAIOrganization;
-
-    [ObservableProperty]
-    private string _openAIChatModelName;
-
-    [ObservableProperty]
-    private string _openAICompletionModelName;
-
-    [ObservableProperty]
-    private string _openAIEmbeddingModelName;
 
     [ObservableProperty]
     private bool _isLastStep;
@@ -88,18 +55,6 @@ public sealed partial class WelcomePageViewModel
     private bool _isBaiduTranslate;
 
     [ObservableProperty]
-    private string _azureTranslateKey;
-
-    [ObservableProperty]
-    private string _azureTranslateRegion;
-
-    [ObservableProperty]
-    private string _baiduTranslateAppId;
-
-    [ObservableProperty]
-    private string _baiduTranslateKey;
-
-    [ObservableProperty]
     private bool _isSpeechStep;
 
     [ObservableProperty]
@@ -112,24 +67,6 @@ public sealed partial class WelcomePageViewModel
     private bool _isOpenAIWhisper;
 
     [ObservableProperty]
-    private string _azureSpeechKey;
-
-    [ObservableProperty]
-    private string _azureSpeechRegion;
-
-    [ObservableProperty]
-    private string _azureWhisperKey;
-
-    [ObservableProperty]
-    private string _azureWhisperEndpoint;
-
-    [ObservableProperty]
-    private string _azureWhisperModelName;
-
-    [ObservableProperty]
-    private string _openAIWhisperKey;
-
-    [ObservableProperty]
     private bool _isImageStep;
 
     [ObservableProperty]
@@ -139,13 +76,10 @@ public sealed partial class WelcomePageViewModel
     private bool _isOpenAIImage;
 
     [ObservableProperty]
-    private string _azureImageKey;
+    private bool _isPreviousStepShown;
 
     [ObservableProperty]
-    private string _azureImageEndpoint;
-
-    [ObservableProperty]
-    private string _openAIImageKey;
+    private bool _isNextStepButtonEnabled;
 
     /// <summary>
     /// 实例.
@@ -153,32 +87,22 @@ public sealed partial class WelcomePageViewModel
     public static WelcomePageViewModel Instance { get; } = new();
 
     /// <summary>
-    /// Azure Open AI 的对话模型集合.
+    /// 内部内核视图模型.
     /// </summary>
-    public ObservableCollection<string> AzureOpenAIChatModelCollection { get; set; }
+    public InternalKernelViewModel InternalKernel { get; }
 
     /// <summary>
-    /// Azure Open AI 的文本生成模型集合.
+    /// 内部绘图服务视图模型.
     /// </summary>
-    public ObservableCollection<string> AzureOpenAICompletionModelCollection { get; set; }
+    public InternalDrawServiceViewModel InternalDrawService { get; }
 
     /// <summary>
-    /// Azure Open AI 的嵌入模型集合.
+    /// 内部翻译服务视图模型.
     /// </summary>
-    public ObservableCollection<string> AzureOpenAIEmbeddingModelCollection { get; set; }
+    public InternalTranslateServiceViewModel InternalTranslate { get; }
 
     /// <summary>
-    /// Open AI 的对话模型集合.
+    /// 内部语音服务视图模型.
     /// </summary>
-    public ObservableCollection<string> OpenAIChatModelCollection { get; set; }
-
-    /// <summary>
-    /// Open AI 的文本生成模型集合.
-    /// </summary>
-    public ObservableCollection<string> OpenAICompletionModelCollection { get; set; }
-
-    /// <summary>
-    /// Open AI 的嵌入模型集合.
-    /// </summary>
-    public ObservableCollection<string> OpenAIEmbeddingModelCollection { get; set; }
+    public InternalSpeechServiceViewModel InternalSpeech { get; }
 }

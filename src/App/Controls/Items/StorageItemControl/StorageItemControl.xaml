@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Controls.Items">
+
+    <Style x:Key="StorageItemCardStyle" TargetType="local:StorageItemControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:StorageItemControl">
+                    <controls:CardPanel Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.OpenCommand, Mode=OneWay}">
+                        <Grid Margin="20,12" RowSpacing="8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <controls:ImageEx
+                                    x:Name="Logo"
+                                    Width="48"
+                                    Height="48"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Stretch="UniformToFill" />
+                                <Button
+                                    Grid.Column="1"
+                                    Margin="0,-4,-12,0"
+                                    VerticalAlignment="Top"
+                                    Style="{StaticResource IconButtonStyle}"
+                                    ToolTipService.ToolTip="{ext:Locale Name=MoreOptions}">
+                                    <controls:FluentIcon FontSize="14" Symbol="MoreVertical" />
+                                    <Button.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem
+                                                MinWidth="188"
+                                                Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.OpenInFileExplorerCommand, Mode=OneWay}"
+                                                Text="{ext:Locale Name=OpenInFileExplorer}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <controls:FluentIcon Symbol="Folder" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem
+                                                MinWidth="188"
+                                                Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.OpenWithCommand, Mode=OneWay}"
+                                                Text="{ext:Locale Name=OpenWith}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <controls:FluentIcon Symbol="Open" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutSeparator />
+                                            <MenuFlyoutItem
+                                                MinWidth="188"
+                                                Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.CopyPathCommand, Mode=OneWay}"
+                                                Text="{ext:Locale Name=CopyPath}">
+                                                <MenuFlyoutItem.Icon>
+                                                    <controls:FluentIcon Symbol="Copy" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Grid>
+                            <TextBlock
+                                x:Name="NameBlock"
+                                Grid.Row="2"
+                                HorizontalAlignment="Left"
+                                MaxLines="2"
+                                Style="{StaticResource BodyStrongTextBlockStyle}"
+                                Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.Data.Name, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.Data.Name, Mode=OneWay}" IsEnabled="{Binding ElementName=NameBlock, Path=IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                            <Grid Grid.Row="3" ColumnSpacing="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                    MaxLines="1"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.ModifiedDisplayText, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis"
+                                    ToolTipService.ToolTip="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.ModifiedTime, Mode=OneWay}" />
+                                <Border
+                                    Grid.Column="1"
+                                    Padding="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                                    BorderThickness="1,0,0,0"
+                                    Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.FileSize, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.FileSize, Mode=OneWay}" />
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </controls:CardPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="StorageItemHorizontalStyle" TargetType="local:StorageItemControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:StorageItemControl">
+                    <controls:CardPanel Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.OpenCommand, Mode=OneWay}">
+                        <Grid Margin="12,8" ColumnSpacing="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <controls:ImageEx
+                                x:Name="Logo"
+                                Width="36"
+                                Height="36"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Stretch="UniformToFill" />
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock
+                                    x:Name="NameBlock"
+                                    HorizontalAlignment="Left"
+                                    MaxLines="1"
+                                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                                    Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.Data.Name, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.Data.Name, Mode=OneWay}" IsEnabled="{Binding ElementName=NameBlock, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                                <TextBlock
+                                    Margin="0,2,0,0"
+                                    HorizontalAlignment="Left"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.FileSize, Mode=OneWay}"
+                                    Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.FileSize, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+                            </StackPanel>
+
+                            <TextBlock
+                                Grid.Column="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                MaxLines="1"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.ModifiedDisplayText, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis"
+                                ToolTipService.ToolTip="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.ModifiedTime, Mode=OneWay}" />
+
+                            <Button
+                                Grid.Column="3"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource SmallIconButtonStyle}"
+                                ToolTipService.ToolTip="{ext:Locale Name=MoreOptions}">
+                                <controls:FluentIcon FontSize="14" Symbol="MoreVertical" />
+                                <Button.Flyout>
+                                    <MenuFlyout Placement="Bottom">
+                                        <MenuFlyoutItem
+                                            MinWidth="188"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.OpenInFileExplorerCommand, Mode=OneWay}"
+                                            Text="{ext:Locale Name=OpenInFileExplorer}">
+                                            <MenuFlyoutItem.Icon>
+                                                <controls:FluentIcon Symbol="Folder" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem
+                                            MinWidth="188"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.OpenWithCommand, Mode=OneWay}"
+                                            Text="{ext:Locale Name=OpenWith}">
+                                            <MenuFlyoutItem.Icon>
+                                                <controls:FluentIcon Symbol="Open" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutSeparator />
+                                        <MenuFlyoutItem
+                                            MinWidth="188"
+                                            Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.CopyPathCommand, Mode=OneWay}"
+                                            Text="{ext:Locale Name=CopyPath}">
+                                            <MenuFlyoutItem.Icon>
+                                                <controls:FluentIcon Symbol="Copy" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                        </Grid>
+                    </controls:CardPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

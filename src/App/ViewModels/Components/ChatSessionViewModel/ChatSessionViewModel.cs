@@ -4,6 +4,8 @@ using System.Collections.Specialized;
 using System.Threading;
 using Microsoft.UI.Dispatching;
 using RichasyAssistant.App.ViewModels.Items;
+using RichasyAssistant.Libs.Kernel;
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
 
@@ -30,29 +32,86 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         AttachExceptionHandlerToAsyncCommand(HandleException, SendMessageCommand);
     }
 
-    [RelayCommand]
-    private void Initialize(SessionPayload session)
+    private static bool RunCustomKernelIfNotStarted(string kernelId)
     {
+        var kernel = ChatDataService.GetExtraKernel(kernelId);
+        if (kernel != null)
+        {
+            var service = ExtraServiceViewModel.Instance.CustomKernels.FirstOrDefault(p => p.Data.Equals(kernel));
+            if (service == null || !service.IsRunning)
+            {
+                ExtraServiceViewModel.Instance.LaunchKernelServiceCommand.Execute(kernel);
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    [RelayCommand]
+    private async Task InitializeAsync(ChatSessionItemViewModel item)
+    {
+        if (_itemRef != null && IsInSettings)
+        {
+            await ExitSettingsAsync();
+        }
+
+        _itemRef = item;
+        Type = item.Type;
+        IsQuickChat = item.IsQuickChat;
+        IsSingleChat = item.IsSingleChat;
+        IsGroupChat = item.IsGroupChat;
+        AssistantId = item.AssistantId;
+        CheckMessageKernelRunning();
         TryClear(Messages);
         UserInput = string.Empty;
-        _sourceSession = session;
-        UserInput = string.Empty;
+        IsChatAvailable = true;
+        var sessionData = ChatDataService.GetSession(item.Id);
         ErrorText = string.Empty;
-        Name = string.IsNullOrEmpty(_sourceSession.Title)
-            ? ResourceToolkit.GetLocalizedString(StringNames.NewSession)
-            : _sourceSession.Title;
+        Name = string.IsNullOrEmpty(sessionData.Title)
+            ? ResourceToolkit.GetLocalizedString(StringNames.NoName)
+            : sessionData.Title;
 
-        AppViewModel.Instance.ChatClient.SwitchSession(session.Id);
-        if (session.Messages?.Any() == true)
+        if (sessionData.Messages?.Any() == true)
         {
-            foreach (var message in session.Messages)
+            foreach (var message in sessionData.Messages.Distinct())
             {
-                var vm = new ChatMessageItemViewModel(message);
+                if (message.Role == ChatMessageRole.System)
+                {
+                    continue;
+                }
+
+                var vm = message.Role == ChatMessageRole.Assistant
+                    ? new ChatMessageItemViewModel(
+                            message,
+                            RegenerateMessageAsync,
+                            UpdateMessageAsync,
+                            DeleteMessageAsync)
+                    : new ChatMessageItemViewModel(
+                        message,
+                        default,
+                        UpdateMessageAsync,
+                        DeleteMessageAsync);
                 Messages.Add(vm);
             }
         }
 
+        try
+        {
+            _kernel = await ChatKernel.CreateAsync(item.Id);
+        }
+        catch (Exception ex)
+        {
+            LogException(ex);
+            IsChatAvailable = false;
+        }
+
+        IsReady = true;
         CheckChatEmpty();
+
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
     }
 
     [RelayCommand]
@@ -63,69 +122,7 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
             return;
         }
 
-        CancelMessage();
-        _cancellationTokenSource = new CancellationTokenSource();
-
-        ErrorText = string.Empty;
-        var msg = UserInput;
-        UserInput = string.Empty;
-        TempMessage = string.Empty;
-        var client = AppViewModel.Instance.ChatClient;
-        client.SwitchSession(_sourceSession.Id);
-        var isStream = SettingsToolkit.ReadLocalSetting(SettingNames.StreamOutput, true);
-        if (isStream)
-        {
-            var response = await client.SendMessageAsync(
-                msg,
-                userMsg =>
-                {
-                    _dispatcherQueue.TryEnqueue(async () =>
-                    {
-                        Messages.Add(new ChatMessageItemViewModel(userMsg));
-                        if (Messages.Count <= 2)
-                        {
-                            var needGenerateTitle = SettingsToolkit.ReadLocalSetting(SettingNames.IsAutoGenerateSessionTitle, true)
-                                && string.IsNullOrEmpty(_sourceSession.Title);
-                            if (needGenerateTitle)
-                            {
-                                var title = await client.TryGenerateTitleAsync();
-                                if (!string.IsNullOrEmpty(title))
-                                {
-                                    _sourceSession.Title = title;
-                                    Name = title;
-                                }
-                            }
-                        }
-                    });
-                },
-                text =>
-                {
-                    _dispatcherQueue.TryEnqueue(() =>
-                    {
-                        TempMessage += text;
-                    });
-                },
-                _cancellationTokenSource.Token);
-            Messages.Add(new ChatMessageItemViewModel(response));
-            TempMessage = string.Empty;
-        }
-        else
-        {
-            var response = await client.SendMessageAsync(
-                msg,
-                userMsg =>
-                {
-                    _dispatcherQueue.TryEnqueue(() =>
-                    {
-                        Messages.Add(new ChatMessageItemViewModel(userMsg));
-                        RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
-                    });
-                },
-                _cancellationTokenSource.Token);
-            Messages.Add(new ChatMessageItemViewModel(response));
-        }
-
-        _cancellationTokenSource = null;
+        await SendMessageInternalAsync(UserInput);
     }
 
     [RelayCommand]
@@ -142,24 +139,213 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
             }
 
             _cancellationTokenSource = default;
-            _dispatcherQueue.TryEnqueue(async () =>
+            _ = _dispatcherQueue.TryEnqueue(async () =>
             {
                 TempMessage = string.Empty;
                 var lastUserMsg = Messages.LastOrDefault(p => p.IsUser);
-                Messages.Remove(lastUserMsg);
+                _ = Messages.Remove(lastUserMsg);
                 UserInput = lastUserMsg.Content;
-                await AppViewModel.Instance.ChatClient.RemoveMessageAsync(lastUserMsg.GetData().Id);
+                await ChatDataService.DeleteMessageAsync(_kernel.SessionId, lastUserMsg.Data.Id);
             });
         }
+
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
     }
 
     [RelayCommand]
     private async Task ClearMessageAsync()
     {
-        var msgIds = Messages.Where(p => p.IsUser || p.IsAssistant).Select(p => p.GetData().Id).ToArray();
+        var msgIds = Messages.Where(p => p.IsUser || p.IsAssistant).Select(p => p.Data.Id).ToArray();
         TryClear(Messages);
         UserInput = string.Empty;
-        await AppViewModel.Instance.ChatClient.RemoveMessagesAsync(msgIds);
+        await ChatDataService.ClearMessageAsync(_kernel.SessionId);
+        _itemRef.Update();
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
+    }
+
+    [RelayCommand]
+    private void EnterSettings()
+    {
+        var session = ChatDataService.GetSession(_itemRef.Id);
+        var options = session.Options;
+        Name = session.Title;
+        MaxTokens = options.MaxResponseTokens;
+        TopP = options.TopP;
+        Temperature = options.Temperature;
+        FrequencyPenalty = options.FrequencyPenalty;
+        PresencePenalty = options.PresencePenalty;
+        IsInSettings = true;
+    }
+
+    [RelayCommand]
+    private async Task ExitSettingsAsync()
+    {
+        var session = ChatDataService.GetSession(_itemRef.Id);
+        var options = session.Options;
+        options.MaxResponseTokens = Convert.ToInt32(MaxTokens);
+        options.Temperature = Temperature;
+        options.TopP = TopP;
+        options.FrequencyPenalty = FrequencyPenalty;
+        options.PresencePenalty = PresencePenalty;
+
+        session.Title = Name;
+        await ChatDataService.AddOrUpdateSessionAsync(session);
+
+        _itemRef.Update();
+
+        if (string.IsNullOrEmpty(Name))
+        {
+            Name = ResourceToolkit.GetLocalizedString(StringNames.NoName);
+        }
+
+        IsInSettings = false;
+    }
+
+    [RelayCommand]
+    private void Reset()
+    {
+        _itemRef = null;
+        _kernel = null;
+        IsReady = false;
+        IsChatEmpty = true;
+        IsInSettings = false;
+        ErrorText = string.Empty;
+        UserInput = string.Empty;
+        TempMessage = string.Empty;
+        Name = string.Empty;
+        MaxTokens = 0;
+        TopP = 0;
+        Temperature = 0;
+        FrequencyPenalty = 0;
+        PresencePenalty = 0;
+        TryClear(Messages);
+    }
+
+    private async Task SendMessageInternalAsync(string msg, bool addUserMsg = true)
+    {
+        CancelMessage();
+
+        if (!CheckMessageKernelRunning())
+        {
+            AppViewModel.Instance.ShowTip(StringNames.WaitServiceLaunching, InfoType.Warning);
+            return;
+        }
+
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        ErrorText = string.Empty;
+        UserInput = string.Empty;
+        TempMessage = string.Empty;
+        var isStream = SettingsToolkit.ReadLocalSetting(SettingNames.UseStreamOutput, true);
+        if (isStream)
+        {
+            var response = await _kernel.SendMessageAsync(
+                msg,
+                userMsg =>
+                {
+                    _ = _dispatcherQueue.TryEnqueue(async () =>
+                    {
+                        Messages.Add(new ChatMessageItemViewModel(
+                            userMsg,
+                            default,
+                            UpdateMessageAsync,
+                            DeleteMessageAsync));
+                        _itemRef.Update();
+                        RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
+                        if (Messages.Count <= 2)
+                        {
+                            await CheckAutoGenerateTitleAsync();
+                        }
+                    });
+                },
+                text =>
+                {
+                    _ = _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        TempMessage = text.TrimStart();
+                    });
+                },
+                !addUserMsg,
+                _cancellationTokenSource.Token);
+            Messages.Add(new ChatMessageItemViewModel(
+                response,
+                RegenerateMessageAsync,
+                UpdateMessageAsync,
+                DeleteMessageAsync));
+            _itemRef.Update();
+            TempMessage = string.Empty;
+        }
+        else
+        {
+            var response = await _kernel.SendMessageAsync(
+                msg,
+                userMsg =>
+                {
+                    _ = _dispatcherQueue.TryEnqueue(async () =>
+                    {
+                        Messages.Add(new ChatMessageItemViewModel(
+                            userMsg,
+                            default,
+                            UpdateMessageAsync,
+                            DeleteMessageAsync));
+                        RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
+                        _itemRef.Update();
+                        if (Messages.Count <= 2)
+                        {
+                            await CheckAutoGenerateTitleAsync();
+                        }
+                    });
+                },
+                !addUserMsg,
+                _cancellationTokenSource.Token);
+            Messages.Add(new ChatMessageItemViewModel(
+                response,
+                RegenerateMessageAsync,
+                UpdateMessageAsync,
+                DeleteMessageAsync));
+            _itemRef.Update();
+        }
+
+        RequestFocusInput?.Invoke(this, EventArgs.Empty);
+        _cancellationTokenSource = null;
+    }
+
+    private async void RegenerateMessageAsync(ChatMessage msg)
+    {
+        IsResponding = true;
+        try
+        {
+            var lastUserMsg = Messages.LastOrDefault(p => p.IsUser);
+            var lastAssistantMsg = Messages.LastOrDefault(p => p.IsAssistant);
+            Messages.Remove(lastAssistantMsg);
+            await ChatDataService.DeleteMessageAsync(_kernel.SessionId, msg.Id);
+            await SendMessageInternalAsync(lastUserMsg.Content, false);
+        }
+        catch (Exception ex)
+        {
+            LogException(ex);
+        }
+
+        IsResponding = false;
+    }
+
+    private async void UpdateMessageAsync(ChatMessage msg)
+        => await ChatDataService.UpdateMessageAsync(msg, _kernel.SessionId);
+
+    private async void DeleteMessageAsync(ChatMessage msg)
+    {
+        var source = Messages.FirstOrDefault(p => p.Data.Equals(msg));
+        Messages.Remove(source);
+        await ChatDataService.DeleteMessageAsync(_kernel.SessionId, msg.Id);
+    }
+
+    private void ResetLastMessage()
+    {
+        var lastIndex = Messages.Count - 1;
+        for (var i = 0; i < Messages.Count; i++)
+        {
+            Messages[i].IsLastMessage = i == lastIndex;
+        }
     }
 
     private void HandleException(Exception ex)
@@ -184,6 +370,38 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
         }
     }
 
+    private bool CheckMessageKernelRunning()
+    {
+        var session = ChatDataService.GetSession(_itemRef.Id);
+        var canSend = true;
+        if (session.Assistants.Count != 0)
+        {
+            foreach (var item in session.Assistants)
+            {
+                var assistant = ChatDataService.GetAssistant(item);
+                if (assistant.Kernel == KernelType.Custom)
+                {
+                    var isRunning = RunCustomKernelIfNotStarted(assistant.Model);
+                    if (!isRunning)
+                    {
+                        canSend = false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            var defaultService = SettingsToolkit.ReadLocalSetting(SettingNames.DefaultKernel, KernelType.AzureOpenAI);
+            if (defaultService == KernelType.Custom)
+            {
+                var kernelId = SettingsToolkit.ReadLocalSetting(SettingNames.CustomKernelId, string.Empty);
+                canSend = RunCustomKernelIfNotStarted(kernelId);
+            }
+        }
+
+        return canSend;
+    }
+
     private void CheckChatEmpty()
         => IsChatEmpty = Messages.Count == 0;
 
@@ -194,6 +412,29 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
             RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
         }
 
+        ResetLastMessage();
         CheckChatEmpty();
+    }
+
+    private async Task CheckAutoGenerateTitleAsync()
+    {
+        var needGenerateTitle = SettingsToolkit.ReadLocalSetting(SettingNames.IsAutoGenerateSessionTitle, true)
+            && string.IsNullOrEmpty(_kernel.Session.Title);
+        if (needGenerateTitle)
+        {
+            var title = await _kernel.TryGenerateTitleAsync();
+            if (!string.IsNullOrEmpty(title))
+            {
+                Name = title;
+            }
+        }
+    }
+
+    partial void OnNameChanged(string value)
+    {
+        if (_itemRef != null)
+        {
+            _itemRef.Title = value;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
+using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Kernel;
 
 namespace RichasyAssistant.App.ViewModels.Items;
@@ -21,62 +22,84 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     [ObservableProperty]
     private string _date;
 
-    private SessionPayload _payload;
+    [ObservableProperty]
+    private bool _isSelected;
+
+    [ObservableProperty]
+    private ChatSessionType _type;
+
+    [ObservableProperty]
+    private bool _isQuickChat;
+
+    [ObservableProperty]
+    private bool _isSingleChat;
+
+    [ObservableProperty]
+    private bool _isGroupChat;
+
+    [ObservableProperty]
+    private string _assistantId;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSessionItemViewModel"/> class.
     /// </summary>
-    /// <param name="payload">会话数据.</param>
-    public ChatSessionItemViewModel(SessionPayload payload)
-        => Update(payload);
+    /// <param name="session">会话数据.</param>
+    public ChatSessionItemViewModel(ChatSession session)
+    {
+        Id = session.Id;
+        Update(session);
+        CheckSessionType();
+    }
+
+    /// <summary>
+    /// 会话Id.
+    /// </summary>
+    public string Id { get; }
 
     /// <summary>
     /// 更新.
     /// </summary>
-    /// <param name="payload">会话数据.</param>
-    public void Update(SessionPayload payload)
+    /// <param name="session">会话数据.</param>
+    public void Update(ChatSession session = default)
     {
-        _payload = payload;
-        Title = string.IsNullOrEmpty(payload.Title) ? GetDefaultTitle(payload) : payload.Title;
-        var hasSystemPrompt = payload.Messages.Any(p => p.Role == ChatMessageRole.System);
+        session ??= ChatDataService.GetSession(Id);
+        Title = string.IsNullOrEmpty(session.Title) ? ResourceToolkit.GetLocalizedString(StringNames.NoName) : session.Title;
+        var hasSystemPrompt = session.Messages.Any(p => p.Role == ChatMessageRole.System);
         Icon = hasSystemPrompt ? FluentSymbol.ChatSparkle : FluentSymbol.Chat;
-        LastMessage = GetLastMessageText(payload);
-        Date = GetLastMessage(payload)?.Time.ToString("MM/dd") ?? string.Empty;
+        LastMessage = GetLastMessageText(session);
+        Date = GetLastMessage(session)?.Time.ToString("MM/dd") ?? string.Empty;
+        AssistantId = session.Assistants.FirstOrDefault() ?? string.Empty;
     }
 
-    /// <summary>
-    /// 获取原始数据.
-    /// </summary>
-    /// <returns>会话数据.</returns>
-    public SessionPayload GetData()
-        => _payload;
+    /// <inheritdoc/>
+    public override bool Equals(object obj) => obj is ChatSessionItemViewModel model && Id == model.Id;
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) => obj is ChatSessionItemViewModel model && EqualityComparer<SessionPayload>.Default.Equals(_payload, model._payload);
+    public override int GetHashCode() => HashCode.Combine(Id);
 
-    /// <inheritdoc/>
-    public override int GetHashCode() => HashCode.Combine(_payload);
-
-    private static string GetDefaultTitle(SessionPayload payload)
+    private static string GetLastMessageText(ChatSession session)
     {
-        var lastMsg = GetLastMessage(payload);
-        return lastMsg is null
-            ? ResourceToolkit.GetLocalizedString(StringNames.Session) + " - " + payload.Id
-            : ResourceToolkit.GetLocalizedString(StringNames.Session) + " - " + lastMsg.Time.ToString("yyyyMMddHHmmss");
-    }
-
-    private static string GetLastMessageText(SessionPayload payload)
-    {
-        var lastMsg = GetLastMessage(payload);
-        if (lastMsg == null)
+        var lastMsg = GetLastMessage(session);
+        if (lastMsg == null || lastMsg.Role == ChatMessageRole.System)
         {
             return ResourceToolkit.GetLocalizedString(StringNames.NoMessage);
         }
         else
         {
-            var role = lastMsg.Role == ChatMessageRole.Assistant
-                ? ResourceToolkit.GetLocalizedString(StringNames.Assistant)
-                : ResourceToolkit.GetLocalizedString(StringNames.Me);
+            string role;
+            if (lastMsg.Role == ChatMessageRole.User)
+            {
+                role = ResourceToolkit.GetLocalizedString(StringNames.Me);
+            }
+            else if (!string.IsNullOrEmpty(lastMsg.AssistantId))
+            {
+                var assistant = ChatDataService.GetAssistant(session.Assistants.First());
+                role = assistant.Name;
+            }
+            else
+            {
+                role = ResourceToolkit.GetLocalizedString(StringNames.Assistant);
+            }
 
             return $"{role}: {lastMsg.Content}";
         }
@@ -85,8 +108,29 @@ public sealed partial class ChatSessionItemViewModel : ViewModelBase
     /// <summary>
     /// 获取最后一条消息.
     /// </summary>
-    /// <param name="payload">会话数据.</param>
+    /// <param name="session">会话数据.</param>
     /// <returns><see cref="ChatMessage"/>.</returns>
-    private static ChatMessage GetLastMessage(SessionPayload payload)
-        => payload.Messages.OrderByDescending(p => p.Time).FirstOrDefault();
+    private static ChatMessage GetLastMessage(ChatSession session)
+        => session.Messages.OrderByDescending(p => p.Time).FirstOrDefault();
+
+    private void CheckSessionType()
+    {
+        var session = ChatDataService.GetSession(Id);
+        if (session.Assistants.Count == 0)
+        {
+            Type = ChatSessionType.Quick;
+        }
+        else if (session.Assistants.Count == 1)
+        {
+            Type = ChatSessionType.Single;
+        }
+        else
+        {
+            Type = ChatSessionType.Group;
+        }
+
+        IsQuickChat = Type == ChatSessionType.Quick;
+        IsSingleChat = Type == ChatSessionType.Single;
+        IsGroupChat = Type == ChatSessionType.Group;
+    }
 }

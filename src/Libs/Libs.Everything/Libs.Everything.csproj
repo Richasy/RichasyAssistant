@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>RichasyAssistant.Libs.Everything</AssemblyName>
+    <RootNamespace>RichasyAssistant.Libs.Everything</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="Everything64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

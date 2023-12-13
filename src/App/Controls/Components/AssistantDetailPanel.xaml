@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:AssistantDetailPanelBase
+    x:Class="RichasyAssistant.App.Controls.Components.AssistantDetailPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:kernel="using:RichasyAssistant.Models.App.Kernel"
+    xmlns:local="using:RichasyAssistant.App.Controls.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <x:Double x:Key="SettingsCardWrapThreshold">280</x:Double>
+        <x:Double x:Key="SettingsCardWrapNoIconThreshold">200</x:Double>
+        <Thickness x:Key="SettingsExpanderItemPadding">24,8,24,8</Thickness>
+    </UserControl.Resources>
+
+    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}">
+        <controls:EmptyHolder
+            Title="{ext:Locale Name=AssistantDetail}"
+            Description="{ext:Locale Name=AssistantDetailDescription}"
+            Emoji="&#x1F916;"
+            Style="{StaticResource BasicEmptyHolderStyle}"
+            Visibility="{x:Bind ViewModel.Source, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}" />
+        <Grid Visibility="{x:Bind ViewModel.Source, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid
+                Height="56"
+                Padding="16,0"
+                BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                BorderThickness="0,0,0,1"
+                ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    x:Name="TitleBlock"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Title, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind ViewModel.Title, Mode=OneWay}" IsEnabled="{x:Bind TitleBlock.IsTextTrimmed, Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Visibility="{x:Bind ViewModel.IsImageCropper, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                    <Button
+                        x:Name="SaveButton"
+                        MinWidth="80"
+                        Click="OnSaveButtonClickAsync"
+                        Content="{ext:Locale Name=Save}"
+                        IsEnabled="{x:Bind ViewModel.IsSaveButtonEnabled, Mode=OneWay}"
+                        Style="{StaticResource AccentButtonStyle}" />
+                    <Grid>
+                        <Button
+                            MinWidth="80"
+                            Background="Transparent"
+                            Command="{x:Bind ViewModel.DiscardCommand}"
+                            Visibility="{x:Bind ViewModel.IsCreateMode, Mode=OneWay}">
+                            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{ext:Locale Name=Discard}" />
+                        </Button>
+                        <Button
+                            MinWidth="80"
+                            Background="Transparent"
+                            Command="{x:Bind ViewModel.DeleteCommand}"
+                            Visibility="{x:Bind ViewModel.IsCreateMode, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                            <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{ext:Locale Name=Delete}" />
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    Visibility="{x:Bind ViewModel.IsImageCropper, Mode=OneWay}">
+                    <Button
+                        MinWidth="80"
+                        Click="OnImageCropperConfirmButtonClickAsync"
+                        Content="{ext:Locale Name=Confirm}"
+                        Style="{StaticResource AccentButtonStyle}" />
+                    <Button
+                        MinWidth="80"
+                        Background="Transparent"
+                        Click="OnImageCropperCancelButtonClickAsync">
+                        <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{ext:Locale Name=Cancel}" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Margin="0,12,0,0"
+                ColumnSpacing="8"
+                Visibility="{x:Bind ViewModel.IsImageCropper, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="340" />
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Style="{StaticResource PageScrollViewerStyle}">
+                    <StackPanel Margin="0,0,0,20" Spacing="20">
+
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <local:AssistantAvatar
+                                x:Name="Avatar"
+                                Width="60"
+                                Height="60"
+                                CornerRadius="30"
+                                Tapped="OnAvatarTappedAsync" />
+                            <TextBox
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Header="{ext:Locale Name=AssistantName}"
+                                HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                                PlaceholderText="{ext:Locale Name=AssistantNamePlaceholderText}"
+                                Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="NoWrap" />
+                        </Grid>
+
+                        <TextBox
+                            Height="120"
+                            HorizontalAlignment="Stretch"
+                            AcceptsReturn="False"
+                            Header="{ext:Locale Name=AssistantDescription}"
+                            HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                            PlaceholderText="{ext:Locale Name=AssistantDescriptionPlaceholderText}"
+                            Text="{x:Bind ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap" />
+
+                        <TextBox
+                            MinHeight="300"
+                            MaxHeight="600"
+                            HorizontalAlignment="Stretch"
+                            AcceptsReturn="False"
+                            Header="{ext:Locale Name=AssistantInstruction}"
+                            HeaderTemplate="{StaticResource InputHeaderTemplate}"
+                            PlaceholderText="{ext:Locale Name=AssistantInstructionPlaceholderText}"
+                            Text="{x:Bind ViewModel.Instruction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid Grid.Column="1" Padding="0,0,20,0">
+                    <StackPanel Spacing="12">
+                        <community:SettingsCard Description="{ext:Locale Name=UseDefaultKernelDescription}" Header="{ext:Locale Name=UseDefaultKernel}">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.UseDefaultKernel, Mode=TwoWay}" />
+                        </community:SettingsCard>
+
+                        <ComboBox
+                            HorizontalAlignment="Stretch"
+                            Header="{ext:Locale Name=Kernel}"
+                            ItemsSource="{x:Bind ViewModel.AllKernels}"
+                            SelectedItem="{x:Bind ViewModel.SelectedKernel, Mode=TwoWay}"
+                            SelectionChangedTrigger="Committed"
+                            Visibility="{x:Bind ViewModel.UseDefaultKernel, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="kernel:ServiceMetadata">
+                                    <TextBlock Text="{x:Bind Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <Grid Visibility="{x:Bind ViewModel.UseDefaultKernel, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                            <TextBlock
+                                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=ChatInvalidConfiguration}"
+                                TextWrapping="Wrap"
+                                Visibility="{x:Bind ViewModel.IsConfigInvalid, Mode=OneWay}" />
+                            <ProgressBar
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                IsIndeterminate="True"
+                                Visibility="{x:Bind ViewModel.IsModelLoading, Mode=OneWay}" />
+                            <ListView
+                                ItemsSource="{x:Bind ViewModel.DisplayModels}"
+                                SelectedItem="{x:Bind ViewModel.SelectedModel, Mode=TwoWay}"
+                                SelectionMode="Single"
+                                Visibility="{x:Bind ViewModel.IsConfigInvalid, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="kernel:ServiceMetadata">
+                                        <Grid Padding="0,8">
+                                            <TextBlock Text="{x:Bind Name}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsImageCropper, Mode=OneWay}">
+                <community:ImageCropper
+                    x:Name="Cropper"
+                    AspectRatio="1"
+                    CropShape="Circular" />
+            </Grid>
+
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation
+                    From="-20,0,0"
+                    To="0,0,0"
+                    Duration="0:0:0.5" />
+                <animations:OpacityAnimation
+                    From="0"
+                    To="1.0"
+                    Duration="0:0:0.5" />
+            </animations:Implicit.ShowAnimations>
+        </Grid>
+    </Grid>
+</local:AssistantDetailPanelBase>

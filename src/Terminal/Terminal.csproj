@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>RichasyAssistant.Terminal</AssemblyName>
@@ -10,11 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.47.1-preview.0.27" />
+    <PackageReference Include="Spectre.Console" Version="0.48.1-preview.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Libs\Libs.Kernel\Libs.Kernel.csproj" />
+    <ProjectReference Include="..\Libs\Libs.Service\Libs.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\Database\chat.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\Database\secret.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

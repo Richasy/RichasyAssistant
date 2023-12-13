@@ -10,6 +10,12 @@
         <Setter Property="Padding" Value="20,0" />
     </Style>
 
+    <Style x:Key="PageScrollViewStyle" TargetType="ScrollView">
+        <Setter Property="HorizontalScrollMode" Value="Disabled" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Padding" Value="20,0" />
+    </Style>
+
     <Style x:Key="PageProgressRingStyle" TargetType="ProgressRing">
         <Setter Property="Width" Value="28" />
         <Setter Property="Height" Value="28" />
@@ -23,6 +29,18 @@
         TargetType="Button">
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style
+        x:Key="MiniIconButtonStyle"
+        BasedOn="{StaticResource SmallIconButtonStyle}"
+        TargetType="Button">
+        <Setter Property="Width" Value="28" />
+        <Setter Property="Height" Value="28" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Background" Value="Transparent" />
@@ -67,4 +85,13 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0,-20,0,0" />
     </Style>
+
+    <DataTemplate x:Key="InputHeaderTemplate">
+        <TextBlock
+            HorizontalAlignment="Left"
+            Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="{Binding}" />
+    </DataTemplate>
+
 </ResourceDictionary>

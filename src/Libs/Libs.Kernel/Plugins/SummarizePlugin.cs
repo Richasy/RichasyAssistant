@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.Orchestration;
+using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.Text;
 
 namespace RichasyAssistant.Libs.Kernel.Plugins;
@@ -51,18 +51,18 @@ public sealed class SummarizePlugin
 
     private const int MaxTokens = 1024;
 
-    private readonly ISKFunction _conversationActionFunction;
+    private readonly KernelFunction _conversationActionFunction;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SummarizePlugin"/> class.
     /// </summary>
-    public SummarizePlugin(IKernel kernel)
+    public SummarizePlugin()
     {
-        _conversationActionFunction = kernel.CreateSemanticFunction(
+        _conversationActionFunction = KernelFunctionFactory.CreateFromPrompt(
             TitleGeneratorDefinition,
-            pluginName: nameof(SummarizePlugin),
+            functionName: nameof(SummarizePlugin),
             description: "Generate a conversation title based on the chat information",
-            requestSettings: new Microsoft.SemanticKernel.AI.AIRequestSettings
+            executionSettings: new PromptExecutionSettings
             {
                 ExtensionData = new Dictionary<string, object>
                 {
@@ -77,19 +77,24 @@ public sealed class SummarizePlugin
     /// 根据聊天信息生成会话标题.
     /// </summary>
     /// <param name="conversation">会话内容.</param>
-    /// <param name="context">上下文.</param>
-    /// <returns><see cref="SKContext"/>.</returns>
-    [SKFunction]
+    /// <returns>标题.</returns>
+    [KernelFunction(TitleGeneratorFunctionName)]
     [Description("Generate a conversation title based on the chat information")]
-    public async Task<SKContext> GenerateTitleAsync(
+    public async Task<string> GenerateTitleAsync(
         [Description("The conversation transcript")] string conversation,
-        SKContext context)
+        Microsoft.SemanticKernel.Kernel kernel)
     {
         var lan = CultureInfo.CurrentCulture.Name;
-        context.Variables.TryAdd("LANGUAGE", lan);
+#pragma warning disable SKEXP0055 // 类型仅用于评估，在将来的更新中可能会被更改或删除。取消此诊断以继续。
         var firstLine = TextChunker.SplitPlainTextLines(conversation, MaxTokens).FirstOrDefault();
-        context.Variables.Update(firstLine);
-        await _conversationActionFunction.InvokeAsync(context).ConfigureAwait(false);
-        return context;
+#pragma warning restore SKEXP0055 // 类型仅用于评估，在将来的更新中可能会被更改或删除。取消此诊断以继续。
+        var arguments = new KernelArguments
+        {
+            { "LANGUAGE", lan },
+            { KernelArguments.InputParameterName, firstLine },
+        };
+
+        var result = await _conversationActionFunction.InvokeAsync(kernel, arguments).ConfigureAwait(false);
+        return result.GetValue<string>() ?? string.Empty;
     }
 }

@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using CommunityToolkit.WinUI.UI;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml.Media;
 
@@ -221,9 +221,8 @@ public abstract partial class ImageExBase : Control, IAlphaMaskProvider
 
     private static bool IntersectsWith(Rect rect1, Rect rect2)
     {
-        return rect1.IsEmpty || rect2.IsEmpty
-            ? false
-            : (rect1.Left <= rect2.Right) &&
+        return !rect1.IsEmpty && !rect2.IsEmpty
+&& (rect1.Left <= rect2.Right) &&
                (rect1.Right >= rect2.Left) &&
                (rect1.Top <= rect2.Bottom) &&
                (rect1.Bottom >= rect2.Top);

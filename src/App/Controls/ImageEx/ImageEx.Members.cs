@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Composition;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Windows.Media.Casting;
 
 namespace RichasyAssistant.App.Controls;

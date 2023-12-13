@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="RichasyAssistant.App.Controls.Dialogs.InternalSpeechConfigDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:configuration="using:RichasyAssistant.App.Controls.Configuration"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Controls.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{ext:Locale Name=SpeechConfiguration}"
+    CloseButtonText="{ext:Locale Name=Cancel}"
+    DefaultButton="Primary"
+    PrimaryButtonText="{ext:Locale Name=Confirm}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <Grid Width="400" MaxHeight="560">
+        <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
+            <StackPanel>
+                <configuration:AzureSpeechConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureSpeech}" />
+                <configuration:AzureWhisperConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureWhisper}" />
+                <configuration:OpenAIWhisperConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsOpenAIWhisper}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</ContentDialog>

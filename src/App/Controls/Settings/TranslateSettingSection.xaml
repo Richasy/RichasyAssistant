@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:SettingSectionBase
+    x:Class="RichasyAssistant.App.Controls.Settings.TranslateSettingSection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:kernel="using:RichasyAssistant.Models.App.Kernel"
+    xmlns:local="using:RichasyAssistant.App.Controls.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <community:SettingsExpander Description="{ext:Locale Name=TranslateSettingDescription}" Header="{ext:Locale Name=TranslateSetting}">
+        <community:SettingsExpander.HeaderIcon>
+            <controls:FluentIcon Symbol="Translate" />
+        </community:SettingsExpander.HeaderIcon>
+
+        <ComboBox
+            MinWidth="120"
+            ItemsSource="{x:Bind ViewModel.TranslateServices, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.TranslateService, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="kernel:ServiceMetadata">
+                    <TextBlock Text="{x:Bind Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <community:SettingsExpander.Items>
+            <!--<community:SettingsCard Header="{ext:Locale Name=AddService}">
+                <Button MinWidth="120" Content="{ext:Locale Name=Add}" />
+            </community:SettingsCard>-->
+            <community:SettingsCard Header="{ext:Locale Name=AzureTranslate}">
+                <Button
+                    MinWidth="120"
+                    Click="OnAzureTranslateEditButtonClickAsync"
+                    Content="{ext:Locale Name=EditConfiguration}" />
+            </community:SettingsCard>
+            <community:SettingsCard Header="{ext:Locale Name=BaiduTranslate}">
+                <Button
+                    MinWidth="120"
+                    Click="OnBaiduTranslateButtonClickAsync"
+                    Content="{ext:Locale Name=EditConfiguration}" />
+            </community:SettingsCard>
+        </community:SettingsExpander.Items>
+    </community:SettingsExpander>
+</local:SettingSectionBase>

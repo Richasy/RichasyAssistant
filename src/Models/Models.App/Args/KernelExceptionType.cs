@@ -86,4 +86,19 @@ public enum KernelExceptionType
     /// 翻译服务尚未初始化.
     /// </summary>
     TranslationServiceNotInitialized,
+
+    /// <summary>
+    /// 绘图数据库未初始化.
+    /// </summary>
+    DrawDbNotInitialized,
+
+    /// <summary>
+    /// 绘图服务尚未初始化.
+    /// </summary>
+    DrawServiceNotInitialized,
+
+    /// <summary>
+    /// 生成图片失败.
+    /// </summary>
+    GenerateImageFailed,
 }

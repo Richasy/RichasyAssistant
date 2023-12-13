@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:TranslationPageBase
+    x:Class="RichasyAssistant.App.Pages.TranslationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:items="using:RichasyAssistant.App.ViewModels.Items"
+    xmlns:items1="using:RichasyAssistant.App.Controls.Items"
+    xmlns:kernel="using:RichasyAssistant.Models.App.Kernel"
+    xmlns:local="using:RichasyAssistant.App.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="LocaleItemTemplate" x:DataType="kernel:Metadata">
+            <TextBlock Text="{x:Bind Value}" TextTrimming="CharacterEllipsis" />
+        </DataTemplate>
+    </Page.Resources>
+
+    <SplitView
+        x:Name="MainView"
+        CompactPaneLength="0"
+        DisplayMode="CompactOverlay"
+        OpenPaneLength="320"
+        PaneBackground="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+        PanePlacement="Right">
+        <SplitView.Pane>
+            <Grid RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid
+                    Height="56"
+                    Padding="16,0"
+                    BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                    BorderThickness="0,0,0,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="{ext:Locale Name=History}" />
+                    <Button
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        Command="{x:Bind ViewModel.ClearHistoryCommand}"
+                        Visibility="{x:Bind ViewModel.IsHistoryEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <controls:FluentIcon
+                                Margin="0,2,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                Symbol="Delete" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{ext:Locale Name=ClearHistory}" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <ScrollViewer
+                    Grid.Row="1"
+                    Padding="16,0"
+                    Style="{StaticResource PageScrollViewerStyle}"
+                    Visibility="{x:Bind ViewModel.IsHistoryEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                    <StackPanel Margin="0,0,0,20">
+                        <ItemsRepeater ItemsSource="{x:Bind ViewModel.History}">
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="items:TranslationRecordItemViewModel">
+                                    <items1:TranslationRecordItemControl DeleteItemClick="OnDeleteRecordClick" ViewModel="{x:Bind}" />
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+                            <ItemsRepeater.Layout>
+                                <StackLayout Spacing="4" />
+                            </ItemsRepeater.Layout>
+                        </ItemsRepeater>
+                        <HyperlinkButton
+                            Margin="0,12,0,0"
+                            HorizontalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.LoadHistoryCommand}"
+                            Content="{ext:Locale Name=LoadMore}"
+                            Visibility="{x:Bind ViewModel.HistoryHasMore, Mode=OneWay}" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <controls:EmptyHolder
+                    Grid.Row="1"
+                    Description="{ext:Locale Name=NoTranslationHistory}"
+                    Style="{StaticResource BasicEmptyHolderStyle}"
+                    Visibility="{x:Bind ViewModel.IsHistoryEmpty, Mode=OneWay}" />
+            </Grid>
+        </SplitView.Pane>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid
+                Height="56"
+                Padding="20,0"
+                BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                BorderThickness="0,0,0,1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="{ext:Locale Name=TextTranslate}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind ViewModel.PoweredBy, Mode=OneWay}" />
+                    <HyperlinkButton
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        Click="OnHistoryButtonClick"
+                        Content="{ext:Locale Name=History}"
+                        FontSize="12"
+                        Visibility="{x:Bind ViewModel.IsHistoryEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsInitializing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                <Grid Visibility="{x:Bind ViewModel.IsAvailable, Mode=OneWay}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid
+                        x:Name="SourceContainer"
+                        Padding="0,24,0,0"
+                        RowSpacing="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ComboBox
+                            MinWidth="200"
+                            Margin="20,0,0,0"
+                            HorizontalAlignment="Left"
+                            Header="{ext:Locale Name=SourceLanguage}"
+                            IsEnabled="{x:Bind ViewModel.IsTranslating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                            ItemTemplate="{StaticResource LocaleItemTemplate}"
+                            ItemsSource="{x:Bind ViewModel.SourceLanguages}"
+                            SelectedItem="{x:Bind ViewModel.SourceLanguage, Mode=TwoWay}" />
+
+                        <StackPanel
+                            Grid.Row="1"
+                            Padding="20,0"
+                            Spacing="8">
+                            <TextBox
+                                x:Name="SourceBox"
+                                MinHeight="240"
+                                MaxHeight="368"
+                                HorizontalAlignment="Stretch"
+                                AcceptsReturn="True"
+                                FontSize="{x:Bind ViewModel.SourceFontSize, Mode=OneWay}"
+                                IsEnabled="{x:Bind ViewModel.IsTranslating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                                MaxLength="5000"
+                                PlaceholderText="{ext:Locale Name=TranslationInputPlaceholderText}"
+                                PreviewKeyDown="OnSourceBoxKeyDown"
+                                Text="{x:Bind ViewModel.SourceText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Foreground="{ThemeResource TextFillColorTertiaryBrush}">
+                                    <Run Text="{x:Bind ViewModel.SourceCharacterCount, Mode=OneWay}" />
+                                    <Run Text="/" />
+                                    <Run Text="5000" />
+                                </TextBlock>
+                                <Button
+                                    Grid.Column="1"
+                                    MinWidth="120"
+                                    VerticalAlignment="Center"
+                                    Command="{x:Bind ViewModel.TranslateCommand}"
+                                    Style="{StaticResource AccentButtonStyle}">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <controls:FluentIcon
+                                            Margin="0,2,0,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Symbol="ArrowSwap" />
+                                        <TextBlock VerticalAlignment="Center" Text="{ext:Locale Name=Translate}" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    <Border
+                        Grid.Column="1"
+                        Width="1"
+                        VerticalAlignment="Stretch"
+                        Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+                    <Grid
+                        x:Name="OutputContainer"
+                        Grid.Column="2"
+                        Padding="0,24,0,0"
+                        RowSpacing="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid Padding="20,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ComboBox
+                                MinWidth="200"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Header="{ext:Locale Name=TargetLanguage}"
+                                IsEnabled="{x:Bind ViewModel.IsTranslating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                                ItemTemplate="{StaticResource LocaleItemTemplate}"
+                                ItemsSource="{x:Bind ViewModel.TargetLanguages}"
+                                SelectedItem="{x:Bind ViewModel.TargetLanguage, Mode=TwoWay}" />
+
+                            <HyperlinkButton
+                                Grid.Column="1"
+                                Width="28"
+                                Height="28"
+                                Padding="0"
+                                VerticalAlignment="Bottom"
+                                Command="{x:Bind ViewModel.CopyOutputCommand}"
+                                ToolTipService.ToolTip="{ext:Locale Name=Copy}"
+                                Visibility="{x:Bind ViewModel.OutputText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                <controls:FluentIcon FontSize="14" Symbol="Copy" />
+                            </HyperlinkButton>
+
+                        </Grid>
+
+                        <StackPanel
+                            Grid.Row="1"
+                            Padding="20,0"
+                            Spacing="8">
+                            <Grid>
+                                <TextBox
+                                    x:Name="OutputBox"
+                                    MinHeight="240"
+                                    MaxHeight="368"
+                                    FontSize="{x:Bind ViewModel.OutputFontSize, Mode=OneWay}"
+                                    IsReadOnly="True"
+                                    PlaceholderText="{ext:Locale Name=TranslatedContentPlaceholderText}"
+                                    Text="{x:Bind ViewModel.OutputText, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+                                <ProgressBar
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Bottom"
+                                    IsIndeterminate="True"
+                                    Visibility="{x:Bind ViewModel.IsTranslating, Mode=OneWay}" />
+                            </Grid>
+
+                            <InfoBar
+                                HorizontalAlignment="Stretch"
+                                IsClosable="False"
+                                IsOpen="{x:Bind ViewModel.ErrorText, Mode=OneWay, Converter={StaticResource ObjectToBoolConverter}}"
+                                Message="{x:Bind ViewModel.ErrorText, Mode=OneWay}"
+                                Severity="Error">
+                                <InfoBar.ActionButton>
+                                    <HyperlinkButton Command="{x:Bind ViewModel.TranslateCommand}" Content="{ext:Locale Name=Retry}" />
+                                </InfoBar.ActionButton>
+                            </InfoBar>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+                <controls:EmptyHolder
+                    x:Name="InvalidContainer"
+                    Title="{ext:Locale Name=TranslateInvalid}"
+                    Description="{ext:Locale Name=TranslateInvalidDescription}"
+                    Emoji="&#x1F640;"
+                    Style="{StaticResource BasicEmptyHolderStyle}"
+                    Visibility="{x:Bind ViewModel.IsAvailable, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+            </Grid>
+
+            <controls:LoadingOverlapper
+                Grid.Row="1"
+                IsOpen="{x:Bind ViewModel.IsInitializing, Mode=OneWay}"
+                Text="{ext:Locale Name=LoadingAndWait}" />
+        </Grid>
+    </SplitView>
+
+</local:TranslationPageBase>

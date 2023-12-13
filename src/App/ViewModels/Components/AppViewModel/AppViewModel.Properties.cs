@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using RichasyAssistant.Libs.Kernel;
-using RichasyAssistant.Libs.Translate;
 using RichasyAssistant.Models.App.Args;
 
 namespace RichasyAssistant.App.ViewModels.Components;
@@ -23,24 +21,4 @@ public sealed partial class AppViewModel
     /// 实例.
     /// </summary>
     public static AppViewModel Instance { get; } = new();
-
-    /// <summary>
-    /// 主窗口对象.
-    /// </summary>
-    public Window MainWindow { get; set; }
-
-    /// <summary>
-    /// 迷你窗口对象.
-    /// </summary>
-    public Window MiniWindow { get; set; }
-
-    /// <summary>
-    /// 聊天客户端.
-    /// </summary>
-    public ChatClient ChatClient { get; set; }
-
-    /// <summary>
-    /// 翻译客户端.
-    /// </summary>
-    public TranslateClient TranslateClient { get; set; }
 }

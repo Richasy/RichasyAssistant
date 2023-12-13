@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:SettingSectionBase
+    x:Class="RichasyAssistant.App.Controls.Settings.StorageSettingSection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:converters="using:RichasyAssistant.App.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Controls.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:CountConverter x:Key="CountConverter" />
+    </UserControl.Resources>
+
+    <community:SettingsCard Description="{ext:Locale Name=StorageSearchMaxCountDescription}" Header="{ext:Locale Name=StorageSearchMaxCount}">
+        <community:SettingsCard.HeaderIcon>
+            <controls:FluentIcon Symbol="BoxSearch" />
+        </community:SettingsCard.HeaderIcon>
+        <ComboBox
+            MinWidth="120"
+            ItemsSource="{x:Bind ViewModel.StorageDisplayCountCollection}"
+            SelectedItem="{x:Bind ViewModel.StorageMaxDisplayCount, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="x:Int32">
+                    <TextBlock Text="{x:Bind Converter={StaticResource CountConverter}}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </community:SettingsCard>
+</local:SettingSectionBase>

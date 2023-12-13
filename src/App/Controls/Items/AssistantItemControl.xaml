@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:AssistantItemControlBase
+    x:Class="RichasyAssistant.App.Controls.Items.AssistantItemControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:components="using:RichasyAssistant.App.Controls.Components"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:local="using:RichasyAssistant.App.Controls.Items"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <controls:CardPanel
+        Background="Transparent"
+        BorderBrush="Transparent"
+        CheckedBorderBrush="Transparent"
+        CheckedPointerOverBorderBrush="Transparent"
+        CheckedPressedBorderBrush="Transparent"
+        Click="OnPanelClick"
+        IsChecked="{x:Bind ViewModel.IsSelected, Mode=OneWay}"
+        IsEnableCheck="False">
+        <Grid Padding="12,8" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <components:AssistantAvatar
+                Width="32"
+                Height="32"
+                CornerRadius="16"
+                Id="{x:Bind ViewModel.Data.Id, Mode=OneWay}" />
+            <StackPanel
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Spacing="2">
+                <TextBlock
+                    x:Name="TitleBlock"
+                    FontSize="13"
+                    MaxLines="1"
+                    Text="{x:Bind ViewModel.Data.Name, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind ViewModel.Data.Name, Mode=OneWay}" IsEnabled="{x:Bind TitleBlock.IsTextTrimmed, Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
+                <TextBlock
+                    FontSize="10"
+                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                    MaxLines="1"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Data.Description, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </StackPanel>
+            <Button
+                Grid.Column="2"
+                Width="36"
+                Height="36"
+                Padding="0"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderThickness="0"
+                Click="OnChatButtonClick"
+                ToolTipService.ToolTip="{ext:Locale Name=ChatWithMe}">
+                <controls:FluentIcon
+                    Width="16"
+                    Height="16"
+                    FontSize="16"
+                    Symbol="ChatAdd" />
+            </Button>
+        </Grid>
+    </controls:CardPanel>
+</local:AssistantItemControlBase>

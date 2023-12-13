@@ -28,12 +28,6 @@ public sealed partial class WelcomePage : WelcomePageBase
         ImagePicker.SelectedIndex = (int)ViewModel.ImageGenerateType;
     }
 
-    private void OnAIKeyBoxLostFocus(object sender, RoutedEventArgs e)
-        => ViewModel.TryLoadAIModelSourceCommand.Execute(default);
-
-    private void OnWhisperKeyBoxLostFocus(object sender, RoutedEventArgs e)
-        => ViewModel.TryLoadWhisperModelCommand.Execute(default);
-
     private void OnAIPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (!IsLoaded)
@@ -71,7 +65,7 @@ public sealed partial class WelcomePage : WelcomePageBase
             return;
         }
 
-        ViewModel.ImageGenerateType = (ImageGenerateType)ImagePicker.SelectedIndex;
+        ViewModel.ImageGenerateType = (DrawType)ImagePicker.SelectedIndex;
     }
 }
 

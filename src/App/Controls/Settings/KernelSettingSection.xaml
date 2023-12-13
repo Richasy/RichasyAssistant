@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:SettingSectionBase
+    x:Class="RichasyAssistant.App.Controls.Settings.KernelSettingSection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:community="using:CommunityToolkit.WinUI.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:RichasyAssistant.App.Extensions"
+    xmlns:items="using:RichasyAssistant.App.ViewModels.Items"
+    xmlns:kernel="using:RichasyAssistant.Models.App.Kernel"
+    xmlns:local="using:RichasyAssistant.App.Controls.Settings"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <community:SettingsExpander Description="{ext:Locale Name=KernelSettingDescription}" Header="{ext:Locale Name=KernelSetting}">
+        <community:SettingsExpander.HeaderIcon>
+            <controls:FluentIcon Symbol="BotSparkle" />
+        </community:SettingsExpander.HeaderIcon>
+
+        <ComboBox
+            MinWidth="120"
+            ItemsSource="{x:Bind ViewModel.ChatKernels, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.ChatKernel, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate x:DataType="kernel:ServiceMetadata">
+                    <TextBlock Text="{x:Bind Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <community:SettingsExpander.Items>
+            <community:SettingsCard Header="{ext:Locale Name=AddKernel}">
+                <Button
+                    MinWidth="120"
+                    Command="{x:Bind ViewModel.ImportCustomKernelCommand, Mode=OneWay}"
+                    Content="{ext:Locale Name=Add}" />
+            </community:SettingsCard>
+            <community:SettingsCard Header="Azure Open AI">
+                <Button
+                    MinWidth="120"
+                    Click="OnAzureOpenAIEditButtonClickAsync"
+                    Content="{ext:Locale Name=EditConfiguration}" />
+            </community:SettingsCard>
+            <community:SettingsCard Header="Open AI">
+                <Button
+                    MinWidth="120"
+                    Click="OnOpenAIEditButtonClickAsync"
+                    Content="{ext:Locale Name=EditConfiguration}" />
+            </community:SettingsCard>
+        </community:SettingsExpander.Items>
+        <community:SettingsExpander.ItemsFooter>
+            <ItemsRepeater ItemsSource="{x:Bind ViewModel.KernelExtraServices}">
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="items:SlimServiceItemViewModel">
+                        <community:SettingsCard
+                            MinHeight="52"
+                            Padding="58,8,44,8"
+                            BorderThickness="0,1,0,0"
+                            CornerRadius="0"
+                            Description="{x:Bind Path}"
+                            Header="{x:Bind Data.Name}">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Button
+                                    Command="{x:Bind OpenFolderCommand}"
+                                    Style="{StaticResource IconButtonStyle}"
+                                    ToolTipService.ToolTip="{ext:Locale Name=OpenInFileExplorer}">
+                                    <controls:FluentIcon FontSize="14" Symbol="Folder" />
+                                </Button>
+                                <Button
+                                    Command="{x:Bind DeleteCommand}"
+                                    Style="{StaticResource IconButtonStyle}"
+                                    ToolTipService.ToolTip="{ext:Locale Name=Delete}">
+                                    <controls:FluentIcon
+                                        FontSize="14"
+                                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                        Symbol="Delete" />
+                                </Button>
+                            </StackPanel>
+                        </community:SettingsCard>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </community:SettingsExpander.ItemsFooter>
+    </community:SettingsExpander>
+</local:SettingSectionBase>

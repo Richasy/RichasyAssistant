@@ -19,7 +19,7 @@ public sealed class LanguageList
     /// <summary>
     /// 语言列表.
     /// </summary>
-    public List<Metadata> Langauges { get; set; }
+    public List<Metadata> Languages { get; set; }
 
     /// <inheritdoc/>
     public override bool Equals(object? obj) => obj is LanguageList list && Id == list.Id;

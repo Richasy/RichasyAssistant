@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:NavigationPanelBase
+    x:Class="RichasyAssistant.App.Controls.Components.NavigationPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:items="using:RichasyAssistant.App.ViewModels.Items"
+    xmlns:items1="using:RichasyAssistant.App.Controls.Items"
+    xmlns:local="using:RichasyAssistant.App.Controls.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Padding="4,0,4,8" RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollViewer
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Hidden"
+            VerticalScrollMode="Auto">
+            <ItemsRepeater Margin="0,0,0,8" ItemsSource="{x:Bind ViewModel.NavigateItems}">
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="items:NavigateItemViewModel">
+                        <items1:NavigateItemControl ViewModel="{x:Bind}" />
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+                <ItemsRepeater.Layout>
+                    <StackLayout Spacing="4" />
+                </ItemsRepeater.Layout>
+            </ItemsRepeater>
+        </ScrollViewer>
+
+        <local:ExtraServiceButton Grid.Row="1" />
+        <items1:NavigateItemControl Grid.Row="2" ViewModel="{x:Bind ViewModel.SettingsItem}" />
+    </Grid>
+</local:NavigationPanelBase>

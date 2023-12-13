@@ -11,9 +11,22 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="ms-appx:///Controls/CardPanel/CardPanel.xaml" />
                 <ResourceDictionary Source="ms-appx:///Controls/ImageEx/ImageEx.xaml" />
+                <ResourceDictionary Source="ms-appx:///Controls/Markdown/MarkdownTextBlock.xaml" />
+                <ResourceDictionary Source="ms-appx:///Controls/Items/StorageItemControl/StorageItemControl.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Overwrites.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/TrayResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_black.png" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_white.png" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="HighContrast">
+                    <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_white.png" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityReverseConverter" IsReverse="True" />

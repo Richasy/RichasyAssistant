@@ -21,10 +21,10 @@
         <Setter Property="DisabledBackground" Value="{ThemeResource ControlFillColorDisabledBrush}" />
         <Setter Property="DisabledBorderBrush" Value="{ThemeResource ControlStrokeColorSecondaryBrush}" />
         <Setter Property="CheckedBorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
-        <Setter Property="CheckedBackground" Value="{ThemeResource ControlFillColorSecondaryBrush}" />
-        <Setter Property="CheckedPointerOverBackground" Value="{ThemeResource ControlFillColorTertiaryBrush}" />
+        <Setter Property="CheckedBackground" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />
+        <Setter Property="CheckedPointerOverBackground" Value="{ThemeResource SubtleFillColorTertiaryBrush}" />
         <Setter Property="CheckedPointerOverBorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
-        <Setter Property="CheckedPressedBackground" Value="{ThemeResource ControlFillColorSecondaryBrush}" />
+        <Setter Property="CheckedPressedBackground" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />
         <Setter Property="CheckedPressedBorderBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
         <Setter Property="CheckedDisabledBackground" Value="{ThemeResource ControlFillColorDisabledBrush}" />
         <Setter Property="CheckedDisabledBorderBrush" Value="{ThemeResource ControlStrokeColorSecondaryBrush}" />

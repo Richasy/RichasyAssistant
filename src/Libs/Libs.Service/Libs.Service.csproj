@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>RichasyAssistant.Libs.Service</AssemblyName>
+    <RootNamespace>RichasyAssistant.Libs.Service</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.Context\Models.Context.csproj" />
+    <ProjectReference Include="..\Libs.Locator\Libs.Locator.csproj" />
+  </ItemGroup>
+
+</Project>

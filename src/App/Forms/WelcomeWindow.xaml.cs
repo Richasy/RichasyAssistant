@@ -18,15 +18,14 @@ public sealed partial class WelcomeWindow : WindowBase, ITipWindow
     public WelcomeWindow()
     {
         InitializeComponent();
-        IsMaximizable = false;
-        IsMinimizable = false;
-        IsResizable = false;
-        IsTitleBarVisible = false;
+
+        AppWindow.SetPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.CompactOverlay);
+
         Width = 700;
         Height = 460;
 
         this.CenterOnScreen();
-        MainFrame.Navigate(typeof(WelcomePage));
+        _ = MainFrame.Navigate(typeof(WelcomePage));
     }
 
     /// <inheritdoc/>
