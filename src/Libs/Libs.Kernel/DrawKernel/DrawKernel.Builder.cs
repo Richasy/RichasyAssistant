@@ -47,7 +47,8 @@ public sealed partial class DrawKernel
             return;
         }
 
-        kernel.Kernel = new KernelBuilder()
+        kernel.Kernel = Microsoft.SemanticKernel.Kernel
+            .CreateBuilder()
             .AddAzureOpenAITextToImage(endpoint, string.Empty, accessKey)
             .Build();
     }
@@ -68,7 +69,8 @@ public sealed partial class DrawKernel
             ? new HttpClient(new ProxyOpenAIHandler(endpoint))
             : default;
 
-        kernel.Kernel = new KernelBuilder()
+        kernel.Kernel = Microsoft.SemanticKernel.Kernel
+            .CreateBuilder()
             .AddOpenAITextToImage(accessKey, httpClient: customHttpClient)
             .Build();
     }

@@ -2,8 +2,8 @@
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.SemanticKernel.AI.ChatCompletion;
-using Microsoft.SemanticKernel.Connectors.AI.OpenAI;
+using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
 using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;

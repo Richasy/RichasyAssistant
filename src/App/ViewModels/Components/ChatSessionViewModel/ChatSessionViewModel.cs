@@ -143,9 +143,12 @@ public sealed partial class ChatSessionViewModel : ViewModelBase
             {
                 TempMessage = string.Empty;
                 var lastUserMsg = Messages.LastOrDefault(p => p.IsUser);
-                _ = Messages.Remove(lastUserMsg);
-                UserInput = lastUserMsg.Content;
-                await ChatDataService.DeleteMessageAsync(_kernel.SessionId, lastUserMsg.Data.Id);
+                if (lastUserMsg is not null)
+                {
+                    _ = Messages.Remove(lastUserMsg);
+                    UserInput = lastUserMsg.Content;
+                    await ChatDataService.DeleteMessageAsync(_kernel.SessionId, lastUserMsg.Data.Id);
+                }
             });
         }
 

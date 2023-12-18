@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.AI.ChatCompletion;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
@@ -39,8 +38,8 @@ public sealed partial class ChatKernel
 
         try
         {
-            var response = await chat.GetChatMessageContentAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken: cancellationToken);
-
+            var responses = await chat.GetChatMessageContentsAsync(GetHistory(), GetOpenAIRequestSettings(), cancellationToken: cancellationToken);
+            var response = responses.FirstOrDefault()?.Content;
             if (string.IsNullOrEmpty(response))
             {
                 throw new Models.App.Args.KernelException(KernelExceptionType.EmptyChatResponse);

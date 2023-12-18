@@ -24,7 +24,10 @@ public sealed partial class ChatKernel
             try
             {
                 var actionFunction = _coreFunctions[SummarizePlugin.TitleGeneratorFunctionName];
-                var titleResult = await Kernel.InvokeAsync(actionFunction, new KernelArguments(firstMsg.Content));
+                var titleResult = await Kernel.InvokeAsync(actionFunction, new KernelArguments()
+                {
+                    ["input"] = firstMsg.Content,
+                });
                 var newTitle = titleResult.GetValue<string>();
                 if (!string.IsNullOrEmpty(newTitle))
                 {

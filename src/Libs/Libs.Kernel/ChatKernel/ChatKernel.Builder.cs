@@ -160,8 +160,9 @@ public sealed partial class ChatKernel
             throw new Models.App.Args.KernelException(KernelExceptionType.InvalidConfiguration);
         }
 
-        kernel.Kernel = new KernelBuilder()
-            .AddAzureOpenAIChatCompletion(model.Id, model.Value, endpoint, accessKey)
+        kernel.Kernel = Microsoft.SemanticKernel.Kernel
+            .CreateBuilder()
+            .AddAzureOpenAIChatCompletion(model.Value, endpoint, accessKey, modelId: model.Id)
             .Build();
     }
 
@@ -185,7 +186,8 @@ public sealed partial class ChatKernel
             ? GetProxyClient(customEndpoint)
             : default;
 
-        kernel.Kernel = new KernelBuilder()
+        kernel.Kernel = Microsoft.SemanticKernel.Kernel
+            .CreateBuilder()
             .AddOpenAIChatCompletion(model, accessKey, org, httpClient: customHttpClient)
             .Build();
     }
@@ -212,7 +214,8 @@ public sealed partial class ChatKernel
         var configPath = Path.Combine(modelFolder, "config.json");
         var config = JsonSerializer.Deserialize<CustomKernelConfig>(await File.ReadAllTextAsync(configPath));
         var proxyClient = GetProxyClient(config.BaseUrl);
-        kernel.Kernel = new KernelBuilder()
+        kernel.Kernel = Microsoft.SemanticKernel.Kernel
+            .CreateBuilder()
             .AddOpenAIChatCompletion(config.Id, "RichasyAssistant", httpClient: proxyClient)
             .Build();
     }

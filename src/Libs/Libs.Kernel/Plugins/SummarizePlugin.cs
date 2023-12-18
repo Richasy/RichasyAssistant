@@ -3,7 +3,6 @@
 using System.ComponentModel;
 using System.Globalization;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.Text;
 
 namespace RichasyAssistant.Libs.Kernel.Plugins;
@@ -76,22 +75,22 @@ public sealed class SummarizePlugin
     /// <summary>
     /// 根据聊天信息生成会话标题.
     /// </summary>
-    /// <param name="conversation">会话内容.</param>
+    /// <param name="input">会话内容.</param>
     /// <returns>标题.</returns>
     [KernelFunction(TitleGeneratorFunctionName)]
     [Description("Generate a conversation title based on the chat information")]
     public async Task<string> GenerateTitleAsync(
-        [Description("The conversation transcript")] string conversation,
+        [Description("The conversation transcript")] string input,
         Microsoft.SemanticKernel.Kernel kernel)
     {
         var lan = CultureInfo.CurrentCulture.Name;
 #pragma warning disable SKEXP0055 // 类型仅用于评估，在将来的更新中可能会被更改或删除。取消此诊断以继续。
-        var firstLine = TextChunker.SplitPlainTextLines(conversation, MaxTokens).FirstOrDefault();
+        var firstLine = TextChunker.SplitPlainTextLines(input, MaxTokens).FirstOrDefault();
 #pragma warning restore SKEXP0055 // 类型仅用于评估，在将来的更新中可能会被更改或删除。取消此诊断以继续。
         var arguments = new KernelArguments
         {
             { "LANGUAGE", lan },
-            { KernelArguments.InputParameterName, firstLine },
+            { "Input", firstLine },
         };
 
         var result = await _conversationActionFunction.InvokeAsync(kernel, arguments).ConfigureAwait(false);

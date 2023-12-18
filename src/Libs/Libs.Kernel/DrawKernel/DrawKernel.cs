@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using Microsoft.SemanticKernel.AI.TextToImage;
+using Microsoft.SemanticKernel.TextToImage;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
