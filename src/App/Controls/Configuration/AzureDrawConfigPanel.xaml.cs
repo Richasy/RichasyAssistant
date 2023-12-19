@@ -13,6 +13,9 @@ public sealed partial class AzureDrawConfigPanel : InternalDrawConfigPanelBase
     /// Initializes a new instance of the <see cref="AzureDrawConfigPanel"/> class.
     /// </summary>
     public AzureDrawConfigPanel() => InitializeComponent();
+
+    private void OnAIKeyBoxLostFocus(object sender, RoutedEventArgs e)
+        => ViewModel.TryLoadAIModelSourceCommand.Execute(DrawType.AzureDallE);
 }
 
 /// <summary>

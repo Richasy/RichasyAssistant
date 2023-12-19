@@ -53,11 +53,9 @@
     <None Remove="Controls\Configuration\AzureOpenAIKernelConfigPanel.xaml" />
     <None Remove="Controls\Configuration\AzureSpeechConfigPanel.xaml" />
     <None Remove="Controls\Configuration\AzureTranslateConfigPanel.xaml" />
-    <None Remove="Controls\Configuration\AzureWhisperConfigPanel.xaml" />
     <None Remove="Controls\Configuration\BaiduTranslateConfigPanel.xaml" />
     <None Remove="Controls\Configuration\OpenAIDrawConfigPanel.xaml" />
     <None Remove="Controls\Configuration\OpenAIKernelConfigPanel.xaml" />
-    <None Remove="Controls\Configuration\OpenAIWhisperConfigPanel.xaml" />
     <None Remove="Controls\Dialogs\InternalDrawConfigDialog.xaml" />
     <None Remove="Controls\Dialogs\InternalKernelConfigDialog.xaml" />
     <None Remove="Controls\Dialogs\InternalSpeechConfigDialog.xaml" />
@@ -204,12 +202,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Dialogs\InternalSpeechConfigDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Configuration\OpenAIWhisperConfigPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Configuration\AzureWhisperConfigPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Configuration\AzureSpeechConfigPanel.xaml">

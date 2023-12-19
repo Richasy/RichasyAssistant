@@ -96,10 +96,12 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
     {
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageKey, InternalDrawService.AzureImageKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageEndpoint, InternalDrawService.AzureImageEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureDrawModel, InternalDrawService.AzureDrawModel.Value);
 
         await AppViewModel.ResetSecretsAsync(
             SettingNames.AzureImageKey,
-            SettingNames.AzureImageEndpoint);
+            SettingNames.AzureImageEndpoint,
+            SettingNames.DefaultAzureDrawModel);
 
         AppViewModel.ResetGlobalSettings();
     }
@@ -152,34 +154,6 @@ public sealed partial class SettingsPageViewModel : ViewModelBase
         await AppViewModel.ResetSecretsAsync(
             SettingNames.AzureSpeechKey,
             SettingNames.AzureSpeechRegion);
-
-        AppViewModel.ResetGlobalSettings();
-    }
-
-    [RelayCommand]
-    private async Task SaveAzureWhisperSettingsAsync()
-    {
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperKey, InternalSpeech.AzureWhisperKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperEndpoint, InternalSpeech.AzureWhisperEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureWhisperModelName, InternalSpeech.AzureWhisperModelName);
-
-        await AppViewModel.ResetSecretsAsync(
-            SettingNames.AzureWhisperKey,
-            SettingNames.AzureWhisperEndpoint,
-            SettingNames.DefaultAzureWhisperModelName);
-
-        AppViewModel.ResetGlobalSettings();
-    }
-
-    [RelayCommand]
-    private async Task SaveOpenAIWhisperSettingsAsync()
-    {
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIWhisperKey, InternalSpeech.OpenAIWhisperKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAICustomEndpoint, InternalSpeech.OpenAICustomEndpoint);
-
-        await AppViewModel.ResetSecretsAsync(
-            SettingNames.OpenAIWhisperKey,
-            SettingNames.OpenAICustomEndpoint);
 
         AppViewModel.ResetGlobalSettings();
     }

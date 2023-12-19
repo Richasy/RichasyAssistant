@@ -38,18 +38,6 @@
                     Click="OnAzureSpeechEditButtonClickAsync"
                     Content="{ext:Locale Name=EditConfiguration}" />
             </community:SettingsCard>
-            <!--<community:SettingsCard Header="{ext:Locale Name=AzureWhisper}">
-                <Button
-                    MinWidth="120"
-                    Click="OnAzureWhisperEditButtonClickAsync"
-                    Content="{ext:Locale Name=EditConfiguration}" />
-            </community:SettingsCard>
-            <community:SettingsCard Header="{ext:Locale Name=OpenAIWhisper}">
-                <Button
-                    MinWidth="120"
-                    Click="OnOpenAIWhisperEditButtonClickAsync"
-                    Content="{ext:Locale Name=EditConfiguration}" />
-            </community:SettingsCard>-->
         </community:SettingsExpander.Items>
     </community:SettingsExpander>
 </local:SettingSectionBase>

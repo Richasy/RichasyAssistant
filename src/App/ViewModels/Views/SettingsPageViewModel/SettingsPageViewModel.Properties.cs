@@ -19,8 +19,6 @@ public sealed partial class SettingsPageViewModel
     private const string AzureDrawId = "AzureDALL·E";
     private const string OpenAIDrawId = "OpenAIDALL·E";
     private const string AzureSpeechId = "AzureSpeech";
-    private const string AzureWhisperId = "AzureWhisper";
-    private const string OpenAIWhisperId = "OpenAIWhisper";
 
     private const string ExtraTranslateFileName = "_extraTranslateServices.json";
     private const string ExtraSpeechFileName = "_extraSpeechServices.json";

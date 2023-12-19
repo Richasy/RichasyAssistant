@@ -33,6 +33,7 @@
             HorizontalAlignment="Center"
             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
             LineHeight="20"
+            MaxLines="5"
             Style="{StaticResource CaptionTextBlockStyle}"
             Text="{x:Bind Description, Mode=OneWay}"
             TextAlignment="Center"

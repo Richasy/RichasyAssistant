@@ -40,8 +40,9 @@ public sealed partial class DrawKernel
     {
         var accessKey = GlobalSettings.TryGet<string>(SettingNames.AzureImageKey);
         var endpoint = GlobalSettings.TryGet<string>(SettingNames.AzureImageEndpoint);
+        var model = GlobalSettings.TryGet<string>(SettingNames.DefaultAzureDrawModel);
 
-        kernel.IsConfigValid = !string.IsNullOrEmpty(accessKey) && !string.IsNullOrEmpty(endpoint);
+        kernel.IsConfigValid = !string.IsNullOrEmpty(accessKey) && !string.IsNullOrEmpty(endpoint) && !string.IsNullOrEmpty(model);
         if (!kernel.IsConfigValid)
         {
             return;
@@ -49,7 +50,7 @@ public sealed partial class DrawKernel
 
         kernel.Kernel = Microsoft.SemanticKernel.Kernel
             .CreateBuilder()
-            .AddAzureOpenAITextToImage(endpoint, accessKey)
+            .AddAzureOpenAITextToImage(model, endpoint, accessKey, apiVersion: "2023-12-01-preview")
             .Build();
     }
 

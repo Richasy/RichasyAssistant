@@ -13,16 +13,6 @@ public enum SpeechType
     Azure,
 
     /// <summary>
-    /// Azure Whisper 语音服务.
-    /// </summary>
-    AzureWhisper,
-
-    /// <summary>
-    /// Open AI 语音服务.
-    /// </summary>
-    OpenAIWhisper,
-
-    /// <summary>
     /// 自定义语音服务.
     /// </summary>
     Custom,

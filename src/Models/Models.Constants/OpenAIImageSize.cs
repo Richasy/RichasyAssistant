@@ -8,17 +8,17 @@ namespace RichasyAssistant.Models.Constants;
 public enum OpenAIImageSize
 {
     /// <summary>
-    /// 256x256.
+    /// 正方形. 1024x1024.
     /// </summary>
-    Small,
+    Square,
 
     /// <summary>
-    /// 512x512.
+    /// 横向. 1792x1024.
     /// </summary>
-    Medium,
+    Landscape,
 
     /// <summary>
-    /// 1024x1024.
+    /// 纵向. 1024x1792.
     /// </summary>
-    Large,
+    Portrait,
 }

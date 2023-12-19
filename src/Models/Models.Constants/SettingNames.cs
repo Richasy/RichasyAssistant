@@ -32,14 +32,9 @@ public enum SettingNames
     AzureSpeechKey,
     AzureSpeechRegion,
 
-    AzureWhisperKey,
-    DefaultAzureWhisperModelName,
-    AzureWhisperEndpoint,
-
     AzureImageKey,
     AzureImageEndpoint,
 
-    OpenAIWhisperKey,
     OpenAIImageKey,
 
     LibraryFolderPath,
@@ -84,4 +79,5 @@ public enum SettingNames
     CustomDrawId,
     CustomTranslateId,
     CustomSpeechId,
+    DefaultAzureDrawModel,
 }

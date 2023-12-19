@@ -19,8 +19,6 @@
         <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
             <StackPanel>
                 <configuration:AzureSpeechConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureSpeech}" />
-                <configuration:AzureWhisperConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureWhisper}" />
-                <configuration:OpenAIWhisperConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsOpenAIWhisper}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -24,26 +24,4 @@ public sealed partial class SpeechSettingSection : SettingSectionBase
             ViewModel.SaveAzureSpeechSettingsCommand.Execute(default);
         }
     }
-
-    private async void OnAzureWhisperEditButtonClickAsync(object sender, RoutedEventArgs e)
-    {
-        var dialog = new InternalSpeechConfigDialog(ViewModel.InternalSpeech, SpeechType.AzureWhisper);
-        dialog.XamlRoot = XamlRoot;
-        var result = await dialog.ShowAsync();
-        if (result == ContentDialogResult.Primary)
-        {
-            ViewModel.SaveAzureWhisperSettingsCommand.Execute(default);
-        }
-    }
-
-    private async void OnOpenAIWhisperEditButtonClickAsync(object sender, RoutedEventArgs e)
-    {
-        var dialog = new InternalSpeechConfigDialog(ViewModel.InternalSpeech, SpeechType.OpenAIWhisper);
-        dialog.XamlRoot = XamlRoot;
-        var result = await dialog.ShowAsync();
-        if (result == ContentDialogResult.Primary)
-        {
-            ViewModel.SaveOpenAIWhisperSettingsCommand.Execute(default);
-        }
-    }
 }

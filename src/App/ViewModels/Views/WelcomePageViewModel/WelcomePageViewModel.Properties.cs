@@ -61,12 +61,6 @@ public sealed partial class WelcomePageViewModel
     private bool _isAzureSpeech;
 
     [ObservableProperty]
-    private bool _isAzureWhisper;
-
-    [ObservableProperty]
-    private bool _isOpenAIWhisper;
-
-    [ObservableProperty]
     private bool _isImageStep;
 
     [ObservableProperty]

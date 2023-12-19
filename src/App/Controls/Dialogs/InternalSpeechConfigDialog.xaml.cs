@@ -20,17 +20,11 @@ public sealed partial class InternalSpeechConfigDialog : ContentDialog
         ViewModel = viewModel;
         _type = type;
         IsAzureSpeech = type == SpeechType.Azure;
-        IsAzureWhisper = type == SpeechType.AzureWhisper;
-        IsOpenAIWhisper = type == SpeechType.OpenAIWhisper;
         AppToolkit.ResetControlTheme(this);
         Loaded += OnLoaded;
     }
 
     private bool IsAzureSpeech { get; }
-
-    private bool IsAzureWhisper { get; }
-
-    private bool IsOpenAIWhisper { get; }
 
     private InternalSpeechServiceViewModel ViewModel { get; }
 

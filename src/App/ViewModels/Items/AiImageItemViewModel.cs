@@ -74,8 +74,11 @@ public sealed partial class AiImageItemViewModel : DataViewModelBase<AiImage>
     }
 
     [RelayCommand]
-    private Task OpenAsync()
-        => Launcher.LaunchUriAsync(new Uri(Data.Link)).AsTask();
+    private async Task OpenAsync()
+    {
+        var imageFile = await StorageFile.GetFileFromPathAsync(Link);
+        await Launcher.LaunchFileAsync(imageFile).AsTask();
+    }
 
     private async Task SaveFileAsync(StorageFile file)
     {

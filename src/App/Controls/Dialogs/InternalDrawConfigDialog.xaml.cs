@@ -9,22 +9,28 @@ namespace RichasyAssistant.App.Controls.Dialogs;
 /// </summary>
 public sealed partial class InternalDrawConfigDialog : ContentDialog
 {
+    private readonly DrawType _drawType;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="InternalDrawConfigDialog"/> class.
     /// </summary>
-    public InternalDrawConfigDialog(InternalDrawServiceViewModel viewModel, bool isAzureDraw)
+    public InternalDrawConfigDialog(InternalDrawServiceViewModel viewModel, DrawType drawType)
     {
         InitializeComponent();
         ViewModel = viewModel;
-        IsAzureDraw = isAzureDraw;
+        _drawType = drawType;
+        IsAzureDraw = drawType == DrawType.AzureDallE;
+        IsOpenAIDraw = drawType == DrawType.OpenAIDallE;
         AppToolkit.ResetControlTheme(this);
         Loaded += OnLoaded;
     }
 
     private bool IsAzureDraw { get; }
 
+    private bool IsOpenAIDraw { get; }
+
     private InternalDrawServiceViewModel ViewModel { get; }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
-        => ViewModel.InitializeCommand.Execute(IsAzureDraw);
+        => ViewModel.InitializeCommand.Execute(_drawType);
 }

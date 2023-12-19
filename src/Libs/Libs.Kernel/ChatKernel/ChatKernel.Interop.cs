@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using RichasyAssistant.Libs.Locator;
@@ -28,22 +27,15 @@ public sealed partial class ChatKernel
         {
             var endpoint = GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIEndpoint);
             var key = GlobalSettings.TryGet<string>(SettingNames.AzureOpenAIAccessKey);
-            var url = $"{endpoint.TrimEnd('/')}/openai/deployments?api-version=2022-12-01";
+            var data = await Utils.GetAzureOpenAIModelsAsync(key, endpoint);
 
             var aoaiChatModels = new List<Metadata>();
             var aoaiCompletionModels = new List<Metadata>();
             var aoaiEmbeddingsModels = new List<Metadata>();
 
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Headers.Add("api-key", key);
-
-            var response = await client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            var responseData = JsonSerializer.Deserialize<OpenAIDeploymentResponse>(content);
-            if (responseData.Data?.Any() ?? false)
+            if (data?.Any() ?? false)
             {
-                foreach (var item in responseData.Data)
+                foreach (var item in data)
                 {
                     var mt = JudgeModelType(item.Model);
                     if (string.IsNullOrEmpty(mt))
@@ -173,20 +165,5 @@ public sealed partial class ChatKernel
         }
 
         return settings;
-    }
-
-    private sealed class OpenAIDeploymentResponse
-    {
-        [JsonPropertyName("data")]
-        public List<OpenAIDeployment> Data { get; set; }
-    }
-
-    private sealed class OpenAIDeployment
-    {
-        [JsonPropertyName("model")]
-        public string Model { get; set; }
-
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
     }
 }

@@ -56,17 +56,10 @@ public sealed partial class AppViewModel : ViewModelBase
         UpdateGlobalSetting(SettingNames.AzureSpeechKey, string.Empty);
         UpdateGlobalSetting(SettingNames.AzureSpeechRegion, string.Empty);
 
-        // 配置 Azure Whisper 设置.
-        UpdateGlobalSetting(SettingNames.AzureWhisperKey, string.Empty);
-        UpdateGlobalSetting(SettingNames.AzureWhisperEndpoint, string.Empty);
-        UpdateGlobalSetting(SettingNames.DefaultAzureWhisperModelName, string.Empty);
-
-        // 配置 Open AI Whisper 设置.
-        UpdateGlobalSetting(SettingNames.OpenAIWhisperKey, string.Empty);
-
         // 配置 Azure 图像设置.
         UpdateGlobalSetting(SettingNames.AzureImageKey, string.Empty);
         UpdateGlobalSetting(SettingNames.AzureImageEndpoint, string.Empty);
+        UpdateGlobalSetting(SettingNames.DefaultAzureDrawModel, string.Empty);
 
         // 配置 Open AI 图像设置.
         UpdateGlobalSetting(SettingNames.OpenAIImageKey, string.Empty);
@@ -120,14 +113,9 @@ public sealed partial class AppViewModel : ViewModelBase
             RetrieveSecret(metas, SettingNames.AzureSpeechKey);
             RetrieveSecret(metas, SettingNames.AzureSpeechRegion);
 
-            RetrieveSecret(metas, SettingNames.AzureWhisperKey);
-            RetrieveSecret(metas, SettingNames.AzureWhisperEndpoint);
-            RetrieveSecret(metas, SettingNames.DefaultAzureWhisperModelName);
-
-            RetrieveSecret(metas, SettingNames.OpenAIWhisperKey);
-
             RetrieveSecret(metas, SettingNames.AzureImageKey);
             RetrieveSecret(metas, SettingNames.AzureImageEndpoint);
+            RetrieveSecret(metas, SettingNames.DefaultAzureDrawModel);
 
             RetrieveSecret(metas, SettingNames.OpenAIImageKey);
 
@@ -161,14 +149,9 @@ public sealed partial class AppViewModel : ViewModelBase
             SettingNames.AzureSpeechKey,
             SettingNames.AzureSpeechRegion,
 
-            SettingNames.AzureWhisperKey,
-            SettingNames.AzureWhisperEndpoint,
-            SettingNames.DefaultAzureWhisperModelName,
-
-            SettingNames.OpenAIWhisperKey,
-
             SettingNames.AzureImageKey,
             SettingNames.AzureImageEndpoint,
+            SettingNames.DefaultAzureDrawModel,
 
             SettingNames.OpenAIImageKey);
 #pragma warning restore SA1115 // Parameter should follow comma
@@ -339,14 +322,6 @@ public sealed partial class AppViewModel : ViewModelBase
         if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureSpeechKey, string.Empty)))
         {
             SettingsToolkit.WriteLocalSetting(SettingNames.DefaultSpeech, SpeechType.Azure);
-        }
-        else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureWhisperKey, string.Empty)))
-        {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultSpeech, SpeechType.AzureWhisper);
-        }
-        else if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.OpenAIWhisperKey, string.Empty)))
-        {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultSpeech, SpeechType.OpenAIWhisper);
         }
 
         if (!string.IsNullOrEmpty(SettingsToolkit.ReadLocalSetting(SettingNames.AzureImageKey, string.Empty)))

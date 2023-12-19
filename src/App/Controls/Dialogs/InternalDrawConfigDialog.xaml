@@ -19,7 +19,7 @@
         <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
             <StackPanel>
                 <configuration:AzureDrawConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureDraw}" />
-                <configuration:OpenAIDrawConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsAzureDraw, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+                <configuration:OpenAIDrawConfigPanel ViewModel="{x:Bind ViewModel}" Visibility="{x:Bind IsOpenAIDraw}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

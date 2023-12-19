@@ -160,9 +160,9 @@
                                         IsEnabled="{x:Bind ViewModel.IsGenerating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
                                         SelectionChanged="OnSizeChanged"
                                         SelectionChangedTrigger="Committed">
-                                        <ComboBoxItem Content="256 x 256" />
-                                        <ComboBoxItem Content="512 x 512" />
-                                        <ComboBoxItem Content="1024 x 1024" />
+                                        <ComboBoxItem Content="{ext:Locale Name=DallESquare}" />
+                                        <ComboBoxItem Content="{ext:Locale Name=DallELandscape}" />
+                                        <ComboBoxItem Content="{ext:Locale Name=DallEPortrait}" />
                                     </ComboBox>
                                 </StackPanel>
 

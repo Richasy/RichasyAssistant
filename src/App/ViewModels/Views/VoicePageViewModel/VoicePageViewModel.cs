@@ -19,8 +19,6 @@ public sealed partial class VoicePageViewModel : ViewModelBase
         var serviceName = SpeechType switch
         {
             SpeechType.Azure => ResourceToolkit.GetLocalizedString(StringNames.AzureSpeech),
-            SpeechType.AzureWhisper => ResourceToolkit.GetLocalizedString(StringNames.AzureWhisper),
-            SpeechType.OpenAIWhisper => ResourceToolkit.GetLocalizedString(StringNames.OpenAIWhisper),
             _ => throw new NotImplementedException(),
         };
 

@@ -16,7 +16,7 @@ public sealed partial class DrawSettingSection : SettingSectionBase
 
     private async void OnAzureDrawEditButtonClickAsync(object sender, RoutedEventArgs e)
     {
-        var dialog = new InternalDrawConfigDialog(ViewModel.InternalDrawService, true);
+        var dialog = new InternalDrawConfigDialog(ViewModel.InternalDrawService, DrawType.AzureDallE);
         dialog.XamlRoot = XamlRoot;
         var result = await dialog.ShowAsync();
         if (result == ContentDialogResult.Primary)
@@ -27,7 +27,7 @@ public sealed partial class DrawSettingSection : SettingSectionBase
 
     private async void OnOpenAIDrawButtonClickAsync(object sender, RoutedEventArgs e)
     {
-        var dialog = new InternalDrawConfigDialog(ViewModel.InternalDrawService, false);
+        var dialog = new InternalDrawConfigDialog(ViewModel.InternalDrawService, DrawType.OpenAIDallE);
         dialog.XamlRoot = XamlRoot;
         var result = await dialog.ShowAsync();
         if (result == ContentDialogResult.Primary)

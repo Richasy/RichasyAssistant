@@ -222,12 +222,6 @@
   <data name="AzureTranslateTip" xml:space="preserve">
     <value>如果你正在使用 Azure 翻译服务（必应翻译），请在创建相关资源后填写下面的表单，应用会使用 Azure 翻译 作为你的默认翻译服务</value>
   </data>
-  <data name="AzureWhisper" xml:space="preserve">
-    <value>Azure 耳语</value>
-  </data>
-  <data name="AzureWhisperTip" xml:space="preserve">
-    <value>如果你正在使用 Azure Open AI Whisper（耳语）服务，请在模型部署完成后填写下面的表单，应用将通过耳语服务提供语音转文本功能</value>
-  </data>
   <data name="Back" xml:space="preserve">
     <value>返回</value>
   </data>
@@ -314,6 +308,15 @@
   </data>
   <data name="CreateLibrary" xml:space="preserve">
     <value>创建存储库</value>
+  </data>
+  <data name="DallELandscape" xml:space="preserve">
+    <value>横向（1792x1024)</value>
+  </data>
+  <data name="DallEPortrait" xml:space="preserve">
+    <value>纵向（1024x1792)</value>
+  </data>
+  <data name="DallESquare" xml:space="preserve">
+    <value>方形（1024x1024）</value>
   </data>
   <data name="DarkTheme" xml:space="preserve">
     <value>深色</value>
@@ -635,12 +638,6 @@
   </data>
   <data name="OpenAITip" xml:space="preserve">
     <value>如果你正在使用 Open AI，请在填写下面的表单，应用会使用 Open AI 作为你的默认 AI 服务</value>
-  </data>
-  <data name="OpenAIWhisper" xml:space="preserve">
-    <value>Open AI 耳语</value>
-  </data>
-  <data name="OpenAIWhisperTip" xml:space="preserve">
-    <value>如果你正在使用 Open AI Whisper（耳语）服务，请在下方填写你的令牌信息，应用将通过耳语服务提供语音转文本功能</value>
   </data>
   <data name="OpenFullWindow" xml:space="preserve">
     <value>打开完整窗口</value>

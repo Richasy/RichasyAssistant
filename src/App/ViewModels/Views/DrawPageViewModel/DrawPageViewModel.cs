@@ -18,7 +18,7 @@ public sealed partial class DrawPageViewModel : ViewModelBase
     /// </summary>
     public DrawPageViewModel()
     {
-        Size = SettingsToolkit.ReadLocalSetting(SettingNames.DrawImageSize, OpenAIImageSize.Medium);
+        Size = SettingsToolkit.ReadLocalSetting(SettingNames.DrawImageSize, OpenAIImageSize.Square);
         HistoryColumnWidth = SettingsToolkit.ReadLocalSetting(SettingNames.DrawHistoryColumnWidth, 260d);
         History = new ObservableCollection<AiImageItemViewModel>();
 

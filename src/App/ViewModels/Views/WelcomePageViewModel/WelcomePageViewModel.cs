@@ -22,7 +22,6 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         CheckStep();
         CheckKernelType();
         CheckTranslateType();
-        CheckSpeechType();
         CheckImageType();
 
         InternalKernel = new InternalKernelViewModel();
@@ -128,14 +127,9 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechKey, InternalSpeech.AzureSpeechKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureSpeechRegion, InternalSpeech.AzureSpeechRegion);
 
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperKey, InternalSpeech.AzureWhisperKey);
-        SettingsToolkit.WriteLocalSetting(SettingNames.AzureWhisperEndpoint, InternalSpeech.AzureWhisperEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureWhisperModelName, InternalSpeech.AzureWhisperModelName);
-
-        SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIWhisperKey, InternalSpeech.OpenAIWhisperKey);
-
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageKey, InternalDrawService.AzureImageKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageEndpoint, InternalDrawService.AzureImageEndpoint);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureDrawModel, InternalDrawService.AzureDrawModel.Value);
 
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIImageKey, InternalDrawService.OpenAIImageKey);
     }
@@ -166,13 +160,6 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         IsBaiduTranslate = TranslateType == TranslateType.Baidu;
     }
 
-    private void CheckSpeechType()
-    {
-        IsAzureSpeech = SpeechType == SpeechType.Azure;
-        IsAzureWhisper = SpeechType == SpeechType.AzureWhisper;
-        IsOpenAIWhisper = SpeechType == SpeechType.OpenAIWhisper;
-    }
-
     private void CheckImageType()
     {
         IsAzureImage = ImageGenerateType == DrawType.AzureDallE;
@@ -187,9 +174,6 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
 
     partial void OnTranslateTypeChanged(TranslateType value)
         => CheckTranslateType();
-
-    partial void OnSpeechTypeChanged(SpeechType value)
-        => CheckSpeechType();
 
     partial void OnImageGenerateTypeChanged(DrawType value)
         => CheckImageType();

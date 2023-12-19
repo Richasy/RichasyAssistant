@@ -157,9 +157,6 @@ public sealed partial class SettingsPageViewModel
         TryClear(SpeechServices);
         SpeechServices.Add(new ServiceMetadata(AzureSpeechId, ResourceToolkit.GetLocalizedString(StringNames.AzureSpeech)));
 
-        // TODO: 支持耳语.
-        // SpeechServices.Add(new ServiceMetadata(AzureWhisperId, ResourceToolkit.GetLocalizedString(StringNames.AzureWhisper)));
-        // SpeechServices.Add(new ServiceMetadata(OpenAIWhisperId, ResourceToolkit.GetLocalizedString(StringNames.OpenAIWhisper)));
         var extraServicesPath = Path.Combine(LibraryPath, ExtraSpeechFileName);
         if (File.Exists(extraServicesPath))
         {
@@ -182,14 +179,6 @@ public sealed partial class SettingsPageViewModel
         if (defaultSpeech == SpeechType.Azure)
         {
             SpeechService = SpeechServices.First();
-        }
-        else if (defaultSpeech == SpeechType.AzureWhisper)
-        {
-            SpeechService = SpeechServices[1];
-        }
-        else if (defaultSpeech == SpeechType.OpenAIWhisper)
-        {
-            SpeechService = SpeechServices[2];
         }
         else
         {
@@ -414,10 +403,6 @@ public sealed partial class SettingsPageViewModel
         if (value.Id == AzureSpeechId)
         {
             SettingsToolkit.WriteLocalSetting(SettingNames.DefaultSpeech, SpeechType.Azure);
-        }
-        else if (value.Id == AzureWhisperId)
-        {
-            SettingsToolkit.WriteLocalSetting(SettingNames.DefaultSpeech, SpeechType.AzureWhisper);
         }
         else
         {
