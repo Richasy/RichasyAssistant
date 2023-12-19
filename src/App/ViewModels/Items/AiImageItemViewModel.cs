@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using System.Net.Http;
 using Humanizer;
 using RichasyAssistant.App.ViewModels.Components;
 using RichasyAssistant.Models.App.Kernel;
@@ -31,16 +30,18 @@ public sealed partial class AiImageItemViewModel : DataViewModelBase<AiImage>
     public AiImageItemViewModel(AiImage image)
         : base(image)
     {
-        Link = image.Link;
+        var libPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
+        Link = Path.Combine(libPath, image.Link);
         Time = image.Time.Humanize();
         TimeDetail = image.Time.ToString("yyyy/MM/dd HH:mm:ss");
     }
 
     [RelayCommand]
-    private void CopyImage()
+    private async Task CopyImageAsync()
     {
         var dp = new DataPackage();
-        dp.SetBitmap(RandomAccessStreamReference.CreateFromUri(new Uri(Data.Link)));
+        var file = await StorageFile.GetFileFromPathAsync(Link);
+        dp.SetBitmap(RandomAccessStreamReference.CreateFromFile(file));
         Clipboard.SetContent(dp);
         AppViewModel.Instance.ShowTip(StringNames.Copied, InfoType.Success);
     }
@@ -78,9 +79,7 @@ public sealed partial class AiImageItemViewModel : DataViewModelBase<AiImage>
 
     private async Task SaveFileAsync(StorageFile file)
     {
-        using var httpClient = new HttpClient();
-        var response = await httpClient.GetAsync(Data.Link);
-        var buffer = await response.Content.ReadAsByteArrayAsync();
-        await FileIO.WriteBytesAsync(file, buffer);
+        var imageFile = await StorageFile.GetFileFromPathAsync(Link);
+        await imageFile.CopyAndReplaceAsync(file);
     }
 }

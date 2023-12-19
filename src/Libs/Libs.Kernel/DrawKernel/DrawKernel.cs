@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.SemanticKernel.TextToImage;
+using RichasyAssistant.Libs.Locator;
 using RichasyAssistant.Libs.Service;
 using RichasyAssistant.Models.App.Args;
 using RichasyAssistant.Models.App.Kernel;
@@ -40,11 +41,25 @@ public sealed partial class DrawKernel
         }
 
         var now = DateTimeOffset.Now;
+        var id = now.ToUnixTimeMilliseconds().ToString();
+        var libPath = GlobalSettings.TryGet<string>(SettingNames.LibraryFolderPath);
+        var fileName = Path.Combine("Images", id + ".png");
+        var path = Path.Combine(libPath, fileName);
+        var directory = Path.GetDirectoryName(path);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        using var client = new HttpClient();
+        var bytes = await client.GetByteArrayAsync(url);
+        await File.WriteAllBytesAsync(path, bytes);
+
         var aiImage = new AiImage
         {
             Id = now.ToUnixTimeMilliseconds().ToString(),
             Prompt = prompt,
-            Link = url,
+            Link = fileName,
             Time = now,
             Width = width,
             Height = width,

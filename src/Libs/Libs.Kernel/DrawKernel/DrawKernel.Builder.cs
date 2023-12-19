@@ -49,7 +49,7 @@ public sealed partial class DrawKernel
 
         kernel.Kernel = Microsoft.SemanticKernel.Kernel
             .CreateBuilder()
-            .AddAzureOpenAITextToImage(endpoint, string.Empty, accessKey)
+            .AddAzureOpenAITextToImage(endpoint, accessKey)
             .Build();
     }
 
