@@ -50,24 +50,12 @@
         <uap:SplashScreen Image="Assets\Logo\SplashScreen.png"  BackgroundColor="#FFFFFF"/>
       </uap:VisualElements>
       <Extensions>
-          <uap:Extension Category="windows.appService" EntryPoint="RichasyAssistant.AppServices.BasicService">
-              <uap:AppService Name="com.richasyassistant.basicservice" uap4:SupportsMultipleInstances="true"/>
-          </uap:Extension>
           <uap:Extension Category="windows.protocol">
               <uap:Protocol Name="ricass" DesiredView="useLess" />
           </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
-
-  <Extensions>
-    <Extension Category="windows.activatableClass.inProcessServer">
-      <InProcessServer>
-        <Path>WinRT.Host.dll</Path>
-        <ActivatableClass ActivatableClassId="RichasyAssistant.AppServices.BasicService" ThreadingModel="both" />
-      </InProcessServer>
-    </Extension>
-  </Extensions>
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />

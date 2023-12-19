@@ -71,7 +71,7 @@
                                             VerticalAlignment="Stretch"
                                             CornerRadius="{StaticResource ControlCornerRadius}"
                                             PlaceholderStretch="Uniform"
-                                            Source="{x:Bind ViewModel.CurrentImage.Data.Link, Mode=OneWay}"
+                                            Source="{x:Bind ViewModel.CurrentImage.Link, Mode=OneWay}"
                                             Stretch="Uniform" />
                                     </Grid>
                                     <Grid>
