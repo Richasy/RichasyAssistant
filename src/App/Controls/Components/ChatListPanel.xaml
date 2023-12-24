@@ -38,7 +38,6 @@
                 x:Name="DisplayPicker"
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                SelectedIndex="0"
                 SelectionChanged="OnDisplayPickerSelectionChanged">
                 <community:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=Chat}">
                     <community:SegmentedItem.Icon>

@@ -152,7 +152,7 @@
                             MinHeight="300"
                             MaxHeight="600"
                             HorizontalAlignment="Stretch"
-                            AcceptsReturn="False"
+                            AcceptsReturn="True"
                             Header="{ext:Locale Name=AssistantInstruction}"
                             HeaderTemplate="{StaticResource InputHeaderTemplate}"
                             PlaceholderText="{ext:Locale Name=AssistantInstructionPlaceholderText}"
