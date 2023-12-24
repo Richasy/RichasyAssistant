@@ -1,0 +1,987 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutThisApp" xml:space="preserve">
+    <value>About this app</value>
+  </data>
+  <data name="AccessKey" xml:space="preserve">
+    <value>Access key</value>
+  </data>
+  <data name="AccessKeyPlaceholderText" xml:space="preserve">
+    <value>Key to access the service</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddKernel" xml:space="preserve">
+    <value>Add new kernel</value>
+  </data>
+  <data name="AddService" xml:space="preserve">
+    <value>Add new service</value>
+  </data>
+  <data name="AIMessageWarning" xml:space="preserve">
+    <value>Disclaimer: The model is not omniscient, AI may generate incorrect information, please verify on your own</value>
+  </data>
+  <data name="AppId" xml:space="preserve">
+    <value>App ID</value>
+  </data>
+  <data name="AppIdPlaceholderText" xml:space="preserve">
+    <value>Please enter App ID</value>
+  </data>
+  <data name="AppLog" xml:space="preserve">
+    <value>App log</value>
+  </data>
+  <data name="AppLogDescription" xml:space="preserve">
+    <value>Configuration items related to the app log</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Richasy Assistant</value>
+  </data>
+  <data name="AppSecret" xml:space="preserve">
+    <value>App secret</value>
+  </data>
+  <data name="AppSecretPlaceholderText" xml:space="preserve">
+    <value>Please enter the application secret key</value>
+  </data>
+  <data name="AppTheme" xml:space="preserve">
+    <value>Application theme</value>
+  </data>
+  <data name="AppThemeDescription" xml:space="preserve">
+    <value>Select the application theme to display</value>
+  </data>
+  <data name="Assistant" xml:space="preserve">
+    <value>Assistant</value>
+  </data>
+  <data name="AssistantDescription" xml:space="preserve">
+    <value>Assistant description</value>
+  </data>
+  <data name="AssistantDescriptionPlaceholderText" xml:space="preserve">
+    <value>Describe the assistant's duties briefly</value>
+  </data>
+  <data name="AssistantDetail" xml:space="preserve">
+    <value>Assistant details</value>
+  </data>
+  <data name="AssistantDetailDescription" xml:space="preserve">
+    <value>Select or create an assistant!</value>
+  </data>
+  <data name="AssistantInstruction" xml:space="preserve">
+    <value>Assistant instruction (system prompt)</value>
+  </data>
+  <data name="AssistantInstructionPlaceholderText" xml:space="preserve">
+    <value>The assistant's prompt instruction will be sent as a system prompt</value>
+  </data>
+  <data name="AssistantName" xml:space="preserve">
+    <value>Assistant name</value>
+  </data>
+  <data name="AssistantNamePlaceholderText" xml:space="preserve">
+    <value>Name it, required field</value>
+  </data>
+  <data name="AttachImage" xml:space="preserve">
+    <value>Attach photo</value>
+  </data>
+  <data name="AudioSearch" xml:space="preserve">
+    <value>Audio search</value>
+  </data>
+  <data name="AutoDetect" xml:space="preserve">
+    <value>Auto detect</value>
+  </data>
+  <data name="AvatarCropper" xml:space="preserve">
+    <value>Avatar cropper</value>
+  </data>
+  <data name="AzureDallETip" xml:space="preserve">
+    <value>If you are using Azure DALL·E service, please fill in the form below after the resource deployment is completed, the application will provide text-to-image function through DALL·E service</value>
+  </data>
+  <data name="AzureOpenAITip" xml:space="preserve">
+    <value>If you are using Azure Open AI, please fill in the form below after deploying the model, the application will use Azure Open AI as your default AI service</value>
+  </data>
+  <data name="AzureSpeech" xml:space="preserve">
+    <value>Azure Speech</value>
+  </data>
+  <data name="AzureSpeechTip" xml:space="preserve">
+    <value>If you are using Azure Speech service, please fill in the form below after creating the relevant resources, the application will provide text-to-speech and speech-to-text functions through Azure Speech service</value>
+  </data>
+  <data name="AzureTranslate" xml:space="preserve">
+    <value>Azure Translate</value>
+  </data>
+  <data name="AzureTranslateTip" xml:space="preserve">
+    <value>If you are using Azure Translate service (Bing Translate), please fill in the form below after creating the relevant resources, the application will use Azure Translate as your default translation service</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="BaiduTranslate" xml:space="preserve">
+    <value>Baidu Translate</value>
+  </data>
+  <data name="BaiduTranslateTip" xml:space="preserve">
+    <value>If you have registered for Baidu Translate Open Platform, please fill in your application information in the form below, the application will use Baidu Translate as your default translation service</value>
+  </data>
+  <data name="BeginChat" xml:space="preserve">
+    <value>Start the conversation!</value>
+  </data>
+  <data name="BeginChatDescription" xml:space="preserve">
+    <value>Create or open a conversation and start chatting!</value>
+  </data>
+  <data name="BeginStorageSearch" xml:space="preserve">
+    <value>Search local files</value>
+  </data>
+  <data name="BeginStorageSearchDescription" xml:space="preserve">
+    <value>Start a fast search of local files with Everything!</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="ChatInvalidConfiguration" xml:space="preserve">
+    <value>Invalid chat service configuration</value>
+  </data>
+  <data name="ChatModelName" xml:space="preserve">
+    <value>Chat model name</value>
+  </data>
+  <data name="ChatModelPlaceholderText" xml:space="preserve">
+    <value>Name of the deployed chat model</value>
+  </data>
+  <data name="ChatWithMe" xml:space="preserve">
+    <value>Chat with me</value>
+  </data>
+  <data name="ClearHistory" xml:space="preserve">
+    <value>Clear history</value>
+  </data>
+  <data name="ClearMessage" xml:space="preserve">
+    <value>Clear message</value>
+  </data>
+  <data name="CloseLibrary" xml:space="preserve">
+    <value>Close repository</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ContinuousSpeech" xml:space="preserve">
+    <value>Continuous speech</value>
+  </data>
+  <data name="Copied" xml:space="preserve">
+    <value>Copied</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CopyImage" xml:space="preserve">
+    <value>Copy image</value>
+  </data>
+  <data name="CopyPath" xml:space="preserve">
+    <value>Copy path</value>
+  </data>
+  <data name="CopyPrompt" xml:space="preserve">
+    <value>Copy prompt</value>
+  </data>
+  <data name="CopyrightTemplate" xml:space="preserve">
+    <value>© {0} Richasy. All rights reserved.</value>
+  </data>
+  <data name="CopySourceContent" xml:space="preserve">
+    <value>Copy input content</value>
+  </data>
+  <data name="CopyTranslationResult" xml:space="preserve">
+    <value>Copy translation result</value>
+  </data>
+  <data name="CountLimitTemplate" xml:space="preserve">
+    <value>First {0} items</value>
+  </data>
+  <data name="CreateAssistant" xml:space="preserve">
+    <value>Create assistant</value>
+  </data>
+  <data name="CreateLibrary" xml:space="preserve">
+    <value>Create repository</value>
+  </data>
+  <data name="DallELandscape" xml:space="preserve">
+    <value>Landscape (1792x1024)</value>
+  </data>
+  <data name="DallEPortrait" xml:space="preserve">
+    <value>Portrait (1024x1792)</value>
+  </data>
+  <data name="DallESquare" xml:space="preserve">
+    <value>Square (1024x1024)</value>
+  </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="DefaultChatKernel" xml:space="preserve">
+    <value>Default dialogue kernel</value>
+  </data>
+  <data name="DefaultChatKernelDescription" xml:space="preserve">
+    <value>Kernel used by default when creating a new session</value>
+  </data>
+  <data name="DefaultDrawService" xml:space="preserve">
+    <value>Default drawing service</value>
+  </data>
+  <data name="DefaultSpeechService" xml:space="preserve">
+    <value>Default speech service</value>
+  </data>
+  <data name="DefaultTranslateService" xml:space="preserve">
+    <value>Default translation service</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteAssistantWarning" xml:space="preserve">
+    <value>Do you want to remove this assistant? After removal, related conversations will also be removed</value>
+  </data>
+  <data name="DeleteCustomKernelWarning" xml:space="preserve">
+    <value>Do you want to delete this custom kernel? After deletion, related assistants will no longer be available</value>
+  </data>
+  <data name="Discard" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="DocumentSearch" xml:space="preserve">
+    <value>Document Search</value>
+  </data>
+  <data name="DownloadEverything" xml:space="preserve">
+    <value>Download Everything</value>
+  </data>
+  <data name="Draw" xml:space="preserve">
+    <value>Draw</value>
+  </data>
+  <data name="DrawConfiguration" xml:space="preserve">
+    <value>Draw Configuration</value>
+  </data>
+  <data name="DrawInputPlaceholderText" xml:space="preserve">
+    <value>Describe the image you want to draw, such as "a snow lotus in the sea of clouds"</value>
+  </data>
+  <data name="DrawInvalidConfiguration" xml:space="preserve">
+    <value>Invalid Drawing Configuration</value>
+  </data>
+  <data name="DrawInvalidConfigurationDescription" xml:space="preserve">
+    <value>Please adjust the drawing-related configuration in the settings page</value>
+  </data>
+  <data name="DrawService" xml:space="preserve">
+    <value>Drawing Service</value>
+  </data>
+  <data name="DrawSetting" xml:space="preserve">
+    <value>Drawing Setting</value>
+  </data>
+  <data name="DrawSettingDescription" xml:space="preserve">
+    <value>Edit or add AI drawing configuration</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditAssistant" xml:space="preserve">
+    <value>Edit assistant</value>
+  </data>
+  <data name="EditConfiguration" xml:space="preserve">
+    <value>Edit configuration</value>
+  </data>
+  <data name="EmbeddingModelName" xml:space="preserve">
+    <value>Embedding model name</value>
+  </data>
+  <data name="EmbeddingModelPlaceholderText" xml:space="preserve">
+    <value>Name of the deployed embedding model</value>
+  </data>
+  <data name="EmptyResponse" xml:space="preserve">
+    <value>Response is empty</value>
+  </data>
+  <data name="Endpoint" xml:space="preserve">
+    <value>Endpoint</value>
+  </data>
+  <data name="EndpointPlaceholderText" xml:space="preserve">
+    <value>Address of the access interface</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="ExportHistory" xml:space="preserve">
+    <value>Export chat history</value>
+  </data>
+  <data name="ExtraDrawLoadFailed" xml:space="preserve">
+    <value>Custom drawing service loading failed, please check the custom drawing service configuration in the repository</value>
+  </data>
+  <data name="ExtraKernelLoadFailed" xml:space="preserve">
+    <value>Custom kernel loading failed, please check the custom kernel configuration in the repository</value>
+  </data>
+  <data name="ExtraSpeechLoadFailed" xml:space="preserve">
+    <value>Custom speech service loading failed, please check the custom speech service configuration in the repository</value>
+  </data>
+  <data name="ExtraTranslateLoadFailed" xml:space="preserve">
+    <value>Custom translation service loading failed, please check the custom translation service configuration in the repository</value>
+  </data>
+  <data name="FileSaved" xml:space="preserve">
+    <value>File saved</value>
+  </data>
+  <data name="FinishDescription" xml:space="preserve">
+    <value>Richasy Assistant will provide you with a unique AI experience based on the configuration information you provided. Enjoy your use.</value>
+  </data>
+  <data name="FinishTitle" xml:space="preserve">
+    <value>You have completed all configurations!</value>
+  </data>
+  <data name="FolderMustEmpty" xml:space="preserve">
+    <value>You must select an empty folder</value>
+  </data>
+  <data name="FolderNotExist" xml:space="preserve">
+    <value>Folder does not exist</value>
+  </data>
+  <data name="FrequencyPenalty" xml:space="preserve">
+    <value>Text repetition</value>
+  </data>
+  <data name="FrequencyPenaltyDescription" xml:space="preserve">
+    <value>The higher the value, the less likely the subsequent text will repeat characters</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="GenerateImageFailed" xml:space="preserve">
+    <value>Failed to generate image, please try again later</value>
+  </data>
+  <data name="GenerateResponseCancelled" xml:space="preserve">
+    <value>Response generation stopped</value>
+  </data>
+  <data name="GenerateResponseFailed" xml:space="preserve">
+    <value>An exception occurred while generating response</value>
+  </data>
+  <data name="Generic" xml:space="preserve">
+    <value>Generic</value>
+  </data>
+  <data name="GenericSearch" xml:space="preserve">
+    <value>Generic search</value>
+  </data>
+  <data name="GlobalChatSetting" xml:space="preserve">
+    <value>Global chat setting</value>
+  </data>
+  <data name="GlobalChatSettingDescription" xml:space="preserve">
+    <value>The settings here will affect all AI chats</value>
+  </data>
+  <data name="GridLayout" xml:space="preserve">
+    <value>Grid layout</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="ImageSearch" xml:space="preserve">
+    <value>Image search</value>
+  </data>
+  <data name="ImportServiceFailed" xml:space="preserve">
+    <value>Import service failed, please try again later</value>
+  </data>
+  <data name="InitialScriptRunningTip" xml:space="preserve">
+    <value>Initial script is running, please wait for it to complete</value>
+  </data>
+  <data name="InitialScriptWarning" xml:space="preserve">
+    <value>This extension service requires running an initial script before import, please manually verify if the service is trustworthy</value>
+  </data>
+  <data name="Instruction" xml:space="preserve">
+    <value>Instruction</value>
+  </data>
+  <data name="Kernel" xml:space="preserve">
+    <value>Kernel</value>
+  </data>
+  <data name="KernelConfiguration" xml:space="preserve">
+    <value>Kernel configuration</value>
+  </data>
+  <data name="KernelLaunchedTip" xml:space="preserve">
+    <value>Kernel {0} has been launched</value>
+  </data>
+  <data name="KernelService" xml:space="preserve">
+    <value>Kernel Service</value>
+  </data>
+  <data name="KernelSetting" xml:space="preserve">
+    <value>Kernel Setting</value>
+  </data>
+  <data name="KernelSettingDescription" xml:space="preserve">
+    <value>Select the appropriate kernel to provide AI dialogue function</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Launch" xml:space="preserve">
+    <value>Launch</value>
+  </data>
+  <data name="LaunchApp" xml:space="preserve">
+    <value>Launch app</value>
+  </data>
+  <data name="Launching" xml:space="preserve">
+    <value>Launching...</value>
+  </data>
+  <data name="LaunchingKernelTip" xml:space="preserve">
+    <value>Launching kernel: {0}</value>
+  </data>
+  <data name="LibraryChooseDescription" xml:space="preserve">
+    <value>Select a blank folder as the repository for application data such as chat records, prompt word lists, etc. You can also open an existing repository to skip the initial configuration</value>
+  </data>
+  <data name="LibraryChooseTitle" xml:space="preserve">
+    <value>Select a repository</value>
+  </data>
+  <data name="LibraryNeedInitialized" xml:space="preserve">
+    <value>You must specify a folder as the application data repository</value>
+  </data>
+  <data name="LibrarySetting" xml:space="preserve">
+    <value>Repository setting</value>
+  </data>
+  <data name="LicenseTerms" xml:space="preserve">
+    <value>License terms</value>
+  </data>
+  <data name="LightTheme" xml:space="preserve">
+    <value>Light theme</value>
+  </data>
+  <data name="ListLayout" xml:space="preserve">
+    <value>List layout</value>
+  </data>
+  <data name="LoadingAndWait" xml:space="preserve">
+    <value>Loading, please wait</value>
+  </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>Load More</value>
+  </data>
+  <data name="MaximumResponseTokens" xml:space="preserve">
+    <value>Maximum output tokens</value>
+  </data>
+  <data name="MaximumResponseTokensDescription" xml:space="preserve">
+    <value>About 4 characters per token</value>
+  </data>
+  <data name="Me" xml:space="preserve">
+    <value>Me</value>
+  </data>
+  <data name="ModelConfiguration" xml:space="preserve">
+    <value>Model configuration</value>
+  </data>
+  <data name="ModelName" xml:space="preserve">
+    <value>Model name</value>
+  </data>
+  <data name="ModelNamePlaceholderText" xml:space="preserve">
+    <value>Name of the deployed model</value>
+  </data>
+  <data name="ModifiedTime" xml:space="preserve">
+    <value>Modified time</value>
+  </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>More options</value>
+  </data>
+  <data name="NameAtoZ" xml:space="preserve">
+    <value>Name (A to Z)</value>
+  </data>
+  <data name="NameZtoA" xml:space="preserve">
+    <value>Name (Z to A)</value>
+  </data>
+  <data name="NeedInputText" xml:space="preserve">
+    <value>Text input required</value>
+  </data>
+  <data name="NeedSelectVoice" xml:space="preserve">
+    <value>A voice must be selected</value>
+  </data>
+  <data name="NewAssistant" xml:space="preserve">
+    <value>New assistant</value>
+  </data>
+  <data name="NewSession" xml:space="preserve">
+    <value>New session</value>
+  </data>
+  <data name="NextStep" xml:space="preserve">
+    <value>Next step</value>
+  </data>
+  <data name="NoAssistants" xml:space="preserve">
+    <value>No available assistants</value>
+  </data>
+  <data name="NoAvailableService" xml:space="preserve">
+    <value>No available extension services</value>
+  </data>
+  <data name="NoAvailableServiceDescription" xml:space="preserve">
+    <value>You can add new extension services in the settings page</value>
+  </data>
+  <data name="NoDisplayImage" xml:space="preserve">
+    <value>No image displayed</value>
+  </data>
+  <data name="NoDisplayImageDescription" xml:space="preserve">
+    <value>Generate or open an image!</value>
+  </data>
+  <data name="NoDrawHistory" xml:space="preserve">
+    <value>No drawing history</value>
+  </data>
+  <data name="NoLimit" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
+  <data name="NoMessage" xml:space="preserve">
+    <value>No messages</value>
+  </data>
+  <data name="NoMessageDescription" xml:space="preserve">
+    <value>Type your message in the text box below!</value>
+  </data>
+  <data name="NoName" xml:space="preserve">
+    <value>Unnamed</value>
+  </data>
+  <data name="NoSearchResult" xml:space="preserve">
+    <value>No search results</value>
+  </data>
+  <data name="NoSearchResultDescription" xml:space="preserve">
+    <value>Try searching with a different keyword</value>
+  </data>
+  <data name="NoSession" xml:space="preserve">
+    <value>No available sessions</value>
+  </data>
+  <data name="NoTranslationHistory" xml:space="preserve">
+    <value>No translation history</value>
+  </data>
+  <data name="OpenAIDallETip" xml:space="preserve">
+    <value>If you are using Open AI DALL·E service, please fill in your token information below, the application will provide text-to-image function through DALL·E service</value>
+  </data>
+  <data name="OpenAITip" xml:space="preserve">
+    <value>If you are using Open AI, please fill in the form below, the application will use Open AI as your default AI service</value>
+  </data>
+  <data name="OpenFullWindow" xml:space="preserve">
+    <value>Open full window</value>
+  </data>
+  <data name="OpenInFileExplorer" xml:space="preserve">
+    <value>Open in File Explorer</value>
+  </data>
+  <data name="OpenItemFailed" xml:space="preserve">
+    <value>Failed to open item</value>
+  </data>
+  <data name="OpenLibrary" xml:space="preserve">
+    <value>Open repository</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>Open log folder</value>
+  </data>
+  <data name="OpenSourceImage" xml:space="preserve">
+    <value>Open original image</value>
+  </data>
+  <data name="OpenWith" xml:space="preserve">
+    <value>Open with</value>
+  </data>
+  <data name="Organization" xml:space="preserve">
+    <value>Organization (optional)</value>
+  </data>
+  <data name="OrganizationPlaceholderText" xml:space="preserve">
+    <value>Enter organization name</value>
+  </data>
+  <data name="PlayAndPause" xml:space="preserve">
+    <value>Play / Pause</value>
+  </data>
+  <data name="PoweredBy" xml:space="preserve">
+    <value>Powered by {0}</value>
+  </data>
+  <data name="PresencePenalty" xml:space="preserve">
+    <value>Topic repetition</value>
+  </data>
+  <data name="PresencePenaltyDescription" xml:space="preserve">
+    <value>The higher the value, the more likely the subsequent text will discuss new topics</value>
+  </data>
+  <data name="PresetSession" xml:space="preserve">
+    <value>Preset session</value>
+  </data>
+  <data name="PrevStep" xml:space="preserve">
+    <value>Previous step</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="ProgramSearch" xml:space="preserve">
+    <value>Program search</value>
+  </data>
+  <data name="Prompt" xml:space="preserve">
+    <value>Prompt</value>
+  </data>
+  <data name="ProxyEndpoint" xml:space="preserve">
+    <value>Proxy endpoint (optional)</value>
+  </data>
+  <data name="ProxyEndpointPlaceholderText" xml:space="preserve">
+    <value>Enter a trusted proxy service address</value>
+  </data>
+  <data name="RecentSession" xml:space="preserve">
+    <value>Recent session</value>
+  </data>
+  <data name="RecognizedText" xml:space="preserve">
+    <value>Recognized text</value>
+  </data>
+  <data name="Regenerate" xml:space="preserve">
+    <value>Regenerate</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="RegionPlaceholderText" xml:space="preserve">
+    <value>Service location</value>
+  </data>
+  <data name="Repeatability" xml:space="preserve">
+    <value>Repeatability</value>
+  </data>
+  <data name="RepeatabilityDescription" xml:space="preserve">
+    <value>Control the repeatability of text or topic in the model</value>
+  </data>
+  <data name="RepeatFile" xml:space="preserve">
+    <value>Repeat file</value>
+  </data>
+  <data name="RequestVoiceMetadataFailed" xml:space="preserve">
+    <value>Request for voice data failed</value>
+  </data>
+  <data name="Resent" xml:space="preserve">
+    <value>Resend</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="Sampling" xml:space="preserve">
+    <value>Sampling</value>
+  </data>
+  <data name="SamplingDescription" xml:space="preserve">
+    <value>Set sampling parameters to determine the randomness of the answer</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="SaveAudio" xml:space="preserve">
+    <value>Save audio</value>
+  </data>
+  <data name="SaveFileFailed" xml:space="preserve">
+    <value>Failed to save file, please try again later</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchByName" xml:space="preserve">
+    <value>Search by name</value>
+  </data>
+  <data name="SearchingAndWaiting" xml:space="preserve">
+    <value>Searching, please wait</value>
+  </data>
+  <data name="SearchResultTip" xml:space="preserve">
+    <value>Found {0} results</value>
+  </data>
+  <data name="SearchResultTipWithLimit" xml:space="preserve">
+    <value>There are a total of {0} results, the first {1} are displayed for you</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>Send feedback</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Send message</value>
+  </data>
+  <data name="Service" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="Session" xml:space="preserve">
+    <value>Session</value>
+  </data>
+  <data name="SessionOption" xml:space="preserve">
+    <value>Session settings</value>
+  </data>
+  <data name="SessionTitle" xml:space="preserve">
+    <value>Session title</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="SizeLargeToSmall" xml:space="preserve">
+    <value>Size (from large to small)</value>
+  </data>
+  <data name="SizeSmallToLarge" xml:space="preserve">
+    <value>Size (from small to large)</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="SomethingWrong" xml:space="preserve">
+    <value>Something went wrong!</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sort by</value>
+  </data>
+  <data name="SourceLanguage" xml:space="preserve">
+    <value>Source language</value>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>Speech</value>
+  </data>
+  <data name="SpeechConfiguration" xml:space="preserve">
+    <value>Speech configuration</value>
+  </data>
+  <data name="SpeechConvertFailed" xml:space="preserve">
+    <value>An exception occurred while trying to convert speech</value>
+  </data>
+  <data name="SpeechInput" xml:space="preserve">
+    <value>Speech input</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>Speech recognition</value>
+  </data>
+  <data name="SpeechRecognizeFailed" xml:space="preserve">
+    <value>Speech recognition failed</value>
+  </data>
+  <data name="SpeechService" xml:space="preserve">
+    <value>Speech service</value>
+  </data>
+  <data name="SpeechSetting" xml:space="preserve">
+    <value>Speech setting</value>
+  </data>
+  <data name="SpeechSettingDescription" xml:space="preserve">
+    <value>Edit or add speech service</value>
+  </data>
+  <data name="StartRecording" xml:space="preserve">
+    <value>Start recording</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="StopRecording" xml:space="preserve">
+    <value>Stop recording</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="StorageInvalid" xml:space="preserve">
+    <value>Storage search service Unavailable</value>
+  </data>
+  <data name="StorageInvalidDescription" xml:space="preserve">
+    <value>Storage search service requires Everything to be installed on this machine first</value>
+  </data>
+  <data name="StorageSearch" xml:space="preserve">
+    <value>Storage search</value>
+  </data>
+  <data name="StorageSearchMaxCount" xml:space="preserve">
+    <value>Maximum display items for storage search</value>
+  </data>
+  <data name="StorageSearchMaxCountDescription" xml:space="preserve">
+    <value>Set the maximum number of search results to display in local storage search</value>
+  </data>
+  <data name="StorageSearchPlaceholder" xml:space="preserve">
+    <value>Find files based on Everything</value>
+  </data>
+  <data name="SystemDefault" xml:space="preserve">
+    <value>Use system settings</value>
+  </data>
+  <data name="TargetLanguage" xml:space="preserve">
+    <value>Target language</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="TemperatureDescription" xml:space="preserve">
+    <value>Control randomness, reducing temperature will result in fewer random completions.</value>
+  </data>
+  <data name="TextCompletionModelName" xml:space="preserve">
+    <value>Text completion model name</value>
+  </data>
+  <data name="TextCompletionModelPlaceholderText" xml:space="preserve">
+    <value>Name of the deployed text completion model</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>Text to speech</value>
+  </data>
+  <data name="TextTranslate" xml:space="preserve">
+    <value>Text translate</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>Tip</value>
+  </data>
+  <data name="TopP" xml:space="preserve">
+    <value>Top-P</value>
+  </data>
+  <data name="TopPDescription" xml:space="preserve">
+    <value>Control diversity through nucleus sampling</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>Translate</value>
+  </data>
+  <data name="TranslateConfiguration" xml:space="preserve">
+    <value>Translate configuration</value>
+  </data>
+  <data name="TranslatedContentPlaceholderText" xml:space="preserve">
+    <value>Translated text will be displayed here</value>
+  </data>
+  <data name="TranslateInvalid" xml:space="preserve">
+    <value>Translation service is unavailable</value>
+  </data>
+  <data name="TranslateInvalidDescription" xml:space="preserve">
+    <value>Please complete the translation service related configuration in the settings</value>
+  </data>
+  <data name="TranslateService" xml:space="preserve">
+    <value>Translation Service</value>
+  </data>
+  <data name="TranslateSetting" xml:space="preserve">
+    <value>Translation Settings</value>
+  </data>
+  <data name="TranslateSettingDescription" xml:space="preserve">
+    <value>Edit or add translation services</value>
+  </data>
+  <data name="TranslationInputPlaceholderText" xml:space="preserve">
+    <value>Please enter the text to be translated</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>An unknown error occurred</value>
+  </data>
+  <data name="UseDefaultKernel" xml:space="preserve">
+    <value>Use default kernel</value>
+  </data>
+  <data name="UseDefaultKernelDescription" xml:space="preserve">
+    <value>The current default kernel will be used when conversing with this assistant</value>
+  </data>
+  <data name="UseMarkdownRenderer" xml:space="preserve">
+    <value>Use markdown renderer</value>
+  </data>
+  <data name="UseMarkdownRendererDescription" xml:space="preserve">
+    <value>Conversation messages will be rendered using the native Markdown renderer, text selection may be affected</value>
+  </data>
+  <data name="UserInputPlaceholderText" xml:space="preserve">
+    <value>Enter message</value>
+  </data>
+  <data name="UseStreamOutput" xml:space="preserve">
+    <value>Use stream output</value>
+  </data>
+  <data name="UseStreamOutputDescription" xml:space="preserve">
+    <value>The model will generate responses word by word (typewriter mode)</value>
+  </data>
+  <data name="VideoSearch" xml:space="preserve">
+    <value>Video search</value>
+  </data>
+  <data name="Voice" xml:space="preserve">
+    <value>Voice</value>
+  </data>
+  <data name="VoiceConfigInvalid" xml:space="preserve">
+    <value>Please complete the voice-related service configuration in the settings</value>
+  </data>
+  <data name="VoiceDependenciesMissing" xml:space="preserve">
+    <value>You need to click the link below to download C++ dependencies to use this feature</value>
+  </data>
+  <data name="VoiceInvalid" xml:space="preserve">
+    <value>Voice service is unavailable</value>
+  </data>
+  <data name="WaitServiceLaunching" xml:space="preserve">
+    <value>Please wait until the service is fully launched before operating</value>
+  </data>
+  <data name="WelcomeDescription" xml:space="preserve">
+    <value>Before you start, please follow me to do some simple configurations!</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Welcome to use Xiao Huan Assistant</value>
+  </data>
+  <data name="ZipSearch" xml:space="preserve">
+    <value>Zip search</value>
+  </data>
+</root>
