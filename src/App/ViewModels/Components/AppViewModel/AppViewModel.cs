@@ -176,6 +176,8 @@ public sealed partial class AppViewModel : ViewModelBase
             {
                 WriteSecret(dbContext, name);
             }
+
+            await dbContext.SaveChangesAsync();
         }
     }
 
