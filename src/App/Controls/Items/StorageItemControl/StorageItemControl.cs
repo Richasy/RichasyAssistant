@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Xaml.Media.Imaging;
-using RichasyAssistant.App.Extensions;
 using RichasyAssistant.App.ViewModels.Items;
+using Windows.Storage;
+using Windows.Storage.FileProperties;
 
 namespace RichasyAssistant.App.Controls.Items;
 
@@ -48,13 +49,18 @@ public sealed class StorageItemControl : ReactiveControl<StorageItemViewModel>
         {
             try
             {
-                using var thumbnail = WindowsThumbnailProvider.GetThumbnail(ViewModel.Data.Path, 96, 96, ThumbnailOptions.None);
-                using var ms = new MemoryStream();
-                thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                ms.Seek(0, SeekOrigin.Begin);
+                // using var thumbnail = WindowsThumbnailProvider.GetThumbnail(ViewModel.Data.Path, 96, 96, ThumbnailOptions.None);
+                // using var ms = new MemoryStream();
+                // thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                // ms.Seek(0, SeekOrigin.Begin);
+                // var image = new BitmapImage();
+                // _logo.Source = image;
+                // await image.SetSourceAsync(ms.AsRandomAccessStream());
+                var file = await StorageFile.GetFileFromPathAsync(ViewModel.Data.Path);
+                var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem, 96);
                 var image = new BitmapImage();
                 _logo.Source = image;
-                await image.SetSourceAsync(ms.AsRandomAccessStream());
+                await image.SetSourceAsync(thumbnail);
             }
             catch
             {
