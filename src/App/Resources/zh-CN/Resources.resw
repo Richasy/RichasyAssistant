@@ -699,6 +699,9 @@
   <data name="ProxyEndpointPlaceholderText" xml:space="preserve">
     <value>填写可信的代理服务地址</value>
   </data>
+  <data name="ReadDocument" xml:space="preserve">
+    <value>阅读文档</value>
+  </data>
   <data name="RecentSession" xml:space="preserve">
     <value>近期会话</value>
   </data>

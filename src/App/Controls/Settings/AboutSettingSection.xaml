@@ -19,8 +19,14 @@
         <community:SettingsExpander.Items>
             <community:SettingsCard ContentAlignment="Left">
                 <StackPanel>
-                    <HyperlinkButton HorizontalAlignment="Left" Content="{ext:Locale Name=LicenseTerms}" />
-                    <HyperlinkButton HorizontalAlignment="Left" Content="{ext:Locale Name=PrivacyPolicy}" />
+                    <HyperlinkButton
+                        HorizontalAlignment="Left"
+                        Content="{ext:Locale Name=LicenseTerms}"
+                        NavigateUri="https://github.com/Richasy/RichasyAssistant/wiki/License" />
+                    <HyperlinkButton
+                        HorizontalAlignment="Left"
+                        Content="{ext:Locale Name=PrivacyPolicy}"
+                        NavigateUri="https://github.com/Richasy/RichasyAssistant/wiki/Privacy" />
                 </StackPanel>
             </community:SettingsCard>
         </community:SettingsExpander.Items>

@@ -699,6 +699,9 @@
   <data name="ProxyEndpointPlaceholderText" xml:space="preserve">
     <value>Enter a trusted proxy service address</value>
   </data>
+  <data name="ReadDocument" xml:space="preserve">
+    <value>Read document</value>
+  </data>
   <data name="RecentSession" xml:space="preserve">
     <value>Recent session</value>
   </data>
