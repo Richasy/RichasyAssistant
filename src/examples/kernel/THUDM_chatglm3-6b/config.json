@@ -1,0 +1,8 @@
+{
+    "id": "THUDM_chatglm3-6b",
+    "name": "ChatGLM3-6b",
+    "base_url": "http://localhost:8124",
+    "initial_script": "initial.ps1",
+    "run_script": "run.ps1",
+    "support_stream_output": true
+}
