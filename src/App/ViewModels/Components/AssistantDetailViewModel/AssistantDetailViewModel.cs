@@ -168,6 +168,7 @@ public sealed partial class AssistantDetailViewModel : ViewModelBase
         await ChatDataService.AddOrUpdateAssistantAsync(assistant);
         _parentViewModel.RefreshAssistantsCommand.Execute(default);
         Source = null;
+        IsCreateMode = false;
     }
 
     [RelayCommand]
