@@ -214,7 +214,6 @@ public sealed partial class TranslationPageViewModel : ViewModelBase, IDisposabl
     {
         if (value == null)
         {
-            SettingsToolkit.DeleteLocalSetting(SettingNames.TranslationTargetLanguage);
             return;
         }
 
