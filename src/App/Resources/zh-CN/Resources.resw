@@ -633,6 +633,9 @@
   <data name="NoTranslationHistory" xml:space="preserve">
     <value>没有翻译记录</value>
   </data>
+  <data name="NotSystemDriveWarning" xml:space="preserve">
+    <value>为了应用能够正常读写文件，请将应用安装位置调整到系统盘</value>
+  </data>
   <data name="OpenAIDallETip" xml:space="preserve">
     <value>如果你正在使用 Open AI DALL·E 服务，请在下方填写你的令牌信息，应用将通过 DALL·E 服务提供文生图功能</value>
   </data>

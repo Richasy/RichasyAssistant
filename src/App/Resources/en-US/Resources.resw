@@ -633,6 +633,9 @@
   <data name="NoTranslationHistory" xml:space="preserve">
     <value>No translation history</value>
   </data>
+  <data name="NotSystemDriveWarning" xml:space="preserve">
+    <value>To ensure that the app can read and write files, please adjust the installation location of the app to the system drive.</value>
+  </data>
   <data name="OpenAIDallETip" xml:space="preserve">
     <value>If you are using Open AI DALL·E service, please fill in your token information below, the application will provide text-to-image function through DALL·E service</value>
   </data>

@@ -86,6 +86,13 @@
                 Visibility="{x:Bind ViewModel.IsFREStep, Mode=OneWay}">
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{ext:Locale Name=WelcomeTitle}" />
                 <TextBlock Style="{StaticResource DescriptionTextStyle}" Text="{ext:Locale Name=WelcomeDescription}" />
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{ext:Locale Name=NotSystemDriveWarning}"
+                    TextWrapping="Wrap"
+                    Visibility="{x:Bind ViewModel.IsNotSystemDriveWarning, Mode=OneWay}" />
 
                 <animations:Implicit.ShowAnimations>
                     <animations:TranslationAnimation
