@@ -64,7 +64,10 @@ public sealed partial class ChatKernel
         else if (type == KernelType.OpenAI)
         {
             var key = GlobalSettings.TryGet<string>(SettingNames.OpenAIAccessKey);
-            var url = $"https://api.openai.com/v1/models";
+            var customEndpoint = GlobalSettings.TryGet<string>(SettingNames.OpenAICustomEndpoint);
+            var url = string.IsNullOrEmpty(customEndpoint)
+                ? $"https://api.openai.com/v1/models"
+                : $"{customEndpoint.TrimEnd('/')}/v1/models";
             var oaiChatModels = new List<Metadata>();
             var oaiCompletionModels = new List<Metadata>();
             var oaiEmbeddingsModels = new List<Metadata>();
