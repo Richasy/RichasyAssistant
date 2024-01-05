@@ -75,6 +75,9 @@ public sealed partial class WelcomePageViewModel
     [ObservableProperty]
     private bool _isNextStepButtonEnabled;
 
+    [ObservableProperty]
+    private bool _isNotSystemDriveWarning;
+
     /// <summary>
     /// 实例.
     /// </summary>

@@ -23,32 +23,48 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
         CheckKernelType();
         CheckTranslateType();
         CheckImageType();
+        IsAzureSpeech = true;
 
         InternalKernel = new InternalKernelViewModel();
         InternalDrawService = new InternalDrawServiceViewModel();
         InternalTranslate = new InternalTranslateServiceViewModel();
         InternalSpeech = new InternalSpeechServiceViewModel();
+
+#if !DEBUG
+        var systemDrive = Path.GetPathRoot(Environment.SystemDirectory);
+        var installedPath = Windows.ApplicationModel.Package.Current.InstalledPath;
+        IsNotSystemDriveWarning = !installedPath.StartsWith(systemDrive);
+        IsNextStepButtonEnabled = !IsNotSystemDriveWarning;
+#endif
     }
 
     [RelayCommand]
     private async Task RestartAsync()
     {
-        if (CurrentStep >= 2)
+        try
         {
-            WriteSettings();
-            await AppViewModel.ResetSecretsAsync();
-        }
+            if (CurrentStep >= 2)
+            {
+                WriteSettings();
+                await AppViewModel.ResetSecretsAsync();
+            }
 
-        var libPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
-        if (string.IsNullOrEmpty(libPath))
+            var libPath = SettingsToolkit.ReadLocalSetting(SettingNames.LibraryFolderPath, string.Empty);
+            if (string.IsNullOrEmpty(libPath))
+            {
+                AppViewModel.Instance.ShowTip(StringNames.LibraryNeedInitialized, InfoType.Error);
+                return;
+            }
+
+            SettingsToolkit.WriteLocalSetting(SettingNames.SkipWelcome, true);
+            AppInstance.GetCurrent().UnregisterKey();
+            _ = AppInstance.Restart(default);
+        }
+        catch (Exception ex)
         {
-            AppViewModel.Instance.ShowTip(StringNames.LibraryNeedInitialized, InfoType.Error);
-            return;
+            AppViewModel.Instance.ShowTip(ex.Message, InfoType.Error);
+            LogException(ex);
         }
-
-        SettingsToolkit.WriteLocalSetting(SettingNames.SkipWelcome, true);
-        AppInstance.GetCurrent().UnregisterKey();
-        _ = AppInstance.Restart(default);
     }
 
     [RelayCommand]
@@ -129,7 +145,7 @@ public sealed partial class WelcomePageViewModel : ViewModelBase
 
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageKey, InternalDrawService.AzureImageKey);
         SettingsToolkit.WriteLocalSetting(SettingNames.AzureImageEndpoint, InternalDrawService.AzureImageEndpoint);
-        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureDrawModel, InternalDrawService.AzureDrawModel.Value);
+        SettingsToolkit.WriteLocalSetting(SettingNames.DefaultAzureDrawModel, InternalDrawService.AzureDrawModel?.Value ?? string.Empty);
 
         SettingsToolkit.WriteLocalSetting(SettingNames.OpenAIImageKey, InternalDrawService.OpenAIImageKey);
     }
