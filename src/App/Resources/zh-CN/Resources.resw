@@ -486,6 +486,9 @@
   <data name="Instruction" xml:space="preserve">
     <value>指令</value>
   </data>
+  <data name="JoinQQGroup" xml:space="preserve">
+    <value>加入 QQ 群</value>
+  </data>
   <data name="Kernel" xml:space="preserve">
     <value>内核</value>
   </data>

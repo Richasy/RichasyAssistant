@@ -73,6 +73,8 @@ public sealed partial class InternalKernelViewModel : ViewModelBase
             else
             {
                 GlobalSettings.Set(SettingNames.OpenAIAccessKey, OpenAIAccessKey);
+                GlobalSettings.Set(SettingNames.OpenAIOrganization, OpenAICustomEndpoint);
+                GlobalSettings.Set(SettingNames.OpenAIOrganization, OpenAIOrganization);
                 var (chatModels, textCompletions, embeddings) = await ChatKernel.GetSupportModelsAsync(KernelType.OpenAI);
                 TryClear(OpenAIChatModelCollection);
                 foreach (var item in chatModels)
