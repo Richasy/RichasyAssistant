@@ -486,6 +486,9 @@
   <data name="Instruction" xml:space="preserve">
     <value>Instruction</value>
   </data>
+  <data name="JoinQQGroup" xml:space="preserve">
+    <value>Join QQ group</value>
+  </data>
   <data name="Kernel" xml:space="preserve">
     <value>Kernel</value>
   </data>

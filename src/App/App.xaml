@@ -19,12 +19,15 @@
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_black.png" />
+                    <BitmapImage x:Key="QQGroup" UriSource="ms-appx:///Assets/qq_group_light.jpg" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_white.png" />
+                    <BitmapImage x:Key="QQGroup" UriSource="ms-appx:///Assets/qq_group_dark.jpg" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="HighContrast">
                     <BitmapImage x:Key="OpenAILogo" UriSource="ms-appx:///Assets/openai_white.png" />
+                    <BitmapImage x:Key="QQGroup" UriSource="ms-appx:///Assets/qq_group_dark.jpg" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 

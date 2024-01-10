@@ -94,6 +94,12 @@ TBD
 - [Markdig](https://github.com/xoofx/markdig)
 - 以及其他开源贡献者.
 
+## 交流
+
+你可以加入 QQ 群进行交流
+
+<img src="assets/qq_group.jpg" width="260px" />
+
 ## 🧩 截图
 
 ![截图](assets/screenshot.png)

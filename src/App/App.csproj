@@ -38,6 +38,8 @@
     <None Remove="Assets\logo.png" />
     <None Remove="Assets\openai_black.png" />
     <None Remove="Assets\openai_white.png" />
+    <None Remove="Assets\qq_group_dark.jpg" />
+    <None Remove="Assets\qq_group_light.jpg" />
     <None Remove="Controls\Components\AppTitleBar.xaml" />
     <None Remove="Controls\Components\AssistantAvatar.xaml" />
     <None Remove="Controls\Components\AssistantDetailPanel.xaml" />
@@ -111,11 +113,11 @@
     <PackageReference Include="ColorCode.WinUI" Version="2.0.15" />
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.231204-build.1603" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.ImageCropper" Version="8.0.231214-build.795" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.0.231214-build.795" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.0.231214-build.795" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.0.231214-build.795" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.55" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.ImageCropper" Version="8.0.240109" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.0.240109" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.0.240109" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.0.240109" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.57" />
     <PackageReference Include="Humanizer.Core" Version="2.14.1" />
     <PackageReference Include="Humanizer.Core.zh-CN" Version="2.14.1" />
     <PackageReference Include="Markdig" Version="0.34.0" />
@@ -123,12 +125,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231219000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
     <PackageReference Include="NeoSmart.PrettySize" Version="3.1.1" />
-    <PackageReference Include="NLog" Version="5.2.7" />
+    <PackageReference Include="NLog" Version="5.2.8" />
     <PackageReference Include="Roman-Numerals" Version="2.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
     <PackageReference Include="WinUIEx" Version="2.3.3" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>

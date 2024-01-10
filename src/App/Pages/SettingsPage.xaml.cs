@@ -22,6 +22,9 @@ public sealed partial class SettingsPage : SettingsPageBase
     /// <inheritdoc/>
     protected override void OnPageLoaded()
         => ViewModel.InitializeCommand.Execute(default);
+
+    private void OnJoinGroupButtonClick(object sender, RoutedEventArgs e)
+        => FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
 }
 
 /// <summary>
