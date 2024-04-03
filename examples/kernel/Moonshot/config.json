@@ -1,0 +1,10 @@
+{
+  "id": "Moonshot",
+  "name": "Moonshot",
+  "base_url": "http://localhost:5259",
+  "initial_script": "",
+  "run_script": "run.ps1",
+  "support_stream_output": false,
+  "token": "Your_token",
+  "default_model": "moonshot-v1-8k"
+}
