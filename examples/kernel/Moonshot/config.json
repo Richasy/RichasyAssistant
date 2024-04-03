@@ -6,5 +6,6 @@
   "run_script": "run.ps1",
   "support_stream_output": false,
   "token": "Your_token",
+  "default_api": "https://api.moonshot.cn/v1/",
   "default_model": "moonshot-v1-8k"
 }

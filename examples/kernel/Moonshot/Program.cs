@@ -17,10 +17,11 @@ var config = JsonSerializer.Deserialize(configJson, AppJsonContext.Default.Custo
 
 var apiKey = config?.Token ?? throw new ArgumentNullException(nameof(config.Token));
 var defaultModel = config?.DefaultModel ?? throw new ArgumentNullException(nameof(config.DefaultModel));
+var defaultApi = config?.DefaultApi ?? throw new ArgumentNullException(nameof(config.DefaultApi));
 
 var httpClient = new HttpClient();
 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
-httpClient.BaseAddress = new Uri("https://api.moonshot.cn/v1/"); // Replace with your API base URL.
+httpClient.BaseAddress = new Uri(defaultApi);
 
 var todosApi = app.MapGroup("/v1");
 todosApi.MapGet("/models", () => GetModelsAsync());
@@ -86,6 +87,9 @@ internal class CustomConfig
 
     [JsonPropertyName("default_model")]
     public string? DefaultModel { get; set; }
+
+    [JsonPropertyName("default_api")]
+    public string? DefaultApi { get; set; }
 }
 
 enum LaunchStatus
