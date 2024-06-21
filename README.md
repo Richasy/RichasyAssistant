@@ -10,6 +10,8 @@
 
 人与AI相互成就的一次探索
 
+***小幻助理因架构大幅调整，现在迁移到新的存储库 [Rodel.Agent](https://github.com/Richasy/Rodel.Agent)，此仓库归档***
+
 </div>
 
 ---
